@@ -1,0 +1,102 @@
+<?php
+    $cs = [
+        '/tp/TP002/css/p.css'
+    ];
+    echo '<link href="'.srcLink($cs,1).'" media="screen" rel="stylesheet" type="text/css">';
+
+    $product = $this->paginator;
+    $product->setItemCountPerPage($this->uriParams()->getRequest()->getQuery('icpp') ? : 12);
+    $optionPage = $this->home()->optionPage();
+    $optionBasic = $this->home()->optionBasic();
+    $menuOption = $this->home()->getMenu();
+?>
+<?php
+    /**** Start SEO DWEB *****/
+    $this->headTitle($this->escapeHtml($this->translate('Danh sách sản phẩm')));
+    $this->headMeta()->appendName('description', '');
+    $this->headMeta()->appendName('keywords', '');
+
+    $this->headMeta()->appendProperty('og:title', 'Danh sách sản phẩm');
+    $this->headMeta()->appendProperty('og:description', 'Danh sách sản phẩm');
+    $this->headMeta()->appendProperty('og:image', '');
+    $this->headMeta()->appendProperty('og:image:secure_url', '');
+    $this->headMeta()->appendProperty('og:image:width', '');
+    $this->headMeta()->appendProperty('og:image:height', '');
+    $this->headMeta()->appendProperty('og:type', 'Page');
+    $this->headMeta()->appendProperty('og:url', 'http://'.$_SERVER['HTTP_HOST'].'/san-pham.html');
+    $this->headMeta()->appendProperty('og:site_name', $optionBasic['sologan']);
+
+    $this->headMeta()->appendName('twitter:card', '');
+    $this->headMeta()->appendName('twitter:title', 'Danh sách sản phẩm');
+    $this->headMeta()->appendName('twitter:description', 'Danh sách sản phẩm');
+    $this->headMeta()->appendName('twitter:image', '');
+    /**** End SEO DWEB *****/
+?>
+
+<div class="breadcrumb">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <ul>
+                    <li><a href="/">Trang chủ</a></li>
+                    <li><span>/</span><a href="/san-pham.html">Sản phẩm</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="main">
+<div class="container">
+    <div class="row">
+        <?php
+            if(!empty($menuOption['product_sidebar']) || !empty($optionPage['view_danh-muc-san-pham-1']) || !empty($optionPage['view_danh-muc-san-pham-2'])):
+                echo $this->render('product/product/sidebar');
+                echo '<div class="col-md-9">';
+            else:
+                echo '<div class="col-md-12">';
+            endif;
+        ?>
+            <div class="right">
+                <div class="productCategory">
+                    <?php
+                    $show = $this->request->getQuery('show');
+                    if(count($product)){
+                        echo '<div class="titlePaginator"><h1 class="title">Danh sách sản phẩm</h1>
+                                <select onchange="location = this.options[this.selectedIndex].value;">
+                                        <option value="' . $this->product()->removeFilter('show') . '">Mới cập nhật</option>
+                                        <option value="' . $this->product()->addFilter('show', 'priceAsc',2) . '" '.($show == 'priceAsc' ? 'selected':'').'>Giá tăng dần</option>
+                                        <option value="' . $this->product()->addFilter('show', 'priceDesc',2) . '" '.($show == 'priceDesc' ? 'selected':'').'>Giá giảm dần</option>
+                                        <option value="' . $this->product()->addFilter('show', 'SaleOff',2) . '" '.($show == 'SaleOff' ? 'selected':'').'>Giảm giá</option>
+                                  </select>
+                            </div>';
+                        echo '<ul class="lPC">';
+                        foreach($product as $p){
+                            ?>
+                            <?php
+                            $imgs = array_slice(json_decode($p->getImage(), true), 0, 2);
+                            ?>
+                            <li class="product-item">
+                                <div class="product-item__inner">
+                                    <div class="product-image__wrapper">
+                                        <a href="<?= $p->getViewLink() ?>">
+                                            <figure class="lazy product-image" data-src="<?= !empty($imgs) ? $imgs['0']:null ?>"></figure>
+                                        </a>
+                                    </div>
+                                    <h3><?= $p->getTitle() ?></h3>
+                                    <p class="price"><?= $p->getPriceOld() ? number_format($p->getPriceOld()).' đ<i>'.number_format($p->getPrice()).' đ</i>':number_format($p->getPrice()).' đ' ?></p>
+                                </div>
+                            </li>
+                            <?php
+                        }
+                        echo '</ul>';
+                        echo '<div class="paginatorProduct">';
+                        echo $this->paginationControl($this->paginator, 'Elastic', 'partial/listPage');
+                        echo '</div>';
+                    }
+                    ?>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>

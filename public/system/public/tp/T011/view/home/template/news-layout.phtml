@@ -1,0 +1,37 @@
+<?php use Home\Model\DateBase;
+      if(!empty($this->newsLayout['news-list article']['news-list'])): ?>
+    <section class="home-news">
+        <div class="home-news__inner">
+            <div class="home-news__headline">
+                <h2><?= $this->newsLayout['news-title text']['value'] ?></h2>
+            </div>
+            <div class="home-news__list">
+                <?php
+                    foreach($this->newsLayout['news-list article']['news-list'] as $n):
+                        $imageFirst = '';
+                        if(!empty(json_decode($n['image'], true))){
+                            $imageFirst = array_shift(json_decode($n['image'], true));
+                        }
+                        ?>
+                        <div class="home-news__item">
+                            <div class="home-news__image-wrapper">
+                                <a href="<?= $n['url'] ?>">
+                                    <figure class="lazy home-news__image" data-src="<?= !empty($imageFirst) ? $imageFirst:null ?>"></figure>
+                                </a>
+                            </div>
+                            <div class="home-news__description">
+                                <h3 class="home-news__title">
+                                    <a href="<?= $n['url'] ?>"><?= $n['title'] ?></a>
+                                </h3>
+                                <p class="home-news__date">
+                                    <i class="fa fa-clock-o"></i>
+                                    <?= DateBase::toFormat($n['date'], 'd/m/Y') ?>
+                                </p>
+                                <a class="home-news__link" href="<?= $n['url'] ?>">Đọc tiếp</a>
+                            </div>
+                        </div>
+                    <?php endforeach;?>
+            </div>
+        </div>
+    </section>
+<?php endif; ?>

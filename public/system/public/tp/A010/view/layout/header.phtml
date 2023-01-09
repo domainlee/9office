@@ -1,0 +1,82 @@
+<?php
+    $url = $this->UriParams()->getRequest()->getRequestUri();
+    $menuOption = $this->home()->getMenu();
+    $optionBasic = $this->home()->optionBasic();
+    $optionPage = $this->home()->optionPage();
+?>
+<header class="head">
+    <div class="head1">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="head1__inner">
+                        <div class="head1__left">
+                            <div class="head1__text">
+                                <p><i class="fa fa-envelope"></i> <?= !empty($optionPage['email']) ? $optionPage['email']:'contact.dweb.vn@gmail.com' ?></p>
+                            </div>
+                            <div class="head1__text">
+                                <p><i class="fa fa-phone"></i> <?= !empty($optionPage['so-dien-thoai']) ? $optionPage['so-dien-thoai']:'0976171678' ?></p>
+                            </div>
+                        </div>
+                        <div class="head1__right">
+                            <form id="search" action="/" class="theme__search" method="get">
+                                <input type="text" name="n" placeholder="Tìm kiếm ..."/>
+                                <a href="javascript:{}" onclick="document.getElementById('search').submit();"><i class="fa fa-search" aria-hidden="true"></i></a>
+                            </form>
+                            <div class="head1__social">
+                                <a href="<?= !empty($optionPage['facebook']) ? $optionPage['facebook']:null ?>"><i class="fa fa-facebook"></i></a>
+                                <a href="<?= !empty($optionPage['youtube']) ? $optionPage['youtube']:null ?>"><i class="fa fa-youtube"></i></a>
+                                <a href="<?= !empty($optionPage['google']) ? $optionPage['google']:null ?>"><i class="fa fa-google-plus"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="head2">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="head2__inner">
+
+                        <div class="logo">
+                            <a href="/">
+                                <?php if(!empty($optionBasic['logo'])): ?>
+                                    <img src="<?= $optionBasic['logo'] ?>" alt="Fashion" />
+                                <?php endif; ?>
+                            </a>
+                        </div>
+
+                        <div class="head2__right">
+                            <a class="button__nav-menu">
+                                <span></span>
+                                <span></span>
+                                <span></span>
+                            </a>
+                            <div class="navigation">
+                                <?php if(!empty($menuOption['head_menu'])): ?>
+                                    <ul>
+                                        <?php foreach($menuOption['head_menu'] as $m): ?>
+                                            <li <?= $url == $m['url'] ? 'class="active"':null ?>><a href="<?= $m['url'] ?>"><?= $m['name'] ?></a>
+                                                <?php if(!empty($m['children'])): ?>
+                                                    <ul>
+                                                        <?php foreach($m['children'] as $mm): ?>
+                                                            <li><a href="<?= $mm['url'] ?>"><?= $mm['name'] ?></a></li>
+                                                        <?php endforeach; ?>
+                                                    </ul>
+                                                <?php endif; ?>
+                                            </li>
+                                        <?php endforeach; ?>
+                                    </ul>
+                                <?php endif; ?>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</header>

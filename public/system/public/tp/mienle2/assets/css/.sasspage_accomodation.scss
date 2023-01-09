@@ -1,0 +1,108 @@
+/*--------------------------------------------------------------
+	#accomodation
+--------------------------------------------------------------*/
+/*--------------------------------------------------------------
+#3.1	accomodation-section
+--------------------------------------------------------------*/
+.accomodation-section {
+	padding-bottom: 60px;
+
+	@include media-query(991px) {
+		padding-bottom: 60px;
+	}
+
+	@include media-query(767px) {
+		//padding-bottom: 0;
+	}
+
+	.residence {
+		padding: 68px 60px;
+		box-shadow: 0px 3px 12.61px 0.39px rgba(178, 201, 211, 0.42);
+
+		@include media-query(991px) {
+			padding: 50px 30px;
+		}
+	}
+
+	.residence h3 {
+		font-size: 24px;
+		font-size: calc-rem-value(24px);
+		margin: 0 0 1em;
+
+		@include media-query(991px) {
+			font-size: 20px;
+			font-size: calc-rem-value(20px);
+		}
+	}
+
+	.residence p {
+		margin-bottom: 1.5em;
+		
+		@include media-query(991px) {
+			font-size: 14px;
+			font-size: calc-rem-value(14px);
+		}
+	}
+
+	.residence .more {
+		font-size: 12px;
+		font-size: calc-rem-value(12px);
+		color: $theme-primary-color;
+		text-transform: uppercase;
+		letter-spacing: 2px;
+		text-decoration: underline;
+	}
+
+	.transport-grids {
+		margin-top: 100px;
+
+		@include media-query(767px) {
+			margin-top: 80px;
+		}
+
+		.grid {
+			width: 33.33%;
+			float: left;
+			padding: 0 35px;
+			text-align: center;
+			margin-bottom: 30px;
+
+			@include media-query(991px) {
+				padding: 0 15px;
+			}
+
+			@include media-query(767px) {
+				width: 100%;
+				float: none;
+			}
+
+		}
+
+		h4 {
+			font-size: 18px;
+			font-size: calc-rem-value(18px);
+			font-weight: 600;
+			text-transform: uppercase;
+			margin: 0 0 1em;
+
+			@include media-query(991px) {
+				font-size: 16px;
+				font-size: calc-rem-value(16px);
+			}
+
+			@include media-query(767px) {
+				text-transform: none;
+				margin: 0 0 0.5em;
+			}
+		}
+
+		p {
+			margin: 0;
+
+			@include media-query(991px) {
+				font-size: 14px;
+				font-size: calc-rem-value(14px);
+			}
+		}
+	}
+}

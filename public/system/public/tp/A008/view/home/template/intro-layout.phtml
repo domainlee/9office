@@ -1,0 +1,41 @@
+<?php if(!empty($this->introLayout['intro-title text']['value']) || !empty($this->introLayout['intro-list-content textarea']['value']) || !empty( $this->introLayout['intro-content textarea']['value']) || !empty($this->introLayout['video-url text']['value'])):?>
+    <section class="intro">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="intro__inner">
+                        <?php if(!empty($this->introLayout['intro-title text']['value']) || !empty($this->introLayout['intro-list-content textarea']['value']) || !empty( $this->introLayout['intro-content textarea']['value']) ):?>
+                            <div class="intro__left">
+                            <h2>
+                                <?= $this->introLayout['intro-title text']['value'] ? $this->introLayout['intro-title text']['value'] : ''?>
+                            </h2>
+                            <p>
+                                <?= $this->introLayout['intro-content textarea']['value'] ? $this->introLayout['intro-content textarea']['value'] : ''?>
+                            </p>
+                            <?php
+                                if(!empty($this->introLayout['intro-list-content textarea']['value'])):
+                                    $text = preg_split('/\r\n|\r|\n/', $this->introLayout['intro-list-content textarea']['value']);
+                                    echo '<ul class="intro__left--list">';
+                                ?>
+
+                                    <?php
+                                        for($i = 0; $i < sizeof($text); $i++){
+                                    ?>
+                                            <li class="intro__left--item"><i class="fa fa-arrow-circle-right"></i><?= $text[$i] ?></li>
+                                    <?php };
+                                        echo '</ul>';
+                                        endif;
+                                        ?>
+                        </div>
+                        <?php endif;?>
+                        <?php if(!empty($this->introLayout['video-url text']['value'])):?>
+                            <div class="intro__right">
+                                <iframe width="560" height="315" src="https://www.youtube.com/embed/<?= $this->introLayout['video-url text']['value'] ? $this->introLayout['video-url text']['value'] : ''?>" frameborder="0" allowfullscreen></iframe>
+                            </div>
+                        <?php endif;?>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+<?php endif;?>

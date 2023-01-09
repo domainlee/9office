@@ -1,0 +1,362 @@
+<?php
+    use Home\Model\DateBase;
+    $optionBasic = $this->home()->optionBasic();
+    $optionPage = $this->home()->optionPage();
+    $homePage = $this->home()->homePage();
+    $fileLogo = getimagesize('http://'.$_SERVER['HTTP_HOST'].$optionBasic['logo']);
+    ?>
+<?php
+/**** Start SEO DWEB *****/
+    echo $this->headLink(['rel' => 'canonical', 'href' => 'http://'.$_SERVER['HTTP_HOST'] ]);
+    $this->headTitle($this->escapeHtml($this->translate(!empty($optionBasic['metaTitle']) ? $optionBasic['metaTitle']:$optionBasic['sologan'])));
+    $this->headMeta()->appendName('description', (!empty($optionBasic['metaDescription']) ? $optionBasic['metaDescription']:'Trang chủ'));
+    $this->headMeta()->appendName('keywords', (!empty($optionBasic['metaKeyword']) ? $optionBasic['metaKeyword']:'Trang chủ'));
+    $this->headMeta()->appendProperty('og:title', !empty($optionBasic['metaTitle']) ? $optionBasic['metaTitle']:'Trang chủ');/*
+    $this->headMeta()->appendProperty('og:image', !empty($optionBasic['logo']) ? $optionBasic['logo']:null);*/
+    $this->headMeta()->appendProperty('og:description', !empty($optionBasic['metaDescription']) ? $optionBasic['metaDescription']:null);
+    $this->headMeta()->appendProperty('og:image', !empty($optionBasic['logo']) ? 'http://'.$_SERVER['HTTP_HOST'].$optionBasic['logo']:null);
+    $this->headMeta()->appendProperty('og:image:secure_url', !empty($optionBasic['logo']) ? 'http://'.$_SERVER['HTTP_HOST'].$optionBasic['logo']:null);
+    $this->headMeta()->appendProperty('og:image:width', $fileLogo['0']);
+    $this->headMeta()->appendProperty('og:image:height', $fileLogo['1']);
+    $this->headMeta()->appendProperty('og:type', 'Website');
+    $this->headMeta()->appendProperty('og:url', 'http://'.$_SERVER['HTTP_HOST']);
+    $this->headMeta()->appendProperty('og:site_name', $optionBasic['sologan']);
+
+    $this->headMeta()->appendName('twitter:card', !empty($optionBasic['logo']) ? 'http://'.$_SERVER['HTTP_HOST'].$optionBasic['logo']:'summary_large_image');
+    $this->headMeta()->appendName('twitter:title', !empty($optionBasic['metaTitle']) ? $optionBasic['metaTitle']:null);
+    $this->headMeta()->appendName('twitter:description', (!empty($optionBasic['metaDescription']) ? $optionBasic['metaDescription']:null));
+    $this->headMeta()->appendName('twitter:image', !empty($optionBasic['logo']) ? 'http://'.$_SERVER['HTTP_HOST'].$optionBasic['logo']:null);
+    /**** End SEO DWEB *****/
+
+?>
+<?php
+if(!empty($homePage)):
+    $count = 0;
+    foreach($homePage as $k => $v ):
+        $layout = explode(' ',$k);
+        switch ($layout[0]) {
+            case "slider-layout":
+                echo $this->partial('home/template/slider', ['bannerList' => $v]);
+                break;
+            case "option-layout":
+                echo $this->partial('home/template/option-layout', ['optionLayout' => $v]);
+                break;
+            case "intro-layout":
+                echo $this->partial('home/template/intro-layout',['introLayout' => $v]);
+                break;
+            case "news-layout":
+                echo $this->partial('home/template/news-layout', ['newsLayout' => $v]);
+                break;
+            case "project-layout":
+                echo $this->partial('home/template/project-layout', ['projectLayout' => $v]);
+                break;
+            case "html-layout":
+                echo $this->partial('home/template/html-layout', ['htmlLayout' => $v]);
+                break;
+            case "image-layout":
+                echo $this->partial('home/template/image-layout', ['imageLayout' => $v]);
+                break;
+            case "galery-layout":
+                echo $this->partial('home/template/galery-layout', ['galeryLayout' => $v]);
+                break;
+            case "video-layout":
+                echo $this->partial('home/template/video-layout', ['videoLayout' => $v]);
+                break;
+            case "support-layout":
+                $count++;
+                if($count < 2){
+                    echo $this->partial('home/template/support-layout', ['supportLayout' => $v]);
+                }
+                break;
+            default:
+                break;
+        }
+    endforeach;
+else:
+
+?>
+    <?php if($optionPage['view_banner']): ?>
+    <section class="hero-slider banner-image">
+        <ul id="banner" class="owl-carousel owl-theme">
+            <?php
+            if(!empty($optionPage['banner'])):
+            foreach($optionPage['banner'] as $b):
+                $imageFirst = '';
+                $i = json_decode($b['image'], true);
+                if(is_array($i) && !empty($i)) {
+                    $imageFirst = array_shift($i);
+                }
+                ?>
+                <li>
+                    <a href="<?= $b['url'] ?>">
+                        <figure class="slider-image" style="background-image: url(<?= $imageFirst ?>)"></figure>
+                    </a>
+                </li>
+                <?php
+            endforeach;
+            endif;
+            ?>
+        </ul>
+        <div class="shape-top gray"></div>
+    </section>
+    <?php endif; ?>
+
+    <?php
+    if(!empty($optionPage['view_anh-gioi-thieu-ben-trai'])):
+    ?>
+    <section class="two-post">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="two-post__inner">
+                        <?php
+                            if(!empty($optionPage['anh-gioi-thieu-ben-trai'])):
+                            foreach($optionPage['anh-gioi-thieu-ben-trai'] as $b):
+                                $image = json_decode($b['image'], true);
+                                $imageFirst = '';
+                                if(is_array($image) && !empty($image)) {
+                                    $imageFirst = array_shift($image);
+                                }
+                        ?>
+                            <div class="two-post__left">
+                                <figure class="lazy two-post__image" data-src="<?= $imageFirst ?>"></figure>
+                            </div>
+                        <?php
+                            endforeach;
+                            endif;
+                        ?>
+                        <div class="two-post__right">
+                            <h2 class="two-post__title"><?= $optionPage['tieu-de-gioi-thieu'] ? $optionPage['tieu-de-gioi-thieu'] : '' ?></h2>
+                            <div class="two-post__intro">
+                                <?= $optionPage['noi-dung-gioi-thieu'] ? $optionPage['noi-dung-gioi-thieu'] : ''?>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="shape-top alt-side"></div>
+    </section>
+    <?php
+        endif;
+    ?>
+    <?php if(!empty($optionPage['view_tien-ich-du-an'])): ?>
+    <section class="feature-project">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="feature-project__inner">
+                        <div class="headline">
+                            <h2 class="headline-default feature-project__headline"><?= $optionPage['tieu-de-tien-ich-du-an'] ? $optionPage['tieu-de-tien-ich-du-an']:'' ?></h2>
+                            <?= $optionPage['mo-ta-tien-ich-du-an'] ? '<div class="headline-intro">'.$optionPage['mo-ta-tien-ich-du-an'].'</div>':null ?>
+                        </div>
+                        <div class="feature-project__list owl-carousel owl-theme">
+                            <?php
+                            if(!empty($optionPage['tien-ich-du-an'])):
+                            foreach($optionPage['tien-ich-du-an'] as $b):
+                                $imageFirst = '';
+                                $i = json_decode($b['image'], true);
+                                if(is_array($i) && !empty($i)) {
+                                    $imageFirst = array_shift($i);
+                                }
+                                ?>
+                                <div class="feature-project__item">
+                                    <a href="<?= $b['url'] ?>">
+                                        <figure class="feature-project__image lazy" data-src="<?= $imageFirst ?>"></figure>
+                                        <h3 class="feature-product__title"><?= $b['title'] ?></h3>
+                                    </a>
+                                </div>
+                                <?php
+                            endforeach;
+                            endif;
+                            ?>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="shape-top gray"></div>
+    </section>
+    <?php endif; ?>
+
+    <?php
+    $news = $optionPage['view_tin-tuc'];
+    if(!empty($news)):
+    ?>
+    <section class="news">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="headline">
+                        <h2 class="headline-default news__headline"><?= $optionPage['tieu-de-tin-tuc'] ? $optionPage['tieu-de-tin-tuc']:'' ?></h2>
+                        <?= $optionPage['mo-ta-tien-ich-du-an'] ? '<div class="headline-intro">'.$optionPage['mo-ta-tien-ich-du-an'].'</div>':null ?>
+                    </div>
+                    <div class="news__inner">
+                        <div class="news__list">
+                            <?php
+                            if(!empty($optionPage['tin-tuc'])):
+                                foreach($optionPage['tin-tuc'] as $n):
+                                $imageFirst = '';
+                                $i = json_decode($n['image'], true);
+                                if(is_array($i) && !empty($i)) {
+                                    $imageFirst = array_shift($i);
+                                }
+                            ?>
+                                <div class="news__item">
+                                    <div class="news__item--right">
+                                        <a href="<?= $n['url'] ?>"><figure class="news__image lazy" data-src="<?= $imageFirst ?>"></figure></a>
+                                    </div>
+                                    <div class="news__item--left">
+                                        <div style="display: none" class="news__date">
+                                            <span>Ngày <?= DateBase::toFormat($n['date'], 'd/m/Y') ?></span>
+                                        </div>
+                                        <h3 class="news__title"><a href="<?= $n['url'] ?>"><?= $n['title'] ?></a></h3>
+                                        <a class="news__button--more" href="<?= $n['url'] ?>">Xem thêm <i class="fa fa-angle-right"></i></a>
+                                    </div>
+                                </div>
+                            <?php endforeach;
+                            endif;
+                            ?>
+                        </div>
+
+                        <div class="news__button">
+                            <a class="btn-default1" href="/bai-viet.html">Xem tất cả</a>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="shape-top alt-side"></div>
+    </section>
+    <?php endif ?>
+
+    <?php if(!empty($optionPage['ban-do'])): ?>
+    <section class="maps" style="max-width: 100%;overflow: hidden">
+        <?= $optionPage['ban-do'] ?>
+    </section>
+    <?php endif ?>
+    <?php if(!empty($optionPage['view_banner-trai'])): ?>
+
+    <section class="four-post">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="headline">
+                        <h2 class="headline-default news__headline"><?= $optionPage['tieu-de-hinh-anh'] ? $optionPage['tieu-de-hinh-anh']:'' ?></h2>
+                        <?= $optionPage['mo-ta-hinh-anh'] ? '<div class="headline-intro">'.$optionPage['mo-ta-hinh-anh'].'</div>':null ?>
+                    </div>
+                    <div class="four-post__inner">
+                            <div class="four-post__item">
+                                <div class="four-post__item--left">
+                                    <div class="four-post__slider owl-carousel owl-theme">
+                                        <?php
+                                        if(!empty($optionPage['banner-trai'])):
+                                        foreach($optionPage['banner-trai'] as $b):
+                                            $imageFirst = '';
+                                            $i = json_decode($b['image'], true);
+                                            if(is_array($i) && !empty($i)) {
+                                                $imageFirst = array_shift($i);
+                                            }
+                                            ?>
+                                            <div class="four-post__slider--item">
+                                                <figure class="four-post__slider--image lazy" data-src="<?= $imageFirst ?>"></figure>
+                                            </div>
+                                            <?php
+                                        endforeach;
+                                        endif;
+                                        ?>
+                                    </div>
+                                </div>
+                                <div class="four-post__item--right">
+                                    <h2 class="four-post__title"><?= $optionPage['tieu-de-banner-trai'] ? $optionPage['tieu-de-banner-trai']:'' ?></h2>
+                                    <div class="four-post__description">
+                                        <?= $optionPage['mo-ta-banner-trai'] ? $optionPage['mo-ta-banner-trai'] : '' ?>
+                                    </div>
+                                </div>
+                            </div>
+
+                        <?php if(!empty($optionPage['banner-phai'])): ?>
+                            <div class="four-post__item">
+                                <div class="four-post__item--left">
+                                    <div class="four-post__slider owl-carousel owl-theme">
+                                        <?php
+                                        foreach($optionPage['banner-phai'] as $b):
+                                            $imageFirst = '';
+                                            $i = json_decode($b['image'], true);
+                                            if(is_array($i) && !empty($i)) {
+                                                $imageFirst = array_shift($i);
+                                            }
+                                            ?>
+                                            <div class="four-post__slider--item">
+                                                <figure class="four-post__slider--image lazy" data-src="<?= $imageFirst ?>"></figure>
+                                            </div>
+                                            <?php
+                                        endforeach;
+                                        ?>
+                                    </div>
+                                </div>
+                                <div class="four-post__item--right">
+                                    <h2 class="four-post__title"><?= $optionPage['tieu-de-banner-phai'] ? $optionPage['tieu-de-banner-phai']:'' ?></h2>
+                                    <div class="four-post__description">
+                                        <?= $optionPage['mo-ta-banner-phai'] ? $optionPage['mo-ta-banner-phai'] : '' ?>
+                                    </div>
+                                </div>
+                            </div>
+                        <?php endif; ?>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="shape-top gray"></div>
+    </section>
+    <?php endif; ?>
+
+    <?php if(!empty($optionPage['view_video'])): ?>
+    <section class="video">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="video__inner">
+                        <div class="headline">
+                            <h2 class="headline-default news__headline"><?= $optionPage['tieu-de-video'] ? $optionPage['tieu-de-video']:'' ?></h2>
+                            <?= $optionPage['mo-ta-video'] ? '<div class="headline-intro">'.$optionPage['mo-ta-video'].'</div>':null ?>
+                        </div>
+                        <div class="video__item">
+                            <iframe width="900" height="507" src="https://www.youtube.com/embed/<?= $optionPage['video'] ? $optionPage['video'] : '' ?>" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="shape-top alt-side"></div>
+    </section>
+    <?php endif; ?>
+
+    <?php if(!empty($optionPage['view_email'])): ?>
+    <section class="form">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="headline">
+                        <h2 class="headline-default"><?= $optionPage['tieu-de-email'] ? $optionPage['tieu-de-email']:'' ?></h2>
+                        <?= $optionPage['mo-ta-email'] ? '<div class="headline-intro">'.$optionPage['mo-ta-email'].'</div>':null ?>
+                    </div>
+                    <form class="form__register" data-parsley-validate novalidate>
+                        <div>
+                            <input class="email" type="text" data-parsley-type="email" required="required" data-parsley-error-message="Email không được để trống" placeholder="Email *" />
+                        </div>
+                        <div>
+                            <input class="phone" type="text" data-parsley-type="digits" data-parsley-length="[10,11]" required="required" data-parsley-error-message="Số điện thoại không được để trống" placeholder="Số điện thoại *" />
+                        </div>
+                        <div>
+                            <button type="submit">Gửi</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+    <?php endif; ?>
+
+<?php endif;?>

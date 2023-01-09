@@ -1,0 +1,32 @@
+<?php if(!empty($this->productLayout['product-list product']['product-list'])):?>
+    <section class="feature-product">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="feature-product__inner">
+                        <?= $this->productLayout['product-sub-title text']['value'] ? '<span class="title-sub">'.$this->productLayout['product-sub-title text']['value'].'</span>' : '' ?>
+                        <?= $this->productLayout['product-title text']['value'] ? '<h2 class="title">'.$this->productLayout['product-title text']['value'].'</h2>' : '' ?>
+                        <?php $slider = $this->productLayout['product-slider-checkbox checkbox']['value'];?>
+                        <ul class="<?= $slider ? 'tab-product owl-carousel owl-theme' : 'feature-product__list '?>">
+                            <?php
+                            foreach($this->productLayout['product-list product']['product-list'] as $k => $p):
+                                $imgs = array_slice(json_decode($p['image'], true), 0, 2);
+                                ?>
+                                <li class="two-up__product-item">
+                                    <div class="two-up__product-image__wrapper">
+                                        <a href="<?= $p['url'] ?>">
+                                            <figure class="lazy two-up__product-image" data-src="<?= !empty($imgs) ? $imgs['0']:null ?>"></figure>
+                                            <figure class="lazy two-up__product-image two-up__product-image__two" data-src="<?= !empty($imgs) ? $imgs['1']:null ?>"></figure>
+                                        </a>
+                                    </div>
+                                    <h3 class="two-up__product-title"><?= $p['title'] ?></h3>
+                                    <p class="price"><?= $p['priceOld'] ? number_format($p['priceOld']).' đ<i>'.number_format($p['price']).' đ</i>':number_format($p['price']).' đ' ?></p>
+                                </li>
+                            <?php endforeach; ?>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+<?php endif;?>

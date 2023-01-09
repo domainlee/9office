@@ -1,0 +1,77 @@
+<?php
+echo $this->doctype();
+$optionBasic = $this->home()->optionBasic();
+?>
+<html lang="en">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+        <?php
+            echo $this->headTitle()->setSeparator('')->setAutoEscape(false);
+            $this->headMeta()->appendName('DC.language', 'scheme=utf-8 content=vi');
+            echo $this->headMeta();
+            echo $this->headLink(['rel' => 'shortcut icon', 'type' => 'image/vnd.microsoft.icon', 'href' => $optionBasic['favicon'] ? $optionBasic['favicon']:null ]);
+        ?>
+
+        <link href="https://fonts.googleapis.com/css?family=Noto+Serif" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Oswald:300,400" rel="stylesheet">
+        <?php
+            $cs = [
+                '/tp/ceo/css/bootstrap.css',
+                '/tp/ceo/css/font-awesome.min.css',
+                '/tp/ceo/css/animate.min.css',
+                '/tp/ceo/css/page.css',
+                '/tp/ceo/css/a.css',
+                '/assets/css/web/owl.carousel.css',
+                '/assets/css/web/owl.theme.css',
+                '/assets/css/web/owl.transitions.css',
+                '/tp/ceo/css/r.css',
+            ];
+            echo '<link href="'.srcLink($cs,3).'" media="screen" rel="stylesheet" type="text/css">';
+            $js = [
+                '/assets/js/web/jquery-1.11.2.min.js',
+            ];
+            echo '<script type="text/javascript" src="'.srcLink($js,3).'"></script>';
+        ?>
+        <!-- Facebook Pixel Code -->
+        <script>
+            !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+                n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+                n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+                t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
+                document,'script','https://connect.facebook.net/en_US/fbevents.js');
+            fbq('init', '1971198599778175'); // Insert your pixel ID here.
+            fbq('track', 'PageView');
+        </script>
+        <noscript><img height="1" width="1" style="display:none"
+                       src="https://www.facebook.com/tr?id=1971198599778175&ev=PageView&noscript=1"
+            /></noscript>
+        <!-- DO NOT MODIFY -->
+        <!-- End Facebook Pixel Code -->
+    </head>
+    <?php
+        $url = $this->UriParams()->getRequest()->getRequestUri();
+        $classPage = substr($url, 1, -5);
+    ?>
+    <body>
+        <?php
+            echo $this->render('layout/header');
+            echo $this->content;
+            echo $this->render('layout/footer');
+        ?>
+    </body>
+    <?php
+        $cs = [
+            '/tp/ceo/css/r.css',
+        ];
+        echo '<link href="'.srcLink($cs,3).'" media="screen" rel="stylesheet" type="text/css">';
+        $js = [
+//            '/tp/dweb/js/jquery-1.10.1.min.js',
+            '/tp/ceo/js/bootstrap.min.js',
+            '/assets/js/web/jquery.lazy.min.js',
+            '/assets/js/web/owl.carousel.js',
+            '/assets/js/web/jquery-ui-1.10.3.custom.min.js',
+            '/tp/ceo/js/a.js',
+        ];
+        echo '<script type="text/javascript" src="'.srcLink($js,1).'"></script>';
+    ?>
+</html>

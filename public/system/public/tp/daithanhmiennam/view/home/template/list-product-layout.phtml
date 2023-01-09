@@ -1,0 +1,38 @@
+<?php
+    $data = $this->listProductLayout;
+    $title = $data['list-product-title text']['value'];
+    $list = $data['list-product-category product']['list-product-category'];
+?>
+<section class="product">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="product__inner">
+                    <h2 class="product__title"><?= $title ?></h2>
+                    <div class="product__list">
+                        <ul class="lP">
+                            <?php foreach($list as $k => $p):
+                                $image = json_decode($p['image'], true);
+                                if(!empty($image)){
+                                    $imageFirst = array_shift($image);
+                                }
+                                ?>
+                                <li>
+                                    <div class="product__item">
+                                        <a class="pI" href="<?= $p['url'] ?>"><figure class="lazy image-product" data-src="<?= !empty($imageFirst) ? $imageFirst:'' ?>"></figure></a>
+                                        <div>
+                                            <h3><a href="<?= $p['url'] ?>"><?= $p['title'] ?></a></h3>
+                                            <p class="price <?= ($p['priceOld'] ? 'priceOld':null) ?>">
+                                                <?=  (!empty($p['priceOld']) ? '<span>'.number_format($p['priceOld']).'</span><i>'.number_format($p['price']).'</i>':number_format($p['price']) ) ?>
+                                            </p>
+                                        </div>
+                                    </div>
+                                </li>
+                            <?php endforeach; ?>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

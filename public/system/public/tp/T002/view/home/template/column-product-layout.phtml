@@ -1,0 +1,105 @@
+<?php if($this->columnProductLayout): ?>
+    <div class="slider-product">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="slider-product__inner">
+                        <div class="slider-product__row">
+                            <div class="slider-product__slider">
+                                <?php if(!empty($this->columnProductLayout['col1-title text']['value'])): ?>
+                                    <h3 class="slider-product__title--category"><?= $this->columnProductLayout['col1-title text']['value'] ?></h3>
+                                <?php endif; ?>
+                                <?php if(!empty($this->columnProductLayout['col-product1 product'])): ?>
+                                    <ul class="slider-product__list">
+                                        <?php
+                                        foreach($this->columnProductLayout['col-product1 product']['col-product1'] as $p):
+                                            $imgs = array_slice(json_decode($p['image'], true), 0, 2);
+                                            ?>
+                                            <li class="slider-product__item">
+                                                <div class="slider-product____item-inner">
+                                                    <div class="slider-product__image-wrapper">
+                                                        <a href="<?= $p['url'] ?>">
+                                                            <figure class="lazy slider-product__image" data-src="<?= !empty($imgs) ? $imgs['0']:null ?>"></figure>
+                                                        </a>
+                                                    </div>
+                                                    <div class="slider-product____content">
+                                                        <h3 class="slider-product__title"><a href="<?= $p['url'] ?>"><?= $p['title'] ?></a></h3>
+                                                        <p class="product-horizontal__price"><?= $p['priceOld'] ? number_format($p['priceOld']).' đ<i>'.number_format($p['price']).' đ</i>':number_format($p['price']).' đ' ?></p>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                        <?php
+                                        endforeach;
+                                        ?>
+                                    </ul>
+                                <?php endif; ?>
+                            </div>
+                        </div>
+                        <div class="slider-product__row">
+                            <div class="slider-product__slider">
+                                <?php if(!empty($this->columnProductLayout['col2-title text']['value'])): ?>
+                                    <h3 class="slider-product__title--category"><?= $this->columnProductLayout['col2-title text']['value'] ?></h3>
+                                <?php endif; ?>
+                                <?php if(!empty($this->columnProductLayout['col-product1 product'])): ?>
+                                    <ul class="slider-product__list">
+                                        <?php
+                                        foreach($this->columnProductLayout['col-product2 product']['col-product2'] as $p):
+                                            $imgs = array_slice(json_decode($p['image'], true), 0, 2);
+                                            ?>
+                                            <li class="slider-product__item">
+                                                <div class="slider-product____item-inner">
+                                                    <div class="slider-product__image-wrapper">
+                                                        <a href="<?= $p['url'] ?>">
+                                                            <figure class="lazy slider-product__image" data-src="<?= !empty($imgs) ? $imgs['0']:null ?>"></figure>
+                                                        </a>
+                                                    </div>
+                                                    <div class="slider-product____content">
+                                                        <h3 class="slider-product__title"><a href="<?= $p['url'] ?>"><?= $p['title'] ?></a></h3>
+                                                        <p class="product-horizontal__price"><?= $p['priceOld'] ? number_format($p['priceOld']).' đ<i>'.number_format($p['price']).' đ</i>':number_format($p['price']).' đ' ?></p>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                        <?php
+                                        endforeach;
+                                        ?>
+                                    </ul>
+                                <?php endif; ?>
+                            </div>
+                        </div>
+                        <div class="slider-product__row">
+                            <div class="slider-product__slider">
+                                <?php if(!empty($this->columnProductLayout['col3-title text']['value'])): ?>
+                                    <h3 class="slider-product__title--category"><?= $this->columnProductLayout['col3-title text']['value'] ?></h3>
+                                <?php endif; ?>
+                                <?php if(!empty($this->columnProductLayout['col-product3 product'])): ?>
+                                    <ul class="slider-product__list">
+                                        <?php
+                                        foreach($this->columnProductLayout['col-product3 product']['col-product3'] as $p):
+                                            $imgs = array_slice(json_decode($p['image'], true), 0, 2);
+                                            ?>
+                                            <li class="slider-product__item">
+                                                <div class="slider-product____item-inner">
+                                                    <div class="slider-product__image-wrapper">
+                                                        <a href="<?= $p['url'] ?>">
+                                                            <figure class="lazy slider-product__image" data-src="<?= !empty($imgs) ? $imgs['0']:null ?>"></figure>
+                                                        </a>
+                                                    </div>
+                                                    <div class="slider-product____content">
+                                                        <h3 class="slider-product__title"><a href="<?= $p['url'] ?>"><?= $p['title'] ?></a></h3>
+                                                        <p class="product-horizontal__price"><?= $p['priceOld'] ? number_format($p['priceOld']).' đ<i>'.number_format($p['price']).' đ</i>':number_format($p['price']).' đ' ?></p>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                        <?php
+                                        endforeach;
+                                        ?>
+                                    </ul>
+                                <?php endif; ?>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+<?php endif;?>

@@ -1,0 +1,25 @@
+<?php if(!empty($this->smallBannerList['small-banner-list banner']['small-banner-list'])): ?>
+    <div class="three-banner">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="three-banner__list">
+                        <?php
+                            foreach($this->smallBannerList['small-banner-list banner']['small-banner-list'] as $b):
+                                $imageFirst = '';
+                                if(!empty(json_decode($b['image'], true))){
+                                    $imageFirst = array_shift(json_decode($b['image'], true));
+                                }
+                                ?>
+                                <div class="three-banner__item">
+                                    <a href="<?= $b['url'] ?>">
+                                        <figure class="lazy three-banner__image" data-src="<?= $imageFirst ?>"></figure>
+                                    </a>
+                                </div>
+                            <?php endforeach;?>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+<?php endif;?>

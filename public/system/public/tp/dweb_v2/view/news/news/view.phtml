@@ -1,0 +1,495 @@
+<?php
+    use Home\Model\DateBase;
+    $view = $this->news;
+    $url = $this->UriParams()->getRequest()->getRequestUri();
+    $image = json_decode($view->getImage(), true);
+    $imageFirst = '';
+    if(!empty($image)){
+        $imageFirst = array_shift($image);
+    }
+    $category = $this->NewsCategory()->getCategories();
+
+    $optionPage = $this->home()->optionPage();
+    $cs = [
+        '/tp/dweb_v2/css/page.css'
+    ];
+    echo '<link href="'.srcLink($cs,2).'" media="screen" rel="stylesheet" type="text/css">';
+?>
+
+<?php
+//$image = 'https://'.$_SERVER['HTTP_HOST'].$imageFirst;
+$image = 'https://blog.dweb.vn'.$imageFirst;
+$imageInfo = getimagesize($image);
+/**** Start SEO DWEB *****/
+echo $this->headLink(['rel' => 'canonical', 'href' => 'https://'.$_SERVER['HTTP_HOST'].$view->getViewLink() ]);
+$this->headTitle($this->escapeHtml($this->translate(!empty($view->getMetaTitle()) ? $view->getMetaTitle():$view->getTitle())));
+$this->headMeta()->appendName('description', (!empty($view->getMetaDescription()) ? $view->getMetaDescription():null));
+$this->headMeta()->appendName('keywords', (!empty($view->getMetaKeyword()) ? $view->getMetaKeyword():null));
+
+$this->headMeta()->appendProperty('og:title', !empty($view->getMetaTitle()) ? $view->getMetaTitle():$view->getTitle());
+$this->headMeta()->appendProperty('og:description', !empty($view->getMetaDescription()) ? $view->getMetaDescription():null);
+$this->headMeta()->appendProperty('og:image', !empty($imageFirst) ? 'https://'.$_SERVER['HTTP_HOST'].$imageFirst:null);
+$this->headMeta()->appendProperty('og:image:secure_url', !empty($imageFirst) ? 'https://'.$_SERVER['HTTP_HOST'].$imageFirst:null);
+$this->headMeta()->appendProperty('og:image:width', $imageInfo['0']);
+$this->headMeta()->appendProperty('og:image:height', $imageInfo['1']);
+$this->headMeta()->appendProperty('og:type', 'Article');
+$this->headMeta()->appendProperty('og:url', 'https://'.$_SERVER['HTTP_HOST'].$view->getViewLink());
+$this->headMeta()->appendProperty('og:site_name', $optionBasic['sologan']);
+
+$this->headMeta()->appendName('twitter:card', !empty($image) ? $image:'summary_large_image');
+$this->headMeta()->appendName('twitter:title', !empty($view->getMetaTitle()) ? $view->getMetaTitle():$view->getTitle());
+$this->headMeta()->appendName('twitter:description', (!empty($view->getMetaDescription()) ? $view->getMetaDescription():null));
+$this->headMeta()->appendName('twitter:image', !empty($image) ? $image:null);
+/**** End SEO DWEB *****/
+?>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org/",
+  "@type": "CreativeWork",
+  "name": "<?= $view->getTitle() ?>",
+}
+</script>
+<?php if($view->getId() == 356): ?>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [{
+    "@type": "Question",
+    "name": "Thế nào là một website chuẩn SEO ?",
+    "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Trả lời: Website chuẩn SEO là một website có cấu trúc  và công cụ để xây dựng các nội dung chuẩn SEO. Các nội dung trên trang web sẽ được tối ưu để giúp cho các công cụ tìm kiếm như Google, Bing, Yahoo,…thu thập thông tin một cách dễ dàng."
+    }
+  },{
+    "@type": "Question",
+    "name": "Tại sao nên đầu tư vào một website chuẩn SEO ?",
+    "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Trả lời: Website là một bộ mặt, cửa hàng online của doanh nghiệp và có chức năng truyền tải thông tin một cách nhanh chóng. Khi đầu tư thiết kế website bán hàng các doanh nghiệp sẽ thuyết phục được những khách hàng khó tính nhất sử dụng sản phẩm và dịch vụ của mình."
+    }
+  },{
+    "@type": "Question",
+    "name": "Địa chỉ thiết kế website chuẩn SEO uy tín ?",
+    "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Trả lời: Trên thị trường hiện nay không ít địa chỉ thiết kế website chuẩn SEO giá rẻ cho các khách hàng lựa chọn. DWEB.VN là một trong những công ty uy tín, dịch vụ thiết kế chuyên nghiệp, website giao diện đẹp, tích hợp các tính năng dễ dàng sử dụng, nền tảng web chuẩn SEO giúp lên top nhanh.  Chi phí thiết kế ưu đãi, cạnh tranh, đội ngũ nhân viên kỹ thuật kinh nghiệm."
+        }
+    },{
+    "@type": "Question",
+    "name": "Khi thiết kế website xong, làm sao để website lên top Google ?",
+    "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Trả lời: Đây là một câu hỏi thường gặp với chủ các doanh nghiệp. Để quá trình đẩy một website lên top Google, theo các bước của DWEB đã từng làm qua với các dự án như sau: Website (nền móng) > Content > Traffic.
+
+        1. Website
+        Có thể tóm tắt lại như sau trước khi phát hành nội dung thì website thì nên chuẩn bị trước và tối ưu thân thiện với Google điều này sẽ giúp nội dung của bạn dễ index với Google hơn.
+
+        2. Content
+        Với content chúng ta không thể mang một nội dung mà người dùng không cần, hoặc sao chép nội dung đó ở đâu điều này Google sẽ hiểu bạn là người sản xuất nội dung hoặc đi sao chép Google có thể nhận dạng.
+
+        3. Traffic
+        Sau khi có nội dung chất lượng, việc đẩy bài viết lên social (google adwords, facebook ads, email mkt, báo, forum … ) để có thật nhiều traffic và từ các nguồn khác nhau, lúc này Google nhận diện được thương hiệu của bạn đang được phổ biến hơn.
+
+        Đây là những checklist tóm tắt quá trình SEO một website, nếu bạn muốn quan tâm chi tiết SEO thì có thể xem chi tiết tại Blog DWEB."
+    }
+    },{
+    "@type": "Question",
+    "name": "Chúng tôi hỗ trợ gì trong việc website của bạn lên top không ?",
+    "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Trả lời: Hiện tại DWEB đang cung cấp dịch vụ viết bài chuẩn seo, với chi phí từ 1tr -> 5tr. Mức giá này có thể rẻ hơn một nhân viên Fulltime nhưng cho kết quả rõ ràng hơn."
+    }
+
+  }]
+}
+</script>
+<?php endif; ?>
+
+<?php
+    echo $view->getContent();
+?>
+
+<?php if($view->getId() == 5105): ?>
+    <section class="form-submit" id="form-brief">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <p class="about__sub">Gửi Brief</p>
+                    <h2 class="about__headline" id="seo-theo-yeu-cau"><strong>Gửi yêu cầu SEO website</strong></h2>
+                    <p class="about__intro">Tổng quan những tóm tắt về website của bạn, chúng tôi sẽ tư vấn một chiến dịch SEO hiệu quả và những cam kết rõ ràng nhất.</p>
+
+                    <form class="contactForm contactForm__js" method="post" enctype="multipart/form-data" data-parsley-validate novalidate>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label>Họ và tên: *</label>
+                                    <input name="name" type="text" data-parsley-minlength="3" placeholder="Họ tên" required="required" data-parsley-error-message="Họ tên không được để trống" >
+                                </div>
+                                <div class="form-group">
+                                    <label>Số điện thoại: *</label>
+                                    <input name="phone" type="text" data-parsley-length="[10,11]" data-parsley-type="digits" placeholder="Số điện thoại" required="required" data-parsley-error-message="Số điện thoại không được để trống" >
+                                </div>
+                                <div class="form-group">
+                                    <label>Email: *</label>
+                                    <input name="email" type="text" placeholder="Email" data-parsley-type="email" required="required" data-parsley-error-message="Email không được để trống" >
+                                </div>
+                                <div class="form-group">
+                                    <label>Mô tả website, lĩnh vực kinh doanh, bằng các <br/>(url ảnh, đường dẫn website, psd url ...)</label>
+                                    <textarea name="content" data-parsley-minlength="10" required="required" data-parsley-error-message="Nội dung không được để trống" placeholder="Nội dung"></textarea>
+                                </div>
+                                <div class="form-group">
+                                    <label>Ngân sách dự kiến: </label>
+                                    <div class="select__wrapper">
+                                        <select name="price" required="required">
+                                            <option value="0">-- Ngân sách dự kiến --</option>
+                                            <option value="Từ 50.000.000 đến 100.000.000">50.000.000 - 100.000.000</option>
+                                            <option value="Từ 100.000.000 đến 200.000.000">100.000.000 - 200.000.000</option>
+                                            <option value="Từ 100.000.000 đến 200.000.000">200.000.000 - 300.000.000</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <button type="submit">Gửi</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+<?php endif; ?>
+
+
+
+<?php if($view->getId() == 356): ?>
+
+<section class="form-submit" id="form-brief">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <p class="about__sub">Gửi Brief</p>
+                <h2 class="about__headline" id="thiet-ke-website-theo-yeu-cau"><strong>Thiết kế website theo yêu cầu</strong></h2>
+                <p class="about__intro">Tổng quan những tóm tắt về website của bạn, chúng tôi sẽ tư vấn một website chuẩn Google để thứ hạng website của bạn dễ dàng hơn bằng việc tối ưu website và những kế hoạch nội dung.</p>
+                <div class="form__inner">
+                    <div class="form__left">
+                        <div class="form-submit__require--item">
+                            <label>Website giới thiệu công ty</label>
+                            <span>3.000.000</span>
+                            <input type="checkbox" name="<?= vnString('Website giới thiệu công ty') ?>" data-title="Website giới thiệu công ty" value="3000000" />
+                        </div>
+                        <div class="form-submit__require--item">
+                            <label>Thương mại điện tử, bán, giới thiệu sản phẩm</label>
+                            <span>5.000.000</span>
+                            <input type="checkbox" name="<?= vnString('Thương mại điện tử, bán, giới thiệu sản phẩm') ?>" data-title="Thương mại điện tử, bán, giới thiệu sản phẩm" value="5000000" />
+                        </div>
+                        <div class="form-submit__require--item">
+                            <label>Website tin tức</label>
+                            <span>3.000.000</span>
+                            <input type="checkbox" name="<?= vnString('Website tin tức') ?>" data-title="Website tin tức" value="3000000" />
+                        </div>
+                        <div class="form-submit__require--item">
+                            <label>Chuẩn SEO On Page</label>
+                            <span>2.000.000</span>
+                            <input type="checkbox" name="<?= vnString('Chuẩn SEO On Page') ?>" data-title="Chuẩn SEO On Page" value="2000000" />
+                        </div>
+                        <div class="form-submit__require--item">
+                            <label>Tốc độ tải trang (page speed) > 80</label>
+                            <span>2.000.000</span>
+                            <input type="checkbox" name="<?= vnString('Tốc độ tải trang (page speed) > 80') ?>" data-title="Tốc độ tải trang (page speed) > 80" value="2000000" />
+                        </div>
+                        <div class="form-submit__require--item">
+                            <label>Bản mobile (responsive)</label>
+                            <span>1.000.000</span>
+                            <input type="checkbox" name="<?= vnString('Bản mobile (responsive)') ?>" data-title="Bản mobile (responsive)" value="1000000" />
+                        </div>
+                        <div class="form-submit__require--item">
+                            <label>Bản mobile riêng (m.domain.com)</label>
+                            <span>5.000.000</span>
+                            <input type="checkbox" name="<?= vnString('Bản mobile riêng (m.domain.com)') ?>" data-title="Bản mobile riêng (m.domain.com)" value="5000000" />
+                        </div>
+                        <div class="form-submit__require--item">
+                            <label>CMS Wordpress</label>
+                            <span></span>
+                            <input type="checkbox" name="<?= vnString('CMS Wordpress') ?>" data-title="CMS Wordpress" value="0" />
+                        </div>
+                        <div class="form-submit__require--item">
+                            <label>Nền tảng DWEB</label>
+                            <span></span>
+                            <input type="checkbox" name="<?= vnString('Nền tảng DWEB') ?>" data-title="Nền tảng DWEB" value="0" />
+                        </div>
+                        <div class="form-submit__require--item">
+                            <label>Framework Zend</label>
+                            <span>5.000.000</span>
+                            <input type="checkbox" name="<?= vnString('Framework Zend') ?>" data-title="Framework Zend" value="5000000" />
+                        </div>
+                        <div class="form-submit__require--item">
+                            <label>Framework Laravel</label>
+                            <span>5.000.000</span>
+                            <input type="checkbox" name="<?= vnString('Framework Laravel') ?>" data-title="Framework Laravel" value="5000000" />
+                        </div>
+                        <div class="form-submit__require--item">
+                            <label>Framework Javascript</label>
+                            <span>6.000.000</span>
+                            <input type="checkbox" name="<?= vnString('Framework Javascript') ?>" data-title="Framework Javascript" value="6000000" />
+                        </div>
+
+                        <div class="form-submit__require--item">
+                            <label>Chúng tôi thiết kế layout (File PSD, AI)</label>
+                            <span>5.000.000</span>
+                            <input type="checkbox" name="<?= vnString('Chúng tôi thiết kế layout (File PSD, AI)') ?>" data-title="Chúng tôi thiết kế layout (File PSD, AI)" value="5000000" />
+                        </div>
+                        <div class="form-submit__require--item">
+                            <label>Chúng tôi nhận file thiết kế từ bạn (PSD, AI)</label>
+                            <span>0</span>
+                            <input type="checkbox" name="<?= vnString('Chúng tôi nhận file thiết kế từ bạn (PSD, AI)') ?>" data-title="Chúng tôi nhận file thiết kế từ bạn (PSD, AI)" value="0" />
+                        </div>
+                        <div class="form-submit__require--item">
+                            <label>Bạn muốn làm giống một website nào đó</label>
+                            <span>0</span>
+                            <input type="checkbox" name="<?= vnString('Bạn muốn làm giống một website nào đó') ?>" data-title="Bạn muốn làm giống một website nào đó" value="0" />
+                        </div>
+
+                        <div class="form-submit__require--item">
+                            <label>Tích hợp thanh toán (VNPAY)</label>
+                            <span>5.000.000</span>
+                            <input type="checkbox" name="<?= vnString('Tích hợp thanh toán (VNPAY)') ?>" data-title="Tích hợp thanh toán (VNPAY)" value="5000000" />
+                        </div>
+
+                        <div class="form-submit__require--item">
+                            <label>Hosting 2Gb, băng thông không giới hạn</label>
+                            <span>1.080.000</span>
+                            <input class="renew" type="checkbox" name="<?= vnString('Hosting 2Gb, băng thông không giới hạn') ?>" data-title="Hosting 2Gb, băng thông không giới hạn" value="1080000" />
+                        </div>
+
+                        <div class="form-submit__require--item">
+                            <label>Tên miền (.vn)</label>
+                            <span>680.000</span>
+                            <input class="renew" type="checkbox" name="<?= vnString('Hosting 2Gb, băng thông không giới hạn') ?>" data-title="Hosting 2Gb, băng thông không giới hạn" value="680000" />
+                        </div>
+                        <div class="form-submit__require--item">
+                            <label>Tên miền (.com.vn)</label>
+                            <span>560.000</span>
+                            <input class="renew" type="checkbox" name="<?= vnString('Tên miền (.com.vn)') ?>" data-title="Tên miền (.com.vn)" value="560000" />
+                        </div>
+
+                        <div class="form-submit__require--item">
+                            <label>Tên miền (.com)</label>
+                            <span>260.000</span>
+                            <input class="renew" type="checkbox" name="<?= vnString('Tên miền (.com)') ?>" data-title="Tên miền (.com)" value="260000" />
+                        </div>
+                        <div class="form-submit__require--item">
+                            <label>SSL (https)</label>
+                            <span>290.000</span>
+                            <input class="renew" type="checkbox" name="<?= vnString('SSL (https)') ?>" data-title="SSL (https)" value="290000" />
+                        </div>
+
+                        <div class="form-submit__require--item form-submit__require--total">
+                            <label>Chi phí dự kiến</label>
+                            <strong class="form-submit__require--price"><span></span> VNĐ</strong> dự kiến năm <strong class="form-submit__require--price-year"><span></span> VNĐ</strong>
+                        </div>
+
+                        <div class="form-submit__require--label">
+                            <p>Hãy lựa chọn một đối tác xứng đáng và được tin chọn để giảm bớt thời gian, công sức. Doanh nghiệp chỉ cần tập chung sản phẩm, dịch vụ, chăm sóc khách hàng, tối ưu lợi nhuận.</p>
+                            <p>DWEB sẽ luôn đồng hành cùng doanh nghiệp, để tạo nên giá trị bền vững.</p>
+                        </div>
+
+
+
+                    </div>
+                    <div class="form__right">
+                        <form class="contactForm contactForm__js" method="post" enctype="multipart/form-data" data-parsley-validate novalidate>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label>Họ và tên: *</label>
+                                        <input name="name" type="text" data-parsley-minlength="3" placeholder="Họ tên" required="required" data-parsley-error-message="Họ tên không được để trống" >
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Số điện thoại: *</label>
+                                        <input name="phone" type="text" data-parsley-length="[10,11]" data-parsley-type="digits" placeholder="Số điện thoại" required="required" data-parsley-error-message="Số điện thoại không được để trống" >
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Email: *</label>
+                                        <input name="email" type="text" placeholder="Email" data-parsley-type="email" required="required" data-parsley-error-message="Email không được để trống" >
+                                    </div>
+                                    <div class="form-group">
+                                        <input class="content" type="hidden" name="content" value="">
+                                    </div>
+                                    <div class="form-group">
+                                        <input class="price" type="hidden" name="price" value="">
+                                    </div>
+
+                                    <div class="form-group">
+                                        <button type="submit">Gửi</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</section>
+<?php endif; ?>
+
+
+<?php if($view->getId() == 5244): ?>
+
+    <section class="form-submit" id="form-brief">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <p class="about__sub">Gửi Brief</p>
+                    <h2 class="about__headline" id="thiet-ke-website-theo-yeu-cau"><strong>Thiết kế website tích hợp KiotViet</strong></h2>
+                    <p class="about__intro">Tổng quan những tóm tắt về website của bạn, chúng tôi sẽ tư vấn một website chuẩn Google để thứ hạng website của bạn dễ dàng hơn bằng việc tối ưu website và những kế hoạch nội dung.</p>
+                    <div class="form__inner">
+                        <div class="form__left">
+
+                            <div class="form-submit__require--item">
+                                <label>Thiết kế website chuẩn seo & Tích hợp KiotViet</label>
+                                <span>5.000.000</span>
+                                <input type="checkbox" name="<?= vnString('Thiết kế website chuẩn seo & Tích hợp KiotViet') ?>" data-title="Thiết kế website chuẩn seo & Tích hợp KiotViet" value="5000000" />
+                            </div>
+
+                            <div class="form-submit__require--item">
+                                <label>Chuẩn SEO On Page</label>
+                                <span>2.000.000</span>
+                                <input type="checkbox" name="<?= vnString('Chuẩn SEO On Page') ?>" data-title="Chuẩn SEO On Page" value="2000000" />
+                            </div>
+                            <div class="form-submit__require--item">
+                                <label>Tốc độ tải trang (page speed) > 80</label>
+                                <span>2.000.000</span>
+                                <input type="checkbox" name="<?= vnString('Tốc độ tải trang (page speed) > 80') ?>" data-title="Tốc độ tải trang (page speed) > 80" value="2000000" />
+                            </div>
+                            <div class="form-submit__require--item">
+                                <label>Bản mobile (responsive)</label>
+                                <span>1.000.000</span>
+                                <input type="checkbox" name="<?= vnString('Bản mobile (responsive)') ?>" data-title="Bản mobile (responsive)" value="1000000" />
+                            </div>
+                            <div class="form-submit__require--item">
+                                <label>Bản mobile riêng (m.domain.com)</label>
+                                <span>5.000.000</span>
+                                <input type="checkbox" name="<?= vnString('Bản mobile riêng (m.domain.com)') ?>" data-title="Bản mobile riêng (m.domain.com)" value="5000000" />
+                            </div>
+                            <div class="form-submit__require--item">
+                                <label>CMS Wordpress</label>
+                                <span></span>
+                                <input type="checkbox" name="<?= vnString('CMS Wordpress') ?>" data-title="CMS Wordpress" value="0" />
+                            </div>
+
+                            <div class="form-submit__require--item">
+                                <label>Framework Zend</label>
+                                <span>5.000.000</span>
+                                <input type="checkbox" name="<?= vnString('Framework Zend') ?>" data-title="Framework Zend" value="5000000" />
+                            </div>
+                            <div class="form-submit__require--item">
+                                <label>Framework Laravel</label>
+                                <span>5.000.000</span>
+                                <input type="checkbox" name="<?= vnString('Framework Laravel') ?>" data-title="Framework Laravel" value="5000000" />
+                            </div>
+                            <div class="form-submit__require--item">
+                                <label>Framework Javascript</label>
+                                <span>6.000.000</span>
+                                <input type="checkbox" name="<?= vnString('Framework Javascript') ?>" data-title="Framework Javascript" value="6000000" />
+                            </div>
+
+                            <div class="form-submit__require--item">
+                                <label>Chúng tôi thiết kế layout (File PSD, AI)</label>
+                                <span>5.000.000</span>
+                                <input type="checkbox" name="<?= vnString('Chúng tôi thiết kế layout (File PSD, AI)') ?>" data-title="Chúng tôi thiết kế layout (File PSD, AI)" value="5000000" />
+                            </div>
+                            <div class="form-submit__require--item">
+                                <label>Chúng tôi nhận file thiết kế từ bạn (PSD, AI)</label>
+                                <span>0</span>
+                                <input type="checkbox" name="<?= vnString('Chúng tôi nhận file thiết kế từ bạn (PSD, AI)') ?>" data-title="Chúng tôi nhận file thiết kế từ bạn (PSD, AI)" value="0" />
+                            </div>
+                            <div class="form-submit__require--item">
+                                <label>Bạn muốn làm giống một website nào đó</label>
+                                <span>0</span>
+                                <input type="checkbox" name="<?= vnString('Bạn muốn làm giống một website nào đó') ?>" data-title="Bạn muốn làm giống một website nào đó" value="0" />
+                            </div>
+
+                            <div class="form-submit__require--item">
+                                <label>Tích hợp thanh toán (VNPAY)</label>
+                                <span>5.000.000</span>
+                                <input type="checkbox" name="<?= vnString('Tích hợp thanh toán (VNPAY)') ?>" data-title="Tích hợp thanh toán (VNPAY)" value="5000000" />
+                            </div>
+
+                            <div class="form-submit__require--item">
+                                <label>Hosting 2Gb, băng thông không giới hạn</label>
+                                <span>1.080.000</span>
+                                <input class="renew" type="checkbox" name="<?= vnString('Hosting 2Gb, băng thông không giới hạn') ?>" data-title="Hosting 2Gb, băng thông không giới hạn" value="1080000" />
+                            </div>
+
+                            <div class="form-submit__require--item">
+                                <label>Tên miền (.vn)</label>
+                                <span>680.000</span>
+                                <input class="renew" type="checkbox" name="<?= vnString('Hosting 2Gb, băng thông không giới hạn') ?>" data-title="Hosting 2Gb, băng thông không giới hạn" value="680000" />
+                            </div>
+                            <div class="form-submit__require--item">
+                                <label>Tên miền (.com.vn)</label>
+                                <span>560.000</span>
+                                <input class="renew" type="checkbox" name="<?= vnString('Tên miền (.com.vn)') ?>" data-title="Tên miền (.com.vn)" value="560000" />
+                            </div>
+                            <div class="form-submit__require--item">
+                                <label>Tên miền (.com)</label>
+                                <span>260.000</span>
+                                <input class="renew" type="checkbox" name="<?= vnString('Tên miền (.com)') ?>" data-title="Tên miền (.com)" value="260000" />
+                            </div>
+                            <div class="form-submit__require--item">
+                                <label>SSL (https)</label>
+                                <span>290.000</span>
+                                <input class="renew" type="checkbox" name="<?= vnString('SSL (https)') ?>" data-title="SSL (https)" value="290000" />
+                            </div>
+                            <div class="form-submit__require--item form-submit__require--total">
+                                <label>Chi phí dự kiến</label>
+                                <strong class="form-submit__require--price"><span></span> VNĐ</strong> dự kiến năm <strong class="form-submit__require--price-year"><span></span> VNĐ</strong>
+                            </div>
+                            <div class="form-submit__require--label">
+                                <p>Hãy lựa chọn một đối tác xứng đáng và được tin chọn để giảm bớt thời gian, công sức. Doanh nghiệp chỉ cần tập chung sản phẩm, dịch vụ, chăm sóc khách hàng, tối ưu lợi nhuận.</p>
+                                <p>DWEB sẽ luôn đồng hành cùng doanh nghiệp, để tạo nên giá trị bền vững.</p>
+                            </div>
+                        </div>
+                        <div class="form__right">
+                            <form class="contactForm contactForm__js" method="post" enctype="multipart/form-data" data-parsley-validate novalidate>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label>Họ và tên: *</label>
+                                            <input name="name" type="text" data-parsley-minlength="3" placeholder="Họ tên" required="required" data-parsley-error-message="Họ tên không được để trống" >
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Số điện thoại: *</label>
+                                            <input name="phone" type="text" data-parsley-length="[10,11]" data-parsley-type="digits" placeholder="Số điện thoại" required="required" data-parsley-error-message="Số điện thoại không được để trống" >
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Email: *</label>
+                                            <input name="email" type="text" placeholder="Email" data-parsley-type="email" required="required" data-parsley-error-message="Email không được để trống" >
+                                        </div>
+                                        <div class="form-group">
+                                            <input class="content" type="hidden" name="content" value="">
+                                        </div>
+                                        <div class="form-group">
+                                            <input class="price" type="hidden" name="price" value="">
+                                        </div>
+
+                                        <div class="form-group">
+                                            <button type="submit">Gửi</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </section>
+<?php endif; ?>

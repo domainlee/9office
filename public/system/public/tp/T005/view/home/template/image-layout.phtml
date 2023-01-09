@@ -1,0 +1,13 @@
+<?php if(!empty($this->imageLayout['image-link text']['value'])):?>
+<section class="promote-image">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="promote-image__inner">
+                <a href="<?= $this->imageLayout['image-link text']['value']?>">
+                    <img src="<?=$this->imageLayout['promote-image file']['value']?>" alt="">
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+<?php endif;?>

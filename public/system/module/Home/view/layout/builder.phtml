@@ -1,0 +1,108 @@
+<div class="sidebar">
+    <h4>Drag these presets into your content</h4>
+    <ul class="momongaPresets">
+
+    </ul>
+</div>
+
+<link rel="stylesheet" href="https://code.jquery.com/ui/1.11.4/themes/start/jquery-ui.css">
+<link rel="stylesheet" href="/assets/dnd/css/momonga.css">
+<link rel="stylesheet" href="/assets/dnd/css/style.css">
+<link rel="stylesheet" href="/assets/plugins/summernote/summernote.css">
+
+
+<!--<script src="https://code.jquery.com/jquery-2.1.4.js"></script>-->
+<!--<script src="https://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>-->
+
+<script src="/assets/js/jquery-1.10.1.min.js"></script>
+<script src="https://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+<!--<script src="https://cdn.ckeditor.com/4.5.4/standard/ckeditor.js"></script>-->
+<!--<script src="https://cdnjs.cloudflare.com/ajax/libs/ckeditor/4.5.4/adapters/jquery.js"></script>-->
+<!--<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>-->
+<!--<script src="https://cdnjs.cloudflare.com/ajax/libs/holder/2.9.0/holder.min.js"></script>-->
+<!--<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-sidebar/3.3.2/jquery.sidebar.min.js"></script>-->
+<script src="/assets/dnd/js//jquery.momonga.js"></script>
+<script src="/assets/plugins/summernote/summernote.min.js"></script>
+<script src="/assets/plugins/summernote/summernote-image-attributes__front.js"></script>
+<script src="/assets/plugins/summernote/lang/summernote-vi-VN.js"></script>
+<script src="/assets/plugins/bootstrap-colorpicker/js/bootstrap-colorpicker.min.js"></script>
+
+<script language="JavaScript">
+    (function ($) {
+        var sortables = $('.edit__section');
+        sortables.momonga({
+//                presets: {
+//                    "text": {
+//                        "title": "Section 1",
+//                        "preview": "<p>Section 1</p>",
+//                        "edit": "ckedit",
+//                        "html": "<div class='summernote'><p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.</p></div>"
+//                    }
+//                },
+                presetsURL: "/section/presets.example.json",
+
+            }
+        );
+
+        edit_summernote($('.summernote'));
+
+        sortables.on('click', '.summernote', function () {
+            edit_summernote($(this));
+        });
+
+        function edit_summernote(a) {
+            a.summernote({
+                airMode: true,
+                popover: {
+                    image: [
+                        ['custom', ['imageAttributes']],
+                        // ['imagesize', ['imageSize100', 'imageSize50', 'imageSize25']],
+                        // ['float', ['floatLeft', 'floatRight', 'floatNone']],
+                        // ['remove', ['removeMedia']]
+                    ],
+                    link: [
+                        ['link', ['linkDialogShow', 'unlink']]
+                    ],
+                    air: [
+                        ['color', ['color']],
+                        ['font', ['bold', 'italic', 'underline', 'clear']],
+                        // ['view', ['codeview']],
+                        // ['para', ['ul', 'ol', 'paragraph']],
+                        ['insert', ['picture', 'video']],
+                        ['link', ['linkDialogShow', 'unlink']],
+                        // ['mybutton', ['myVideo']],
+                        // ['styleTags', ['h1', 'h2', 'h3', 'h4', 'h5']]
+                    ]
+                },
+                lang: "vi-VN",
+                imageAttributes:{
+                    icon: '<i class="note-icon-pencil"/>',
+                    removeEmpty: false, // true = remove attributes | false = leave empty if present
+                    disableUpload: false // true = don't display Upload Options | Display Upload Options
+                },
+                callbacks: {
+                    onImageUpload: function (image) {
+                        sendFile(image[0]);
+                    }
+                },
+            });
+        }
+
+        function sendFile(image) {
+            var data = new FormData();
+            data.append("imagemulti[]", image);
+            $.ajax({
+                data: data,
+                type: "POST",
+                url: "/admin/media/upload",
+                cache: false,
+                contentType: false,
+                processData: false,
+                success: function(data) {
+                    $('.summernote').summernote("insertImage", data.url);
+                }
+            });
+        }
+
+    }(jQuery));
+</script>

@@ -1,0 +1,54 @@
+<?php
+    $view = $this->page;
+    $imageFirst = '';
+    if(!empty(json_decode($view->getImage(), true))){
+        $imageFirst = array_shift(json_decode($view->getImage(), true));
+    }
+    $optionBasic = $this->home()->optionBasic();
+    $image = 'http://'.$_SERVER['HTTP_HOST'].$imageFirst;
+?>
+<?php
+    $imageInfo = getimagesize($image);
+    /**** Start SEO DWEB *****/
+    echo $this->headLink(['rel' => 'canonical', 'href' => 'http://'.$_SERVER['HTTP_HOST'].$view->getViewLink() ]);
+    $this->headTitle($this->escapeHtml($this->translate(!empty($view->getMetaTitle()) ? $view->getMetaTitle():null)));
+    $this->headMeta()->appendName('description', (!empty($view->getMetaDescription()) ? $view->getMetaDescription():null));
+    $this->headMeta()->appendName('keywords', (!empty($view->getMetaKeyword()) ? $view->getMetaKeyword():null));
+
+    $this->headMeta()->appendProperty('og:title', !empty($view->getMetaTitle()) ? $view->getMetaTitle():null);
+    $this->headMeta()->appendProperty('og:description', !empty($view->getMetaDescription()) ? $view->getMetaDescription():null);
+    $this->headMeta()->appendProperty('og:image', !empty($imageFirst) ? 'http://'.$_SERVER['HTTP_HOST'].$imageFirst:null);
+    $this->headMeta()->appendProperty('og:image:secure_url', !empty($imageFirst) ? 'http://'.$_SERVER['HTTP_HOST'].$imageFirst:null);
+    $this->headMeta()->appendProperty('og:image:width', $imageInfo['0']);
+    $this->headMeta()->appendProperty('og:image:height', $imageInfo['1']);
+    $this->headMeta()->appendProperty('og:type', 'Page');
+    $this->headMeta()->appendProperty('og:url', 'http://'.$_SERVER['HTTP_HOST'].$view->getViewLink());
+    $this->headMeta()->appendProperty('og:site_name', $optionBasic['sologan']);
+
+    $this->headMeta()->appendName('twitter:card', !empty($image) ? $image:'summary_large_image');
+    $this->headMeta()->appendName('twitter:title', !empty($view->getMetaTitle()) ? $view->getMetaTitle():null);
+    $this->headMeta()->appendName('twitter:description', (!empty($view->getMetaDescription()) ? $view->getMetaDescription():null));
+    $this->headMeta()->appendName('twitter:image', !empty($image) ? $image:null);
+    /**** End SEO DWEB *****/
+?>
+<?php
+    $cs = [
+        '/tp/A001/css/p.css'
+    ];
+    echo '<link href="'.srcLink($cs,1).'" media="screen" rel="stylesheet" type="text/css">';
+?>
+<div class="main">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="right">
+                    <div class="contentPage">
+                        <?php
+                            echo html_entity_decode($this->page->getDescription());
+                        ?>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

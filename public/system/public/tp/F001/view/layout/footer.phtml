@@ -1,0 +1,59 @@
+<?php
+$optionBasic = $this->home()->optionBasic();
+$optionPage = $this->home()->optionPage();
+$menuOption = $this->home()->getMenu();
+?>
+<div class="footer">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <?php if(!empty($optionPage['view_footer-1'])):?>
+                    <ul class="f1">
+                        <li>
+                            <h3><?=$optionPage['tieu-de-cot-mang-xa-hoi'] ? $optionPage['tieu-de-cot-mang-xa-hoi'] : ''?></h3>
+                            <ul class="social">
+                                <li><a href="<?= !empty($optionPage['facebook']) ? $optionPage['facebook']:null ?>"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
+                                <li><a href="<?= !empty($optionPage['twitter']) ? $optionPage['twitter']:null ?>"><i class="fa fa-instagram" aria-hidden="true"></i></a></li>
+                                <li><a href="<?= !empty($optionPage ['youtube']) ? $optionPage['youtube']:null ?>"><i class="fa fa-youtube" aria-hidden="true"></i></a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <h3><?=$optionPage['tieu-de-cot-2'] ? $optionPage['tieu-de-cot-2'] : ''?></h3>
+                            <?=$optionPage['noi-dung-cot-2'] ? $optionPage['noi-dung-cot-2'] : ''?>
+                        </li>
+                        <li>
+                            <h3><?=$optionPage['tieu-de-cot-3'] ? $optionPage['tieu-de-cot-3'] : ''?></h3>
+                            <?=$optionPage['noi-dung-cot-3'] ? $optionPage['noi-dung-cot-3'] : ''?>
+                        </li>
+                    </ul>
+                <?php endif;?>
+                <?php if(!empty($optionPage['view_footer-2'])):?>
+                    <ul class="f2">
+                        <li>
+                            <h3><?=$optionPage['tieu-de-cot-1'] ? $optionPage['tieu-de-cot-1'] : ''?></h3>
+                            <?=$optionPage['noi-dung-cot-1'] ? $optionPage['noi-dung-cot-1'] : ''?>
+                        </li>
+                        <li>
+                            <h3><?=$optionPage['tieu-de-cot-danh-muc'] ? $optionPage['tieu-de-cot-danh-muc'] : ''?></h3>
+                            <?php
+                            if(!empty($menuOption['footer_menu'])):
+                                ?>
+                                <ul>
+                                    <?php foreach ($menuOption['footer_menu'] as $m):?>
+                                        <li><a href="<?=$m['url']?>"><?=$m['name']?></a></li>
+                                    <?php endforeach;?>
+                                </ul>
+                            <?php
+                            endif;
+                            ?>
+                        </li>
+                        <li>
+                            <h3><?=$optionPage['tieu-de-cot-thong-tin-3'] ? $optionPage['tieu-de-cot-thong-tin-3'] : ''?></h3>
+                            <?=$optionPage['noi-dung-cot-thong-tin-3'] ? $optionPage['noi-dung-cot-thong-tin-3'] : ''?>
+                        </li>
+                    </ul>
+                <?php endif;?>
+            </div>
+        </div>
+    </div>
+</div>

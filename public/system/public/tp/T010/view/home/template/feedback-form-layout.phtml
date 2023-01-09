@@ -1,0 +1,71 @@
+<section class="feedback-form">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="feedback-form__inner">
+                    <div class="feedback">
+                        <div class="feedback__headline">
+                            <?= $this->feedbackFormLayout['feedback-title text']['value'] ? '<h2 class="titleHome">'.$this->feedbackFormLayout['feedback-title text']['value'].'</h2>' : '' ?>
+                        </div>
+                        <div class="feedback__slider owl-carousel owl-theme">
+                            <?php if(!empty($this->feedbackFormLayout['feedback-1 textarea']['value'])):?>
+                                <div class="feedback__item">
+                                    <div class="feedback__item--inner">
+                                        <figure class="feedback__image lazy" data-src="<?= $this->feedbackFormLayout['avatar-1 file']['value'] ? $this->feedbackFormLayout['avatar-1 file']['value']: '' ?>"></figure>
+                                        <div>
+                                            <p class="feedback__name"><?= $this->feedbackFormLayout['name-1 text']['value'] ? $this->feedbackFormLayout['name-1 text']['value'] : '' ?></p>
+                                            <div class="feedback__intro"><?= $this->feedbackFormLayout['feedback-1 textarea']['value'] ? $this->feedbackFormLayout['feedback-1 textarea']['value'] : '' ?></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            <?php endif;?>
+                            <?php if(!empty($this->feedbackFormLayout['feedback-2 textarea']['value'])):?>
+                                <div class="feedback__item">
+                                    <div class="feedback__item--inner">
+                                        <figure class="feedback__image lazy" data-src="<?= $this->feedbackFormLayout['avatar-2 file']['value'] ? $this->feedbackFormLayout['avatar-2 file']['value'] : '' ?>"></figure>
+                                        <div>
+                                            <p class="feedback__name"><?= $this->feedbackFormLayout['name-2 text']['value'] ? $this->feedbackFormLayout['name-2 text']['value'] : '' ?></p>
+                                            <div class="feedback__intro"><?= $this->feedbackFormLayout['feedback-2 textarea']['value'] ? $this->feedbackFormLayout['feedback-2 textarea']['value'] : '' ?></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            <?php endif;?>
+                            <?php if(!empty($this->feedbackFormLayout['feedback-3 textarea']['value'])):?>
+                                <div class="feedback__item">
+                                    <div class="feedback__item--inner">
+                                        <figure class="feedback__image lazy" data-src="<?= $this->feedbackFormLayout['avatar-3 file']['value'] ? $this->feedbackFormLayout['avatar-3 file']['value']: '' ?>"></figure>
+                                        <div>
+                                            <p class="feedback__title"><?= $this->feedbackFormLayout['name-3 text']['value'] ? $this->feedbackFormLayout['name-3 text']['value'] : ''?></p>
+                                            <div class="feedback__intro"><?= $this->feedbackFormLayout['feedback-3 textarea']['value'] ? $this->feedbackFormLayout['feedback-3 textarea']['value'] : '' ?></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            <?php endif;?>
+                        </div>
+                    </div>
+                    <div class="support-form">
+                        <div class="support-form__inner">
+                            <h2 class="titleHome"><?= $this->feedbackFormLayout['support-title text']['value'] ? $this->feedbackFormLayout['support-title text']['value'] : ''?></h2>
+                            <form class="form__register" data-parsley-validate novalidate>
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <input type="text" class="title" placeholder="Tên" required="required" data-parsley-error-message="Tên không được để trống" value="">
+                                    </div>
+                                    <div>
+                                        <input class="email" type="text" data-parsley-type="email" required="required" data-parsley-error-message="Email không được để trống" placeholder="Email *" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <textarea class="content" placeholder="Nội dung" required="required" data-parsley-error-message="Nội dung không được để trống" rows="4"></textarea>
+                                </div>
+                                <div>
+                                    <button type="submit">Gửi phản hồi</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

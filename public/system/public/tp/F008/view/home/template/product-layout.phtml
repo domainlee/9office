@@ -1,0 +1,30 @@
+<section class="product">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h1 class="titleHome"><span><?= $this->productLayout['product-title text']['value'] ? $this->productLayout['product-title text']['value']: ''?></span></h1>
+                <?php $slider = $this->productLayout['product-slider-checkbox checkbox']['value']?>
+                <ul class=" <?= $slider ? 'two-up__product-list owl-carousel owl-theme' : 'lP'?> product__list">
+                    <?php foreach($this->productLayout['product-list product']['product-list'] as $k => $p):
+                        $image = json_decode($p['image'], true);
+                        if(!empty($image)){
+                            $imageFirst = array_shift($image);
+                        }
+                        ?>
+                        <li>
+                            <a class="pI" href="<?= $p['url'] ?>"><figure class="lazy image-product" data-src="<?= !empty($imageFirst) ? $imageFirst:'' ?>"></figure></a>
+                            <div>
+                                <h2><a href="<?= $p['url'] ?>"><?= $p['title'] ?></a></h2>
+                                <p class="price <?= ($p['priceOld'] ? 'priceOld':null) ?>">
+                                    <?=  (!empty($p['priceOld']) ? '<span>'.number_format($p['priceOld']).'</span><i>'.number_format($p['price']).'</i>':number_format($p['price']) ) ?>
+                                </p>
+                            </div>
+                            <a class="btnAddCart" data-quantity="1" data-id="<?= $p['id']?>">Giỏ hàng</a>
+                        </li>
+                    <?php endforeach; ?>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
+

@@ -1,0 +1,152 @@
+<?php
+    $optionBasic = $this->home()->optionBasic();
+    $optionPage = $this->home()->optionPage();
+    $this->headTitle($this->escapeHtml($this->translate(!empty($optionBasic['metaTitle']) ? $optionBasic['metaTitle']:'Trang chủ')));
+    $this->headMeta()->appendName('description', (!empty($optionBasic['metaDescription']) ? $optionBasic['metaDescription']:'Trang chủ'));
+    $this->headMeta()->appendName('keywords', (!empty($optionBasic['metaKeyword']) ? $optionBasic['metaKeyword']:'Trang chủ'));
+    $this->headMeta()->appendProperty('og:title', !empty($optionBasic['metaTitle']) ? $optionBasic['metaTitle']:'Trang chủ');
+    $this->headMeta()->appendProperty('og:image', !empty($optionBasic['logo']) ? $optionBasic['logo']:null);
+?>
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <?php
+                if(!empty($optionPage['banner'])){
+                    echo '<ul id="banner" class="owl-carousel owl-theme">';
+                    foreach($optionPage['banner'] as $k => $b){
+                        $image = json_decode($b['image'], true);
+                        if(!empty($image)){
+                            $imageFirst = array_shift($image);
+                        }
+                        $img = '<img class="owl-lazy" data-src="'.$imageFirst.'" alt="'.$b['name'].'" />';
+                        echo '<li><a'.($b['url'] ? ' href="'.$b['url'].'"':'').'>'.$img.'</a></li>';
+                    }
+                    echo '</ul>';
+                }
+
+                if(!empty($optionPage['3-banner-nho'])){
+                    echo '<ul id="feature" style="display: none">';
+                    foreach($optionPage['3-banner-nho'] as $b){
+                        $image = json_decode($b['image'], true);
+                        if(!empty($image)){
+                            $imageFirst = array_shift($image);
+                        }
+                        echo '<li><a'.($b['url'] ? ' href="'.$b['url'].'"':'').'><figure class="lazy image-feature" data-src="'. (!empty($imageFirst) ? $imageFirst:null ).'"><h3 class="feature-title"><span>'.$b['title'].'</span></h3></figure></a></li>';
+                    }
+                    echo '</ul>';
+                }
+            ?>
+        </div>
+    </div>
+
+    <?php if(!empty($optionPage['category1'])): ?>
+    <div class="row">
+        <div class="col-md-12">
+            <h1 class="titleHome"><span><?= !empty($optionPage['title-category-1']) ? $optionPage['title-category-1']:'Danh mục' ?></span></h1>
+            <ul class="lP">
+                <?php foreach($optionPage['category1'] as $k => $p):
+                    $image = json_decode($p['image'], true);
+                    if(!empty($image)){
+                        $imageFirst = array_shift($image);
+                    }
+                ?>
+                <li>
+                    <a class="pI" href="<?= $p['url'] ?>"><figure class="lazy image-product" data-src="<?= !empty($imageFirst) ? $imageFirst:'' ?>"></figure></a>
+                    <div>
+                        <h2><a href="<?= $p['url'] ?>"><?= $p['title'] ?></a></h2>
+                        <p class="price <?= ($p['priceOld'] ? 'priceOld':null) ?>">
+                            <?=  (!empty($p['priceOld']) ? '<span>'.number_format($p['priceOld']).' VNĐ</span><i>Giá cũ: '.number_format($p['price']).' VNĐ</i>':(number_format($p['price']) != 0 ? number_format($p['price']).' VNĐ':'<span class="order-seeding">Hàng đang về</span>')) ?>
+                        </p>
+                    </div>
+                    <?= ($p['priceOld'] ? '<span class="icon-sales">Giảm giá</span>':null) ?>
+                </li>
+                <?php endforeach; ?>
+            </ul>
+        </div>
+    </div>
+    <?php endif; ?>
+
+
+    <?php if(!empty($optionPage['category2'])): ?>
+    <div class="row">
+        <div class="col-md-12">
+            <h1 class="titleHome"><span><?= !empty($optionPage['title-category-2']) ? $optionPage['title-category-2']:'Danh mục' ?></span></h1>
+            <ul class="lP">
+                <?php foreach($optionPage['category2'] as $k => $p):
+                    $image = json_decode($p['image'], true);
+                    if(!empty($image)){
+                        $imageFirst = array_shift($image);
+                    }
+                    ?>
+                    <li>
+                        <a class="pI" href="<?= $p['url'] ?>"><figure class="lazy image-product" data-src="<?= !empty($imageFirst) ? $imageFirst:'' ?>"></figure></a>
+                        <div>
+                            <h2><a href="<?= $p['url'] ?>"><?= $p['title'] ?></a></h2>
+                            <p class="price <?= ($p['priceOld'] ? 'priceOld':null) ?>">
+                                <?=  (!empty($p['priceOld']) ? '<span>'.number_format($p['priceOld']).' VNĐ</span><i>Giá cũ: '.number_format($p['price']).' VNĐ</i>':(number_format($p['price']) != 0 ? number_format($p['price']).' VNĐ':'<span class="order-seeding">Hàng đang về</span>')) ?>
+                            </p>
+
+                        </div>
+                    </li>
+                <?php endforeach; ?>
+            </ul>
+        </div>
+    </div>
+    <?php endif; ?>
+
+    <?php if(!empty($optionPage['sales'])): ?>
+    <div class="row">
+        <div class="col-md-12">
+            <h1 class="titleHome"><span><?= !empty($optionPage['title-sales']) ? $optionPage['title-sales']:'Danh mục' ?></span></h1>
+            <ul class="lP">
+                <?php foreach($optionPage['sales'] as $k => $p):
+                    $image = json_decode($p['image'], true);
+                    if(!empty($image)){
+                        $imageFirst = array_shift($image);
+                    }
+                    ?>
+                    <li>
+                        <a class="pI" href="<?= $p['url'] ?>"><figure class="lazy image-product" data-src="<?= !empty($imageFirst) ? $imageFirst:'' ?>"></figure></a>
+                        <div>
+                            <h2><a href="<?= $p['url'] ?>"><?= $p['title'] ?></a></h2>
+                            <p class="price <?= ($p['priceOld'] ? 'priceOld':null) ?>">
+                                <?=  (!empty($p['priceOld']) ? '<span>'.number_format($p['priceOld']).' VNĐ</span><i>Giá cũ: '.number_format($p['price']).' VNĐ</i>':(number_format($p['price']) != 0 ? number_format($p['price']).' VNĐ':'<span class="order-seeding">Hàng đang về</span>')) ?>
+                            </p>
+
+                        </div>
+                    </li>
+                <?php endforeach; ?>
+            </ul>
+        </div>
+    </div>
+    <?php endif; ?>
+
+    <?php if(!empty($optionPage['news'])): ?>
+    <div class="row nHome" style="display: none">
+        <div class="col-md-12">
+            <?php
+                $new = $optionPage['news'];
+                if(!empty($new)){
+                    echo '<h1 class="titleHome"><span>Tin tức</span></h1>';
+                    echo '<ul class="lN">';
+                    foreach($new as $n){
+                        $image = json_decode($n['image'], true);
+                        if(!empty($image)){
+                            $imageFirst = array_shift($image);
+                        }
+                        ?>
+                        <li>
+                            <a href="<?= $n['url'] ?>"><figure class="lazy image-article" data-src="<?= !empty($imageFirst) ? $imageFirst:'' ?>"></figure></a>
+                            <h2><a href="<?= $n['url'] ?>"><?= $n['title'] ?></a></h2>
+                            <p><a href="<?= $n['url'] ?>">Xem thêm <i class="fa fa-angle-right"></i></a></p>
+                        </li>
+                    <?php
+                    }
+                    echo '</ul>';
+                }
+            ?>
+        </div>
+    </div>
+    <?php endif; ?>
+
+</div>

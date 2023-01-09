@@ -1,0 +1,31 @@
+<?php
+$page = $this->page;
+?>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <ul class="breadcrumb">
+                <li><a href="/">Trang chủ</a></li>
+                <li><a>Trang</a></li>
+                <li><a><?= $page->getName(); ?></a></li>
+            </ul>
+
+            <div class="box_view">
+                <div class="left">
+                    <?php
+                        echo $page->getDescription();
+                    ?>
+                </div>
+                <div class="right">
+                    <div class="sideBar">
+                        <?php
+                        echo $this->render('news/news/sidebar');
+                        ?>
+                    </div>
+                </div>
+                <div class="clear"></div>
+            </div>
+        </div>
+    </div>
+</div>

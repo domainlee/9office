@@ -1,0 +1,516 @@
+<?php
+$optionBasic = $this->home()->optionBasic();
+$optionPage = $this->home()->optionPage();
+$this->headTitle($this->escapeHtml($this->translate(!empty($optionBasic['metaTitle']) ? $optionBasic['metaTitle']:'Trang chủ')));
+$this->headMeta()->appendName('description', (!empty($optionBasic['metaDescription']) ? $optionBasic['metaDescription']:'Trang chủ'));
+$this->headMeta()->appendName('keywords', (!empty($optionBasic['metaKeyword']) ? $optionBasic['metaKeyword']:'Trang chủ'));
+$this->headMeta()->appendProperty('og:title', !empty($optionBasic['metaTitle']) ? $optionBasic['metaTitle']:'Trang chủ');
+$this->headMeta()->appendProperty('og:image', !empty($optionBasic['logo']) ? $optionBasic['logo']:null);
+use Home\Model\DateBase;
+
+?>
+
+<?php
+if(!empty($optionPage['view_banner'])):
+    ?>
+    <section class="hero-slider banner-image">
+        <ul id="banner" class="owl-carousel owl-theme">
+            <?php
+            foreach($optionPage['banner'] as $b):
+                $imageFirst = '';
+                $i = json_decode($b['image'], true);
+                if(is_array($i) && !empty($i)) {
+                    $imageFirst = array_shift($i);
+                }
+                ?>
+                <li>
+                    <a href="<?= $b['url'] ?>">
+                        <figure class="slider-image">
+                            <div class="hero-slider__content">
+                                <h3 class="hero-slider__title"><?= $b['title']?></h3>
+                                <div class="hero-slider__description"><p><?= $b['description'] ?></p></div>
+                                <!--<div class="button-default1">Chi tiết</div>-->
+                            </div>
+                        </figure>
+                    </a>
+                </li>
+            <?php
+            endforeach;
+            ?>
+        </ul>
+    </section>
+<?php endif; ?>
+
+<?php
+if(!empty($optionPage['view_anh-gioi-thieu-ben-trai'])):
+    ?>
+    <section class="two-post">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="two-post__inner">
+                        <?php
+                        foreach($optionPage['anh-gioi-thieu-ben-trai'] as $b):
+                            $image = json_decode($b['image'], true);
+                            $imageFirst = '';
+                            if(is_array($image) && !empty($image)) {
+                                $imageFirst = array_shift($image);
+                            }
+                            ?>
+                            <div class="two-post__left">
+                                <figure class="lazy two-post__image" data-src="<?= $imageFirst ?>"></figure>
+                            </div>
+                        <?php
+                        endforeach;
+                        ?>
+                        <?php if(!empty($optionPage['tieu-de-gioi-thieu']) || !empty($optionPage['noi-dung-gioi-thieu'])): ?>
+                            <div class="two-post__right">
+                                <h2 class="two-post__title"><?= $optionPage['tieu-de-gioi-thieu'] ?></h2>
+                                <div class="two-post__intro">
+                                    <p><?= $optionPage['noi-dung-gioi-thieu'] ?></p>
+                                </div>
+                                <div class="two-post__button">
+                                    <a href="" class="button-default1">Chi tiết</a>
+                                </div>
+                            </div>
+                        <?php endif; ?>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+<?php
+endif;
+?>
+<?php if(!empty($optionPage['view_ba-project'])): ?>
+    <section class="feature-project">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <span class="red-line"></span>
+                    <h2 class="headline-default feature-project__headline"><?= $optionPage['tieu-de-3-project'] ? $optionPage['tieu-de-3-project']:'Tiện ích dự án' ?></h2>
+                    <div class="feature-project__intro"><?= $optionPage['mo-ta-ngan-3-project'] ? $optionPage['mo-ta-ngan-3-project'] : ''?></div>
+                    <div class="feature-project__inner">
+                        <div class="feature-project__list owl-carousel owl-theme">
+                            <?php
+                            foreach($optionPage['ba-project'] as $b):
+                                $imageFirst = '';
+                                $i = json_decode($b['image'], true);
+                                if(is_array($i) && !empty($i)) {
+                                    $imageFirst = array_shift($i);
+                                }
+                                ?>
+                                <div class="feature-project__item">
+                                    <a href="<?= $b['url'] ?>">
+                                        <!--<figure class="feature-project__image" style="background-image: url(<?/*= $imageFirst */?>)" data-src="<?/*= $imageFirst */?>"></figure>-->
+                                        <div class="feature-project__icon">
+                                            <a href="#"><i class="fa fa-location-arrow"></i></a>
+                                        </div>
+                                        <h3 class="feature-product__title"><?= $b['title'] ?></h3>
+                                        <div class="feature-product__intro"><?= $b['intro'] ?></div>
+                                    </a>
+                                </div>
+                            <?php
+                            endforeach;
+                            ?>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+<?php endif; ?>
+
+
+
+<?php
+/*$team = $optionPage['team'];
+if(!empty($team)):
+    */?><!--
+    <section class="team">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <span class="red-line"></span>
+                    <h2 class="headline-default news__headline">meet our professional team</h2>
+                    <?/*= $optionPage['mo-ta-tin-tuc'] ? '<div class="feature-project__intro">We are Best Team in the World that bring your Ideas to life.</span></div>':'' */?>
+                    <div class="team__inner">
+                        <div class="team__list">
+                            <?php
+/*                            foreach($team as $n):
+                                $imageFirst = '';
+                                $i = json_decode($n['image'], true);
+                                if(is_array($i) && !empty($i)) {
+                                    $imageFirst = array_shift($i);
+                                }
+                                */?>
+                                <div class="team__item">
+                                    <div class="team__item--inner">
+                                        <div class="team__item--right">
+                                            <a href="<?/*= $n['url'] */?>">
+                                                <figure class="team__image lazy" data-src="<?/*= $imageFirst */?>"></figure></a>
+                                            <div class="team__hover-box">
+                                                <a href="#" class="team__button" data-toggle="modal" data-target="#teamModal">Details</a>
+                                            </div>
+                                        </div>
+                                        <div class="news__item--left" style="">
+
+                                            <h3 class="feature-product__title"><a href="<?/*= $n['url'] */?>"><?/*= $n['title'] */?></a></h3>
+                                            <div class="feature-product__intro"><?/*= $n['intro'] */?></div>
+                                        </div>
+                                        <div class="modal fade" id="teamModal" tabindex="-1" role="dialog"  aria-hidden="true">
+                                            <div class="modal-dialog" role="document">
+                                                <div class="modal-content">
+                                                    <div class="modal-body">
+                                                        <div class="row">
+                                                            <div class="col-sm-6">
+                                                                <a href="<?/*= $n['url'] */?>">
+                                                                    <figure class="team__image lazy" data-src="<?/*= $imageFirst */?>"></figure></a>
+                                                            </div>
+                                                            <div class="col-sm-6">
+                                                                <h2 class="feature-product__title"><a href="<?/*= $n['url'] */?>"><?/*= $n['title'] */?></h2>
+                                                                <span><?/*= $n['intro'] */?></span>
+                                                                <p><?/*= $n['content'] */?></p>
+
+                                                                <h3>Social Icons</h3>
+                                                                <div class="social-list">
+                                                                    <a class="fa fa-facebook icons" href="#"></a>
+                                                                    <a class="fa fa-twitter icons" href="#"></a>
+                                                                    <a class="fa fa-google icons" href="#"></a>
+                                                                    <a class="fa fa-linkedin icons" href="#"></a>
+                                                                    <a class="fa fa-instagram icons" href="#"></a>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            <?php /*endforeach; */?>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+--><?php /*endif; */?>
+<!--
+<?php /*if(!empty($optionPage['cac-cong-viec-noi-bat'])): */?>
+    <section class="works">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <span class="red-line"></span>
+                    <h2 class="headline-default news__headline">some of our best works</h2>
+                    <div class="feature-project__intro"><span>we have more than 120 items in our portfolio</span></div>
+                    <div class="works__inner">
+                        <div class="works__list">
+                            <?php
+/*                                foreach($optionPage['cac-cong-viec-noi-bat'] as $w):
+                                $imageFirst = '';
+                                $i = json_decode($w['image'], true);
+                                if(is_array($i) && !empty($i)) {
+                                    $imageFirst = array_shift($i);
+                                }
+
+                            */?>
+                            <div class="works__item">
+                                <a href="<?/*= $b['url'] */?>">
+                                    <figure class="lazy news__image" data-src="<?/*= $imageFirst */?>"></figure></a>
+                                <div class="works__hover-box">
+                                    <div class="inner-hover">
+                                        <h2><a href="single-project.html">Single Project Item</a></h2>
+                                        <p>Branding, Logo</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <?php /*endforeach; */?>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+--><?php /*endif; */?>
+<?php
+/*if(!empty($optionPage['cau-trich-dan'])):
+    */?><!--
+    <section class="quote">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="quote__inner">
+                        <h2 class="qoute__title"><?/*= $optionPage['cau-trich-dan'] ? $optionPage['cau-trich-dan'] : '' */?></h2>
+                        <span class="quote__author">- <?/*= $optionPage['tac-gia'] ? $optionPage['tac-gia'] : '' */?>-</span>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+--><?php /*endif;*/?>
+
+<?php
+if(!empty($optionPage['view_anh-gioi-thieu-ben-trai-2'])):
+    ?>
+    <section class="two-post">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="two-post__inner">
+                        <?php
+                        foreach($optionPage['anh-gioi-thieu-ben-trai-2'] as $b):
+                            $image = json_decode($b['image'], true);
+                            $imageFirst = '';
+                            if(is_array($image) && !empty($image)) {
+                                $imageFirst = array_shift($image);
+                            }
+                            ?>
+                            <div class="two-post__left">
+                                <figure class="lazy two-post__image" data-src="<?= $imageFirst ?>"></figure>
+                            </div>
+                        <?php
+                        endforeach;
+                        ?>
+                        <?php if(!empty($optionPage['tieu-de-gioi-thieu']) || !empty($optionPage['noi-dung-gioi-thieu'])): ?>
+                            <div class="two-post__right">
+                                <!--<h2 class="two-post__title"><?/*= $optionPage['tieu-de-gioi-thieu'] */?></h2>-->
+                                <div class="two-post__intro">
+                                    <div class="two-post__intro--item">
+                                        <div class="feature-project__icon">
+                                            <a class="feature-project__icon" href="#"><i class="fa fa-css3"></i></a>
+                                        </div>
+                                        <div class="two-post__intro--content">
+                                            <h2>Website Development</h2>
+                                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+                                                tempor incididunt ut labore et dolore magna aliqua.</p>
+                                        </div>
+                                    </div>
+                                    <div class="two-post__intro--item">
+                                        <div class="feature-project__icon">
+                                            <a class="feature-project__icon" href="#"><i class="fa fa-cogs"></i></a>
+                                        </div>
+                                        <div class="two-post__intro--content">
+                                            <h2>Free Installation</h2>
+                                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+                                                tempor incididunt ut labore et dolore magna aliqua.</p>
+                                        </div>
+                                    </div>
+                                    <div class="two-post__intro--item">
+                                        <div class="feature-project__icon">
+                                            <a class="feature-project__icon" href="#"><i class="fa fa-laptop"></i></a>
+                                        </div>
+                                        <div class="two-post__intro--content">
+                                            <h2>Responsive for all devices</h2>
+                                            <p>Duis aute irure dolor sint occaecat cupidatat non proident, sunt in culpa
+                                                qui officia deserunt mollit anim id est laborum.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        <?php endif; ?>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+<?php
+endif;
+?>
+<?php
+$news = $optionPage['view_tin-tuc'];
+if(!empty($news)):
+    ?>
+    <section class="news">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <span class="red-line"></span>
+                    <h2 class="headline-default news__headline"><?= $optionPage['tieu-de-tin-tuc'] ? $optionPage['tieu-de-tin-tuc']:'Tin tức' ?></h2>
+                    <?= $optionPage['mo-ta-tin-tuc'] ? '<div class="feature-project__intro"><span>'.$optionPage['mo-ta-tin-tuc'].'</span></div>':'' ?>
+                    <div class="news__inner">
+                        <div class="news__list owl-carousel owl-theme">
+                            <?php
+                            foreach($optionPage['tin-tuc'] as $n):
+                                $imageFirst = '';
+                                $i = json_decode($n['image'], true);
+                                if(is_array($i) && !empty($i)) {
+                                    $imageFirst = array_shift($i);
+                                }
+                                ?>
+                                <div class="news__item">
+                                    <div class="news__item--inner">
+                                        <div class="news__item--right">
+                                            <a href="<?= $n['url'] ?>">
+                                                <figure class="news__image lazy" data-src="<?= $imageFirst ?>"></figure></a>
+                                            <div class="news__date">
+                                                <span><?= DateBase::toFormat($n['date'], 'd/m/Y') ?></span>
+                                            </div>
+                                        </div>
+                                        <div class="news__item--left" style="">
+
+                                            <h3 class="feature-product__title"><a href="<?= $n['url'] ?>"><?= $n['title'] ?></a></h3>
+                                            <div class="feature-product__intro"><?= $n['intro'] ?></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            <?php endforeach; ?>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+<?php endif; ?>
+
+
+<?php
+/*$KH = $optionPage['khach-hang'];
+if(!empty($KH)):
+    */?><!--
+    <section class="client">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="footer__social">
+                        <a class="icon-social-twitter icons" href=""></a>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <ul class="client__slider owl-carousel owl-theme">
+                        <?php
+/*                        foreach($KH as $n):
+                            $image = json_decode($n['image'], true);
+                            if(!empty($image)){
+                                $imageFirst = array_shift($image);
+                            }
+                            */?>
+                            <li class="client--slider-item">
+                                <div class="client--description"><?/*= $n['intro'] */?></div>
+                                <h2 class="client--name"><?/*= $n['title'] */?></h2>
+                            </li>
+                        <?php
+/*                        endforeach;
+                        */?>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+--><?php
+/*endif;
+*/?>
+
+<?php if(!empty($optionPage['banner-trai'])):?>
+
+    <section class="four-post">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="four-post__inner">
+                        <span class="red-line"></span>
+                        <h2 class="headline-default news__headline"><?= $optionPage['tieu-de-banner-trai'] ? $optionPage['tieu-de-banner-trai']:'' ?></h2>
+                        <?= $optionPage['mo-ta-banner-trai'] ? '<div class="feature-project__intro"><span>'.$optionPage['mo-ta-banner-trai'].'</span></div>':'' ?>
+                        <div class="four-post__item">
+                            <div class="four-post__item--left">
+                                <div class="customer__list owl-carousel owl-theme">
+                                    <?php
+                                    foreach($optionPage['banner-trai'] as $b):
+                                        $imageFirst = '';
+                                        $i = json_decode($b['image'], true);
+                                        if(is_array($i) && !empty($i)) {
+                                            $imageFirst = array_shift($i);
+                                        }
+                                        ?>
+                                        <div class="four-post__slider--item">
+                                            <a href="<?= $b['url']?>">
+                                                <figure class="four-post__slider--image lazy" style="background-image: url(<?= $imageFirst?>)"></figure>
+                                            </a>
+                                            <h3 class="four-post__title"><a href="<?= $b['url'] ?>"><?= $b['title'] ?></a></h3>
+                                            <div class="four-post__intro"><?= $b['description'] ?></div>
+                                        </div>
+                                    <?php
+                                    endforeach;
+                                    ?>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+<?php endif;?>
+
+<?php if(!empty($optionPage['video'])):?>
+    <section class="video">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="video__inner">
+                        <h2 class="headline-default"><?= $optionPage['tieu-de-video'] ?></h2>
+                        <?= $optionPage['mo-ta-video'] ? '<div class="four-post__intro"><span>'.$optionPage['mo-ta-video'].'</span></div>':'' ?>
+                        <div class="video__item">
+                            <iframe width="900" height="507" src="https://www.youtube.com/embed/<?= $optionPage['video'] ?>" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+<?php endif;?>
+
+<?php if(!empty($optionPage['tieu-de-email'])): ?>
+    <section class="form">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form__inner">
+                        <form class="form__register" data-parsley-validate novalidate>
+                            <h2 class="form__title"><?= $optionPage['tieu-de-email'] ? $optionPage['tieu-de-email']:'Email' ?></h2>
+                            <div class="form__row">
+                                <div>
+                                    <input class="email" type="text" data-parsley-type="email" required="required" data-parsley-error-message="Email không được để trống" placeholder="Email *" />
+                                </div>
+                                <div>
+                                    <input class="phone" type="text" data-parsley-type="digits" data-parsley-length="[10,11]" required="required" data-parsley-error-message="Số điện thoại không được để trống" placeholder="Số điện thoại *" />
+                                </div>
+                            </div>
+                            <div>
+                                <button type="submit">Send Message</button>
+                            </div>
+                        </form>
+                        <div class="form__contact">
+                            <ul class="form__contact--list">
+                                <li>
+                                    <span><i class="fa fa-info"></i></span>
+                                    <p>Address &amp; <br> Contact info</p>
+                                </li>
+                                <li>
+                                    <span><i class="fa fa-map-marker"></i></span>
+                                    <p>Mursel Igrishta 56, <br> 40000 Mitrovica, Kosovo</p>
+                                </li>
+                                <li>
+                                    <span><i class="fa fa-phone"></i></span>
+                                    <p>+1065289799528, <br>+1065289799528</p>
+                                </li>
+                                <li>
+                                    <span><i class="fa fa-envelope-o"></i></span>
+                                    <p>maurocio@nunforest.com <br> maurocio@gmail.com</p>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+<?php endif; ?>
+

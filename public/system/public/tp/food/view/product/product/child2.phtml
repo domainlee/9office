@@ -1,0 +1,83 @@
+<?php
+    $category = $this->category;
+    $prodCategory = $this->category();
+    $product = $this->paginator;
+
+?>
+<div class="category Child2">
+    <ul class="breadcrumdChild">
+        <?php
+            if($category->getParentId()){
+                $cc = $prodCategory->getId($category);
+                if($cc->getParentId()){
+                    $ccc = $prodCategory->getId($cc);
+                    if($ccc->getParentId()){
+                        $cccc = $prodCategory->getId($ccc);
+                    }
+                }
+            }
+        ?>
+        <?= (isset($cccc) ? '<li class="1"><a href="'.$cccc->getViewLink().'">'.$cccc->getName().'</a></li>':null) ?>
+        <?= (isset($ccc) ? '<li class="2"><a href="'.$ccc->getViewLink().'">'.$ccc->getName().'</a></li>':null) ?>
+        <?= (isset($cc) ? '<li class="3"><a href="'.$cc->getViewLink().'">'.$cc->getName().'</a></li>':null) ?>
+        <li class="4"><a href="<?= $category->getViewLink(); ?>"><?= $category->getName(); ?></a></li>
+    </ul>
+
+    <?php
+        if($category->getChilds()){
+            echo '<ul class="childMulti">';
+                foreach($category->getChilds() as $c_){
+                    $images = $this->home()->getImages(['id' => $c_->getId(), 'type' => 3]);
+                    $img = '';
+                    if(count($images)){
+                        $c = 0;
+                        foreach($images as $i){
+                            $c++;
+                            if($c == 1){
+                                $img = '<img src="'.$i->getOption('media')->getPictureUri().'" alt="'.$c_->getName().'" />';
+                            }
+                        }
+                    }
+                    echo '<li><a href="'.$c_->getViewLink().'">'.$img.'<h2>'.$c_->getName().'</h2></a></li>';
+                }
+            echo '</ul>';
+        }
+
+    ?>
+    <div class="productChild2">
+        <?php
+            if($category->getChilds()){
+                echo '<ul class="listProductChild2">';
+                    foreach($category->getChilds() as $c_){
+                        echo '<li>';
+                            echo '<a href="'.$c_->getViewLink().'"><h2>'.$c_->getName().'</h2><span>Xem tất cả</span></a>';
+                            if(count($product)){
+                                echo '<ul>';
+                                    foreach($product as $p){
+                                        $images = $this->home()->getImages(['id' => $p->getId(), 'type' => 2]);
+                                        $img = '';
+                                        if(count($images)){
+                                            $c = 0;
+                                            foreach($images as $i){
+                                                $c++;
+                                                if($c == 1){
+                                                    $img = '<img src="'.$i->getOption('media')->getPictureUri().'" alt="'.$p->getTitle().'" />';
+                                                }
+                                            }
+                                        }
+                                        if($p->getCategoryId() == $c_->getId()){
+                                            echo '<li>
+                                                <a href="'.$p->getViewLink().'">'.$img.'<h2>'.$p->getTitle().'</h2></a>
+                                                <p>'.($p->getPriceOld() != 0 ? '<span>'.number_format($p->getPriceOld()).' VNĐ</span>':null).'<span class="'.($p->getPriceOld() != 0 ? 'PriceOld':null).'">'.number_format($p->getPrice()).' VNĐ</span></p>
+                                            </li>';
+                                        }
+                                    }
+                                echo '</ul>';
+                            }
+                        echo '</li>';
+                    }
+                echo '</ul>';
+            }
+        ?>
+    </div>
+</div>

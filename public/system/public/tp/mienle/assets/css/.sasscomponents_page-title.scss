@@ -1,0 +1,91 @@
+/******************************
+	#page title
+******************************/
+.page-title {
+	background: $theme-primary-color;
+	width: 100%;
+	height: 450px;
+	text-align: center;
+	position: relative;
+	word-break: break-all;
+	display: flex;
+
+	@include media-query(991px) {
+		height: 300px;
+	}
+
+	.pattern {
+		width: 68%;
+		height: 100%;
+		position: absolute;
+		left: 50%;
+		top: 0;
+		@include translatingX();
+		z-index: 1;
+		pointer-events: none;
+
+		> span {
+			background: rgba(255, 255, 255, 0.15);
+			width: 1px;
+			height: 100%;
+			position: absolute;
+			left: 0%;
+			top: 0;
+		}
+
+		> span:nth-child(2) {
+			left: 25%;
+		}
+
+		> span:nth-child(3) {
+			left: 50%;
+		}
+
+		> span:nth-child(4) {
+			left: 75%;
+		}
+
+		> span:nth-child(5) {
+			left: 100%;
+		}
+	}
+
+	.page-title-container {
+		width: 100%;
+		height: 100%;
+		position: absolute;
+		left: 0;
+		top: 0;
+		z-index: 1;
+		background-size: cover;
+		background-position: center;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		text-align: left;
+	}
+
+	.page-title-wrapper {
+		text-align: center;
+	}
+
+
+	h2 {
+		font-family: $stylish-font;
+		font-size: 58px;
+		font-size: calc-rem-value(58);
+		color: $white;
+		font-weight: bold;
+		margin: 0;
+
+		@include media-query(991px) {
+			font-size: 48px;
+			font-size: calc-rem-value(48);
+		}
+
+		@include media-query(767px) {
+			font-size: 35px;
+			font-size: calc-rem-value(35);
+		}
+	}
+}

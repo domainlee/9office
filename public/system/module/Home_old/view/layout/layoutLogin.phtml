@@ -1,0 +1,26 @@
+<?php echo $this->doctype(); ?>
+<html lang="en">
+
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="Login">
+        <meta name="author" content="Mienlv">
+        <link rel="shortcut icon" href="assets/images/favicon_1.ico">
+        <title>Đăng nhập</title>
+        <?php
+        echo $this->headLink()
+            ->prependStylesheet('/assets/css/pages.css')
+            ->prependStylesheet('/assets/css/core.css')
+            ->prependStylesheet('/assets/css/components.css')
+            ->prependStylesheet('/assets/css/bootstrap.min.css');
+
+        //    echo $this->headScript()
+        //        ->prependFile('/js/admin/product/import.js');
+        ?>
+
+    </head>
+
+<body>
+
+<?= $this->content; ?>

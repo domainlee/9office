@@ -1,0 +1,178 @@
+<?php
+    $this->headTitle($this->escapeHtml('Bảng giá'));
+    $this->headMeta()->appendName('description', 'Bảng giá');
+    $this->headMeta()->appendName('keywords', 'Thiết kế website giá rẻ, website chỉ 3000k, thiet ke website gia re');
+    $this->headMeta()->appendProperty('og:title', 'Bảng giá');
+    $cs = [
+        '/tp/dweb/css/page.css'
+    ];
+    echo '<link href="'.srcLink($cs,2).'" media="screen" rel="stylesheet" type="text/css">';
+    $optionPage = $this->home()->optionPage();
+?>
+
+<section class="m-t-100 price">
+    <div class="price__hero">
+        <div class="price__hero-inner">
+            <h1 class="price__hero-title">Bảng <span>giá</span></h1>
+            <p class="price__hero-description">Bảng giá website DWEB</p>
+        </div>
+    </div>
+    <div class="container">
+        <div class="price__inner">
+            <div class="price__list">
+                <div class="price__item">
+                    <div class="price__item-title">
+                        <h2>Cơ bản</h2>
+                    </div>
+                    <div class="price__item-price">
+                        <h3>199.000 đ</h3>
+                        <p>Tháng</p>
+                    </div>
+                    <div>Phí duy trì 1 năm</div>
+                    <div>Dung lượng 500Mb</div>
+                    <div>Băng thông không giới hạn</div>
+                    <div>Mẫu có sẵn</div>
+                    <div>Responsive</div>
+                    <div>Tuỳ chỉnh giao diện</div>
+                    <div>Thanh toán tối thiểu 6 Tháng</div>
+                    <div><a class="btn-d">Đăng ký</a></div>
+                </div>
+                <div class="price__item price__item--advance">
+                    <div class="price__item-title">
+                        <h2>Cao cấp</h2>
+                        <p>Thiết kế tính năng, giao diện</p>
+                    </div>
+                    <div class="price__item-price">
+                        <h3>999.000 đ</h3>
+                        <p>Tháng</p>
+                    </div>
+                    <div>Phí duy trì 1 năm</div>
+                    <div>Dung lượng 2Gb</div>
+                    <div>Băng thông không giới hạn</div>
+                    <div>Thiết kế theo yêu cầu</div>
+                    <div>Responsive</div>
+                    <div>Tuỳ chỉnh giao diện</div>
+                    <div>Thanh toán tối thiểu 6 tháng</div>
+                    <div><a class="btn-d">Đăng ký</a></div>
+                </div>
+                <div class="price__item">
+                    <div class="price__item-title">
+                        <h2>Nâng cao</h2>
+                    </div>
+                    <div class="price__item-price">
+                        <h3>299.000 đ</h3>
+                        <p>Tháng</p>
+                    </div>
+                    <div>Phí duy trì 1 năm</div>
+                    <div>Dung lượng 800Mb</div>
+                    <div>Băng thông không giới hạn</div>
+                    <div>Tuỳ chỉnh theo mẫu có sẵn</div>
+                    <div>Responsive</div>
+                    <div>Tuỳ chỉnh giao diện</div>
+                    <div>Thanh toán tối thiểu 6 tháng</div>
+                    <div><a class="btn-d">Đăng ký</a></div>
+                </div>
+
+            </div>
+            <p class="price__note">* Lưu ý bảng giá trên chưa bao gồm tên miền</p>
+
+        </div>
+
+    </div>
+</section>
+
+<section class="price-domain">
+    <div class="container">
+        <div class="price-domain__inner">
+            <h2 class="price-domain__title">Bảng giá <span>tên miền</span></h2>
+            <div class="price__domain">
+                <table class="table">
+                    <thead>
+                    <tr> <th width="60%"> TÊN MIỀN VIỆT NAM </th> <th> PHÍ KHỞI TẠO (VNĐ) </th> <th> PHÍ DUY TRÌ HÀNG NĂM (VNĐ) </th> </tr>
+                    </thead>
+                    <tbody>
+                    <tr> <td>.vn</td> <td>350.000</td> <td>480.000</td> </tr>
+                    <tr> <td>.com.vn | .net.vn | .biz.vn</td> <td>350.000</td> <td>350.000</td> </tr>
+                    <tr> <td>.org.vn | .gov.vn | .edu.vn | .pro.vn | .info.vn | .int.vn | .ac.vn | .health.vn</td> <td>200.000</td> <td>200.000</td> </tr>
+                    <tr> <td>.name.vn</td> <td>30.000</td> <td>30.000</td> </tr> <tr> <td>Tên miền địa giới hành chính</td> <td>200.000</td> <td>200.000</td> </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="price__domain">
+                <table class="table">
+                    <thead>
+                    <tr> <th width="60%"> TÊN MIỀN QUỐC TẾ </th> <th> PHÍ KHỞI TẠO (VNĐ) </th> <th> PHÍ DUY TRÌ HÀNG NĂM (VNĐ) </th> </tr>
+                    </thead>
+                    <tbody>
+                    <tr> <td>.com | .net</td> <td>Miễn phí</td> <td>275.000</td> </tr>
+                    <tr> <td>.org | .info | .link</td> <td>Miễn phí</td> <td>285.000</td> </tr>
+                    <tr> <td>.us | .biz | .pw</td> <td>Miễn phí</td> <td>275.000</td> </tr>
+                    <tr> <td>.co.uk | .eu | .name</td> <td>Miễn phí</td> <td>290.000</td> </tr>
+                    <tr> <td>.mobi | .ninja | .in | .com.co | .net.co | .nom.co | .ca</td> <td>Miễn phí</td> <td>499.000</td> </tr>
+                    <tr> <td>.bz | .ws | .tv</td> <td>Miễn phí</td> <td>735.000</td> </tr>
+                    <tr> <td>.co</td> <td>Miễn phí</td> <td>800.000</td> </tr>
+                    <tr> <td>.me</td> <td>Miễn phí</td> <td>710.000</td> </tr>
+                    <tr> <td>.ceo</td> <td>Miễn phí</td> <td>2.666.000</td> </tr>
+                    <tr> <td>.xxx | .jp</td> <td>Miễn phí</td> <td>2.666.000</td> </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<?php if(!empty($optionPage['du-an-tieu-bieu'])): ?>
+    <section class="project">
+        <div class="container">
+            <h2 class="project-title title-h2 align-center">Giao diện</h2>
+            <div class="project-description">
+                Hãy lựa chọn một theme phù hợp với cửa hàng kinh doanh Online của bạn! <br/>
+                Xem các website mẫu của khách hàng đã tin tưởng sử dụng DWEB.
+            </div>
+            <div class="project-list">
+                <?php foreach ($optionPage['du-an-tieu-bieu'] as $p):
+                    $image = json_decode($p['image'], true);
+                    if(!empty($image)){
+                        $imageFirst = array_shift($image);
+                    }
+                    $extraContent = json_decode($p['extraContent'], true);
+                    ?>
+                    <div class="project-item">
+                        <div class="project-inner">
+                            <figure class="lazy project-image" data-src="<?= $imageFirst ?>"></figure>
+                            <div class="project-control">
+                                <a class="btn-d project__button-reviewer" target="_blank" href="<?= $p['intro'] ?>">Xem thử</a>
+                                <a class="btn-d project__button-detail" href="/register-<?= vnString($p['title']) ?>.html">Tạo website</a>
+                                <h3 class="project__title"><?= $p['title'] ?></h3>
+                                <p class="project__description"><?= !empty($extraContent['mo-ta']) ? $extraContent['mo-ta']:null ?></p>
+                            </div>
+                        </div>
+                    </div>
+                <?php endforeach; ?>
+            </div>
+            <div class="project__button-load-more">
+                <div class="project__button-line"></div>
+                <a class="project__button-link" href="/kho-giao-dien.html">Xem tất cả</a>
+                <div class="project__button-line"></div>
+            </div>
+        </div>
+    </section>
+<?php endif; ?>
+
+<section class="support-module">
+    <div class="container">
+        <div class="support-module__inner">
+            <h2 class="support-module__headline">Tư vấn miễn phí</h2>
+            <div class="support-module__sub">Chúng tôi sẽ liên hệ với bạn trong thời gian sớm nhất. Tư vấn website, bán hàng, quảng cáo adwords, facebook. Bạn có thể đọc kinh nghiệm bán hàng với <a href="http://blog.dweb.vn" target="_blank">blog</a> dweb</div>
+            <form class="support-module__form" data-parsley-validate novalidate>
+                <div>
+                    <input type="text" data-parsley-type="digits" data-parsley-length="[10,11]" required="required" placeholder="Số điện thoại *" />
+                </div>
+                <div>
+                    <button type="submit">Gửi</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</section>

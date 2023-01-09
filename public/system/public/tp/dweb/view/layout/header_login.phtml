@@ -1,0 +1,21 @@
+<?php $url = $this->UriParams()->getRequest()->getRequestUri(); ?>
+
+<header class="header">
+    <div class="container header-container">
+        <div class="header-inner">
+            <div class="header-logo">
+                <a href="/"><<?= $url == '/' ? 'h1':'h2' ?> class="header-sologan"><span class="logo-first-key">D</span>WEB.<strong>Service</strong></<?= $url == '/' ? 'h1':'h2' ?>></a>
+            </div>
+            <div class="header-nav">
+                <ul>
+                    <li><a href="/" >Quản lý website</a></li>
+                    <li><a href="/">Facebook ADs</a></li>
+                    <li><a href="/">Google Adwords</a></li>
+                    <li><a class="icon__seongon" href="/">Dịch vụ SEO</a></li>
+                    <li><a href="/">Blog</a></li>
+                    <li><a class="button-login" href="/admin" target="_blank">Quản lý website</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</header>

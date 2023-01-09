@@ -1,0 +1,41 @@
+<?php if(!empty($this->threeOptionLayout)):?>
+    <section class="three-event">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="three-event__inner">
+                        <div class="three-event__list">
+                            <div class="three-event__item">
+                                <div class="three-event__item--inner">
+                                    <a href="<?= $this->threeOptionLayout['option-link-1 text']['value'] ? $this->threeOptionLayout['option-link-1 text']['value'] : '#'?>">
+                                        <h3 class="three-event__title"><?= $this->threeOptionLayout['option-title-1 text']['value'] ? $this->threeOptionLayout['option-title-1 text']['value'] : ''?></h3>
+                                        <div class="three-event__intro"><?= $this->threeOptionLayout['option-content-1 text']['value'] ? $this->threeOptionLayout['option-content-1 text']['value'] : ''?></div>
+                                        <i class="fa fa-chevron-right"></i>
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="three-event__item">
+                                <div class="three-event__item--inner">
+                                    <a href="<?= $this->threeOptionLayout['option-link-2 text']['value'] ? $this->threeOptionLayout['option-link-2 text']['value'] : '#'?>">
+                                        <h3 class="three-event__title"><?= $this->threeOptionLayout['option-title-2 text']['value'] ? $this->threeOptionLayout['option-title-2 text']['value'] : ''?></h3>
+                                        <div class="three-event__intro"><?= $this->threeOptionLayout['option-content-2 text']['value'] ? $this->threeOptionLayout['option-content-2 text']['value'] : ''?></div>
+                                        <i class="fa fa-chevron-right"></i>
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="three-event__item">
+                                <div class="three-event__item--inner">
+                                    <a href="<?= $this->threeOptionLayout['option-link-3 text']['value'] ? $this->threeOptionLayout['option-link-3 text']['value'] : '#'?>">
+                                        <h3 class="three-event__title"><?= $this->threeOptionLayout['option-title-3 text']['value'] ? $this->threeOptionLayout['option-title-3 text']['value'] : ''?></h3>
+                                        <div class="three-event__intro"><?= $this->threeOptionLayout['option-content-3 text']['value'] ? $this->threeOptionLayout['option-content-3 text']['value'] : ''?></div>
+                                        <i class="fa fa-chevron-right"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+<?php endif;?>

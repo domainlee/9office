@@ -1,0 +1,94 @@
+<?php if(!empty($this->tabProductLayout['tab-product1 product']['tab-product1']) || !empty($this->tabProductLayout['tab-product2 product']['tab-product2'])
+|| !empty($this->tabProductLayout['tab-product3 product']['tab-product3']) || !empty($this->tabProductLayout['tab-product4 product']['tab-product4'])):?>
+<section class="feature-product">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="feature-product__inner">
+                    <?= $this->tabProductLayout['tab-product-title text']['value'] ? '<h2 class="title">'.$this->tabProductLayout['tab-product-title text']['value'].'</h2>' : '' ?>
+                    <ul class="feature-product__tab nav nav-tabs" role="tablist">
+                            <?= $this->tabProductLayout['tab1-title text']['value'] ? '<li role="presentation" class="active"><a href="#tab1-'.$this->id.'" aria-controls="tab1-'.$this->id.'" role="tab" data-toggle="tab">'.$this->tabProductLayout['tab1-title text']['value'].'</a></li>' : '' ?>
+                            <?= $this->tabProductLayout['tab2-title text']['value'] ? '<li role="presentation" class=""><a href="#tab2-'.$this->id.'" aria-controls="tab2-'.$this->id.'" role="tab" data-toggle="tab">'.$this->tabProductLayout['tab2-title text']['value'].'</a></li>' : '' ?>
+                            <?= $this->tabProductLayout['tab3-title text']['value'] ? '<li role="presentation" class=""><a href="#tab3-'.$this->id.'" aria-controls="tab3-'.$this->id.'" role="tab" data-toggle="tab">'.$this->tabProductLayout['tab3-title text']['value'].'</a></li>' : '' ?>
+                    </ul>
+                    <?php $slider = $this->tabProductLayout['tab-product-slider-checkbox checkbox']['value'];?>
+                    <div class="tab-content">
+                        <div role="tabpanel" class="tab-pane fade in active" id="tab1-<?=$this->id?>">
+                            <?php if(!empty($this->tabProductLayout['tab-product1 product']['tab-product1'])): ?>
+                                <ul class="<?= $slider ? 'tab-product owl-carousel owl-theme' : 'feature-product__list '?>">
+                                    <?php
+                                    foreach($this->tabProductLayout['tab-product1 product']['tab-product1'] as $k => $p):
+                                        $imgs = array_slice(json_decode($p['image'], true), 0, 2);
+                                        ?>
+                                        <li class="two-up__product-item">
+                                            <div class="two-up__product-item__inner">
+                                                <div class="two-up__product-image__wrapper">
+                                                    <a href="<?= $p['url'] ?>">
+                                                        <figure class="lazy two-up__product-image" data-src="<?= !empty($imgs) ? $imgs['0']:null ?>"></figure>
+                                                        <figure class="lazy two-up__product-image two-up__product-image__two" data-src="<?= !empty($imgs) ? $imgs['1']:null ?>"></figure>
+                                                    </a>
+                                                </div>
+                                                <h3 class="two-up__product-title"><?= $p['title'] ?></h3>
+                                                <p class="price"><?= $p['priceOld'] ? number_format($p['priceOld']).' đ<i>'.number_format($p['price']).' đ</i>':number_format($p['price']).' đ' ?></p>
+                                                <a class="btnAddCart" data-quantity="1" data-id="<?= $p['id'] ?>">Giỏ hàng</a>
+                                            </div>
+                                        </li>
+                                    <?php endforeach; ?>
+                                </ul>
+                            <?php endif; ?>
+                        </div>
+                        <div role="tabpanel" class="tab-pane fade" id="tab2-<?=$this->id?>">
+                            <?php if(!empty($this->tabProductLayout['tab-product2 product']['tab-product2'])): ?>
+                                <ul class="<?= $slider ? 'tab-product owl-carousel owl-theme' : 'feature-product__list '?>">
+                                    <?php
+                                    foreach($this->tabProductLayout['tab-product2 product']['tab-product2'] as $k => $p):
+                                        $imgs = array_slice(json_decode($p['image'], true), 0, 2);
+                                        ?>
+                                        <li class="two-up__product-item">
+                                            <div class="two-up__product-item__inner">
+                                                <div class="two-up__product-image__wrapper">
+                                                    <a href="<?= $p['url'] ?>">
+                                                        <figure class="lazy two-up__product-image" data-src="<?= !empty($imgs) ? $imgs['0']:null ?>"></figure>
+                                                        <figure class="lazy two-up__product-image two-up__product-image__two" data-src="<?= !empty($imgs) ? $imgs['1']:null ?>"></figure>
+                                                    </a>
+                                                </div>
+                                                <h3 class="two-up__product-title"><?= $p['title'] ?></h3>
+                                                <p class="price"><?= $p['priceOld'] ? number_format($p['priceOld']).' đ<i>'.number_format($p['price']).' đ</i>':number_format($p['price']).' đ' ?></p>
+                                                <a class="btnAddCart" data-quantity="1" data-id="<?= $p['id'] ?>">Giỏ hàng</a>
+                                            </div>
+                                        </li>
+                                    <?php endforeach; ?>
+                                </ul>
+                            <?php endif; ?>
+                        </div>
+                        <div role="tabpanel" class="tab-pane fade" id="tab3-<?=$this->id?>">
+                            <?php if(!empty($this->tabProductLayout['tab-product3 product']['tab-product3'])): ?>
+                                <ul class="<?= $slider ? 'tab-product owl-carousel owl-theme' : 'feature-product__list '?>">
+                                    <?php
+                                    foreach($this->tabProductLayout['tab-product3 product']['tab-product3'] as $k => $p):
+                                        $imgs = array_slice(json_decode($p['image'], true), 0, 2);
+                                        ?>
+                                        <li class="two-up__product-item">
+                                            <div class="two-up__product-item__inner">
+                                                <div class="two-up__product-image__wrapper">
+                                                    <a href="<?= $p['url'] ?>">
+                                                        <figure class="lazy two-up__product-image" data-src="<?= !empty($imgs) ? $imgs['0']:null ?>"></figure>
+                                                        <figure class="lazy two-up__product-image two-up__product-image__two" data-src="<?= !empty($imgs) ? $imgs['1']:null ?>"></figure>
+                                                    </a>
+                                                </div>
+                                                <h3 class="two-up__product-title"><?= $p['title'] ?></h3>
+                                                <p class="price"><?= $p['priceOld'] ? number_format($p['priceOld']).' đ<i>'.number_format($p['price']).' đ</i>':number_format($p['price']).' đ' ?></p>
+                                                <a class="btnAddCart" data-quantity="1" data-id="<?= $p['id'] ?>">Giỏ hàng</a>
+                                            </div>
+                                        </li>
+                                    <?php endforeach; ?>
+                                </ul>
+                            <?php endif; ?>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<?php endif;?>

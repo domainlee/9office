@@ -1,0 +1,70 @@
+<?php if(!empty($this->tabProjectLayout['tab-description-1 textarea']['value']) || !empty($this->tabProjectLayout['tab-description-2 textarea']['value']) || !empty($this->tabProjectLayout['tab-description-3 textarea']['value'])
+    || !empty($this->tabProjectLayout['tab-image-1 file']['value'])|| !empty($this->tabProjectLayout['tab-image-2 file']['value'])||!empty($this->tabProjectLayout['tab-image-3 file']['value'])):?>
+    <section class="workflow">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="project--title">
+                        <?= $this->tabProjectLayout['tab-small-title text']['value'] ? ' <h2 class="project--title-small">'.$this->tabProjectLayout['tab-small-title text']['value'].'</h2>'  : ''?>
+                        <?= $this->tabProjectLayout['tab-big-title text']['value'] ? '<h2 class="project--title-medium">'.$this->tabProjectLayout['tab-big-title text']['value'].'</h2>' : ''?>
+                        <?= $this->tabProjectLayout['tab-sub-title text']['value'] ? '<p class="project--title-description">'.$this->tabProjectLayout['tab-sub-title text']['value'].'</p>': '' ?>
+                    </div>
+
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <ul class="nav nav-tabs">
+                        <?=$this->tabProjectLayout['tab-title-1 text']['value'] ? '<li class="active"><a data-toggle="tab" href="#tab1-'.$this->id.'">'.$this->tabProjectLayout['tab-title-1 text']['value'].'</a></li>' : '' ?>
+                        <?=$this->tabProjectLayout['tab-title-2 text']['value'] ? '<li><a data-toggle="tab" href="#tab2-'.$this->id.'">'.$this->tabProjectLayout['tab-title-2 text']['value'].'</a></li>' : '' ?>
+                        <?=$this->tabProjectLayout['tab-title-3 text']['value'] ? '<li><a data-toggle="tab" href="#tab3-'.$this->id.'">'.$this->tabProjectLayout['tab-title-3 text']['value'].'</a></li>' : '' ?>
+                    </ul>
+                    <div class="tab-content">
+                        <?php if(!empty($this->tabProjectLayout['tab-description-1 textarea']['value']) || !empty($this->tabProjectLayout['tab-image-1 file']['value'])):?>
+                            <div id="tab1-<?= $this->id ?>" class="tab-pane fade in active">
+                                <div class="interior--content">
+                                    <div class="interior--image" style="background-image: url(<?= $this->tabProjectLayout['tab-image-1 file']['value']?>);"></div>
+                                    <div class="interior--description">
+                                        <?php
+                                            echo substr($this->tabProjectLayout['tab-description-1 textarea']['value'],0, 800);
+                                            if(strlen($this->tabProjectLayout['tab-description-1 textarea']['value']) > 800){
+                                                echo '...';
+                                            }
+                                        ?>
+                                    </div>
+                                </div>
+                            </div>
+                        <?php endif;?>
+                        <?php if(!empty($this->tabProjectLayout['tab-description-2 textarea']['value']) || !empty($this->tabProjectLayout['tab-image-2 file']['value'])):?>
+                            <div id="tab2-<?= $this->id ?>" class="tab-pane fade">
+                                <div class="interior--content">
+                                    <div class="interior--image" style="background-image: url(<?= $this->tabProjectLayout['tab-image-2 file']['value']?>);"></div>
+                                    <div class="interior--description">
+                                        <?php
+                                            echo substr($this->tabProjectLayout['tab-description-2 textarea']['value'],0, 800);
+                                            if(strlen($this->tabProjectLayout['tab-description-2 textarea']['value']) > 800){
+                                                echo '...';
+                                            }
+                                        ?>
+                                    </div>
+                                </div>
+                            </div>
+                        <?php endif;?>
+                        <?php if(!empty($this->tabProjectLayout['tab-description-3 textarea']['value']) || !empty($this->tabProjectLayout['tab-image-3 file']['value'])):?>
+                            <div id="tab3-<?= $this->id ?>" class="tab-pane fade">
+                                <div class="interior--content">
+                                    <div class="interior--image" style="background-image: url(<?= $this->tabProjectLayout['tab-image-3 file']['value']?>);"></div>
+                                    <div class="interior--description">
+                                        <?php
+                                        echo substr($this->tabProjectLayout['tab-description-3 textarea']['value'],0, 800);
+                                        ?>
+                                    </div>
+                                </div>
+                            </div>
+                        <?php endif;?>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+<?php endif;?>

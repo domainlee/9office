@@ -1,0 +1,44 @@
+<?php if(!empty($this->fourOptionLayout['option-1-title text']['value']) || !empty($this->fourOptionLayout['option-1-content text']['value'])
+    || !empty($this->fourOptionLayout['option-2-title text']['value']) || !empty($this->fourOptionLayout['option-2-content text']['value'])
+    || !empty($this->fourOptionLayout['option-3-title text']['value']) || !empty($this->fourOptionLayout['option-3-content text']['value'])
+    || !empty($this->fourOptionLayout['option-4-title text']['value']) || !empty($this->fourOptionLayout['option-4-content text']['value'])):?>
+
+<section class="service">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="service__inner">
+                    <?php if(!empty($this->fourOptionLayout['option-1-title text']['value']) || !empty($this->fourOptionLayout['option-1-content text']['value']) || !empty($this->fourOptionLayout['option-1-image file']['value'])): ?>
+                        <div class="service__item">
+                            <figure class="lazy service__image" style="background-image: url(<?= $this->fourOptionLayout['option-1-image file']['value'] ?>)"></figure>
+                            <h3><?= $this->fourOptionLayout['option-1-title text']['value'] ? $this->fourOptionLayout['option-1-title text']['value'] : ''?></h3>
+                            <?= $this->fourOptionLayout['option-1-content text']['value'] ? $this->fourOptionLayout['option-1-content text']['value'] : ''?>
+                        </div>
+                    <?php endif; ?>
+                    <?php if(!empty($this->fourOptionLayout['option-2-title text']['value']) || !empty($this->fourOptionLayout['option-2-content text']['value']) || !empty($this->fourOptionLayout['option-2-image file']['value'])): ?>
+                        <div class="service__item">
+                            <figure class="lazy service__image" style="background-image: url(<?= $this->fourOptionLayout['option-2-image file']['value'] ?>)"></figure>
+                            <h3><?= $this->fourOptionLayout['option-2-title text']['value'] ? $this->fourOptionLayout['option-2-title text']['value'] : ''?></h3>
+                            <?= $this->fourOptionLayout['option-2-content text']['value'] ? $this->fourOptionLayout['option-2-content text']['value'] : ''?>
+                        </div>
+                    <?php endif; ?>
+                    <?php if(!empty($this->fourOptionLayout['option-3-title text']['value']) || !empty($this->fourOptionLayout['option-3-content text']['value']) || !empty($this->fourOptionLayout['option-3-image file']['value'])): ?>
+                        <div class="service__item">
+                            <figure class="lazy service__image" style="background-image: url(<?= $this->fourOptionLayout['option-3-image file']['value'] ?>)"></figure>
+                            <h3><?= $this->fourOptionLayout['option-3-title text']['value'] ? $this->fourOptionLayout['option-3-title text']['value'] : ''?></h3>
+                            <?= $this->fourOptionLayout['option-3-content text']['value'] ? $this->fourOptionLayout['option-3-content text']['value'] : ''?>
+                        </div>
+                    <?php endif; ?>
+                    <?php if(!empty($this->fourOptionLayout['option-4-title text']['value']) || !empty($this->fourOptionLayout['option-4-content text']['value']) || !empty($this->fourOptionLayout['option-4-image file']['value'])): ?>
+                        <div class="service__item">
+                            <figure class="lazy service__image" style="background-image: url(<?= $this->fourOptionLayout['option-4-image file']['value'] ?>)"></figure>
+                            <h3><?= $this->fourOptionLayout['option-4-title text']['value'] ? $this->fourOptionLayout['option-4-title text']['value'] : ''?></h3>
+                            <?= $this->fourOptionLayout['option-4-content text']['value'] ? $this->fourOptionLayout['option-4-content text']['value'] : ''?>
+                        </div>
+                    <?php endif; ?>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<?php endif;?>

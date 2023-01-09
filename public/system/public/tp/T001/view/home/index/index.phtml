@@ -1,0 +1,348 @@
+<?php
+    use Home\Model\DateBase;
+    $optionBasic = $this->home()->optionBasic();
+    $optionPage = $this->home()->optionPage();
+    $homePage = $this->home()->homePage();
+    $fileLogo = getimagesize('http://'.$_SERVER['HTTP_HOST'].$optionBasic['logo']);
+?>
+<?php
+    /**** Start SEO DWEB *****/
+    echo $this->headLink(['rel' => 'canonical', 'href' => 'http://'.$_SERVER['HTTP_HOST'] ]);
+    $this->headTitle($this->escapeHtml($this->translate(!empty($optionBasic['metaTitle']) ? $optionBasic['metaTitle']:$optionBasic['sologan'])));
+    $this->headMeta()->appendName('description', (!empty($optionBasic['metaDescription']) ? $optionBasic['metaDescription']:null));
+    $this->headMeta()->appendName('keywords', (!empty($optionBasic['metaKeyword']) ? $optionBasic['metaKeyword']:null));
+    $this->headMeta()->appendProperty('og:title', !empty($optionBasic['metaTitle']) ? $optionBasic['metaTitle']:$optionBasic['sologan']);
+    $this->headMeta()->appendProperty('og:description', !empty($optionBasic['metaDescription']) ? $optionBasic['metaDescription']:null);
+    $this->headMeta()->appendProperty('og:image', !empty($optionBasic['logo']) ? 'http://'.$_SERVER['HTTP_HOST'].$optionBasic['logo']:null);
+    $this->headMeta()->appendProperty('og:image:secure_url', !empty($optionBasic['logo']) ? 'http://'.$_SERVER['HTTP_HOST'].$optionBasic['logo']:null);
+    $this->headMeta()->appendProperty('og:image:width', $fileLogo['0']);
+    $this->headMeta()->appendProperty('og:image:height', $fileLogo['1']);
+    $this->headMeta()->appendProperty('og:type', 'Website');
+    $this->headMeta()->appendProperty('og:url', 'http://'.$_SERVER['HTTP_HOST']);
+    $this->headMeta()->appendProperty('og:site_name', $optionBasic['sologan']);
+
+    $this->headMeta()->appendName('twitter:card', !empty($optionBasic['logo']) ? 'http://'.$_SERVER['HTTP_HOST'].$optionBasic['logo']:'summary_large_image');
+    $this->headMeta()->appendName('twitter:title', !empty($optionBasic['metaTitle']) ? $optionBasic['metaTitle']:'Trang chủ');
+    $this->headMeta()->appendName('twitter:description', (!empty($optionBasic['metaDescription']) ? $optionBasic['metaDescription']:null));
+    $this->headMeta()->appendName('twitter:image', !empty($optionBasic['logo']) ? 'http://'.$_SERVER['HTTP_HOST'].$optionBasic['logo']:null);
+    /**** End SEO DWEB *****/
+
+?>
+<?php
+if(!empty($homePage)):
+    $count = 0;
+    foreach($homePage as $k => $v ):
+        $layout = explode(' ',$k);
+        switch ($layout[0]) {
+            case "slider-layout":
+                echo $this->partial('home/template/slider', ['bannerList' => $v]);
+                break;
+            case "product-layout":
+                echo $this->partial('home/template/product-layout', ['productLayout' => $v]);
+                break;
+            case "option-layout":
+                echo $this->partial('home/template/option-layout', ['optionLayout' => $v]);
+                break;
+            case "small-banner-layout":
+                echo $this->partial('home/template/small-banner-layout', ['smallBannerList' => $v]);
+                break;
+            case "html-layout":
+                echo $this->partial('home/template/html-layout', ['htmlLayout' => $v]);
+                break;
+            case "tab-product-layout":
+                $count++;
+                echo $this->partial('home/template/tab-product-layout', ['tabProductLayout' => $v, 'id' => $count]);
+                break;
+            case "image-layout":
+                echo $this->partial('home/template/image-layout', ['imageLayout' => $v]);
+                break;
+            case "news-layout":
+                echo $this->partial('home/template/news-layout', ['newsLayout' => $v]);
+                break;
+            default:
+                break;
+        }
+    endforeach;
+else: ?>
+
+<!--<editor-fold desc="Old Template">-->
+<?php if(!empty($optionPage['view_banner'])):?>
+        <div class="NavBannerAds">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="width200">&nbsp;</div>
+                        <?php
+                        echo '<div class="banner">';
+                        echo '<ul id="banner" class="owl-carousel owl-theme">';
+                        if (!empty($optionPage['banner-chinh'])) {
+                            foreach ($optionPage['banner-chinh'] as $b) {
+                                $imageFirst = '';
+                                if (!empty(json_decode($b['image'], true))) {
+                                    $imageFirst = array_shift(json_decode($b['image'], true));
+                                }
+                                ?>
+                                <li>
+                                    <a href="<?= $b['url'] ?>">
+                                        <figure class="lazy banner-image" data-src="<?= $imageFirst ?>"></figure>
+                                    </a>
+                                </li>
+                                <?php
+                            }
+
+                        }
+                        echo '</ul></div>';
+                        ?>
+                        <?php if(!empty($optionPage['2-banner-trai'])): ?>
+                            <div class="width200 ADsRight">
+                                <ul>
+                                    <?php
+                                    if(!empty($optionPage['2-banner-trai'])):
+                                        foreach($optionPage['2-banner-trai'] as $b):
+                                            $imageFirst = '';
+                                            if(!empty(json_decode($b['image'], true))){
+                                                $imageFirst = array_shift(json_decode($b['image'], true));
+                                            }
+                                            ?>
+                                            <li><a href="<?= $b['url'] ?>"><figure class="lazy banner-trai" data-src="<?= $imageFirst ?>"></figure> </a> </li>
+                                        <?php endforeach; endif; ?>
+                                </ul>
+                            </div>
+                        <?php endif; ?>
+                    </div>
+                </div>
+            </div>
+        </div>
+    <?php endif;?>
+<?php if(!empty($optionPage['view_4-tab-san-pham'])): ?>
+<div class="ProductOptionHome">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="ProductOptionHomeContent">
+                    <ul class="NavProductOption">
+                        <?php if(!empty($optionPage['tieu-de-tab-1'])): ?>
+                            <li><a class="active" data-tab="#tab1"><?= $optionPage['tieu-de-tab-1'] ?></a></li>
+                        <?php endif; ?>
+                        <?php if(!empty($optionPage['tieu-de-tab-2'])): ?>
+                            <li><a  data-tab="#tab2"><?= $optionPage['tieu-de-tab-2'] ?></a></li>
+                        <?php endif; ?>
+                        <?php if(!empty($optionPage['tieu-de-tab-3'])): ?>
+                            <li><a data-tab="#tab3"><?= $optionPage['tieu-de-tab-3'] ?></a></li>
+                        <?php endif; ?>
+                        <?php if(!empty($optionPage['tieu-de-tab-4'])): ?>
+                            <li><a  data-tab="#tab4"><?= $optionPage['tieu-de-tab-4'] ?></a></li>
+                        <?php endif; ?>
+                    </ul>
+                    <div id="tab1" class="tab newHome active">
+                        <?php if(!empty($optionPage['san-pham-tab-1']) && !empty($optionPage['tieu-de-tab-1'])): ?>
+                            <div class="product-list">
+                                <?php foreach($optionPage['san-pham-tab-1'] as $p):
+                                    $imgs = array_slice(json_decode($p['image'], true), 0, 2); ?>
+                                    <div class="product-item">
+                                        <div class="product_image-wrapper">
+                                            <a href="<?= $p['url'] ?>">
+                                                <figure class="lazy product_image" data-src="<?= !empty($imgs) ? $imgs['0']:null ?>"></figure>
+                                            </a>
+                                        </div>
+                                        <p class="product-price"><?= $p['priceOld'] ? number_format($p['priceOld']).' đ<i>'.number_format($p['price']).' đ</i>':number_format($p['price']).' đ' ?></p>
+                                        <h3 class="product-title"><?= $p['title'] ?></h3>
+                                    </div>
+                                <?php endforeach; ?>
+                            </div>
+                        <?php endif; ?>
+                    </div>
+                    <div id="tab2" class="tab">
+                        <?php if(!empty($optionPage['san-pham-tab-2']) && !empty($optionPage['tieu-de-tab-2'])): ?>
+                            <div class="product-list">
+                            <?php foreach($optionPage['san-pham-tab-2'] as $p):
+                                $imgs = array_slice(json_decode($p['image'], true), 0, 2); ?>
+                                <div class="product-item">
+                                    <div class="product_image-wrapper">
+                                        <a href="<?= $p['url'] ?>">
+                                            <figure class="lazy product_image" data-src="<?= !empty($imgs) ? $imgs['0']:null ?>"></figure>
+                                        </a>
+                                    </div>
+                                    <p class="product-price"><?= $p['priceOld'] ? number_format($p['priceOld']).' đ<i>'.number_format($p['price']).' đ</i>':number_format($p['price']).' đ' ?></p>
+                                    <h3 class="product-title"><?= $p['title'] ?></h3>
+                                </div>
+                            <?php endforeach; ?>
+                            </div>
+                        <?php endif; ?>
+                    </div>
+                    <div id="tab3" class="tab">
+                        <?php if(!empty($optionPage['san-pham-tab-3']) && !empty($optionPage['tieu-de-tab-3'])): ?>
+                            <div class="product-list">
+                                <?php foreach($optionPage['san-pham-tab-3'] as $p):
+                                    $imgs = array_slice(json_decode($p['image'], true), 0, 2); ?>
+                                    <div class="product-item">
+                                        <div class="product_image-wrapper">
+                                            <a href="<?= $p['url'] ?>">
+                                                <figure class="lazy product_image" data-src="<?= !empty($imgs) ? $imgs['0']:null ?>"></figure>
+                                            </a>
+                                        </div>
+                                        <p class="product-price"><?= $p['priceOld'] ? number_format($p['priceOld']).' đ<i>'.number_format($p['price']).' đ</i>':number_format($p['price']).' đ' ?></p>
+                                        <h3 class="product-title"><?= $p['title'] ?></h3>
+                                    </div>
+                                <?php endforeach; ?>
+                            </div>
+                        <?php endif; ?>
+                    </div>
+                    <div id="tab4" class="tab">
+                        <?php if(!empty($optionPage['san-pham-tab-4']) && !empty($optionPage['tieu-de-tab-4'])): ?>
+                            <div class="product-list">
+                                <?php foreach($optionPage['san-pham-tab-4'] as $p):
+                                    $imgs = array_slice(json_decode($p['image'], true), 0, 2); ?>
+                                    <div class="product-item">
+                                        <div class="product_image-wrapper">
+                                            <a href="<?= $p['url'] ?>">
+                                                <figure class="lazy product_image" data-src="<?= !empty($imgs) ? $imgs['0']:null ?>"></figure>
+                                            </a>
+                                        </div>
+                                        <p class="product-price"><?= $p['priceOld'] ? number_format($p['priceOld']).' đ<i>'.number_format($p['price']).' đ</i>':number_format($p['price']).' đ' ?></p>
+                                        <h3 class="product-title"><?= $p['title'] ?></h3>
+                                    </div>
+                                <?php endforeach; ?>
+                            </div>
+                        <?php endif; ?>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<?php endif;?>
+
+<?php if(!empty($optionPage['view_3-banner-giua'])): ?>
+    <div class="ADsHome1">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <ul>
+                        <?php
+                        if($optionPage['3-banner-giua']):
+                        $i = 0;
+                        foreach($optionPage['3-banner-giua'] as $b):
+                            $i++;
+                            $imageFirst = '';
+                            if(!empty(json_decode($b['image'], true))){
+                                $imageFirst = array_shift(json_decode($b['image'], true));
+                            }
+                            ?>
+                            <li><a <?= $i == 1 ? 'class="active"':null ?> href="<?= $b['url'] ?>"><figure class="lazy three-banner-center" data-src="<?= $imageFirst ?>"></figure> </a> </li>
+                        <?php endforeach; endif; ?>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+<?php endif; ?>
+
+<?php if(!empty($optionPage['view_1-banner-giua'])): ?>
+<div class="ADsHome2">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <?php
+                if(!empty($optionPage['1-banner-giua'])):
+                    foreach($optionPage['1-banner-giua'] as $b):
+                    $imageFirst = '';
+                    if(!empty(json_decode($b['image'], true))){
+                        $imageFirst = array_shift(json_decode($b['image'], true));
+                    }
+                ?>
+                <a  href="<?= $b['url'] ?>"><figure class="lazy one-banner-center" data-src="<?= $imageFirst ?>"></figure> </a>
+                <?php endforeach; endif;?>
+            </div>
+        </div>
+    </div>
+</div>
+<?php endif; ?>
+<?php if(!empty($optionPage['danh-muc-san-pham'])):?>
+<div class="category">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+
+                  <ul class="categoryProductHome">
+                            <?php
+                            if($optionPage['danh-muc-san-pham']) {
+                                $i = 1;
+                                foreach ($optionPage['danh-muc-san-pham'] as $c) {
+                                    $imageFirst = '';
+                                    if (!empty(json_decode($c['image'], true))) {
+                                        $imageFirst = array_shift(json_decode($c['image'], true));
+                                    }
+                                    ?>
+                                    <li>
+                                        <div class="c-h-1">
+                                            <h2><span><?= $i++ ?></span><a
+                                                        href="<?= $c['url'] ?>"><?= $c['title'] ?></a></h2>
+                                            <p>
+                                                <a href="<?= $c['url'] ?>?show=bestseller">Mua nhiều</a>
+                                                <a href="<?= $c['url'] ?>?show=mostview">Xem nhiều</a>
+                                            </p>
+                                            <?php
+                                            if (!empty($c['child'])) {
+                                                ?>
+                                                <ul>
+                                                    <?php
+                                                    foreach ($c['child'] as $cc) {
+                                                        echo '<li><a href="' . $cc['url'] . '"><i class="fa fa-angle-right"></i>' . $cc['title'] . '</a></li>';
+                                                    }
+                                                    ?>
+                                                </ul>
+                                                <?php
+                                            }
+                                            ?>
+                                        </div>
+                                        <div class="c-h-2">
+                                            <a href="<?= $c['url'] ?>">
+                                                <figure class="lazy image_category"
+                                                        style="background-image: url(<?= $imageFirst ?>)"></figure>
+                                            </a>
+                                        </div>
+                                        <div class="c-h-3">
+                                            <?php
+                                            $product = $this->product()->search(['categoryId' => $c['id']]);
+                                            if (!empty($product)) {
+                                                echo '<ul class="lP2">';
+                                                $count = 0;
+                                                foreach ($product as $p) {
+                                                    $count++;
+                                                    if ($count == 7) {
+                                                        break;
+                                                    }
+                                                    $imageFirst = '';
+                                                    if (!empty(json_decode($p->getImage(), true))) {
+                                                        $imageFirst = array_shift(json_decode($p->getImage(), true));
+                                                    }
+                                                    echo '<li class="item">
+                                                                <h2><a href="' . $p->getViewLink() . '">' . $p->getTitle() . '</a></h2>
+                                                                <a class="pI" href="' . $p->getViewLink() . '">
+                                                                    <figure class="lazy product_image product_image--two" data-src="' . $imageFirst . '"></figure>
+                                                                </a>
+                                                                <p ' . ($p->getPriceOld() ? 'class="oldPrice"' : '') . '>' . ($p->getPriceOld() ? '<span>' . number_format($p->getPriceOld()) . '₫</span><i>' . number_format($p->getPrice()) . '₫</i>' : number_format($p->getPrice()) . '₫') . '</p>
+                                                            </li>';
+                                                }
+                                                echo '</ul>';
+                                            }
+                                            ?>
+                                        </div>
+                                    </li>
+                                    <?php
+                                }
+                            }
+                            ?>
+                        </ul>
+
+            </div>
+        </div>
+    </div>
+</div>
+<?php endif; ?>
+<!--</editor-fold>-->
+
+<?php endif; ?>
+

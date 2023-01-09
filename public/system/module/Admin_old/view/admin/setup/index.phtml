@@ -1,0 +1,193 @@
+<?php
+    echo $this->headtitle($this->escapehtml($this->translate('Tuỳ chỉnh')));
+    $form = $this->form;
+    $value = $this->value;
+?>
+<form method="post" enctype="multipart/form-data" data-parsley-validate novalidate>
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="card-box">
+                <h4 class="m-t-0 header-title m-b-20"><b>Cấu hình cơ bản</b></h4>
+                <div class="row">
+                    <div class="col-sm-5">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="form-group form-group__logo">
+                                    <label class="control-label">Logo</label>
+                                    <div class="imgLogo">
+                                        <?php if(!empty($value['logo'])): ?>
+                                            <img class="img-responsive img-thumbnail" src="<?= $value['logo'] ?>" />
+                                        <?php endif; ?>
+                                    </div>
+                                    <input type="file" id="logo" class="filestyle" data-buttonText="Chọn Logo" data-buttonname="btn-white" data-iconname="fa fa-cloud-upload">
+                                    <input type="hidden" name="logo" class="logo" value="<?= !empty($value['logo']) ? $value['logo']:'' ?>" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="form-group form-group__favicon">
+                                    <label class="control-label">Favicon</label>
+                                    <div class="imgFavicon">
+                                        <?php if(!empty($value['favicon'])): ?>
+                                            <img class="img-responsive img-thumbnail" src="<?= $value['favicon'] ?>" />
+                                        <?php endif; ?>
+                                    </div>
+                                    <input type="file" id="favicon" class="filestyle" data-buttonText="Chọn Favicon" data-buttonname="btn-white" data-iconname="fa fa-cloud-upload">
+                                    <input type="hidden" name="favicon" class="favicon" value="<?= !empty($value['favicon']) ? $value['favicon']:'' ?>" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="form-group">
+                                    <label class="control-label" for="sologan">Tên trang</label>
+                                    <?= $this->formelement($form->get('sologan')->setAttributes(['class' => 'form-control', 'placeholder'=>'Tên trang'])) ?>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="form-group">
+                                    <label class="control-label" for="sologan">Tiêu đề</label>
+                                    <?= $this->formelement($form->get('metaTitle')->setAttributes(['class' => 'form-control', 'placeholder'=>'Tiêu đề'])) ?>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="form-group">
+                                    <label class="control-label" for="sologan">Từ khoá chính</label>
+                                    <?= $this->formelement($form->get('metaKeyword')->setAttributes(['class' => 'form-control', 'data-role' => 'tagsinput', 'placeholder'=>'Từ khoá chính'])) ?>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="form-group">
+                                    <label class="control-label" for="sologan">Mô tả</label>
+                                    <?= $this->formelement($form->get('metaDescription')->setAttributes(['class' => 'form-control', 'placeholder'=>'Mô tả'])) ?>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-actions m-t-10 m-b-30">
+                            <?=$this->formelement($form->get('submit')->setAttributes(['class' => 'btn btn-default']))?>
+                            <?=$this->formelement($form->get('reset')->setAttributes(['class' => 'btn']))?>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-4 col-md-offset-2">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="form-group m-b-30">
+                                    <a class="flex" href="/admin/user">
+                                        <div class="icon-left">
+                                            <i class="fa fa-users"></i>
+                                        </div>
+                                        <div>
+                                            <label class="control-label" for="uitemplateId">Tài khoản</label>
+                                            <p class="text-muted m-b-0 font-13">
+                                                Quản lý danh sách tài khoản, thêm, sửa, xoá. Phân quyền tài khoản.
+                                            </p>
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="form-group m-b-30">
+                                    <a class="flex" href="/admin/setup/comment">
+                                        <div class="icon-left">
+                                            <i class="fa fa-comments-o"></i>
+                                        </div>
+                                        <div>
+                                            <label class="control-label" for="uitemplateId">Danh sách Bình luận - Đánh giá</label>
+                                            <p class="text-muted m-b-0 font-13">
+                                                Danh sách bình luận, đánh giá.
+                                            </p>
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="form-group m-b-30">
+                                    <a class="flex" href="/admin/setup/other">
+                                        <div class="icon-left">
+                                            <i class="fa fa-cogs"></i>
+                                        </div>
+                                        <div>
+                                            <label class="control-label" for="uitemplateId">Cài đặt khác</label>
+                                            <p class="text-muted m-b-0 font-13">
+                                                Facebook App Id, Email nhận thông báo, <br/>Quản lý tên miền riêng, Thay đổi giao diện khác.
+                                            </p>
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="form-group m-b-30">
+                                    <a class="flex" href="/admin/setup/popup">
+                                        <div class="icon-left">
+                                            <i class="fa fa-arrows-alt"></i>
+                                        </div>
+                                        <div>
+                                            <label class="control-label" for="uitemplateId">Hộp mở (Popup)</label>
+                                            <p class="text-muted m-b-0 font-13">
+                                                Quản lý popup và nội dung popup.
+                                            </p>
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="form-group m-b-30">
+                                    <a class="flex" href="/admin/setup/source">
+                                        <div class="icon-left">
+                                            <i class="fa fa fa-code"></i>
+                                        </div>
+                                        <div>
+                                            <label class="control-label" for="uitemplateId">Thêm mã Javascript/ CSS</label>
+                                            <p class="text-muted m-b-0 font-13">
+                                                Thêm đoạn mã Live chat, Google Analytics, <br/>Facebook Pixel ID, CSS.
+                                            </p>
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="form-group m-b-30">
+                                    <a class="flex" href="/admin/setup/robot">
+                                        <div class="icon-left">
+                                            <i class="fa fa-file-code-o"></i>
+                                        </div>
+                                        <div>
+                                            <label class="control-label" for="uitemplateId">Cài đặt robots / sitemap</label>
+                                            <p class="text-muted m-b-0 font-13">
+                                                Cấu hình file robots.txt và sitemap.xml
+                                            </p>
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </div>
+                </div>
+
+
+
+            </div>
+        </div>
+    </div>
+</form>

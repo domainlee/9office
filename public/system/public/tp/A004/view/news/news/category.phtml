@@ -1,0 +1,117 @@
+<?php
+    $theme = $this->NewsCategory()->featchTreeCategory(20);
+    $data = $this->paginator;
+    $data->setItemCountPerPage($this->uriParams()->getRequest()->getQuery('icpp') ? : 12);
+    $category = $this->category;
+
+    $cs = [
+        '/tp/A004/css/n.css'
+    ];
+    echo '<link href="'.srcLink($cs,1).'" media="screen" rel="stylesheet" type="text/css">';
+    $optionPage = $this->home()->optionPage();
+    $optionBasic = $this->home()->optionBasic();
+    $menuOption = $this->home()->getMenu();
+    use Home\Model\DateBase;
+
+?>
+<?php
+    $image = 'http://'.$_SERVER['HTTP_HOST'].$imageFirst;
+    $imageInfo = getimagesize($image);
+    /**** Start SEO DWEB *****/
+    echo $this->headLink(['rel' => 'canonical', 'href' => 'http://'.$_SERVER['HTTP_HOST'].$category->getViewLink() ]);
+    $this->headTitle(!empty($category->getMetaTitle()) ? $category->getMetaTitle():$category->getName());
+    $this->headMeta()->appendName('description', (!empty($category->getMetaDescription()) ? $category->getMetaDescription():null));
+    $this->headMeta()->appendName('keywords', (!empty($category->getMetaKeyword()) ? $category->getMetaKeyword():null));
+
+    $this->headMeta()->appendProperty('og:title', !empty($category->getMetaTitle()) ? $category->getMetaTitle():$category->getName());
+    $this->headMeta()->appendProperty('og:description', !empty($category->getMetaDescription()) ? $category->getMetaDescription():null);
+    $this->headMeta()->appendProperty('og:image', !empty($imageFirst) ? 'http://'.$_SERVER['HTTP_HOST'].$imageFirst:null);
+    $this->headMeta()->appendProperty('og:image:secure_url', !empty($imageFirst) ? 'http://'.$_SERVER['HTTP_HOST'].$imageFirst:null);
+    $this->headMeta()->appendProperty('og:image:width', $imageInfo['0']);
+    $this->headMeta()->appendProperty('og:image:height', $imageInfo['1']);
+    $this->headMeta()->appendProperty('og:type', 'Category Article');
+    $this->headMeta()->appendProperty('og:url', 'http://'.$_SERVER['HTTP_HOST'].$category->getViewLink());
+    $this->headMeta()->appendProperty('og:site_name', $optionBasic['sologan']);
+
+    $this->headMeta()->appendName('twitter:card', !empty($image) ? $image:'summary_large_image');
+    $this->headMeta()->appendName('twitter:title', !empty($category->getMetaTitle()) ? $category->getMetaTitle():null);
+    $this->headMeta()->appendName('twitter:description', (!empty($category->getMetaDescription()) ? $category->getMetaDescription():null));
+    $this->headMeta()->appendName('twitter:image', !empty($image) ? $image:null);
+    /**** End SEO DWEB *****/
+?>
+<!--    <section class="lazy hero-news" data-src="https://ir.vinhomes.vn/dizi/themes/vinhome/assets/images/banner-quan-he-co-dong.jpg">
+        <h1 class="title-page"><?/*=$category->getName()*/?></h1>
+    </section>-->
+<?php
+if(!empty($data)):
+    $category = $this->NewsCategory()->getCategories();
+    ?>
+    <section class="page-news">
+        <div class="container">
+            <div class="row">
+                <?php
+                    if(!empty($menuOption['news_sidebar']) || !empty($optionPage['view_danh-muc-sidebar-1']) || !empty($optionPage['view_danh-muc-sidebar-2']) || !empty($optionPage['view_banner-sidebar'])):
+                        echo '<div class="col-md-8">';
+                    else:
+                        echo '<div class="col-md-12">';
+                    endif;
+                ?>
+                    <div class="news__inner">
+                        <div class="post-last__list post-last__list--category">
+                            <?php
+                                $i = 0;
+                                foreach($data as $n):
+                                $i++;
+                                $image = json_decode($n->getImage(), true);
+                                $imageFirst = '';
+                                if(!empty($image)) {
+                                    $imageFirst = array_shift($image);
+                                }
+                            ?>
+                                <div class="post-last__item">
+                                        <div class="post-last__item--inner">
+                                            <div class="post-last__left">
+                                                <a href="<?= $n->getViewLink(); ?>">
+                                                    <figure class="post-last__image lazy" data-src="<?= $imageFirst ?>"></figure>
+                                                </a>
+                                            </div>
+                                            <div class="post-last__content">
+                                                <h3 class="post-last__title"><a href="<?= $n->getViewLink() ?>" title="<?=$n->getTitle();?>"><?=$n->getTitle()?></a>
+                                                </h3>
+                                                <p class="news__date"><?= DateBase::toFormat($n->getCreatedDateTime(), 'M d, Y') ?></p>
+                                                <div class="post-last__intro">
+                                                    <?php
+                                                    $s = substr($n->getDescription(),0,300);
+                                                    $rs = substr($s,0,strrpos($s, ' '));
+                                                    if(strlen($n->getDescription()) > 300):
+                                                        echo $rs;
+                                                        echo '...';
+                                                    else:
+                                                        echo $n->getDescription();
+                                                    endif;
+
+                                                    ?>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                            <?php endforeach;
+                            echo '</div>';
+                            ?>
+
+                        <div class="news__paginator">
+                            <?php
+                            echo $this->paginationControl($data, 'Elastic', 'partial/listPage');
+                            ?>
+                        </div>
+                    </div>
+                </div>
+            <?php
+                if(!empty($menuOption['news_sidebar']) || !empty($optionPage['view_danh-muc-sidebar-1']) || !empty($optionPage['view_danh-muc-sidebar-2']) || !empty($optionPage['view_banner-sidebar'])) {
+
+                    echo $this->render('layout/sidebar');
+                }?>
+            </div>
+        </div>
+    </section>
+<?php endif; ?>

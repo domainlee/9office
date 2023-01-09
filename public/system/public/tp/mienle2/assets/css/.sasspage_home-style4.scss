@@ -1,0 +1,688 @@
+/*--------------------------------------------------------------
+	#home style 4
+--------------------------------------------------------------*/
+/*--------------------------------------------------------------
+#7.1	services-section
+--------------------------------------------------------------*/
+.services-section {
+	padding-bottom: 60px;
+
+	@include media-query(991px) {
+		padding-bottom: 40px;
+	}
+
+	@include media-query(767px) {
+		padding-bottom: 30px;
+	}
+
+	.service-grids {
+		margin: 0 -15px;
+
+		@include media-query(767px) {
+			margin: 0 -7.5px;
+		}
+
+		.grid {
+			width: calc(33.33% - 30px);
+			float: left;
+			margin: 0 15px 50px;
+			padding: 0 15px 0 85px;
+			position: relative;
+
+			@include media-query(991px) {
+				width: calc(50% - 30px);
+				padding: 0 15px 0 65px;
+			}
+
+			@include media-query(767px) {
+				width: calc(50% - 15px);
+				margin: 0 7.5px 40px;
+			}
+
+			@include media-query(650px) {
+				width: calc(100% - 15px);
+			}
+		}
+
+		.icon {
+			position: absolute;
+			left: 0;
+			top: -10px;
+
+			.fi:before {
+				font-size: 50px;
+				font-size: calc-rem-value(50);
+				color: $theme-primary-color;
+
+				@include media-query(991px) {
+					font-size: 40px;
+					font-size: calc-rem-value(40);
+				}
+			}
+		}
+
+		h3 {
+			font-size: 18px;
+			font-size: calc-rem-value(18);
+			font-weight: normal;
+			margin: 0 0 0.6em;
+			text-transform: uppercase;
+
+			@include media-query(991px) {
+				font-size: 16px;
+				font-size: calc-rem-value(16);
+			}
+
+			@include media-query(767px) {
+				font-size: 14px;
+				font-size: calc-rem-value(14);
+			}
+		}
+
+		p {
+			font-size: 14px;
+			font-size: calc-rem-value(14);
+			margin-bottom: 0;
+
+			@include media-query(767px) {
+				font-size: 13px;
+				font-size: calc-rem-value(13);
+			}
+		}
+	}
+}
+
+
+/*--------------------------------------------------------------
+#7.2	about-section
+--------------------------------------------------------------*/
+.about-section {
+	background-color: #eef5f8;
+
+	.about-area {
+		padding-left: 85px;
+
+		@include media-query(1199px) {
+			padding-top: 0;
+			padding-left: 0;
+		}
+
+		@include media-query(991px) {
+			padding-top: 60px;
+		}
+
+		p {
+			margin-bottom: 2em;
+		}
+
+		.btns > a:first-child {
+			margin-right: 15px;
+
+			@include media-query(767px) {
+				margin-right: 10px;
+			}
+		}
+	}
+
+	blockquote {
+		font-size: 22px;
+		font-size: calc-rem-value(22);
+		font-weight: 300;
+		color: $heading-color;
+		border: 0;
+		padding: 0;
+		margin-bottom: 2em;
+
+		@include media-query(991px) {
+			font-size: 20px;
+			font-size: calc-rem-value(20);
+		}
+
+		@include media-query(767px) {
+			font-size: 18px;
+			font-size: calc-rem-value(18);
+		}
+
+		span {
+			font-size: 14px;
+			font-size: calc-rem-value(14);
+			font-weight: 600;
+			margin-top: 1em;
+			display: block;
+		}
+	}
+
+	.video-area {
+		max-width: 469px;
+		position: relative;
+
+		img {
+			border-radius: 5px;
+		}
+	}
+
+	.video-holder {
+		background: $white;
+		width: 100px;
+		height: 100px;
+		line-height: 100px;
+		text-align: center;
+		border-radius: 5px;
+		position: absolute;
+		right: -50px;
+		top: 50%;
+		@include translatingY();
+		box-shadow: 0px 3px 27.2px 4.8px rgba(8, 106, 216, 0.11);
+
+		@include media-query(1199px) {
+			left: calc(50% - 50px);
+		}
+
+		.fi:before {
+			font-size: 50px;
+			font-size: calc-rem-value(50);
+			color: $theme-primary-color;
+		}
+	}
+}
+
+
+/*--------------------------------------------------------------
+#7.3	featured-wedding
+--------------------------------------------------------------*/
+.featured-wedding {
+	.feature-grids {
+		margin: 0 -15px;
+
+		@include media-query(767px) {
+			margin: 0 -7.5px;
+		}
+
+		.grid {
+			width: calc(33.33% - 30px);
+			float: left;
+			margin: 0 15px 50px;
+			position: relative;
+
+			@include media-query(991px) {
+				width: calc(50% - 30px);
+			}
+
+			@include media-query(767px) {
+				width: calc(50% - 15px);
+				margin: 0 7.5px 40px;
+			}
+
+			@include media-query(550px) {
+				width: calc(100% - 15px);
+			}
+		}
+
+		.count {
+			background-color: $white;
+			width: 30px;
+			height: 30px;
+			line-height: 26px;
+			text-align: center;
+			font-size: 10px;
+			font-size: calc-rem-value(10);
+			border: 3px solid $theme-primary-color;
+			color: $heading-color;
+			border-radius: 50%;
+			position: absolute;
+			left: -15px;
+			top: -15px;
+		}
+
+		.details {
+			background-color: $white;
+			padding: 28px 30px;
+			box-shadow: 0px 6px 13.6px 2.4px rgba(0, 0, 0, 0.05);
+
+			@include media-query(767px) {
+				padding: 20px;
+			}
+		}
+
+		h3 {
+			font-size: 18px;
+			font-size: calc-rem-value(18);
+			font-weight: normal;
+			margin: 0 0 0.4em;
+			text-transform: capitalize;
+
+			@include media-query(991px) {
+				font-size: 16px;
+				font-size: calc-rem-value(16);
+			}
+
+			@include media-query(767px) {
+				font-size: 14px;
+				font-size: calc-rem-value(14);
+			}
+
+			a {
+				color: $heading-color;
+			}
+
+			a:hover {
+				color: $theme-primary-color;
+			}
+		}
+
+		p {
+			font-size: 12px;
+			font-size: calc-rem-value(12);
+			color: $theme-primary-color;
+			margin-bottom: 0;
+		}
+	}
+
+	.all-work {
+		text-align: center;
+	}
+}
+
+.portfolio-grid,
+.portfolio-filter,
+.portfolio-grid-2 {
+	padding-bottom: 70px;
+
+	@include media-query(991px) {
+		padding-bottom: 50px;
+	}
+
+	@include media-query(767px) {
+		padding-bottom: 40px;
+	}
+}
+
+.portfolio-filter {
+	.gallery-filters {
+		text-align: center;
+
+		ul {
+			list-style: none;
+			display: inline-block;
+			margin-bottom: 50px;
+		}
+
+		ul li {
+			display: inline-block;
+		}
+
+		ul > li + li {
+			margin-left: 20px;
+
+			@include media-query(767px) {
+				font-size: 13px;
+				margin-left: 15px;
+			}
+		}
+
+		ul a {
+			color: $heading-color;
+		}
+
+		ul a.current {
+			color: $theme-primary-color;
+			text-decoration: underline;
+		}
+	}
+}
+
+.portfolio-grid-2 {
+	.feature-grids {
+		.grid {
+			width: calc(50% - 30px);
+
+			@include media-query(767px) {
+				width: calc(50% - 15px);
+				margin: 0 7.5px 40px;
+			}
+
+			@include media-query(550px) {
+				width: calc(100% - 15px);
+			}
+		}
+	}
+}
+
+
+/*--------------------------------------------------------------
+#7.4	testimonials-section
+--------------------------------------------------------------*/
+.testimonials-section {
+	position: relative;
+	padding-bottom: 50px;
+
+	@include media-query(991px) {
+		padding-bottom: 30px;
+	}
+
+	@include media-query(767px) {
+		padding-bottom: 20px;
+	}
+
+	&:before {
+		background-color: #f1edea;
+		content: "";
+		width: 100%;
+		height: 60%;
+		position: absolute;
+		left: 0;
+		top: 0;
+	}
+
+	.testimonial-grids {
+		margin: 0 -15px;
+
+		.grid {
+			width: calc(33.33% - 30px);
+			float: left;
+			margin: 0 15px 70px;
+
+			@include media-query(991px) {
+				width: calc(50% - 30px);
+			}
+
+			@include media-query(600px) {
+				width: calc(100% - 30px);
+				float: none;
+			}
+		}
+	}
+
+	.quote {
+		background: $white;
+		padding: 45px;
+		position: relative;
+		box-shadow: 0px 13px 24.65px 4.35px rgba(0, 0, 0, 0.07);
+
+		@include media-query(767px) {
+			padding: 30px 25px;
+		}
+
+		&:before {
+			content: "";
+		    border-right: 30px solid transparent;
+		    border-top: 20px solid $white;
+		    position: absolute;
+		    left: 35px;
+		    bottom: -20px;
+		}
+	}
+
+	.client-info {
+		margin-top: 35px;
+		position: relative;
+		padding-left: 85px;
+
+		.img-holder {
+			position: absolute;
+			left: 0;
+			top: 0;
+
+			img {
+				border-radius: 50%;
+				border: 2px solid $theme-primary-color;
+			}
+		}
+
+		h5 {
+			font-size: 16px;
+			font-size: calc-rem-value(16);
+			font-weight: normal;
+			margin: 0 0 0;
+			padding: 1em 0 0.3em;
+
+			@include media-query(767px) {
+				font-size: 14px;
+				font-size: calc-rem-value(14);
+			}
+		}
+
+		p {
+			font-size: 12px;
+			font-size: calc-rem-value(12);
+			margin: 0;
+			line-height: 1.7em;
+		}
+	}
+}
+
+
+/*--------------------------------------------------------------
+#7.5	pricing-section
+--------------------------------------------------------------*/
+.pricing-section {
+	@include media-query(991px) {
+		padding-bottom: 70px;
+	}
+
+	@include media-query(767px) {
+		padding-bottom: 60px;
+	}
+
+	.pricing-grids {
+		@include widther(992px) {
+			margin-top: 30px;
+			margin-bottom: 30px;
+		}
+	}
+
+	.pricing-grids .grid {
+		width: 33.33%;
+		float: left;
+		text-align: center;
+		box-shadow: 0px 13px 34px 6px rgba(0, 0, 0, 0.07);
+
+		@include media-query(991px) {
+			width: 50%;
+			margin-bottom: 30px;
+		}
+
+		@include media-query(550px) {
+			width: 100%;
+		}
+	}
+
+	.pricing-grids > .grid:nth-child(2) {
+		position: relative;
+		z-index: 1;
+
+		@include widther(992px) {
+			-webkit-transform: scale(1.1,1.1);
+			-moz-transform: scale(1.1,1.1);
+			-o-transform: scale(1.1,1.1);
+			-ms-transform: scale(1.1,1.1);
+			transform: scale(1.1,1.1);
+		}
+	}
+
+	.pricing-header {
+		background-color: #d7e2e8;
+		padding: 55px 15px;
+		position: relative;
+
+		@include media-query(767px) {
+			padding: 35px 15px;
+		}
+
+		&:before {
+			content: "";
+			@include background-style("../images/pricing-header-bg.png", center center, cover, no-repeat, local);
+			width: 100%;
+			height: 100%;
+			position: absolute;
+			left: 0;
+			top: 0;
+			opacity: 0.5;
+		}
+
+		h4,
+		p {
+			position: relative;
+		}
+
+		h4 {
+			font-size: 14px;
+			font-size: calc-rem-value(14);
+			font-weight: 600;
+			margin: 0 0 1em;
+			text-transform: uppercase;
+			letter-spacing: 3px;
+
+			@include media-query(767px) {
+				font-size: 12px;
+				font-size: calc-rem-value(12);
+			}
+		}
+
+		p {
+			font-size: 14px;
+			font-size: calc-rem-value(14);
+			color: $heading-color;
+			margin: 0;
+
+			@include media-query(767px) {
+				font-size: 13px;
+				font-size: calc-rem-value(13);
+			}
+		}
+
+		p span {
+			font-size: 36px;
+			font-size: calc-rem-value(36);
+			position: relative;
+			top: 8px;
+			display: inline-block;
+		    padding-left: 20px;
+
+		    @include media-query(767px) {
+				font-size: 30px;
+				font-size: calc-rem-value(30);
+			}
+
+			&:before {
+				content: "";
+				width: 1px;
+				height: 100%;
+				background-color: #bfc6d3;
+				position: absolute;
+				left: 8px;
+			    top: 0;
+			    -webkit-transform: rotate(25deg);
+			    transform: rotate(25deg);
+			}
+		}
+	}
+
+	.pricing-body {
+		background-color: $white;
+		padding: 44px 65px;
+
+		@include media-query(767px) {
+			padding: 40px 35px;
+		}
+	}
+
+	ul {
+		list-style: none;
+		font-size: 14px;
+		font-size: calc-rem-value(14);
+		font-weight: 300;
+		margin-bottom: 2.5em;
+
+		@include media-query(767px) {
+			font-size: 13px;
+			font-size: calc-rem-value(13);
+		}
+	}
+
+	ul > li + li {
+		border-top: 1px solid #eeeeee;
+		margin-top: 13px;
+		padding-top: 13px;
+
+		@include media-query(767px) {
+			margin-top: 10px;
+			padding-top: 10px;
+		}
+	}
+}
+
+
+/*--------------------------------------------------------------
+#7.6	fun-fact-section
+--------------------------------------------------------------*/
+.fun-fact-section {
+	text-align: center;
+
+	.fun-fact-grids {
+		border: 2px solid #e0e5e7;
+		padding: 75px 0;
+
+		@include media-query(767px) {
+			padding: 75px 0 25px;
+		}
+	}
+
+	.fun-fact-grids .grid {
+		width: 25%;
+		float: left;
+
+		@include media-query(767px) {
+			width: 50%;
+			margin-bottom: 50px;
+		}
+	}
+
+	.fun-fact-grids > .grid + .grid {
+		border-left: 1px solid #c6ced2;
+	}
+
+	.fun-fact-grids > .grid:nth-child(3) {
+		@include media-query(767px) {
+			border-left: 0;
+		}
+	}
+
+	.grid h3 {
+		font-size: 45px;
+		font-size: calc-rem-value(45);
+		font-weight: normal;
+		margin: 0 0 0.2em;
+
+		@include media-query(991px) {
+			font-size: 35px;
+			font-size: calc-rem-value(35);
+		}
+
+		@include media-query(767px) {
+			font-size: 30px;
+			font-size: calc-rem-value(30);
+		}
+	}
+
+	.grid .odometer-value {
+		//color: $theme-primary-color;
+	}
+
+	.grid h3 + p {
+		font-size: 12px;
+		font-size: calc-rem-value(12);
+		margin: 0;
+		color: #87888a;
+		text-transform: uppercase;
+		letter-spacing: 2px;
+
+		@include media-query(991px) {
+			font-size: 10px;
+			font-size: calc-rem-value(10);
+			letter-spacing: 0;
+		}
+	}
+}
+
+

@@ -1,0 +1,37 @@
+<?php
+    $url = $this->UriParams()->getRequest()->getRequestUri();
+    $menuOption = $this->home()->getMenu();
+    $optionBasic = $this->home()->optionBasic();
+    $optionPage = $this->home()->optionPage();
+?>
+
+<header class="header">
+    <div class="container header-container">
+        <div class="header-inner">
+            <div class="header-logo">
+                <a href="/">
+                    <?php if(!empty($optionBasic['logo'])): ?>
+                        <img src="<?= $optionBasic['logo'] ?>" alt="Fashion" />
+                    <?php endif; ?>
+                </a>
+            </div>
+            <div class="header-nav">
+                <?php if(!empty($menuOption['head_menu'])): ?>
+                    <ul>
+                        <?php foreach($menuOption['head_menu'] as $m): ?>
+                            <li <?= $url == $m['url'] ? 'class="active"':null ?>><a href="<?= $m['url'] ?>"><?= $m['name'] ?></a>
+                                <?php if(!empty($m['children'])): ?>
+                                    <ul>
+                                        <?php foreach($m['children'] as $mm): ?>
+                                            <li><a href="<?= $mm['url'] ?>"><?= $mm['name'] ?></a></li>
+                                        <?php endforeach; ?>
+                                    </ul>
+                                <?php endif; ?>
+                            </li>
+                        <?php endforeach; ?>
+                    </ul>
+                <?php endif; ?>
+            </div>
+        </div>
+    </div>
+</header>

@@ -1,0 +1,41 @@
+<div class="NavBannerAds">
+    <?php if(!empty($this->bannerList['banner-option-list banner']['banner-option-list'])): ?>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="NavBannerAds__inner">
+                        <div class="width200 NavBannerAds__nav">&nbsp;</div>
+                        <div class="banner">
+                            <ul id="banner" class="owl-carousel owl-theme">
+                                <?php
+                                    foreach ($this->bannerList['banner-option-list banner']['banner-option-list'] as $b):
+                                        $imageFirst = '';
+                                        if (!empty(json_decode($b['image'], true))) {
+                                            $imageFirst = array_shift(json_decode($b['image'], true));
+                                        }
+                                        ?>
+                                        <li>
+                                            <a href="<?= $b['url'] ?>">
+                                                <figure class="lazy banner-image" data-src="<?= $imageFirst ?>"></figure>
+                                            </a>
+                                        </li>
+                                    <?php endforeach;?>
+                            </ul>
+                        </div>
+                        <div class="width200 ADsRight">
+                            <h3><?= ($this->bannerList['title-ads text']['value'] ? : '') ?></h3>
+                            <ul class="custom">
+                                <?php foreach($this->bannerList as $k => $v ):
+                                    $item = explode(' ',$k);
+                                    $pattern = "/feature-[0-9]/";
+                                    if(preg_match($pattern, $item[0])): ?>
+                                        <?= $v['value'] ? '<li><div><h3>'.$v['value'].'</h3></div></li>' : null ?>
+                                <?php endif;endforeach; ?>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    <?php endif; ?>
+</div>

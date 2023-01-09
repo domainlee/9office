@@ -1,0 +1,65 @@
+<?php
+    $optionPage = $this->home()->optionPage();
+?>
+
+<footer class="footer">
+    <div class="footer__one">
+        <div class="container">
+            <div class="footer__inner">
+                <?php
+                $menuOption = $this->home()->getMenu();
+                ?>
+                <ul>
+                    <?php
+                    if(!empty($menuOption['footer_menu'])) {
+                        foreach($menuOption['footer_menu'] as $m) {
+                            ?>
+                            <li>
+                            <a href="<?= $m['url'] ?>"><?= $m['name'] ?></a>
+                            <?php
+                            if($m['children']){
+                                echo '<div>';
+                                echo '<ul class="nav3"><h2>Danh mục</h2>';
+                                foreach($m['children'] as $mc){
+                                    ?>
+                                    <li><a href="<?= $mc['url'] ?>"><?= $mc['name'] ?></a>
+                                    <?php
+                                    if($mc['children']){
+                                        echo '<ul>';
+                                        foreach($mc['children'] as $mcc){
+                                            ?>
+                                            <li><a href="<?= $mcc['url'] ?>"><?= $mcc['name'] ?></a>
+                                            <?php
+                                        }
+                                        echo '</ul>';
+                                    }
+                                    ?>
+                                    </li>
+                                    <?php
+                                }
+                                echo '</div>';
+                            }
+                            ?>
+                            </li>
+                            <?php
+                        }
+                    }
+                    ?>
+                </ul>
+
+
+
+
+            </div>
+        </div>
+    </div>
+    <div class="footer__two">
+        <div class="container">
+            <ul class="footer__social">
+                <li><a href="<?= $optionPage['facebook'] ?>"><i class="fa fa-facebook"></i></a></li>
+                <li><a href="<?= $optionPage['google'] ?>"><i class="fa fa-google-plus"></i></a></li>
+                <li><a href="<?= $optionPage['instagram'] ?>"><i class="fa fa-instagram"></i></a></li>
+            </ul>
+        </div>
+    </div>
+</footer>

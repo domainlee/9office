@@ -1,0 +1,35 @@
+<?php if(!empty($this->galeryLayout['galery-list banner']['galery-list'])):?>
+    <section class="three-post-image">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="three-post-image__inner">
+                        <div class="three-post-image__headline">
+                            <span><?= $this->galeryLayout['galery-sub-title text']['value'] ? $this->galeryLayout['galery-sub-title text']['value'] : ''?></span>
+                            <h2><?= $this->galeryLayout['galery-title text']['value'] ? $this->galeryLayout['galery-title text']['value'] : ''?></h2>
+                        </div>
+                        <div class="three-post-image__list">
+                        <?php
+                            foreach($this->galeryLayout['galery-list banner']['galery-list'] as $k => $b):
+                                $image = json_decode($b['image'], true);
+                                $imageFirst = '';
+                                if(!empty($image)){
+                                    $imageFirst = array_shift($image);
+                                }
+                                ?>
+                                <div class="three-post-image__item">
+                                    <a href="">
+                                        <figure class="news-type-1__image lazy" data-src = "<?= $imageFirst ?>"></figure>
+                                    </a>
+                                    <h3><?= $b['description']?></h3>
+                                </div>
+                            <?php
+                            endforeach;
+                        ?>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+<?php endif;?>

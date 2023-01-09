@@ -1,0 +1,26 @@
+<?php if(!empty($this->introLayout)):?>
+<section class="two-post">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="two-post__inner">
+                    <div class="two-post__left">
+                        <figure class="lazy two-post__image" data-src="<?= $this->introLayout['intro-image file']['value'] ?>"></figure>
+                    </div>
+                    <div class="two-post__right">
+                        <h2 class="two-post__title"><?= $this->introLayout['intro-title text']['value'] ? $this->introLayout['intro-title text']['value'] : ''?></h2>
+                        <div class="two-post__intro">
+                            <?= $this->introLayout['intro-content textarea']['value'] ? $this->introLayout['intro-content textarea']['value'] : ''?>
+                        </div>
+                        <div class="two-post__button">
+                            <a href="<?= $this->introLayout['intro-link text']['value'] ? $this->introLayout['intro-link text']['value'] : ''?>" class="button-default1">Chi tiết</a>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="shape-top gray"></div>
+</section>
+<?php endif;?>

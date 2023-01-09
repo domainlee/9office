@@ -1,0 +1,227 @@
+<?php
+    use Home\Model\DateBase;
+    $optionBasic = $this->home()->optionBasic();
+    $optionPage = $this->home()->optionPage();
+    $homePage = $this->home()->homePage();
+    $fileLogo = getimagesize('http://'.$_SERVER['HTTP_HOST'].$optionBasic['logo']);
+?>
+<?php
+    /**** Start SEO DWEB *****/
+    echo $this->headLink(['rel' => 'canonical', 'href' => 'http://'.$_SERVER['HTTP_HOST'] ]);
+    $this->headTitle($this->escapeHtml($this->translate(!empty($optionBasic['metaTitle']) ? $optionBasic['metaTitle']:$optionBasic['sologan'])));
+    $this->headMeta()->appendName('description', (!empty($optionBasic['metaDescription']) ? $optionBasic['metaDescription']:null));
+    $this->headMeta()->appendName('keywords', (!empty($optionBasic['metaKeyword']) ? $optionBasic['metaKeyword']:null));
+    $this->headMeta()->appendProperty('og:title', !empty($optionBasic['metaTitle']) ? $optionBasic['metaTitle']:$optionBasic['sologan']);
+    $this->headMeta()->appendProperty('og:description', !empty($optionBasic['metaDescription']) ? $optionBasic['metaDescription']:null);
+    $this->headMeta()->appendProperty('og:image', !empty($optionBasic['logo']) ? 'http://'.$_SERVER['HTTP_HOST'].$optionBasic['logo']:null);
+    $this->headMeta()->appendProperty('og:image:secure_url', !empty($optionBasic['logo']) ? 'http://'.$_SERVER['HTTP_HOST'].$optionBasic['logo']:null);
+    $this->headMeta()->appendProperty('og:image:width', $fileLogo['0']);
+    $this->headMeta()->appendProperty('og:image:height', $fileLogo['1']);
+    $this->headMeta()->appendProperty('og:type', 'Website');
+    $this->headMeta()->appendProperty('og:url', 'http://'.$_SERVER['HTTP_HOST']);
+    $this->headMeta()->appendProperty('og:site_name', $optionBasic['sologan']);
+
+    $this->headMeta()->appendName('twitter:card', !empty($optionBasic['logo']) ? 'http://'.$_SERVER['HTTP_HOST'].$optionBasic['logo']:'summary_large_image');
+    $this->headMeta()->appendName('twitter:title', !empty($optionBasic['metaTitle']) ? $optionBasic['metaTitle']:null);
+    $this->headMeta()->appendName('twitter:description', (!empty($optionBasic['metaDescription']) ? $optionBasic['metaDescription']:null));
+    $this->headMeta()->appendName('twitter:image', !empty($optionBasic['logo']) ? 'http://'.$_SERVER['HTTP_HOST'].$optionBasic['logo']:null);
+    /**** End SEO DWEB *****/
+?>
+<?php
+if(!empty($homePage)):?>
+<section class="main">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="main__inner">
+                    <?php
+                    foreach($homePage as $k => $v ):
+                        $layout = explode(' ',$k);
+                        switch ($layout[0]) {
+                            case "top-image-layout":
+                                echo $this->partial('home/template/top-image-layout', ['topImageLayout' => $v]);
+                                break;
+                            default:
+                                break;
+                        }
+                    endforeach;
+                    ?>
+                    <div class="main__left">
+                        <?php
+                        $count = 0;
+                        foreach($homePage as $k => $v ):
+                            $layout = explode(' ',$k);
+                            switch ($layout[0]) {
+                                case "highlight-news-layout":
+                                    echo $this->partial('home/template/highlight-news-layout', ['highlightNewsLayout' => $v]);
+                                    break;
+                                case "option-layout":
+                                    echo $this->partial('home/template/option-layout', ['optionLayout' => $v]);
+                                    break;
+                                case "news-category-layout":
+                                    echo $this->partial('home/template/news-category-layout', ['newsCategoryLayout' => $v]);
+                                    break;
+                                case "html-layout":
+                                    echo $this->partial('home/template/html-layout', ['htmlLayout' => $v]);
+                                    break;
+                                case "image-layout":
+                                    echo $this->partial('home/template/image-layout', ['imageLayout' => $v]);
+                                    break;
+                                default:
+                                    break;
+                            }
+                        endforeach;
+
+                        ?>
+                    </div>
+                    <div class="main__right">
+                        <?php echo $this->render('layout/sidebar');?>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</section>
+
+
+<?php else:?>
+<section class="main">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="main__inner">
+                    <?php if(!empty($optionPage['view_banner-quang-cao'])): ?>
+                    <div class="main__adv-top">
+
+                            <?php
+                            if(!empty($optionPage['banner'])):
+                                foreach($optionPage['banner'] as $b):
+                                $image = json_decode($b['image'], true);
+                                $imageFirst = '';
+                                if(!empty($image)){
+                                    $imageFirst = array_shift($image);
+                                }
+                                ?>
+                                    <a href="<?= $b['url'] ?>">
+                                        <img class="slider-image lazy" data-src="<?= $imageFirst ?>" />
+                                    </a>
+                            <?php
+                                endforeach;
+                                endif;
+                            ?>
+                    </div>
+                    <?php endif; ?>
+                    <div class="main__left">
+                        <?php
+                            if(!empty($optionPage['view_tin-tuc-dau-trang'])):
+                        ?>
+                        <div class="main__last-post">
+                            <div class="last-post__left">
+                                <div class="last-post__left--inner">
+                                    <?php
+                                    if(!empty($optionPage['bai-viet-noi-bat'])):
+                                        foreach($optionPage['bai-viet-noi-bat'] as $n):
+                                        $image = json_decode($n['image'], true);
+                                        if(!empty($image)) {
+                                            $imageFirst = array_shift($image);
+                                        }
+                                    ?>
+                                        <div class="last-post__left--item last-post__left--first">
+                                            <a href="<?= $n['url'] ?>"><figure class="last-post__left--image lazy" data-src="<?= $imageFirst ?>"></figure></a>
+                                            <div>
+                                                <h3 class="last-post__left--title"><a href="<?= $n['url'] ?>"><?= $n['title'] ?></a></h3>
+                                                <div class="date-time"><span><?= $n['category'] ?></span><span><?= DateBase::toFormat($n['date'], 'd M y') ?></span></div>
+                                            </div>
+                                        </div>
+                                    <?php endforeach; endif;?>
+                                    <?php
+                                    if(!empty($optionPage['4-bai-viet'])):
+                                        foreach($optionPage['4-bai-viet'] as $n):
+                                            $image = json_decode($n['image'], true);
+                                            if(!empty($image)) {
+                                                $imageFirst = array_shift($image);
+                                            }
+                                            ?>
+                                            <div class="last-post__left--item">
+                                                <a href="<?= $n['url'] ?>"><figure class="last-post__left--image lazy" data-src="<?= $imageFirst ?>"></figure></a>
+                                                <div>
+                                                    <h3 class="last-post__left--title"><a href="<?= $n['url'] ?>"><?= $n['title'] ?></a></h3>
+                                                    <div class="date-time"><span><?= $n['category'] ?></span><span><?= DateBase::toFormat($n['date'], 'd M y') ?></span></div>
+                                                </div>
+                                            </div>
+                                        <?php endforeach; endif;?>
+                                </div>
+                            </div>
+                            <div class="last-post__right">
+                                <?php
+                                if(!empty($optionPage['8-bai-viet'])):
+                                foreach($optionPage['8-bai-viet'] as $n):
+                                    $image = json_decode($n['image'], true);
+                                    if(!empty($image)) {
+                                        $imageFirst = array_shift($image);
+                                    }
+                                        ?>
+                                        <div class="last-post__right--item">
+                                            <div class="last-post__right--inner">
+                                                <h3 class="last-post__right--title"><a href="<?= $n['url'] ?>"><?= $n['title'] ?></a></h3>
+                                                <div class="date-time"><span><?= $n['category'] ?></span><span><?= DateBase::toFormat($n['date'], 'd M y') ?></span></div>
+                                            </div>
+                                        </div>
+                                    <?php endforeach; endif;?>
+                            </div>
+                        </div>
+                        <?php endif ?>
+
+                        <?php
+                            if(!empty($optionPage['view_danh-muc-tin-tuc'])):
+                        ?>
+
+                        <div class="main__category">
+                            <?php
+                                if(!empty($optionPage['danh-muc-tin-tuc'])):
+                                foreach($optionPage['danh-muc-tin-tuc'] as $n):
+                            ?>
+                            <div class="main__col">
+                                <h1 class="main__category--headline"><a href="<?= $n['url'] ?>"><?= $n['title'] ?></a></h1>
+                                <div class="main__category--list">
+                                    <?php
+                                        $newsCategory = $this->news()->getLastestNews(['categoryId' => $n['id'], 'limit' => 6]);
+                                        if(!empty($newsCategory)):
+                                            $c = 0;
+                                        foreach($newsCategory as $nn):
+                                            $c++;
+                                            $imageFirst = '';
+                                            if(!empty(json_decode($nn->getImage(), true))){
+                                                $imageFirst = array_shift(json_decode($nn->getImage(), true));
+                                            }
+                                    ?>
+
+                                    <div class="main__category--item <?= $c == 1 ? 'main__category--first':null ?>">
+                                        <?php if($c == 1): ?>
+                                            <a href="<?= $nn->getViewLink() ?>"><figure class="main__category--image lazy" data-src="<?= $imageFirst ?>"></figure></a>
+                                        <?php endif ?>
+                                        <h3 class="main__category--title"><a href="<?= $nn->getViewLink() ?>"><?= $nn->getTitle() ?></a></h3>
+                                        <div class="date-time"><span><?= $nn->getCateName() ?></span><span><?= DateBase::toFormat($nn->getCreatedDateTime(), 'd M y') ?></span></div>
+                                    </div>
+                                    <?php endforeach; endif;?>
+                                </div>
+                            </div>
+                            <?php endforeach; endif;?>
+
+                        </div>
+                        <?php endif ?>
+                    </div>
+                    <div class="main__right">
+                        <?php echo $this->render('layout/sidebar');?>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<?php endif;?>
+
+

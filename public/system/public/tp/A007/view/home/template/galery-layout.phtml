@@ -1,0 +1,21 @@
+<?php if(!empty($this->galeryLayout)):?>
+<section class="brand">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="brand__inner">
+                    <div class="brand__list">
+                        <ul class="brand__carousel owl-carousel owl-theme">
+                            <?php for($i = 1; $i < 8; $i++){
+                                if(!empty($this->galeryLayout['image-'.$i. ' file']['value'])){?>
+                                    <li><a href="">
+                                            <figure class="last-post__image lazy" data-src="<?=$this->galeryLayout['image-'.$i. ' file']['value']?>"></figure> </a></li>
+                            <?php }}?>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<?php endif;?>

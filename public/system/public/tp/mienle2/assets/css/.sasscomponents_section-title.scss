@@ -1,0 +1,75 @@
+.section-title {
+	text-align: center;
+	margin-bottom: 52px;
+	padding-top: 70px;
+	position: relative;
+
+	@include media-query(991px) {
+		margin-bottom: 42px;
+	}
+
+	@include media-query(767px) {
+		margin-bottom: 35px;
+	}
+
+	&:before {
+		content: "";
+		@include background-style("../images/sec-title-flower.png", center center, cover, no-repeat, local);
+		width: 126px;
+		height: 59px;
+		position: absolute;
+		left: 50%;
+		@include translatingX();
+		top: 0;
+	}
+
+	h2 {
+		font-size: 36px;
+		font-size: calc-rem-value(36);
+		font-weight: 600;
+		margin: 0 0 0.39em;
+		text-transform: uppercase;
+
+		@include media-query(991px) {
+			font-size: 30px;
+			font-size: calc-rem-value(30);
+		}
+
+		@include media-query(767px) {
+			font-size: 25px;
+			font-size: calc-rem-value(25);
+		}
+	}
+
+	p {
+		font-size: 15px;
+		font-size: calc-rem-value(15);
+		font-weight: 300;
+		margin-bottom: 0;
+
+		@include media-query(767px) {
+			font-size: 14px;
+			font-size: calc-rem-value(14);
+		}
+	}
+}
+
+.section-title-s2 {
+	h2 {
+		font-size: 30px;
+		font-size: calc-rem-value(30);
+		font-weight: 600;
+		line-height: 1.4em;
+		margin: 0 0 1em;
+
+		@include media-query(991px) {
+			font-size: 25px;
+			font-size: calc-rem-value(25);
+		}
+
+		@include media-query(767px) {
+			font-size: 22px;
+			font-size: calc-rem-value(22);
+		}
+	}
+}

@@ -1,0 +1,131 @@
+<?php
+echo $this->doctype();
+$optionBasic = $this->home()->optionBasic();
+$optionPage = $this->home()->optionPage();
+?>
+<html lang="vi">
+    <head>
+<script data-ad-client="ca-pub-1711566821890650" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<meta name="google-site-verification" content="u3RiNWrSEXpNwfkvhfABmjoOVLcUWlP8vvDW72mnrfo" />
+        <?php
+            echo $this->headTitle()->setSeparator(' | ')->setAutoEscape(false);
+            $this->headMeta()->appendName('DC.language', 'scheme=utf-8 content=vi');
+            $this->headMeta()->appendName('author', 'DWEB.VN');
+            $this->headMeta()->appendName('format-detection', 'telephone=no');
+            $this->headMeta()->appendName('viewport', 'width=device-width, initial-scale=1, maximum-scale=1');
+            echo $this->headMeta();
+            echo $this->headLink(['rel' => 'shortcut icon', 'type' => 'image/vnd.microsoft.icon', 'href' => $optionBasic['favicon'] ? $optionBasic['favicon']:null ]);
+        ?>
+
+        <link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,600" rel="stylesheet">
+        <link href='https://fonts.googleapis.com/css?family=Roboto:300,500,700' rel='stylesheet' type='text/css'>
+
+        <?php
+            $cs = [
+                '/tp/dweb_v2/css/bootstrap.css',
+                '/tp/dweb_v2/css/font-awesome.min.css',
+                '/tp/dweb_v2/css/animate.min.css',
+                '/tp/dweb_v2/css/a.css',
+                '/tp/dweb_v2/css/modal-video.min.css',
+                '/assets/css/icons.css',
+                '/tp/dweb_v2/css/r.css',
+                '/assets/css/web/owl.carousel.css',
+                '/assets/css/web/owl.theme.css',
+                '/assets/css/web/owl.transitions.css',
+                '/assets/css/components.css',
+            ];
+            echo '<link href="'.srcLink($cs,1).'" media="screen" rel="stylesheet" type="text/css">';
+            $js = [
+                '/assets/js/web/jquery-1.11.2.min.js',
+            ];
+            echo '<script type="text/javascript" src="'.srcLink($js,4).'"></script>';
+        ?>
+        <!-- Facebook Pixel Code -->
+        <script>
+            !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+                n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+                n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+                t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
+                document,'script','https://connect.facebook.net/en_US/fbevents.js');
+            fbq('init', '1971198599778175'); // Insert your pixel ID here.
+            fbq('track', 'PageView');
+        </script>
+        <noscript><img height="1" width="1" style="display:none"
+                       src="https://www.facebook.com/tr?id=1971198599778175&ev=PageView&noscript=1"
+            /></noscript>
+        <!-- DO NOT MODIFY -->
+        <!-- End Facebook Pixel Code -->
+        <script data-ad-client="ca-pub-1711566821890650" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    </head>
+    <?php
+        $url = $this->UriParams()->getRequest()->getRequestUri();
+        $url2 = $this->home()->getMcaName('action');
+        $classPage = substr($url, 1, -5);
+    ?>
+    <body <?= $url == '/' | $url2 == 'view' | $url2 == 'landing' | $url2 == 'viewall' ? 'class="home-page single-news '.$url2.'"':'class="'.$classPage.' '.$url2.'"' ?>>
+        <?php
+            echo $this->render('layout/header');
+            echo $this->content;
+            echo $this->render('layout/footer');
+        ?>
+        <div class="support" style="">
+            <div>
+                <form class="support__form" data-parsley-validate novalidate>
+                    <input type="text" data-parsley-type="digits" data-parsley-length="[10,11]" required="required" placeholder="Nhập số điện thoại" />
+                    <button type="submit">Gửi</button>
+                </form>
+            </div>
+        </div>
+    </body>
+    <?php
+        $cs = [
+            '/tp/dweb_v2/css/r.css',
+        ];
+        echo '<link href="'.srcLink($cs,3).'" media="screen" rel="stylesheet" type="text/css">';
+        $js = [
+//            '/tp/dweb/js/jquery-1.10.1.min.js',
+            '/tp/dweb_v2/js/bootstrap.min.js',
+            '/assets/js/web/jquery.lazy.min.js',
+            '/assets/js/web/owl.carousel.js',
+            '/tp/dweb_v2/js/waypoint/jquery.waypoints.min.js',
+            '/tp/dweb_v2/js/a.js',
+            '/tp/dweb_v2/js/a_created.js',
+//            '/tp/dweb_v2/js/hero-slider/TweenLite.min.js',
+//            '/tp/dweb_v2/js/hero-slider/rAF.js',
+//            '/tp/dweb_v2/js/hero-slider/EasePack.min.js',
+//            '/tp/dweb_v2/js/hero-slider/demo-1.js',
+            '/tp/dweb_v2/js/jquery-modal-video.min.js',
+            '/assets/plugins/parsleyjs/parsley.min.js',
+            '/tp/dweb_v2/js/form.js',
+
+        ];
+        echo '<script type="text/javascript" src="'.srcLink($js,9).'"></script>';
+    ?>
+    <!--Start of Tawk.to Script-->
+    <script type="text/javascript">
+        var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
+        (function(){
+            var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
+            s1.async=true;
+            s1.src='https://embed.tawk.to/5db27389df22d91339a0f73f/default';
+            s1.charset='UTF-8';
+            s1.setAttribute('crossorigin','*');
+            s0.parentNode.insertBefore(s1,s0);
+        })();
+    </script>
+    <!--End of Tawk.to Script-->
+
+
+    <?= $this->render('layout/modal'); ?>
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-137920625-1"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'UA-137920625-1');
+    </script>
+
+</html>

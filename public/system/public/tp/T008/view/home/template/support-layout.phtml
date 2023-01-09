@@ -1,0 +1,19 @@
+<section class="support">
+    <div class="row">
+        <div class="col-md-12">
+            <h1 class="titleHome"><span><?= $this->supportLayout['support-title text']['value'] ?></span></h1>
+            <form class="support__form" data-parsley-validate novalidate>
+
+                <div class="form-group">
+                    <input type="text" name="email" class="email" data-parsley-type="email" placeholder="Email" required="required" data-parsley-error-message="Email không được để trống" value="">
+                </div>
+                <div class="form-group">
+                    <textarea class="content" placeholder="Nội dung" required="required" data-parsley-error-message="Nội dung không được để trống"></textarea>
+                </div>
+                <div class="form-group">
+                    <button type="submit">Gửi</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</section>

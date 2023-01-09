@@ -1,0 +1,77 @@
+<?php
+$q = $this->request->getQuery('q');
+
+$this->headTitle($this->escapeHtml($this->translate('Tìm kiếm sản phẩm "'.$q.'"')));
+$this->headMeta()->appendName('description', ('Tìm kiếm sản phẩm "'.$q.'"'));
+$this->headMeta()->appendName('keywords', ('Tìm kiếm sản phẩm "'.$q.'"'));
+$this->headMeta()->appendProperty('og:title', 'Tìm kiếm sản phẩm "'.$q.'"');
+$menuOption = $this->home()->getMenu();
+$optionPage = $this->home()->optionPage();
+$optionBasic = $this->home()->optionBasic();
+$cs = [
+    '/tp/F005/css/p.css'
+];
+echo '<link href="'.srcLink($cs,1).'" media="screen" rel="stylesheet" type="text/css">';
+
+$product = $this->paginator;
+?>
+<section class="hero-product">
+    <figure class="hero-product__image" style="background-image: url('/tp/F004/images/bg_breadcrumb.jpg')">
+        <h3>Tìm kiếm</h3>
+    </figure>
+</section>
+<div class="main">
+    <div class="container">
+        <div class="row">
+            <?php
+            if(!empty($menuOption['products_sidebar']) || !empty($optionPage['view_danh-muc-san-pham-1']) || !empty($optionPage['view_danh-muc-san-pham-2'])):
+                echo $this->render('product/product/sidebar');
+                echo '<div class="col-md-9">';
+            else:
+                echo '<div class="col-md-12">';
+            endif;
+            ?>
+                <div class="right">
+                    <div class="productCategory">
+                        <?php
+                        $show = $this->request->getQuery('show');
+                        if(count($product)){
+                            echo '<div class="titlePaginator"><h1 class="title">Tìm kiếm với từ khoá "'.(!empty($q) ? $q : null ).'"</h1>
+                                    <select onchange="location = this.options[this.selectedIndex].value;">
+                                        <option value="' . $this->product()->removeFilter('show') . '">Mới cập nhật</option>
+                                        <option value="' . $this->product()->addFilter('show', 'priceAsc',2) . '" '.($show == 'priceAsc' ? 'selected':'').'>Giá tăng dần</option>
+                                        <option value="' . $this->product()->addFilter('show', 'priceDesc',2) . '" '.($show == 'priceDesc' ? 'selected':'').'>Giá giảm dần</option>
+                                        <option value="' . $this->product()->addFilter('show', 'SaleOff',2) . '" '.($show == 'SaleOff' ? 'selected':'').'>Giảm giá</option>
+                                  </select>
+                                  </div>';
+                            echo '<ul class="lPC">';
+                            foreach($product as $p){
+                                ?>
+                                <?php
+                                $imgs = array_slice(json_decode($p->getImage(), true), 0, 2);
+                                ?>
+
+                                <li class="product__item">
+                                    <div class="product__image--wrapper">
+                                        <a class="pI" href="<?= $p->getViewLink() ?>">
+                                            <figure class="lazy product-image" data-src="<?= !empty($imgs) ? $imgs['0']:'' ?>"></figure>
+                                            <figure class="lazy product-image product-image--two" data-src="<?= !empty($imgs) ? $imgs['1']:null ?>"></figure>
+                                        </a>
+                                    </div>
+                                    <div>
+                                        <h2 class="product__item--title"><a href="<?= $p->getViewLink() ?>"><?= $p->getTitle() ?></a></h2>
+                                        <p class="price"><?= $p->getPriceOld() ? number_format($p->getPriceOld()).' đ<i>'.number_format($p->getPrice()).' đ</i>':number_format($p->getPrice()).' đ' ?></p>
+                                    </div>
+                                </li>
+                                <?php
+                            }
+                            echo '</ul>';
+                            echo $this->paginationControl($this->paginator, 'Elastic', 'partial/listPageRemmy');
+                        }
+                        ?>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

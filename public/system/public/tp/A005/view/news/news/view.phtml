@@ -1,0 +1,99 @@
+<?php
+    use Home\Model\DateBase;
+    $view = $this->news;
+    $url = $this->UriParams()->getRequest()->getRequestUri();
+    $image = json_decode($view->getImage(), true);
+    $imageFirst = '';
+    if(!empty($image)){
+        $imageFirst = array_shift($image);
+    }
+    $category = $this->NewsCategory()->getCategories();
+
+    $optionPage = $this->home()->optionPage();
+    $menuOption = $this->home()->getMenu();
+    $optionBasic = $this->home()->optionBasic();
+
+    $cs = [
+        '/tp/A005/css/n.css'
+    ];
+    echo '<link href="'.srcLink($cs,1).'" media="screen" rel="stylesheet" type="text/css">';
+?>
+<?php
+    $image = 'http://'.$_SERVER['HTTP_HOST'].$imageFirst;
+    $imageInfo = getimagesize($image);
+    /**** Start SEO DWEB *****/
+    echo $this->headLink(['rel' => 'canonical', 'href' => 'http://'.$_SERVER['HTTP_HOST'].$view->getViewLink() ]);
+    $this->headTitle($this->escapeHtml($this->translate(!empty($view->getMetaTitle()) ? $view->getMetaTitle():$view->getTitle())));
+    $this->headMeta()->appendName('description', (!empty($view->getMetaDescription()) ? $view->getMetaDescription():null));
+    $this->headMeta()->appendName('keywords', (!empty($view->getMetaKeyword()) ? $view->getMetaKeyword():null));
+
+    $this->headMeta()->appendProperty('og:title', !empty($view->getMetaTitle()) ? $view->getMetaTitle():$view->getTitle());
+    $this->headMeta()->appendProperty('og:description', !empty($view->getMetaDescription()) ? $view->getMetaDescription():null);
+    $this->headMeta()->appendProperty('og:image', !empty($imageFirst) ? 'http://'.$_SERVER['HTTP_HOST'].$imageFirst:null);
+    $this->headMeta()->appendProperty('og:image:secure_url', !empty($imageFirst) ? 'http://'.$_SERVER['HTTP_HOST'].$imageFirst:null);
+    $this->headMeta()->appendProperty('og:image:width', $imageInfo['0']);
+    $this->headMeta()->appendProperty('og:image:height', $imageInfo['1']);
+    $this->headMeta()->appendProperty('og:type', 'Article');
+    $this->headMeta()->appendProperty('og:url', 'http://'.$_SERVER['HTTP_HOST'].$view->getViewLink());
+    $this->headMeta()->appendProperty('og:site_name', $optionBasic['sologan']);
+
+    $this->headMeta()->appendName('twitter:card', !empty($image) ? $image:'summary_large_image');
+    $this->headMeta()->appendName('twitter:title', !empty($view->getMetaTitle()) ? $view->getMetaTitle():null);
+    $this->headMeta()->appendName('twitter:description', (!empty($view->getMetaDescription()) ? $view->getMetaDescription():null));
+    $this->headMeta()->appendName('twitter:image', !empty($image) ? $image:null);
+    /**** End SEO DWEB *****/
+?>
+<?php
+    if($view->getType() == 2):
+        echo $this->render('news/news/gallery');
+    else:
+ ?>
+    <section class="single-news">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <figure class="lazy single-news__image" data-src="<?= $imageFirst ?>"></figure>
+                </div>
+                <?php
+                if(!empty($menuOption['news_sidebar']) || !empty($optionPage['view_danh-muc-sidebar-1']) || !empty($optionPage['view_danh-muc-sidebar-2']) || !empty($optionPage['view_banner-sidebar'])):
+                    echo '<div class="col-md-8">';
+                else:
+                    echo '<div class="col-md-12">';
+                endif;
+                ?>
+                    <div class="single-news__detail">
+                        <h1 class="single-news__title"><?= $view->getTitle() ?></h1>
+                        <div class="single-news__profile">
+                            <span><i class="fa fa-clock-o"></i><?= DateBase::toFormat($view->getCreatedDateTime(), 'd/m/Y') ?></span><span><i class="fa fa-folder-o"></i><?= $view->getCateName() ?></span><span><i class="fa fa-eye"></i><?= $view->getView() ?></span>
+                        </div>
+                        <div class="single-news__content">
+                            <?php
+                                echo html_entity_decode($view->getContent());
+                            ?>
+                        </div>
+                        <div class="single-news__relation">
+                            <?php
+                                $relation = json_decode($view->getArticleRelated(), true);
+                                if(!empty($relation)) {
+                                    echo '<h2 class="single-news__relation--title">Bài viết liên quan</h2>';
+                                    echo '<ul>';
+                                    foreach($relation as $r) {
+                            ?>
+                                <li><i class="fa fa-caret-right"></i><a href="<?= $r['url'] ?>"><?= $r['title'] ?></a></li>
+                            <?php
+                                    }
+                                echo '</ul>';
+                                }
+                            ?>
+                        </div>
+                    </div>
+                </div>
+
+            <?php if(!empty($menuOption['news_sidebar']) || !empty($optionPage['view_danh-muc-sidebar-1']) || !empty($optionPage['view_danh-muc-sidebar-2']) || !empty($optionPage['view_banner-sidebar'])){
+                echo $this->render('layout/sidebar');
+            } ?>
+            </div>
+        </div>
+    </section>
+<?php endif; ?>
+

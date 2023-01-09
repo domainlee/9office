@@ -1,0 +1,67 @@
+<?php use Home\Model\DateBase;
+    $listNews = $newsLayout['news-list article']['news-list'];
+    if(!empty($listNews)): ?>
+    <section class="home-news">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="home-news__inner">
+                        <div class="home-news__headline">
+                            <h2><?= $newsLayout['news-title text']['value'] ?></h2>
+                        </div>
+                        <div class="home-news__list">
+                            <div class="home-news__news-first">
+                                <?php $firstNews = array_shift($listNews);
+                                    $imageFirst = '';
+                                    if(!empty(json_decode($firstNews['image'], true))){
+                                        $imageFirst = array_shift(json_decode($firstNews['image'], true));
+                                    }
+                                    ?>
+                                    <div class="home-news__item">
+                                        <div class="home-news__image-wrapper">
+                                            <a href="<?= $firstNews['url'] ?>">
+                                                <figure class="lazy home-news__image"
+                                                    data-src="<?= !empty($imageFirst) ? $imageFirst : null ?>">
+                                                </figure>
+                                            </a>
+                                        </div>
+                                        <div class="home-news__description">
+                                            <h3 class="home-news__title">
+                                                <a href="<?= $firstNews['url'] ?>"><?= $firstNews['title'] ?></a>
+                                            </h3>
+                                            <p class="home-news__date">
+                                                <i class="fa fa-clock-o"></i>
+                                                <?= DateBase::toFormat($firstNews['date'], 'd/m/Y') ?>
+                                            </p>
+                                        </div>
+                                    </div>
+                            </div>
+                            <?php if(!empty($listNews)): ?>
+                                <div class="home-news__news-after">
+                                    <?php foreach($listNews as $n):
+                                        $imageFirst = '';
+                                        if(!empty(json_decode($n['image'], true))){
+                                            $imageFirst = array_shift(json_decode($n['image'], true));
+                                        }
+                                        ?>
+                                        <div class="home-news__item">
+                                            <div class="home-news__description">
+                                                <h3 class="home-news__title">
+                                                    <a href="<?= $n['url'] ?>"><?= $n['title'] ?></a>
+                                                </h3>
+                                                <p class="home-news__date">
+                                                    <i class="fa fa-clock-o"></i>
+                                                    <?= DateBase::toFormat($n['date'], 'd/m/Y') ?>
+                                                </p>
+                                            </div>
+                                        </div>
+                                    <?php endforeach; ?>
+                                </div>
+                            <?php endif; ?>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+<?php endif; ?>

@@ -1,0 +1,34 @@
+<?php if(!empty($this->productLayout['product-list product']['product-list'])):?>
+<section class="feature-product">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <?= $this->productLayout['product-title text']['value'] ? '<h2 class="titleHome">'.$this->productLayout['product-title text']['value'].'</h2>' : ''?>
+                <?php $slider = $this->productLayout['product-slider-checkbox checkbox']['value']?>
+                <ul class="<?= $slider ? 'product-slider owl-carousel owl-theme' : 'lP' ?> feature-product__list">
+                    <?php foreach($this->productLayout['product-list product']['product-list'] as $k => $p):
+                        $image = json_decode($p['image'], true);
+                        if(!empty($image)){
+                            $imageFirst = array_shift($image);
+                        }
+                        $imgs = array_slice(json_decode($p['image'], true), 0, 2);
+                        ?>
+                        <li class="feature-product__item">
+                            <div class="feature-product__item--wrapper">
+                                <a href="<?= $p['url'] ?>">
+                                    <figure class="lazy two-up__product-image" data-src="<?= !empty($imgs) ? $imgs['0']:null ?>"></figure>
+                                    <figure class="lazy two-up__product-image two-up__product-image__two" data-src="<?= !empty($imgs) ? $imgs['1']:null ?>"></figure>
+                                </a>
+                            </div>
+                            <h3 class="feature-product__item--title"><?= $p['title'] ?></h3>
+                            <p class="price"><?= $p['priceOld'] ? number_format($p['priceOld']).' đ<i>'.number_format($p['price']).' đ</i>':number_format($p['price']).' đ' ?></p>
+                        </li>
+                    <?php endforeach; ?>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+</section>
+
+<?php endif;?>

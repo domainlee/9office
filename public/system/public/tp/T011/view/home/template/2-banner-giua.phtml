@@ -1,0 +1,25 @@
+<?php if(!empty($this->twoBanner)):
+    ?>
+    <div class="banner-two">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <ul class="banner-two__list">
+                        <?php
+                        if(!empty($this->twoBanner)):
+                            $i = 0;
+                            foreach($this->twoBanner['two-banner'] as $b):
+                                $i++;
+                                $imageFirst = '';
+                                if(!empty(json_decode($b['image'], true))){
+                                    $imageFirst = array_shift(json_decode($b['image'], true));
+                                }
+                                ?>
+                                <li class="banner-two__item"><a href="<?= $b['url'] ?>"><figure class="lazy banner-two__image" data-src="<?= $imageFirst ?>"></figure></a></li>
+                            <?php endforeach; endif;?>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+<?php endif; ?>

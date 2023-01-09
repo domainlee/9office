@@ -1,0 +1,34 @@
+<?php if(!empty($brandBannerList['brand-banner-list banner']['brand-banner-list'])): ?>
+<section class="brand-banner">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <?php
+                $listBanner = $brandBannerList['brand-banner-list banner']['brand-banner-list'];
+                echo '<div>'; ?>
+                <div class="container">
+                    <div class="brand-banner__title">
+                        <h3><?= $brandBannerList['brand-banner-title text']['value'] ?></h3>
+                    </div>
+                </div>
+                <?php echo '<ul class="brandList owl-carousel owl-theme">';
+                foreach($brandBannerList['brand-banner-list banner']['brand-banner-list'] as $b){
+                    $imageFirst = '';
+                    if(!empty(json_decode($b['image'], true))){
+                        $imageFirst = array_shift(json_decode($b['image'], true));
+                    }
+                    ?>
+                    <li>
+                        <a href="<?= $b['url']?:'#' ?>" onclick="<?= $b['url']?'':'return false;' ?>">
+                            <figure class="owl-lazy banner-image" data-src="<?= $imageFirst ?>"></figure>
+                        </a>
+                    </li>
+                    <?php
+                }
+                echo '</ul></div>';
+                ?>
+            </div>
+        </div>
+    </div>
+</section>
+<?php endif;?>

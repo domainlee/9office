@@ -1,0 +1,29 @@
+<?php if(!empty($this->supportLayout['support-title text']['value'])):?>
+<section class="form">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="form__inner">
+                    <div class="form__left">
+                        <h2 class="headline-default"><?= $this->supportLayout['support-title text']['value'] ? $this->supportLayout['support-title text']['value'] : ''?></h2>
+                        <?= $this->supportLayout['support-sub-title text']['value'] ? '<div class="four-post__intro"><span>'.$this->supportLayout['support-sub-title text']['value'].'</span></div>':'' ?>
+                    </div>
+                    <div class="form__right">
+                        <form class="form__register" data-parsley-validate novalidate>
+                            <div>
+                                <input class="email" type="text" data-parsley-type="email" required="required" data-parsley-error-message="Email không được để trống" placeholder="Email *" />
+                            </div>
+                            <div>
+                                <input class="phone" type="text" data-parsley-type="digits" data-parsley-length="[10,11]" required="required" data-parsley-error-message="Số điện thoại không được để trống" placeholder="Số điện thoại *" />
+                            </div>
+                            <div>
+                                <button type="submit">Gửi</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<?php endif;?>

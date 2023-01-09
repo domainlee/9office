@@ -1,0 +1,149 @@
+<?php
+    use Home\Model\DateBase;
+    $optionBasic = $this->home()->optionBasic();
+    $optionPage = $this->home()->optionPage();
+    $fileLogo = getimagesize('http://'.$_SERVER['HTTP_HOST'].$optionBasic['logo']);
+?>
+<?php
+    /**** Start SEO DWEB *****/
+    echo $this->headLink(['rel' => 'canonical', 'href' => 'http://'.$_SERVER['HTTP_HOST'] ]);
+    $this->headTitle($this->escapeHtml($this->translate(!empty($optionBasic['metaTitle']) ? $optionBasic['metaTitle']:null)));
+    $this->headMeta()->appendName('description', (!empty($optionBasic['metaDescription']) ? $optionBasic['metaDescription']:null));
+    $this->headMeta()->appendName('keywords', (!empty($optionBasic['metaKeyword']) ? $optionBasic['metaKeyword']:null));
+    $this->headMeta()->appendProperty('og:title', !empty($optionBasic['metaTitle']) ? $optionBasic['metaTitle']:null);
+    $this->headMeta()->appendProperty('og:description', !empty($optionBasic['metaDescription']) ? $optionBasic['metaDescription']:null);
+    $this->headMeta()->appendProperty('og:image', !empty($optionBasic['logo']) ? 'http://'.$_SERVER['HTTP_HOST'].$optionBasic['logo']:null);
+    $this->headMeta()->appendProperty('og:image:secure_url', !empty($optionBasic['logo']) ? 'http://'.$_SERVER['HTTP_HOST'].$optionBasic['logo']:null);
+    $this->headMeta()->appendProperty('og:image:width', $fileLogo['0']);
+    $this->headMeta()->appendProperty('og:image:height', $fileLogo['1']);
+    $this->headMeta()->appendProperty('og:type', 'Website');
+    $this->headMeta()->appendProperty('og:url', 'http://'.$_SERVER['HTTP_HOST']);
+    $this->headMeta()->appendProperty('og:site_name', $optionBasic['sologan']);
+
+    $this->headMeta()->appendName('twitter:card', !empty($optionBasic['logo']) ? 'http://'.$_SERVER['HTTP_HOST'].$optionBasic['logo']:'summary_large_image');
+    $this->headMeta()->appendName('twitter:title', !empty($optionBasic['metaTitle']) ? $optionBasic['metaTitle']:null);
+    $this->headMeta()->appendName('twitter:description', (!empty($optionBasic['metaDescription']) ? $optionBasic['metaDescription']:null));
+    $this->headMeta()->appendName('twitter:image', !empty($optionBasic['logo']) ? 'http://'.$_SERVER['HTTP_HOST'].$optionBasic['logo']:null);
+    /**** End SEO DWEB *****/
+?>
+<?php
+if(!empty($optionPage['view_banner-bai-viet'])):
+    foreach($optionPage['banner'] as $b):
+        $image = json_decode($b['image'], true);
+        $imageFirst = '';
+        if(!empty($image)){
+            $imageFirst = array_shift($image);
+        }
+?>
+<section class="hero-slider banner-image" style="background-image: url(<?= !empty($imageFirst) ? $imageFirst:null ?>)">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="hero-slider__content">
+                    <span><?= $b['category'] ?></span>
+                    <h2><?= $b['title'] ?></h2>
+                    <div class="hero-slider__intro"><?= $b['intro'] ?></div>
+                    <a href="<?= $b['url'] ?>">Đọc tiếp</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<?php endforeach; endif;?>
+
+<?php if(!empty($optionPage['view_anh-gioi-thieu-ben-trai'])):?>
+<section class="two-post">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="two-post__inner">
+                    <?php
+                        foreach($optionPage['anh-gioi-thieu-ben-trai'] as $b):
+                            $image = json_decode($b['image'], true);
+                            $imageFirst = '';
+                            if(!empty($image)){
+                                $imageFirst = array_shift($image);
+                            }
+                    ?>
+                        <div class="two-post__left">
+                            <figure class="lazy two-post__image" data-src="<?= $imageFirst ?>">
+                                <div class="two-post__left--content">
+                                    <h3>5</h3>
+                                    <p>Kinh nghiệm</p>
+                                </div>
+                            </figure>
+                        </div>
+                    <?php
+                        endforeach;
+                    ?>
+                    <?php if(!empty($optionPage['tieu-de-gioi-thieu']) || !empty($optionPage['noi-dung-gioi-thieu'])): ?>
+                    <div class="two-post__right">
+                        <h2 class="two-post__title"><?= $optionPage['tieu-de-gioi-thieu'] ?></h2>
+                        <div class="two-post__intro">
+                            <?= $optionPage['noi-dung-gioi-thieu'] ?>
+                        </div>
+                    </div>
+                    <?php endif; ?>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<?php endif;?>
+<?php
+    $news = $this->News()->searchPaginator();
+    $news->setItemCountPerPage($this->uriParams()->getRequest()->getQuery('icpp') ? : 15);
+
+    if(!empty($news)):
+    $category = $this->NewsCategory()->getCategories();
+?>
+<section class="post-last">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="post-last__inner">
+                    <div class="post-last__headline">
+                        <h3>Dự án mới</h3>
+                        <h2>Nhiều người xem nhất</h2>
+                    </div>
+                    <div class="post-last__list">
+                        <?php
+                            foreach($news as $n):
+                                $extraContent = json_decode($n->getExtracontent(), true);
+
+                            $image = json_decode($n->getImage(), true);
+                            $imageFirst = '';
+                            if(!empty($image)){
+                                $imageFirst = array_shift($image);
+                            }
+                        ?>
+                            <div class="post-last__item">
+                                <div class="post-last__image">
+                                    <a href="<?= $n->getViewLink(); ?>">
+                                        <figure class="lazy" data-src="<?= $imageFirst ?>">
+                                            <?= $n->getType() == 2 ? '<i class="fa fa-picture-o" aria-hidden="true"></i>':null ?>
+                                        </figure>
+                                    </a>
+                                </div>
+                                <div class="post-last__content">
+                                    <?= !empty($extraContent['nam']) ? '<span class="post-last__date">'.$extraContent['nam'].'</span>':null ?>
+                                    <h2 class="post-last__title"><a href="<?= $n->getViewLink() ?>"><?= $n->getTitle() ?></a></h2>
+                                    <div class="post-last__intro"><?= $n->getDescription() ?></div>
+                                    <a class="post-last__link" href="<?= $n->getViewLink() ?>">Xem thêm <span class="icon-row"></span></a>
+                                </div>
+                            </div>
+                        <?php endforeach; ?>
+                    </div>
+
+                    <div class="news__paginator">
+                        <?php
+                        echo $this->paginationControl($news, 'Elastic', 'partial/listPage');
+                        ?>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<?php endif; ?>

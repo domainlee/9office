@@ -1,0 +1,42 @@
+<?php
+    $optionBasic = $this->home()->optionBasic();
+    $optionPage = $this->home()->optionPage();
+?>
+<?php if(!empty($optionPage['view_cot-thong-tin-footer-1']) || !empty($optionPage['view_cot-thong-tin-footer-2']) || !empty($optionPage['view_cot-thong-tin-footer-3'])): ?>
+<div class="footer w1230">
+    <div class="container">
+        <div class="row">
+            <?php if(!empty($optionPage['view_cot-thong-tin-footer-1'])):?>
+            <div class="col-md-4">
+                <div class="footer__logo">
+                    <img src="<?= $optionBasic['logo'] ?>" alt="Fashion" />
+                </div>
+                <p>
+                    <?= $optionPage['noi-dung-cot-thong-tin-1'] ? $optionPage['noi-dung-cot-thong-tin-1'] : ''?>
+                </p>
+            </div>
+            <?php endif;?>
+            <?php if(!empty($optionPage['view_cot-thong-tin-footer-2'])):?>
+            <div class="col-md-4">
+                <div class="footer__contact">
+                    <h3 class="footer__title"><?= $optionPage['tieu-de-cot-thong-tin-2'] ? $optionPage['tieu-de-cot-thong-tin-2'] : ''?></h3>
+                    <?= $optionPage['noi-dung-cot-thong-tin-2'] ? $optionPage['noi-dung-cot-thong-tin-2'] : ''?>
+                </div>
+            </div>
+            <?php endif;?>
+            <?php if(!empty($optionPage['view_cot-thong-tin-footer-3'])):?>
+            <div class="col-md-4">
+                <h3 class="footer__title"><?= $optionPage['tieu-de-cot-thong-tin-3'] ? $optionPage['tieu-de-cot-thong-tin-3'] : ''?></h3>
+                <div class="social">
+                    <?= !empty($optionPage['youtube']) ? '<a class="icon-social-youtube icons" href="'.$optionPage['youtube'].'"></a>' : null ?>
+                    <?= !empty($optionPage['facebook']) ? '<a class="icon-social-facebook icons" href="'.$optionPage['facebook'].'"></a>' : null ?>
+                    <?= !empty($optionPage['twitter']) ? '<a class="icon-social-twitter icons" href="'.$optionPage['twitter'].'"></a>':null ?>
+                    <?= !empty($optionPage['instagram']) ? '<a class="icon-social-instagram icons" href="'.$optionPage['instagram'].'"></a>':null ?>
+                    <?= !empty($optionPage['pinterest']) ? '<a class="icon-social-pinterest icons" href="'.$optionPage['pinterest'].'"></a>':null ?>
+                </div>
+            </div>
+            <?php endif;?>
+        </div>
+    </div>
+</div>
+<?php endif;?>

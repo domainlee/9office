@@ -1,0 +1,34 @@
+<?php if(!empty($this->productLayout2['product-list-2 product']['product-list-2'])):?>
+    <section class="product-2">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="product-title">
+                        <?= $this->productLayout2['product-title-2 text']['value'] ? '<h2 class="titleHome">'.$this->productLayout2['product-title-2 text']['value'].'</h2>' : ''?>
+                    </div>
+                    <?php $slider = $this->productLayout2['product-slider-checkbox-2 checkbox']['value'];?>
+                    <ul class="<?= $slider ? 'product-slider-2 owl-carousel owl-theme' : 'lP2' ?>">
+                        <?php foreach($this->productLayout2['product-list-2 product']['product-list-2'] as $k => $p):
+                            $image = json_decode($p['image'], true);
+                            if(!empty($image)){
+                                $imageFirst = array_shift($image);
+                            }
+                            ?>
+                            <li class="product-2__item">
+                                <div class="product-2__item--inner">
+                                    <a class="pI" href="<?= $p['url'] ?>"><figure class="lazy image-product" data-src="<?= !empty($imageFirst) ? $imageFirst:'' ?>"></figure></a>
+                                    <div class="product-2__info">
+                                        <h3><a href="<?= $p['url'] ?>"><?= $p['title'] ?></a></h3>
+                                        <p class="price <?= ($p['priceOld'] ? 'priceOld':null) ?>">
+                                            <?=  (!empty($p['priceOld']) ? '<span>'.number_format($p['priceOld']).'₫</span><i>'.number_format($p['price']).'₫</i>':number_format($p['price']).'₫') ?>
+                                        </p>
+                                    </div>
+                                </div>
+                            </li>
+                        <?php endforeach; ?>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+<?php endif;?>

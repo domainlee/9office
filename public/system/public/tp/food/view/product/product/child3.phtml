@@ -1,0 +1,52 @@
+<?php
+$category = $this->category;
+$prodCategory = $this->category();
+$product = $this->paginator;
+
+?>
+<div class="category Child2">
+    <ul class="breadcrumdChild">
+        <?php
+        if($category->getParentId()){
+            $cc = $prodCategory->getId($category);
+            if($cc->getParentId()){
+                $ccc = $prodCategory->getId($cc);
+                if($ccc->getParentId()){
+                    $cccc = $prodCategory->getId($ccc);
+                }
+            }
+        }
+        ?>
+        <?= (isset($cc) ? '<li class="3"><a href="'.$cc->getViewLink().'">'.$cc->getName().'</a></li>':null) ?>
+        <li class="4"><a href="<?= $category->getViewLink(); ?>"><?= $category->getName(); ?></a></li>
+    </ul>
+
+    <div class="productChild3">
+        <?php
+            if(count($product)){
+                echo '<ul>';
+                foreach($product as $p){
+                    $images = $this->home()->getImages(['id' => $p->getId(), 'type' => 2]);
+                    $img = '';
+                    if(count($images)){
+                        $c = 0;
+                        foreach($images as $i){
+                            $c++;
+                            if($c == 1){
+                                $img = '<img src="'.$i->getOption('media')->getPictureUri().'" alt="'.$p->getTitle().'" />';
+                            }
+                        }
+                    }
+                    echo '<li>
+                            <a href="'.$p->getViewLink().'">'.$img.'<h2>'.$p->getTitle().'</h2></a>
+                            <p>'.($p->getPriceOld() != 0 ? '<span>'.number_format($p->getPriceOld()).' VNĐ</span>':null).'<span class="'.($p->getPriceOld() != 0 ? 'PriceOld':null).'">'.number_format($p->getPrice()).' VNĐ</span></p>
+                        </li>';
+                }
+                echo '</ul>';
+            }
+            echo '<div class="paginatorProduct">';
+            echo $this->paginationControl($this->paginator, 'Elastic', 'partial/listPage');
+            echo '</div>';
+        ?>
+    </div>
+</div>

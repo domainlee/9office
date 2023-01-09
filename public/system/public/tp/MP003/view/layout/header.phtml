@@ -1,0 +1,154 @@
+<?php
+    $optionBasic = $this->home()->optionBasic();
+    $optionPage = $this->home()->optionPage();
+    $url = $this->UriParams()->getRequest()->getRequestUri();
+?>
+<?php if(!empty($optionPage['hotline']) || !empty($optionPage['email']) || !empty($optionPage['dia-chi-shop'])):?>
+<div class="head__top">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="head__top--inner">
+                    <?php if(!empty($optionPage['hotline']) || !empty($optionPage['email'])): ?>
+                    <div class="leftInfo">
+                        <?= $optionPage['hotline'] ? '<span class="top-hotline"><i class="fa fa-phone" aria-hidden="true"></i><a href="tel:'.$optionPage['hotline'].'">'.$optionPage['hotline'].'</a></span>' : ''?>
+                        <?= $optionPage['email'] ? '<span class="top-email"><i class="fa fa-envelope" aria-hidden="true"></i><a href="mailto:'.$optionPage['email'].'">'.$optionPage['email'].'</a></span>' : ''?>
+                    </div>
+                    <?php endif;?>
+                    <?php if(!empty($optionPage['dia-chi-shop'])):?>
+                    <div class="rightInfo">
+                        <?= $optionPage['dia-chi-shop'] ? '<span class="top-hotline"><i class="fa fa-map-marker" aria-hidden="true"></i><a href="#">'.$optionPage['dia-chi-shop'].'</a></span>' : ''?>
+                    </div>
+                    <?php endif;?>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<?php endif;?>
+<div class="head__logo">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="head__logo--inner">
+                    <div class="head__col--logo">
+                        <?php if(!empty($optionBasic['logo'])): ?>
+                            <h1>
+                                <div class="logo">
+                                    <a href="/">
+                                        <img src="<?= $optionBasic['logo'] ?>" alt="<?= !empty($optionBasic['sologan']) ? $optionBasic['sologan']:null ?>" />
+                                    </a>
+                                </div>
+                            </h1>
+                        <?php else: ?>
+                            <div class="logo">
+                                <a class="logo-text" href="/">FASHION<p>Make of style</p></a>
+                            </div>
+                        <?php endif; ?>
+                        <a id="menuMobile">
+                            <i class="icon-menu icons" aria-hidden="true"></i>
+                        </a>
+                    </div>
+                    <div class="head__col--form">
+                        <div class="search-box">
+                            <div class="search-form">
+
+                                <form id="search" action="/search" method="get">
+                                    <input type="text" name="q" placeholder="Tìm kiếm ..."/>
+                                    <a href="javascript:{}" onclick="document.getElementById('search').submit();"><i class="fa fa-search" aria-hidden="true"></i></a>
+                                    <div id="searchFolding"></div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="head__col--cart">
+                        <div class="loginRegister">
+                            <i class="fa fa-user-o" aria-hidden="true"></i>
+                            <?php
+                                if ($this->user()->hasIdentity()) {
+                                 ?>
+                                    <ul class="RegisterLogin">
+                                        <li><a class="login-icon" href="#"><?= $this->user()->getUser()->getFullName() ? $this->user()->getUser()->getFullName():ucfirst($this->user()->getUser()->getUserName()) ?></a></li>
+                                        <li><a href="/user/signout">Thoát</a></li>
+                                    </ul>
+                                <?php
+                                }else{
+                                    ?>
+                                    <ul class="RegisterLogin">
+                                        <li><a href="/user/signup">Đăng ký</a></li>
+                                        <li><a href="/user/signin">Đăng nhập</a></li>
+                                    </ul>
+                                <?php
+                                }
+                                ?>
+                        </div>
+                        <div class="cart-label">
+                            <?php
+                            $cartService = $this->cart()->getServiceCart();
+                            $products = $cartService->getProducts();
+                            ?>
+                            <a class="totalCart" href="/cart"><i class="fa fa-shopping-cart" aria-hidden="true"></i><span><?= $cartService->getTotalProducts() ?></span></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="head__nav">
+    <div class="container">
+        <div class="row">
+            <?php
+            $menuOption = $this->home()->getMenu();
+            ?>
+            <div class="col-md-12">
+                <div class="nav__left">
+                    <ul>
+                        <?php foreach($menuOption['head_menu'] as $m): ?>
+                            <li class="<?= $url == $m['url'] ? 'active ' : null?><?= $m['children'] ? 'navIsset':null ?>"><a href="<?= $m['url'] ?>"><?= $m['name'] ?><?= $m['children'] ? '<i class="fa fa-caret-down"></i>' : null ?></a>
+                                <?php if(!empty($m['children'])): ?>
+                                    <ul class="navHome__list">
+                                        <?php foreach($m['children'] as $mm): ?>
+                                            <li <?= $mm['children'] ? 'class="navIsset"':null ?>><a href="<?= $mm['url'] ?>"><?= $mm['name'] ?></a>
+                                                <?php if(!empty($mm['children'])): ?>
+                                                    <ul class="ul-level-3">
+                                                        <?php foreach ($mm['children'] as $mcc):?>
+                                                            <li><a href="<?= $mcc['url'] ?>"><?= $mcc['name'] ?></a></li>
+                                                        <?php endforeach;?>
+                                                    </ul>
+                                                <?php endif;?>
+                                            </li>
+                                        <?php endforeach; ?>
+                                    </ul>
+                                <?php endif; ?>
+                            </li>
+                        <?php endforeach; ?>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="navMobile">
+    <ul class="navMobile__list">
+        <?php foreach($menuOption['head_menu'] as $m): ?>
+            <li <?= $url == $m['url'] ? 'class="active"':null ?>><?= $m['children'] ? '<button><i class="fa fa-caret-down"></i></button>' : null ?><a href="<?= $m['url'] ?>"><?= $m['name'] ?></a>
+                <?php if(!empty($m['children'])): ?>
+                    <ul class="nav2">
+                        <?php foreach($m['children'] as $mm): ?>
+                            <li><?= $mm['children'] ? '<button><i class="fa fa-caret-down"></i></button>' : null ?><a href="<?= $mm['url'] ?>"><?= $mm['name'] ?></a>
+                                <?php if(!empty($mm['children'])): ?>
+                                    <ul>
+                                        <?php foreach ($mm['children'] as $mcc):?>
+                                            <li><a href="<?= $mcc['url'] ?>"><?= $mcc['name'] ?></a></li>
+                                        <?php endforeach;?>
+                                    </ul>
+                                <?php endif;?>
+                            </li>
+                        <?php endforeach; ?>
+                    </ul>
+                <?php endif; ?>
+            </li>
+        <?php endforeach; ?>
+    </ul>
+</div>

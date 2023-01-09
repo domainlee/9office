@@ -1,0 +1,241 @@
+.header {
+    background: none;
+}
+.header-inner {
+    justify-content: flex-end;
+}
+.created-website {
+    height: 100vh;
+}
+.created-website__inner {
+    display: flex;
+}
+.created-website__left {
+    width: 65%;
+}
+.created-website__right {
+    width: 35%;
+}
+.created-website__image {
+    height: 100vh;
+    background-size: cover;
+    background-position: center;
+}
+.select-custom {
+    position: relative;
+}
+.created-website__form {
+    padding: 0 50px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+.header-logo {
+    display: flex;
+    justify-content: center;
+    margin: 80px 0 0;
+}
+input[type="text"], input[type="password"] {
+    height: 60px;
+    width: 100%;
+    border-radius: 10px;
+    border: 1px solid #DDD;
+    padding: 0 20px;
+    font-size: 18px;
+    font-weight: 300;
+    transition: all 0.2s ease;
+}
+input[type="text"]:focus, input[type="password"]:focus {
+    outline: none;
+    border-color: #05aabe;
+}
+.register__title {
+    font-size: 16px;
+    text-align: center;
+    margin: 0 0 50px;
+    color: #999;
+}
+button[type=submit] {
+    width: 100%;
+    background-color: #05aabe;
+    color: #FFF;
+    border: none;
+    padding: 15px;
+    text-transform: uppercase;
+    border-radius: 10px;
+    font-size: 13px;
+    font-weight: 600;
+}
+button[type=submit]:focus {
+    outline: none;
+}
+.created-website__line {
+    border-top: 1px solid #DDD;
+    position: relative;
+    text-align: center;
+    margin: 50px 0 0;
+}
+.created-website__line span {
+    background: #FFF;
+    position: relative;
+    top: -12px;
+    padding: 0 15px;
+    color: #666;
+    font-size: 13px;
+}
+.created-website__facebook {
+    background-color: #39589b;
+    color: #FFF;
+    border-radius: 5px;
+    height: 40px;
+    align-items: center;
+    display: flex;
+    width: 150px;
+    margin: 0 auto;
+    justify-content: center;
+    cursor: pointer;
+}
+.created-website__facebook:hover {
+    color: #fff;
+}
+.created-website__facebook i {
+    height: 34px;
+    display: flex;
+    align-items: center;
+    width: 25px;
+    justify-content: center;
+    font-size: 15px;
+    border-radius: 5px;
+}
+.parsley-errors-list.filled {
+    display: block;
+    margin: 10px 0 0;
+}
+.created-website__store {
+    display: flex;
+    align-items: center;
+    color: #666;
+    margin: 15px 0 0;
+}
+.created-website__store input[type="text"] {
+    border: none;
+    border-bottom: 1px solid #DDD;
+    border-radius: 0;
+    max-width: 150px;
+    font-size: 13px;
+    height: 40px;
+    padding: 0 5px;
+    margin: 0 5px;
+}
+.created-website__question {
+    position: relative;
+}
+.created-website__question p {
+    position: absolute;
+    width: 250px;
+    right: -65px;
+    bottom: 35px;
+    padding: 15px;
+    margin: 0;
+    font-size: 13px;
+    color: #fff;
+    background: #05aabe;
+    opacity: 0;
+    visibility: hidden;
+    transition: 0.3s all ease;
+}
+.created-website__question:hover p {
+    opacity: 1;
+    visibility: visible;
+    bottom: 40px;
+}
+.created-website__question p:after {
+    content: '';
+    height: 0;
+    border-left: 8px solid transparent;
+    border-right: 8px solid transparent;
+    border-top: 8px solid #05aabe;
+    position: absolute;
+    bottom: -8px;
+}
+.created-website__question i {
+    margin: 0 0 0 15px;
+    font-size: 18px;
+    color: #999;
+}
+.created-website__store .parsley-errors-list.filled {
+    display: none !important;
+}
+.created-website__label {
+    color: #666;
+    font-size: 13px;
+    padding: 20px;
+    background: #f9f9f9;
+    line-height: 22px;
+    display: flex;
+    align-items: center;
+    border-radius: 10px;
+    margin: auto 0 30px;
+}
+.created-website__label i {
+    margin: 0 15px 0 0;
+    font-size: 28px;
+    color: #666;
+}
+.created-website__label p {
+    margin: 0;
+}
+.created-website__label p span {
+    color: #05aabe;
+}
+.label__store {
+    color: #05aabe;
+}
+.modal-content {
+    line-height: 30px;
+}
+.modal-content .btn-d {
+    padding: 7px 10px;
+    width: 100px;
+    line-height: 18px;
+    font-size: 13px;
+}
+.modal-content a {
+    color: #05aabe;
+}
+.modal__headline {
+    font-weight: 500;
+    font-size: 18px;
+    border-bottom: 1px solid #DDD;
+    padding: 0 0 10px;
+    margin: 0 0 10px;
+    color: #1daec1;
+    text-transform: uppercase;
+}
+#modalRegisterDWEB .modal-content, #modalGlobal .modal-content {
+    padding: 30px 50px;
+}
+.text-dark {
+    color: #666;
+}
+.error li {
+    margin: 10px 0 0;
+}
+.signin-page__list {
+    display: flex;
+    margin: 5px -5px;
+}
+.signin-page__list li {
+    flex: 1;
+    border: 1px solid #DDD;
+    padding: 5px;
+    text-align: center;
+    width: 50%;
+    margin: 5px;
+    border-radius: 5px;
+}
+.signin-page__list li a {
+    color: #666;
+    cursor: pointer;
+}

@@ -1,0 +1,111 @@
+.box-comment {
+    max-width: 800px;
+    margin: 0 auto 30px;
+    background-color: #FFF;
+    padding: 30px;
+    border: 1px solid #DDD;
+    border-radius: 5px;
+}
+.box-comment__headline {
+    margin: 0 0 15px 0;
+}
+.box-comment textarea {
+    width: 100%;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #DDD;
+    min-height: 80px;
+}
+.box-comment textarea:focus, .box-comment__item--two input:focus {
+    outline: none;
+    border-color: #CCC;
+}
+.box-comment__item--two {
+    display: flex;
+    justify-content: space-between;
+    margin: 12px 0 0;
+}
+.box-comment__item--two input {
+    width: 49%;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #DDD;
+}
+.box-comment__button {
+    margin: 15px 0 30px;
+}
+.box-comment__button button {
+    background-color: #f9f9f9;
+    padding: 8px 25px;
+    border-radius: 5px;
+    text-transform: uppercase;
+    border-color: #DDD;
+    -webkit-transition: all 0.2s ease;
+    -moz-transition: all 0.2s ease;
+    -o-transition: all 0.2s ease;
+    transition: all 0.2s ease;
+}
+.box-comment__button button:hover {
+    border-color: #CCC;
+    box-shadow: 0 2px 3px #DDDD;
+}
+.form__comment textarea.parsley-error, .form__comment input.parsley-error {
+    border-color: #ff9e9e;
+    background-color: #fff2f2;
+}
+.box-comment__list {
+    font-family: Arial, "Helvetica Neue", "Helvetica", Tahoma, Verdana, sans-serif;
+}
+.box-comment__user span {
+    width: 60px;
+    height: 60px;
+    background: #DDD;
+    display: inline-flex;
+    align-items: center;
+    border-radius: 50%;
+    font-weight: 600;
+    justify-content: center;
+    margin: 0 10px 0 0;
+    font-size: 20px;
+}
+.box-comment__item {
+    padding: 0 0 15px;
+    margin: 15px 0;
+    border-bottom: 1px solid #DDD;
+    display: flex;
+}
+.box-comment__user--comment {
+    margin: 0 0 0 5px;
+}
+.box-comment__user--tool {
+    margin: 10px 0 0;
+    color: #888;
+    display: flex;
+    font-size: 12px;
+}
+.box-comment__user--tool a {
+    margin: 0 10px 0 0;
+    color: #337ab7;
+}
+.commentFacebook {
+    max-width: 800px;
+    margin: 0 auto 30px;
+    background-color: #FFF;
+    padding: 30px;
+    border: 1px solid #DDD;
+    border-radius: 5px;
+}
+.social {
+    margin: 0 0 15px;
+    display: inline-block;
+}
+@media only screen and (min-width:200px) and (max-width: 640px) {
+    .box-comment {
+        padding: 20px;
+    }
+    .box-comment__user span {
+        width: 40px;
+        height: 40px;
+        font-size: 12px;
+    }
+}

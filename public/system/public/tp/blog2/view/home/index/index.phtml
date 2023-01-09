@@ -1,0 +1,129 @@
+<?php
+
+    $this->headMeta()->appendName('description', ('DWEB công cụ tạo website, bán hàng, giới thiệu công ty, thời trang, mỹ phẩm, kiến trúc ... Chúng tôi luôn quan tâm tới từng sản phẩm & lắng nghe khách hàng'));
+    $this->headMeta()->appendName('keywords', ('DWEB, công cụ tạo website, bán hàng, giới thiệu công ty, thời trang, mỹ phẩm, kiến trúc'));
+
+    $this->headMeta()->appendProperty('fb:app_id', '1697190970583102');
+    $this->headMeta()->appendProperty('article:author', 'https://www.facebook.com/dwebvietnam');
+    $this->headMeta()->appendProperty('og:locale', 'vi_VN');
+    $this->headMeta()->appendProperty('og:image', 'http://dweb.vn/tp/dweb/image/dweb-thumbnail.png');
+    $this->headMeta()->appendProperty('og:url', 'http://dweb.vn');
+    $this->headMeta()->appendProperty('og:title', 'DWEB website trải nghiệm người dùng');
+    $this->headMeta()->appendProperty('og:description', ('DWEB là công cụ tạo website, bán hàng, giới thiệu công ty, thời trang, mỹ phẩm, kiến trúc ... Chúng tôi luôn quan tâm tới từng sản phẩm & lắng nghe khách hàng'));
+
+    $this->headMeta()->appendProperty('twitter:card', 'DWEB.VN');
+    $this->headMeta()->appendProperty('twitter:title', 'DWEB website trải nghiệm người dùng');
+    $this->headMeta()->appendProperty('twitter:image', 'http://dweb.vn/tp/dweb/image/dweb-thumbnail.png');
+    $this->headMeta()->appendProperty('twitter:description', 'DWEB là công cụ tạo website, bán hàng, giới thiệu công ty, thời trang, mỹ phẩm, kiến trúc ... Chúng tôi luôn quan tâm tới từng sản phẩm & lắng nghe khách hàng');
+
+    $optionPage = $this->home()->optionPage();
+    $homePage = $this->home()->homePage();
+?>
+
+<!-- <section class="m-t-100 blog">
+    <div class="price__hero">
+        <div class="price__hero-inner">
+            <h1 class="price__hero-title">Blog <span>DWEB</span></h1>
+            <p class="price__hero-description">
+                Chia sẻ kinh nghiệm ý tưởng kinh doanh online thiết thực nhất
+            </p>
+        </div>
+    </div>
+</section> -->
+
+
+<?php
+    $news = $this->News()->searchPaginator();
+    $news->setItemCountPerPage($this->uriParams()->getRequest()->getQuery('icpp') ? : 12);
+    if(!empty($news)):
+    $category = $this->NewsCategory()->getCategories();
+    $temp = array();
+    foreach ($news as $n) {
+        $newsList[$n->getId()] = $n;
+    }
+
+    if(!empty($homePage)):
+        $count = 0;
+        foreach($homePage as $k => $v ):
+            $layout = explode(' ',$k);
+            switch ($layout[0]) {
+                case "news-layout":
+                    foreach ($v['news-list article']['news-list'] as $n) {
+                        unset($newsList[$n['id']]);
+                    }
+                    echo $this->partial('home/template/news-layout', ['newsLayout' => $v]);
+                    break;
+                default:
+                    break;
+            }
+        endforeach;
+    endif;
+?>
+
+<section class="news">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="news__inner">
+                    <div class="news__category">
+                        <ul class="news__list-category">
+                            <?php $url = $this->UriParams()->getRequest()->getRequestUri(); ?>
+                            <?php if(!empty($category)): ?>
+                                <?php foreach($category as $t): ?>
+                                    <li><a <?= $url == $t->getViewLink() ? 'class="active"':null ?> href="<?= $t->getViewLink() ?>"><?= $t->getName() ?></a></li>
+                                <?php endforeach; ?>
+                            <?php endif; ?>
+                        </ul>
+                    </div>
+                    <div class="news__list">
+                        <?php
+                            $i = 0;
+                            foreach($newsList as $n):
+                            $i++;
+                            $image = json_decode($n->getImage(), true);
+                            $imageFirst = '';
+                            if(!empty($image)){
+                                $imageFirst = array_shift($image);
+                            }
+                            if($i == 7):
+                            ?>
+                            <div class="adv-middle">
+                                <a href="http://dweb.vn/thiet-ke-web-gia-re-n356.html" title="thiet ke web gia re">
+                                    <figure style="background-image: url('/tp/blog/image/thiet-ke-web-gia-re-1.png');">
+                                        <div class="landing-head-hero__content">
+                                            <h2 class="">Thiết kế <span>web giá rẻ</span></h2>
+                                            <p class=""><?= !empty($optionPage['tieu-de-khuyen-mai-danh-muc']) ? $optionPage['tieu-de-khuyen-mai-danh-muc']:'Chỉ với <span>3000k</span>/ ngày bạn đã có ngay một website.' ?> </p>
+                                            <span>Dùng thử miễn phí</span>
+                                        </div>
+                                    </figure>
+                                </a>
+                            </div>
+                            <?php endif; ?>
+                            <div class="news__item">
+                                <div class="news__item--inner">
+                                    <a href="<?= $n->getViewLink() ?>">
+                                        <figure class="lazy news__image" data-src="<?= $imageFirst ?>"></figure>
+                                    </a>
+                                    <div class="news__intro">
+                                        <a href="<?= $n->getViewLink() ?>">
+                                            <h2 class="news__title"><?= $n->getTitle() ?></h2>
+                                        </a>
+                                        <div class="news__intro--sub">
+                                            <?= $n->getDescription() ?>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        <?php endforeach; ?>
+                    </div>
+                    <div class="news__paginator">
+                        <?php
+                            echo $this->paginationControl($news, 'Elastic', 'partial/listPage');
+                        ?>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<?php endif; ?>

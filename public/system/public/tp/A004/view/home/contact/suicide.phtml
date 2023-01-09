@@ -1,0 +1,60 @@
+<?php
+    $this->headTitle($this->escapeHtml($this->translate('Liên hệ')));
+    $this->headMeta()->appendName('content', ('DWEB - là một cơ quan thiết kế website sáng tạo có trụ sở tại 295A Hoàng Mai, Hà Nội. Chúng tôi cung cấp dịch vụ thiết kế UI/UX layout Website/Mobile xây dựng thương hiệu'));
+    $this->headMeta()->appendName('keywords', ('Thiết kế website theo yêu cầu, UI/UX, Nhận dạng thương hiệu'));
+    $this->headMeta()->appendProperty('og:title', 'Difference Web');
+?>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="suicideForm">
+                <h2>Gửi câu hỏi tư vấn</h2>
+                <p>
+                    Gửi vấn đề của bạn để được Bác sĩ, Chuyên gia F5 Beauty tư vấn!
+                </p>
+                <?php
+                    if(isset($this->error) && $this->error == 0){
+                        echo '<meta http-equiv="refresh" content="8;url=/" />';
+                        echo '<div class="successContact">'.$this->mes.'</div>';
+                    }else{
+                ?>
+                <form method="post">
+                    <?php
+                        $name = '';
+                        $phone = '';
+                        $email = '';
+                        $error = $this->error;
+                    ?>
+                    <div <?= (isset($this->error['fullName']) ? 'class="error"':null ) ?>>
+                        <label>Họ và tên: *</label>
+                        <input type="text" maxlength="50" name="fullName" placeholder="Họ tên" required <?= (isset($name) ? 'value="'.$name.'"':null) ?> />
+                        <?=  (isset($this->error['fullName']) ? '<p>'.$this->error['fullName'].'</p>':'') ?>
+                    </div>
+                    <div <?= (isset($this->error['phone']) ? 'class="error"':null ) ?>>
+                        <label>Số điện thoại: *</label>
+                        <input type="text" pattern="\d+" minlength="10" maxlength="12" name="phone" placeholder="Số điện thoại" required <?= (isset($phone) ? 'value="'.$phone.'"':null) ?> />
+                        <?= (isset($this->error['phone']) ? '<p>'.$this->error['phone'].'</p>':'') ?>
+                    </div>
+                    <div <?= (isset($this->error['email']) ? 'class="error"':null ) ?>>
+                        <label>Email: *</label>
+                        <input type="email" name="email" placeholder="Email" required <?= (isset($email) ? 'value="'.$email.'"':null) ?>/>
+                        <?= (isset($this->error['email']) ? '<p>'.$this->error['email'].'</p>':'') ?>
+                    </div>
+                    <div <?= (isset($this->error['content']) ? 'class="error"':null ) ?>>
+                        <label>Thông điệp:</label>
+                        <textarea name="content" placeholder="Thông điệp" required></textarea>
+                        <?= (isset($this->error['content']) ? '<p>'.$this->error['content'].'</p>':'') ?>
+                    </div>
+                    <div>
+                        <label></label>
+                        <input type="submit" value="Gửi" />
+                    </div>
+                </form>
+                <?php
+                    }
+                ?>
+            </div>
+        </div>
+    </div>
+</div>

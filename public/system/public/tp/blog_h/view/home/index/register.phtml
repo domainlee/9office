@@ -1,0 +1,71 @@
+<?php
+$this->headTitle($this->escapeHtml($this->translate('Tạo website')));
+$this->headMeta()->appendName('content', ('DWEB - là một cơ quan thiết kế website sáng tạo có trụ sở tại 295A Hoàng Mai, Hà Nội. Chúng tôi cung cấp dịch vụ thiết kế UI/UX layout Website/Mobile xây dựng thương hiệu'));
+$this->headMeta()->appendName('keywords', ('Thiết kế website theo yêu cầu, UI/UX, Nhận dạng thương hiệu'));
+$this->headMeta()->appendProperty('og:title', 'Difference Web');
+
+$cs = [
+    '/assets/css/components.css',
+    '/tp/dweb/css/page.css',
+    '/tp/dweb/css/contact.css',
+];
+echo '<link href="'.srcLink($cs, 2).'" media="screen" rel="stylesheet" type="text/css">';
+$js = [
+    '/assets/plugins/parsleyjs/parsley.min.js',
+    '/tp/dweb/js/form.js',
+];
+echo '<script type="text/javascript" src="'.srcLink($js, 2).'"></script>';
+$form = $this->form;
+$error = $this->error;
+?>
+<?php if($error): ?>
+<meta http-equiv="refresh" content="8" />
+<?php endif; ?>
+
+<section class="register-wrapper">
+    <div class="container">
+        <div class="register__inner">
+            <div class="row">
+                <div class="col-md-8">
+                    <div class="register__dk">
+                        <h2>Tạo website chỉ 30 giây</h2>
+                        <p>Mọi việc đơn giản chỉ trong 30 giây...</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <form class="contactForm registerForm" method="post" enctype="multipart/form-data" data-parsley-validate novalidate>
+                            <h2 class="register__title">Đăng ký ngay</h2>
+                            <?php if(!$error): ?>
+                                <div class="form-group">
+                                    <label>Tên doanh nghiệp</label>
+                                    <?= $this->formelement($form->get('store')->setAttributes(['class' => '', 'data-parsley-minlength' => '3', 'data-parsley-pattern'=> '^[a-z0-9_-]{4,32}$', 'placeholder'=>'Tên doanh nghiệp', 'required' => 'required', 'data-parsley-error-message' => 'Tên doanh nghiệp không hợp lệ'])) ?>
+                                    <span class="labelDWEB"><?= '.'.$_SERVER['HTTP_HOST'] ?></span>
+                                    <?= $this->formelementerrors($form->get('store'),['class' => 'parsley-errors-list filled']) ?>
+                                </div>
+                                <div class="form-group">
+                                    <label>Số điện thoại: *</label>
+                                    <?= $this->formelement($form->get('phone')->setAttributes(['class' => '', 'data-parsley-type' =>'digits', 'data-parsley-length' => '[10,11]', 'placeholder'=>'Số điện thoại', 'required' => 'required', 'data-parsley-error-message' => 'Số điện thoại không được để trống'])) ?>
+                                    <?= $this->formelementerrors($form->get('phone'),['class' => 'parsley-errors-list filled']) ?>
+                                </div>
+                                <div class="form-group">
+                                    <label>Email: *</label>
+                                    <?= $this->formelement($form->get('email')->setAttributes(['class' => '', 'data-parsley-type' =>'email', 'placeholder'=>'Email', 'required' => 'required', 'data-parsley-error-message' => 'Email không được để trống'])) ?>
+                                    <?= $this->formelementerrors($form->get('email'),['class' => 'parsley-errors-list filled']) ?>
+                                </div>
+                                <div class="form-group">
+                                    <label>Email: *</label>
+                                    <?= $this->formelement($form->get('password')->setAttributes(['class' => '', 'data-parsley-minlength' => '6', 'placeholder'=>'Password', 'required' => 'required', 'data-parsley-error-message' => 'Password không được để trống'])) ?>
+                                    <?= $this->formelementerrors($form->get('password'),['class' => 'parsley-errors-list filled']) ?>
+                                </div>
+                                <div class="form-group">
+                                    <button type="submit">Gửi</button>
+                                </div>
+                            <?php else: ?>
+                                <p>Cảm ơn bạn đã đăng ký sử dụng dịch vụ của chúng tôi, chúng tôi có gửi một Email kích hoạt tài khoản vào Email bạn đã đăng ký. </p>
+                            <?php endif; ?>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

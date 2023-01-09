@@ -1,0 +1,16 @@
+<?php
+echo $this->headtitle($this->escapehtml($this->translate('Đăng nhập thành công')));
+$redirect = $this->redirect;
+?>
+<meta http-equiv="refresh" content="3;URL='<?= $redirect ?>'" />
+
+<div class="account-pages"></div>
+<div class="clearfix"></div>
+<div class="wrapper-page">
+    <div class="ex-page-content text-center">
+        <div class="text-error"><i class="ti-face-smile text-success"></i></div>
+        <h2>Đăng nhập thành công</h2><br>
+        <p class="text-muted">Đang chuyển trang <?= $redirect ?> </p>
+        <br>
+    </div>
+</div>

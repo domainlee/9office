@@ -1,0 +1,23 @@
+<?php if(!empty($this->bannerList['banner-list banner']['banner-list'])):?>
+<section class="hero-slider">
+    <?php
+        foreach($this->bannerList['banner-list banner']['banner-list'] as $k => $b):
+            $image = json_decode($b['image'], true);
+            if(!empty($image)) {
+                $imageFirst = array_shift($image);
+            }
+            ?>
+            <figure class="lazy banner-image" style="background-image: url(<?= !empty($imageFirst) ? $imageFirst:null ?>)">
+                <div>
+                    <div class="container">
+                        <div class="col-sm-12">
+                            <h2><?= $b['title'] ?></h2>
+                            <p><?= $b['description'] ?></p>
+                            <?= $b['url'] ? '<a class="button-arrow" href="'.$b['url'].'">Mua ngay</a>' : ''?>
+                        </div>
+                    </div>
+                </div>
+            </figure>
+    <?php endforeach;?>
+</section>
+<?php endif;?>

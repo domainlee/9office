@@ -1,0 +1,75 @@
+<?php
+    $optionPage = $this->home()->optionPage();
+?>
+
+<div id="modalRegisterDWEB" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form class="contactForm registerForm storeRegister" method="post" enctype="multipart/form-data" data-parsley-validate="" novalidate="">
+                <h2 class="register__title">Dùng thử website DWEB</h2>
+                <h4>Miễn phí 15 ngày với đầy đủ tính năng</h4>
+                <div class="form-group">
+                    <div>
+                        <input type="text" name="store" class="" data-parsley-minlength="3" data-parsley-pattern="^[a-z0-9_-]{4,32}$" placeholder="Tên doanh nghiệp" required="required" data-parsley-error-message="Tên doanh nghiệp không hợp lệ" value="">
+                        <span class="labelDWEB"><?= '.'.$_SERVER['HTTP_HOST'] ?></span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div>
+                        <input type="text" name="phone" class="" data-parsley-type="digits" data-parsley-length="[10,11]" placeholder="Số điện thoại" required="required" data-parsley-error-message="Số điện thoại không được để trống" value="">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div>
+                        <input type="text" name="email" class="" data-parsley-type="email" placeholder="Email" required="required" data-parsley-error-message="Email không được để trống" value="">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div>
+                        <input type="password" name="password" class="" data-parsley-minlength="6" placeholder="Password" required="required" data-parsley-error-message="Password không được để trống" value="">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="select-custom">
+                        <select name="service" required="required">
+                            <option>Lĩnh vực kinh doanh</option>
+                            <option value="f001">Thời trang</option>
+                            <option value="a011">Bất động </option>
+                            <option value="a005">Giới thiệu công ty</option>
+                            <option value="mp001">Mỹ phẩm - Làm đẹp</option>
+                            <option value="tp001">Ẩm thực - Ăn uống</option>
+                            <option value="t005">Mẹ và bé</option>
+                            <option value="t001">Siêu thị nhiều mặt hàng</option>
+                            <option value="t003">Công nghệ</option>
+                            <option value="a009">Tin tức - bài viết</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div>
+                        <button type="submit">Đăng ký</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div id="modalGlobal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <input type="hidden" value="" />
+            <p>Lưu ý khi đổi giao diện dữ liệu trang chủ không phù hợp với giao diện mới, nên website không còn dữ liệu,
+                bạn có thể cập nhật <a href="/admin/setup/template">tại đây</a></p>
+            <a class="button-change-template">Chấp nhận</a>
+        </div>
+    </div>
+</div>
+
+<footer class="footer">
+    <div class="footer__two">
+        <div class="container">
+            <div class="footer__copyright">Công ty cổ phần công nghệ <a href="http://dweb.vn"> DTT</a> Việt Nam. Địa chỉ: Tầng 3, 36 Hoàng Cầu, toà nhà viễn đông, Hà Nội</div>
+        </div>
+    </div>
+</footer>

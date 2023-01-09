@@ -1,0 +1,11 @@
+<?php
+    $images  = $this->images;
+    $results = $this->results;
+    if(count($images)){
+        echo '<ul id="product" class="owl-carousel owl-theme">';
+            foreach($images as $i){
+                echo '<li><img src="'.$i->getOption('media')->getPictureUri().'" alt="'.$results->getName().'" /></li>';
+            }
+        echo '</ul>';
+    }
+

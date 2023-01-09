@@ -1,0 +1,57 @@
+<?php if(!empty($this->smallBannerList['small-banner-list banner']['small-banner-list'])):?>
+<section class="three-banner">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+
+                <div class="feature2">
+                    <?php
+                    $i = 0;
+                    foreach($this->smallBannerList['small-banner-list banner']['small-banner-list'] as $k => $b):
+                        $i++;
+
+                        $image = json_decode($b['image'], true);
+                        if(!empty($image)){
+                            $imageFirst = array_shift($image);
+                        }
+                        if($i == 1):
+                            ?>
+                            <div class="w40">
+                                <figure class="lazy banner-image10" data-src="<?= !empty($imageFirst) ? $imageFirst:null ?>">
+                                    <div>
+                                        <h3><?= $b['title'] ?></h3>
+                                        <p><?= $b['description'] ?></p>
+                                        <a href="<?= $b['url'] ?>">Xem</a>
+                                    </div>
+                                </figure>
+                            </div>
+                        <?php endif; ?>
+                    <?php endforeach; ?>
+
+
+                    <div class="w60">
+                        <?php
+                        $i = 0;
+                        foreach($this->smallBannerList['small-banner-list banner']['small-banner-list'] as $k => $b):
+                            $i++;
+                            $image = json_decode($b['image'], true);
+                            if(!empty($image)){
+                                $imageFirst = array_shift($image);
+                            }
+                            if($i > 1):
+                                ?>
+                                <figure class="lazy banner-image5" data-src="<?= !empty($imageFirst) ? $imageFirst:null ?>">
+                                    <div>
+                                        <h3><?= $b['title'] ?></h3>
+                                        <a href="<?= $b['url'] ?>">Xem</a>
+                                    </div>
+                                </figure>
+                            <?php endif; ?>
+                        <?php endforeach; ?>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<?php endif;?>

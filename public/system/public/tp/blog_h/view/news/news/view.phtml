@@ -1,0 +1,137 @@
+<?php
+    use Home\Model\DateBase;
+    $view = $this->news;
+    $optionPage = $this->home()->optionPage();
+    $optionBasic = $this->home()->optionBasic();
+    $url = $this->UriParams()->getRequest()->getRequestUri();
+    $image = json_decode($view->getImage(), true);
+    $imageFirst = '';
+    if(!empty($image)){
+        $imageFirst = array_shift($image);
+    }
+    $category = $this->NewsCategory()->getCategories();
+?>
+
+<?php
+//$image = 'https://'.$_SERVER['HTTP_HOST'].$imageFirst;
+$image = 'https://blog.dweb.vn'.$imageFirst;
+$imageInfo = getimagesize($image);
+///**** Start SEO DWEB *****/
+echo $this->headLink(['rel' => 'canonical', 'href' => 'https://'.$_SERVER['HTTP_HOST'].$view->getViewLink() ]);
+$this->headTitle($this->escapeHtml($this->translate(!empty($view->getMetaTitle()) ? $view->getMetaTitle():$view->getTitle())));
+$this->headMeta()->appendName('description', (!empty($view->getMetaDescription()) ? $view->getMetaDescription():null));
+$this->headMeta()->appendName('keywords', (!empty($view->getMetaKeyword()) ? $view->getMetaKeyword():null));
+
+$this->headMeta()->appendProperty('og:title', !empty($view->getMetaTitle()) ? $view->getMetaTitle():$view->getTitle());
+$this->headMeta()->appendProperty('og:description', !empty($view->getMetaDescription()) ? $view->getMetaDescription():null);
+$this->headMeta()->appendProperty('og:image', !empty($imageFirst) ? 'https://'.$_SERVER['HTTP_HOST'].$imageFirst:null);
+$this->headMeta()->appendProperty('og:image:secure_url', !empty($imageFirst) ? 'https://'.$_SERVER['HTTP_HOST'].$imageFirst:null);
+$this->headMeta()->appendProperty('og:image:width', $imageInfo['0']);
+$this->headMeta()->appendProperty('og:image:height', $imageInfo['1']);
+$this->headMeta()->appendProperty('og:type', 'Article');
+$this->headMeta()->appendProperty('og:url', 'https://'.$_SERVER['HTTP_HOST'].$view->getViewLink());
+$this->headMeta()->appendProperty('og:site_name', $optionBasic['sologan']);
+
+$this->headMeta()->appendName('twitter:card', !empty($image) ? $image:'summary_large_image');
+$this->headMeta()->appendName('twitter:title', !empty($view->getMetaTitle()) ? $view->getMetaTitle():$view->getTitle());
+$this->headMeta()->appendName('twitter:description', (!empty($view->getMetaDescription()) ? $view->getMetaDescription():null));
+$this->headMeta()->appendName('twitter:image', !empty($image) ? $image:null);
+/**** End SEO DWEB *****/
+?>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "<?= 'https://'.$_SERVER['HTTP_HOST'].$view->getViewLink() ?>"
+  },
+  "headline": "<?= !empty($view->getMetaTitle()) ? $view->getMetaTitle():$view->getTitle() ?>",
+  "description": "<?= !empty($view->getMetaDescription()) ? $view->getMetaDescription():null ?>",
+  "image": {
+    "@type": "ImageObject",
+    "url": "<?= $image ?>",
+    "width": 700,
+    "height": 300
+  },
+  "author": {
+    "@type": "Organization",
+    "name": "DWEB"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Admin",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://dweb.vn/logogmail.png",
+      "width": 170,
+      "height": 60
+    }
+  },
+  "datePublished": "<?= DateBase::toFormat($view->getCreatedDateTime(), 'd/m/Y') ?>",
+  "dateModified": "<?= DateBase::toFormat($view->getCreatedDateTime(), 'd/m/Y') ?>"
+}
+</script>
+
+<section class="single-news">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <figure class="lazy single-news__image" data-src="https://blog.dweb.vn<?= $imageFirst ?>"></figure>
+                <div class="single-news__detail">
+                    <h1 class="single-news__title" itemprop="name"><?= $view->getTitle() ?></h1>
+                    <div class="single-news__profile">
+                        <span><i class="fa fa-clock-o"></i><?= DateBase::toFormat($view->getCreatedDateTime(), 'd/m/Y') ?></span><span><i class="fa fa-folder-o"></i><?= $view->getCateName() ?></span><span><i class="fa fa-eye"></i><?= $view->getView() ?></span>
+                    </div>
+
+                    <?= $this->partial('layout/appendix', ['style' => '.appendix {background-color: #FFF;border: none;padding: 0 0 30px !important;border-bottom: 1px solid #DDD;}']); ?>
+                    <div class="single-news__content content_appendix" itemscope="" itemtype="http://schema.org/Article">
+                        <?= html_entity_decode($view->getContent()); ?>
+                    </div>
+
+                    <?= $this->partial('layout/socialShare', ['url' => $view->getViewLink()]); ?>
+
+                    <?= $this->partial('layout/tag', ['tag' => $view->getTags(), 'type' => 2 ]); ?>
+
+                    <div class="single-news__relation">
+                        <?php
+                            $relation = json_decode($view->getArticleRelated(), true);
+                            if(!empty($relation)) {
+                                echo '<h2 class="single-news__relation--headline">Bài viết liên quan</h2>';
+                                echo '<ul class="single-news__relation--list">';
+                                foreach($relation as $r) {
+                                    $image = json_decode($r['image'], true);
+                                    $imageFirst = '';
+                                    if(!empty($image)){
+                                        $imageFirst = array_shift($image);
+                                    }
+                        ?>
+                            <li>
+                                <div class="single-news__relation--inner">
+                                    <a href="<?= $r['url'] ?>" target="_blank"><figure class="single-news__relation--image lazy" data-src="https://blog.dweb.vn<?= $imageFirst ?>"></figure></a>
+                                    <h3 class="single-news__relation--title"><a href="<?= $r['url'] ?>" target="_blank"><?= $r['title'] ?></a></h3>
+                                </div>
+                            </li>
+                        <?php
+                                }
+                            echo '</ul>';
+                            }
+                        ?>
+                    </div>
+                    <?= $this->partial('layout/rating', ['type' => 2 , 'itemId' => $view->getId()]); ?>
+                    <?= $this->partial('layout/comment', ['type' => 2 , 'itemId' => $view->getId()]); ?>
+                    <?= $this->partial('layout/commentFacebook', ['url' => $view->getViewLink()]); ?>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="news-category ">
+    <div class="news__category">
+        <?= $this->partial('layout/category'); ?>
+    </div>
+</section>
+
+

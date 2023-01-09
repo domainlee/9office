@@ -1,0 +1,126 @@
+<?php
+    $category = $this->category;
+    $product = $this->paginator;
+    $product->setItemCountPerPage($this->uriParams()->getRequest()->getQuery('icpp') ? : 20);
+    $prodCategory = $this->category();
+    $image = json_decode($category->getImage(), true);
+    $imageFirst = '';
+    if(!empty($image)){
+        $imageFirst = array_shift($image);
+    }
+    $cs = [
+        '/tp/F004/css/p.css'
+    ];
+    echo '<link href="'.srcLink($cs,1).'" media="screen" rel="stylesheet" type="text/css">';
+    $optionPage = $this->home()->optionPage();
+    $optionBasic = $this->home()->optionBasic();
+    $menuOption = $this->home()->getMenu();
+?>
+<?php
+    $image = 'http://'.$_SERVER['HTTP_HOST'].$imageFirst;
+    $imageInfo = getimagesize($image);
+    /**** Start SEO DWEB *****/
+    echo $this->headLink(['rel' => 'canonical', 'href' => 'http://'.$_SERVER['HTTP_HOST'].$category->getViewLink() ]);
+    $this->headTitle(!empty($category->getMetaTitle()) ? $category->getMetaTitle():$category->getName());
+    $this->headMeta()->appendName('description', (!empty($category->getMetaDescription()) ? $category->getMetaDescription():null));
+    $this->headMeta()->appendName('keywords', (!empty($category->getMetaKeyword()) ? $category->getMetaKeyword():null));
+
+    $this->headMeta()->appendProperty('og:title', !empty($category->getMetaTitle()) ? $category->getMetaTitle():$category->getName());
+    $this->headMeta()->appendProperty('og:description', !empty($category->getMetaDescription()) ? $category->getMetaDescription():null);
+    $this->headMeta()->appendProperty('og:image', !empty($imageFirst) ? 'http://'.$_SERVER['HTTP_HOST'].$imageFirst:null);
+    $this->headMeta()->appendProperty('og:image:secure_url', !empty($imageFirst) ? 'http://'.$_SERVER['HTTP_HOST'].$imageFirst:null);
+    $this->headMeta()->appendProperty('og:image:width', $imageInfo['0']);
+    $this->headMeta()->appendProperty('og:image:height', $imageInfo['1']);
+    $this->headMeta()->appendProperty('og:type', 'Category Article');
+    $this->headMeta()->appendProperty('og:url', 'http://'.$_SERVER['HTTP_HOST'].$category->getViewLink());
+    $this->headMeta()->appendProperty('og:site_name', $optionBasic['sologan']);
+
+    $this->headMeta()->appendName('twitter:card', !empty($image) ? $image:'summary_large_image');
+    $this->headMeta()->appendName('twitter:title', !empty($category->getMetaTitle()) ? $category->getMetaTitle():null);
+    $this->headMeta()->appendName('twitter:description', (!empty($category->getMetaDescription()) ? $category->getMetaDescription():null));
+    $this->headMeta()->appendName('twitter:image', !empty($image) ? $image:null);
+    /**** End SEO DWEB *****/
+?>
+<?php
+if(!empty($category->getParentId())){
+    $cc = $prodCategory->getId($category);
+    if(!empty($cc->getParentId())){
+        $ccc = $prodCategory->getId($cc);
+        if(!empty($ccc->getParentId())){
+            $cccc = $prodCategory->getId($ccc);
+        }
+    }
+}
+?>
+<div class="breadcrumb">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <ul>
+                    <li><a href="/">Trang chủ</a></li>
+                    <li><span>/</span><a href="/san-pham.html">Sản phẩm</a></li>
+                    <?= (isset($cccc) ? '<li><span>/</span><a href="'.$cccc->getViewLink().'">'.$cccc->getName().'</a></li>':null) ?>
+                    <?= (isset($ccc) ? '<li><span>/</span><a href="'.$ccc->getViewLink().'">'.$ccc->getName().'</a></li>':null) ?>
+                    <?= (isset($cc) ? '<li><span>/</span><a href="'.$cc->getViewLink().'">'.$cc->getName().'</a></li>':null) ?>
+                    <li><span>/</span><a href="<?= $category->getViewLink(); ?>"><?= $category->getName(); ?></a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="">
+<div class="container">
+    <div class="row">
+
+        <?php echo $this->render('product/product/sidebar');
+        ?>
+        <div class="col-md-9">
+            <div class="right">
+
+
+                <div class="productCategory">
+                    <?php
+                        $show = $this->request->getQuery('show');
+                        if(count($product)){
+                            echo '<div class="titlePaginator">';
+                            echo '<h1 class="title">'.$category->getName().'</h1>';
+                            echo '<select onchange="location = this.options[this.selectedIndex].value;">
+                                        <option value="' . $this->product()->removeFilter('show') . '">Mới cập nhật</option>
+                                        <option value="' . $this->product()->addFilter('show', 'priceAsc',2) . '" '.($show == 'priceAsc' ? 'selected':'').'>Giá tăng dần</option>
+                                        <option value="' . $this->product()->addFilter('show', 'priceDesc',2) . '" '.($show == 'priceDesc' ? 'selected':'').'>Giá giảm dần</option>
+                                        <option value="' . $this->product()->addFilter('show', 'SaleOff',2) . '" '.($show == 'SaleOff' ? 'selected':'').'>Giảm giá</option>
+                                  </select>';
+                            echo '</div>';
+                            echo '<ul class="lPC">';
+                            foreach($product as $p){
+                                ?>
+                                <?php
+                                    $imgs = array_slice(json_decode($p->getImage(), true), 0, 2);
+                                    ?>
+                                <li class="two-up__product-item">
+                                    <div class="feature-product__item--wrapper">
+                                        <a href="<?= $p->getViewLink() ?>">
+                                            <figure class="lazy two-up__product-image" data-src="<?= !empty($imgs) ? $imgs['0']:null ?>"></figure>
+                                            <figure class="lazy two-up__product-image two-up__product-image__two" data-src="<?= !empty($imgs) ? $imgs['1']:null ?>"></figure>
+                                        </a>
+                                    </div>
+                                    <h3 class="feature-product__item--title"><?= $p->getTitle() ?></h3>
+                                    <p class="price"><?= $p->getPriceOld() ? number_format($p->getPriceOld()).' đ<i>'.number_format($p->getPrice()).' đ</i>':number_format($p->getPrice()).' đ' ?></p>
+                                </li>
+
+                            <?php
+                            }
+                            echo '</ul>';
+                            echo '<div class="paginatorProduct">';
+                            echo $this->paginationControl($this->paginator, 'Elastic', 'partial/listPage');
+                            echo '</div>';
+                        }else{
+                            echo '<p style="margin: 10px 0 0 0;text-align: center">Đang được cập nhật</p>';
+                        }
+                    ?>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>

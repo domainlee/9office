@@ -1,0 +1,78 @@
+<?php
+$q = $this->request->getQuery('q');
+
+$this->headTitle($this->escapeHtml($this->translate('Tìm kiếm sản phẩm "'.$q.'"')));
+$this->headMeta()->appendName('description', ('Tìm kiếm sản phẩm "'.$q.'"'));
+$this->headMeta()->appendName('keywords', ('Tìm kiếm sản phẩm "'.$q.'"'));
+$this->headMeta()->appendProperty('og:title', 'Tìm kiếm sản phẩm "'.$q.'"');
+$cs = [
+    '/tp/MP003/css/p.css'
+];
+echo '<link href="'.srcLink($cs,1).'" media="screen" rel="stylesheet" type="text/css">';
+
+$product = $this->paginator;
+$menuOption = $this->home()->getMenu();
+$optionPage = $this->home()->optionPage();
+$optionBasic = $this->home()->optionBasic();
+?>
+<div class="breadcrumb">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <ul>
+                    <li><a href="/">Trang chủ</a></li>
+                    <li><span>/</span><a href="#">Tìm kiếm</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container">
+
+    <div class="row">
+        <div class="productCategory">
+            <?php
+            echo $this->render('product/product/sidebar');
+            ?>
+            <div class="col-md-9">
+                <?php
+                $show = $this->request->getQuery('show');
+
+                if(count($product)){
+                    echo '<div class="right">';
+                    echo '<h1><span>Tìm kiếm với từ khóa "'.(isset($q) ? $q:null).'"</span>
+                          <select onchange="location = this.options[this.selectedIndex].value;">
+                                <option value="' . $this->product()->removeFilter('show') . '">Mới cập nhật</option>
+                                <option value="' . $this->product()->addFilter('show', 'priceAsc',2) . '" '.($show == 'priceAsc' ? 'selected':'').'>Giá tăng dần</option>
+                                <option value="' . $this->product()->addFilter('show', 'priceDesc',2) . '" '.($show == 'priceDesc' ? 'selected':'').'>Giá giảm dần</option>
+                                <option value="' . $this->product()->addFilter('show', 'SaleOff',2) . '" '.($show == 'SaleOff' ? 'selected':'').'>Giảm giá</option>
+                          </select>
+                        </h1>';
+                    echo '<ul class="lP product">';
+                    foreach($product as $p){
+                        $image = json_decode($p->getImage(), true);
+                        if(!empty($image)){
+                            $imageFirst = array_shift($image);
+                        }
+                        echo '<li class="product__item">
+                                <div class="product__item--inner">
+                                    <a class="pI" href="'.$p->getViewLink().'"><figure class="lazy image-product" data-src="'.(!empty($imageFirst) ? $imageFirst:null).'"></figure></a>
+                                    <div>
+                                        <h3><a href="'.$p->getViewLink().'">'. $p->getTitle().'</a></h3>
+                                        <p class="price '.($p->getPriceOld() ? 'priceOld':'').'">'.($p->getPriceOld() ? '<span>'.number_format($p->getPriceOld()).'₫</span><i>'.number_format($p->getPrice()).'₫</i>':number_format($p->getPrice()).'₫').'</p>
+                                    </div>
+                                    <a class="btnAddCart" data-id="'.$p->getId().'" data-quantity="1">Mua hàng</a>
+                                </div>
+                            </li>';
+                    }
+                    echo '</ul>';
+                    echo '<div class="paginatorProduct">';
+                    echo $this->paginationControl($this->paginator, 'Elastic', 'partial/listPage');
+                    echo '</div>';
+                    echo '</div>';
+                }
+                ?>
+            </div>
+        </div>
+    </div>
+</div>

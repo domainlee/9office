@@ -1,0 +1,128 @@
+<?php
+$optionPage = $this->home()->optionPage();
+$storeId = $this->home()->storeId();
+$optionBasic = $this->home()->optionBasic();
+$menuOption = $this->home()->getMenu();
+$cs = [
+    '/tp/T006/css/footer.css',
+];
+echo '<link href="'.srcLink($cs,1).'" media="screen" rel="stylesheet" type="text/css">';
+?>
+<div class="footer">
+    <div class="footer__one">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="footer__category--inner">
+                        <ul class="footer__category">
+                            <?php
+                            if(!empty($optionPage['view_gioi-thieu'])):
+                                ?>
+                                <li>
+                                    <a class="logo" href="/">
+                                        <?php if(!empty($optionBasic['logo'])): ?>
+                                            <img src="<?= $optionBasic['logo'] ?>" alt="<?= !empty($optionBasic['sologan']) ? $optionBasic['sologan']:null ?>" />
+                                        <?php endif; ?>
+                                    </a>
+                                    <div class="footer__content">
+                                        <?php if(!empty($optionPage['noi-dung-gioi-thieu'])): ?>
+                                            <?= $optionPage['noi-dung-gioi-thieu'] ?>
+                                        <?php endif; ?>
+                                    </div>
+                                    <ul class="social">
+                                        <li><a href="<?= !empty($optionPage['facebook']) ? $optionPage['facebook']:null ?>"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
+                                        <li><a href="<?= !empty($optionPage['youtube']) ? $optionPage['youtube']:null ?>"><i class="fa fa-youtube" aria-hidden="true"></i></a></li>
+                                    </ul>
+                                </li>
+                            <?php endif; ?>
+
+
+                            <?php if(!empty($optionPage['view_danh-sach-lien-ket-1'])):?>
+                                <li>
+                                    <h3 class="footer__title"><?= $optionPage['tieu-de-danh-sach-lien-ket-1'] ?></h3>
+                                    <div class="footer__content">
+                                        <ul>
+                                            <?php foreach($menuOption['footer_menu1'] as $m): ?>
+                                                <li <?= $url == $m['url'] ? 'class="active"':null ?>><a href="<?= $m['url'] ?>"><?= $m['name'] ?></a>
+                                                </li>
+                                            <?php endforeach; ?>
+                                        </ul>
+                                    </div>
+                                </li>
+                            <?php endif;?>
+                            <?php if(!empty($optionPage['view_danh-sach-lien-ket-2'])):?>
+                                <li>
+                                    <h3 class="footer__title"><?= $optionPage['tieu-de-danh-sach-lien-ket-2'] ?></h3>
+                                    <div class="footer__content">
+                                        <ul>
+                                            <?php foreach($menuOption['footer_menu2'] as $m): ?>
+                                                <li <?= $url == $m['url'] ? 'class="active"':null ?>><a href="<?= $m['url'] ?>"><?= $m['name'] ?></a>
+                                                </li>
+                                            <?php endforeach; ?>
+                                        </ul>
+                                    </div>
+                                </li>
+                            <?php endif;?>
+                            <?php if(!empty($optionPage['view_thong-tin-dia-chi'])):?>
+                                <li>
+                                    <h3 class="footer__title"><?= $optionPage['tieu-de-thong-tin'] ?></h3>
+                                    <div class="footer__content footer__content--textarea">
+                                        <?= $optionPage['dia-chi'] ? $optionPage['dia-chi'] : ''?>
+                                    </div>
+                                </li>
+                            <?php endif;?>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="footer__two">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="footer__category--inner">
+                        <ul class="footer__category">
+                            <?php foreach($optionPage['danh-muc-san-pham-footer'] as $c): ?>
+                                <li>
+                                    <h4><a href="<?= $c['url'] ?>"><?= $c['title'] ?></a></h4>
+                                    <?php if(!empty($c['child'])): ?>
+                                        <ul>
+                                            <?php foreach($c['child'] as $cc): ?>
+                                                <li><a href="<?= $cc['url'] ?>"><?= $cc['title'] ?></a></li>
+                                            <?php endforeach; ?>
+                                        </ul>
+                                    <?php endif; ?>
+                                </li>
+                            <?php endforeach; ?>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="footer__three">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <?php
+                    if(!empty($optionPage['view_copyright'])):?>
+                        <div class="footer__copyright">
+                            <?php if(empty($optionPage['tu-copyright'])): ?>
+                                <?= $optionPage['copyright'] ? $optionPage['copyright'] : ''?>
+                            <?php else: $strTerm = explode($optionPage['tu-copyright'], $optionPage['copyright']."&nbsp;");
+                                $last_key = end(array_keys($strTerm));
+                                foreach($strTerm as $k => $v){
+                                    echo $v;
+                                    if($k == $last_key) continue;
+                                    echo '<a href="'.$optionPage['duong-dan-copyright'].'">'.$optionPage['tu-copyright'].'</a>';
+                                }
+                                ?>
+                            <?php endif; ?>
+                        </div>
+                    <?php endif;?>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,142 @@
+.nav.nav-tabs + .tab-content {
+    padding: 30px 0;
+}
+.tab-content {
+    box-shadow: none;
+}
+.image-item {
+}
+@media screen and (min-width: 480px) {
+    .image-item {
+        width: 10%;
+        display: inline-block;
+    }
+    #imagesLibrary .image-item {
+        width: 25%;
+    }
+}
+@media screen and (max-width: 480px) {
+    .modal-full {
+        width: inherit;
+    }
+}
+
+.list-image {
+    margin: 0 -5px;
+}
+.image-item figure {
+    margin: 5px;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    border: 2px solid #FFF;
+    box-shadow: 0 0 0 1px #CCC;
+    max-width: 100%;
+    max-height: 100%;
+}
+.image-item.active figure {
+    border: 2px solid #5fbeaa;
+    box-shadow: 0 0 0 1px #5fbeaa;
+}
+.image-item figure:before {
+    content: '';
+    padding-top: 80%;
+    display: block;
+}
+
+#percentComplete{
+    margin: 0 0 10px 0;
+}
+#imagemulti{
+    padding: 30px;
+    border: 1px dashed #CCC;
+    background: #f9f9f9;
+}
+
+.list-image-insert {
+    padding: 0 0;
+    margin: 10px -5px 0;
+    list-style: none;
+    overflow: auto;
+}
+
+.deleteProduct {
+    color: #666;
+    cursor: pointer;
+}
+
+a {
+    color: #36404a;
+    cursor: pointer;
+}
+
+.portlet-body-option {
+    padding: 10px 20px !important;
+}
+
+.bootstrap-tagsinput {
+    display: block;
+}
+
+.tab-content__option {
+    padding: 30px 0 0 0 !important;
+    margin-bottom: 0 !important;
+}
+
+.tab-content_option {
+    margin-bottom: 0 !important;
+}
+
+/*.ui-autocomplete-multiselect {*/
+    /*width: 100% !important;*/
+    /*background: #FFFFFF !important;*/
+    /*border: 1px solid #E3E3E3 !important;*/
+    /*border-radius: 4px;*/
+/*}*/
+
+/*.autocompleteMulti {*/
+    /*border: none !important;*/
+    /*font-family: 'Noto Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif !important;*/
+    /*font-weight: 400 !important;*/
+    /*font-size: 14px !important;*/
+    /*width: 100% !important;*/
+/*}*/
+
+/*.ui-autocomplete-multiselect-item {*/
+    /*background-color: #5fbeaa !important;*/
+    /*color: #FFF;*/
+    /*padding: 2px 20px 2px 6px;*/
+    /*display: inline-block;*/
+    /*font-family: 'Noto Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif !important;*/
+    /*font-size: 11px;*/
+    /*border-radius: 5px;*/
+    /*margin: 7px 0 0 7px;*/
+/*}*/
+
+/*.ui-widget-content {*/
+    /*background: #FFF !important;*/
+/*}*/
+
+/*.ui-icon {*/
+    /*margin: 0 0 0 5px;*/
+    /*position: absolute;*/
+    /*display: inline-block !important;*/
+    /*background: none !important;*/
+    /*width: auto !important;*/
+    /*height: auto !important;*/
+    /*text-indent: 0 !important;*/
+    /*cursor: pointer;*/
+/*}*/
+
+/*.ui-icon:after {*/
+    /*content: 'x';*/
+    /*font-size: 10px;*/
+    /*padding: 0 2px;*/
+/*}*/
+
+/*.dropdown-toggle {*/
+/*}*/
+/*.ui-menu .ui-menu-item a:hover, .ui-menu .ui-menu-item a:focus, .ui-menu .ui-menu-item:hover, .ui-menu .ui-menu-item:focus{*/
+    /*background: none !important;*/
+    /*border: none !important;*/
+/*}*/

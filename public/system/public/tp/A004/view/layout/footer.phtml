@@ -1,0 +1,53 @@
+<?php
+    $optionBasic = $this->home()->optionBasic();
+    $optionPage = $this->home()->optionPage();
+?>
+<footer class="footer">
+    <div class="container">
+        <?php if(!empty($optionPage['view_footer-1'])):?>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="footer--wrapper">
+                    <div class="footer--item">
+                        <h2 class="footer--title"><?= !empty($optionPage['tieu-de-cot-thong-tin-1']) ? $optionPage['tieu-de-cot-thong-tin-1']:'' ?></h2>
+                        <div class="footer--content">
+                            <?= !empty($optionPage['thong-tin-cot-thong-tin-1']) ? $optionPage['thong-tin-cot-thong-tin-1']:'' ?>
+                        </div>
+                    </div>
+                    <div class="footer--item">
+                        <h2 class="footer--title"><?= !empty($optionPage['tieu-de-cot-thong-tin-2']) ? $optionPage['tieu-de-cot-thong-tin-2']:'' ?></h2>
+                        <div class="footer--content">
+                            <?= !empty($optionPage['thong-tin-cot-thong-tin-2']) ? $optionPage['thong-tin-cot-thong-tin-2']:'' ?>
+                        </div>
+                    </div>
+                    <div class="footer--item">
+                        <h2 class="footer--title"><?=$optionPage['tieu-de-cot-mang-xa-hoi'] ? $optionPage['tieu-de-cot-mang-xa-hoi'] : ''?></h2>
+                        <div class="footer--content">
+                            <ul class="social">
+                                <?=$optionPage['facebook'] ? '<li class="social-fa"><a href="'.$optionPage['facebook'].'"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>' : '#'?>
+                                <?=$optionPage['twitter'] ? '<li class="social-tw"><a href="'.$optionPage['twitter'].'"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>' : '#'?>
+                                <?=$optionPage['google'] ? '<li class="social-gg"><a href="'.$optionPage['google'].'"><i class="fa fa-google-plus" aria-hidden="true"></i></a></li>' : '#'?>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <?php endif;?>
+        <?php if(!empty($optionPage['view_footer-2'])):?>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="footer--wrapper-copyright">
+                    <div class="footer--copyright">
+                        <?= $optionPage['copyright'] ? $optionPage['copyright'] : ''?>
+                    </div><!--
+                    <div class="footer--design">
+                        Design by: <a href="http://dweb.vn">DWEB.VN</a>
+                    </div>-->
+                </div>
+            </div>
+        </div>
+        <?php endif;?>
+    </div>
+</footer>
+

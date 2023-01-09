@@ -1,0 +1,28 @@
+<?php if(!empty($this->introLayout['intro-content textarea']['value']) || !empty($this->introLayout['intro-image file']['value']) || !empty($this->introLayout['intro-title text']['value'])):?>
+<section class="two-post">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="two-post__inner">
+                    <?php if(!empty($this->introLayout['intro-image file']['value'])):?>
+                        <div class="two-post__left">
+                            <figure class="lazy two-post__image" data-src="<?= $this->introLayout['intro-image file']['value'] ?>"></figure>
+                        </div>
+                    <?php endif;?>
+                    <div class="two-post__right">
+                        <?= $this->introLayout['intro-title text']['value'] ? '<h2 class="two-post__title">'.$this->introLayout['intro-title text']['value'].'</h2>' : ''?>
+                        <?= $this->introLayout['intro-content textarea']['value'] ? '<div class="two-post__intro">'.$this->introLayout['intro-content textarea']['value'].'</div>' : ''?>
+                        <?php if(!empty($this->introLayout['intro-link text']['value'])):?>
+                            <div class="two-post__button">
+                                <a href="<?= $this->introLayout['intro-link text']['value']?>" class="button-default1">Chi tiết</a>
+                            </div>
+                        <?php endif;?>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="shape-top gray"></div>
+</section>
+<?php endif;?>

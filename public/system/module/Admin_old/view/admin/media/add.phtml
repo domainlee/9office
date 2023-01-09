@@ -1,0 +1,135 @@
+<?php
+    echo $this->headtitle($this->escapehtml($this->translate('Thêm')));
+    $form = $this->form;
+?>
+
+<form method="post" enctype="multipart/form-data" data-parsley-validate novalidate>
+    <div class="row">
+        <div class="col-sm-8">
+            <div class="card-box">
+                <div class="portlet-title">
+                    <h4 class="m-t-0 header-title m-b-20"><b>Thêm hình</b></h4>
+                </div>
+                <div class="portlet-body form">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <label class="control-label" for="firstName">Tiêu đề</label>
+                                <?= $this->formelement($form->get('name')->setAttributes(['class' => 'form-control', 'placeholder'=>'Tiêu đề', 'required' => 'required', 'data-parsley-error-message' => 'Tiêu đề không được để trống'])) ?>
+                                <?= $this->formelementerrors($form->get('name'),['class' => 'parsley-errors-list filled']) ?>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <label class="control-label" for="firstName">Mô tả</label>
+                                <?= $this->formelement($form->get('description')->setAttributes(['class' => 'form-control', 'id'=> 'textarea_full', 'placeholder'=>'Mô tả'])) ?>
+                                <?= $this->formelementerrors($form->get('description'),['class' => 'parsley-errors-list filled'])?>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-actions">
+                        <?=$this->formelement($form->get('submit')->setAttributes(['class' => 'btn btn-default']))?>
+                        <?=$this->formelement($form->get('reset')->setAttributes(['class' => 'btn']))?>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-sm-4">
+            <div class="card-box">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="form-group">
+                            <label class="control-label" for="firstName">Hình ảnh</label>
+                            <a id="abc" role="button" class="btn btn-block btn-default" data-toggle="modal" data-target="#full-width-modal">Hình ảnh <i class="fa fa-upload"></i></a>
+                            <ul id="imagesLibrary" class="list-image-insert list-image-insert__one">
+                            </ul>
+                            <?=$this->formelement($form->get('images')->setAttributes(['class' => 'm-wrap span12','id' => 'images']))?>
+                            <div id="full-width-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="full-width-modalLabel" aria-hidden="true" style="display: none;">
+                                <div class="modal-dialog modal-full">
+                                    <div class="modal-content">
+                                        <ul class="nav nav-tabs navtab-bg nav-justified">
+                                            <li class="active">
+                                                <a href="#list" data-toggle="tab" aria-expanded="false">
+                                                    <span class="">Thư viện</span>
+                                                </a>
+                                            </li>
+                                            <li class="">
+                                                <a href="#upload" data-toggle="tab" aria-expanded="false">
+                                                    <span class="">Upload</span>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                        <div class="tab-content">
+                                            <div class="tab-pane active" id="list">
+                                                <div class="list-image"></div>
+                                            </div>
+                                            <div class="tab-pane" id="upload">
+                                                <label id="percentComplete">Lưu ý ảnh nhỏ hơn 3Mb</label>
+                                                <input type="file" name="imagemulti[]" class="m-wrap btn-block" id="imagemulti" multiple="multiple">
+                                            </div>
+                                        </div>
+
+                                        <div class="modal-footer">
+                                            <input type="hidden" data-value="1" id="pageImage">
+                                            <button type="button" class="btn btn-prev-image btn-load-more btn-inverse waves-effect waves-light"><i class="ion-chevron-left"></i></button>
+                                            <button type="button" class="btn btn-next-image btn-load-more btn-inverse waves-effect waves-light"><i class="ion-chevron-right"></i></button>
+                                            <button type="button" class="btn btn-insert btn-default waves-effect waves-light">Sử dụng</button>
+                                            <button type="button" class="btn" data-dismiss="modal">Đóng</button>
+                                        </div>
+                                    </div><!-- /.modal-content -->
+                                </div><!-- /.modal-dialog -->
+                            </div><!-- /.modal -->
+
+                        </div>
+                    </div>
+                </div>
+                <div class="row"></div>
+            </div>
+            <div class="card-box">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="form-group">
+                            <label class="control-label" for="firstName">Liên kết</label>
+                        </div>
+                    </div>
+                    <div class="col-sm-12">
+                        <ul class="nav nav-tabs navtab-bg nav-justified">
+                            <li class="active">
+                                <a href="#home1" data-toggle="tab" aria-expanded="true">
+                                    <span class="visible-xs"><i class="fa fa-home"></i></span>
+                                    <span class="hidden-xs">Đường dẫn</span>
+                                </a>
+                            </li>
+                            <li class="">
+                                <a href="#profile1" data-toggle="tab" aria-expanded="false">
+                                    <span class="visible-xs"><i class="fa fa-user"></i></span>
+                                    <span class="hidden-xs">Sản phẩm</span>
+                                </a>
+                            </li>
+                            <li class="">
+                                <a href="#messages1" data-toggle="tab" aria-expanded="false">
+                                    <span class="visible-xs"><i class="fa fa-envelope-o"></i></span>
+                                    <span class="hidden-xs">Tin tức</span>
+                                </a>
+                            </li>
+                        </ul>
+                        <div class="tab-content tab-content_option">
+                            <div class="tab-pane active" id="home1">
+                                <?= $this->formelement($form->get('link')->setAttributes(['class' => 'form-control urlBanner', 'placeholder'=>'Đường dẫn'])) ?>
+                            </div>
+                            <div class="tab-pane" id="profile1">
+                                <?= $this->formelement($form->get('productRelated')->setAttributes(['class' => 'form-control select-ajax-product select-banner-product', 'multiple'=>'multiple', 'data-length' => '1', 'data-placeholder' => 'Liên kết đến sản phẩm'])) ?>
+                            </div>
+                            <div class="tab-pane" id="messages1">
+                                <?= $this->formelement($form->get('articleRelated')->setAttributes(['class' => 'form-control select-ajax-article select-banner-article', 'multiple'=>'multiple', 'data-length' => '1', 'data-placeholder' => 'Liên kết đến bài viết'])) ?>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

@@ -1,0 +1,632 @@
+@media (min-width: 1366px){
+    .container {
+        width: 100%;
+        /*padding: 0 0;*/
+    }
+}
+.col-xs-1, .col-sm-1, .col-md-1, .col-lg-1, .col-xs-2, .col-sm-2, .col-md-2, .col-lg-2, .col-xs-3, .col-sm-3, .col-md-3, .col-lg-3, .col-xs-4, .col-sm-4, .col-md-4, .col-lg-4, .col-xs-5, .col-sm-5, .col-md-5, .col-lg-5, .col-xs-6, .col-sm-6, .col-md-6, .col-lg-6, .col-xs-7, .col-sm-7, .col-md-7, .col-lg-7, .col-xs-8, .col-sm-8, .col-md-8, .col-lg-8, .col-xs-9, .col-sm-9, .col-md-9, .col-lg-9, .col-xs-10, .col-sm-10, .col-md-10, .col-lg-10, .col-xs-11, .col-sm-11, .col-md-11, .col-lg-11, .col-xs-12, .col-sm-12, .col-md-12, .col-lg-12{
+    padding: 0 0;
+}
+body::-webkit-scrollbar-thumb {
+    background-color: #046230;
+}
+body::-webkit-scrollbar {
+    width: 1em;
+}
+ul{
+    padding: 0 0;
+    margin: 0 0;
+}
+ul li{
+    list-style: none;
+}
+a:hover{
+    text-decoration: none;
+}
+.logo{
+    display: inline-block;
+    margin: 40px 0 0 15px;
+}
+.head{
+    position: fixed;
+    width: 100%;
+    z-index: 10;
+    top: 0;
+    left: 0;
+}
+.head1{
+    height: 100px;
+    background: url(/tp/food/img/bg-header.png);
+}
+.timeWork{
+    width: 375px;
+    height: 90px;
+    background: url(/tp/food/img/FreshFood.png) no-repeat left top;
+    position: absolute;
+    bottom: -99px;
+    display: inline-block;
+    left: 50px;
+}
+.timeWork p:nth-child(1){
+    font-size: 21px;
+    width: 275px;
+    font-family: 'Roboto Slab',serif;
+    margin: 0 0;
+    line-height: 22px;
+    padding: 25px 28px 0 25px;
+    color: #565656;
+    display: inline-block;
+}
+.timeWork p:nth-child(1) span{
+    font-size: 13px;
+    position: relative;
+    top: -4px;
+    color: #777;
+}
+.timeWork p:nth-child(2){
+    position: absolute;
+    right: 0;
+    top: 5px;
+    background-color: #d9e021;
+    padding: 10px 9px 11px;
+    border-top-left-radius: 1em;
+    border-top-right-radius: 1em;
+    font-weight: bold;
+    -webkit-box-shadow: 0px 0px 3px 0px rgba(0,0,0,.4);
+    -moz-box-shadow: 0px 0px 3px 0px rgba(0,0,0,.4);
+    box-shadow: 0px 0px 3px 0px rgba(0,0,0,.4);
+    width: 125px;
+    height: 85px;
+    margin: 0 0;
+}
+.timeWork p:nth-child(2) span{
+    display: block;
+    font-size: 11px;
+    text-align: center;
+    line-height: 12px;
+    margin: 0 0 10px;
+    position: relative;
+    top: 0px;
+}
+.timeWork p:nth-child(2) strong{
+    font-size: 12px;
+    text-align: center;
+    display: block;
+    text-transform: uppercase;
+}
+.RegisterLogin{
+    text-align: right;
+    margin: 0 10px 0 0;
+}
+.RegisterLogin li{
+    display: inline-block;
+}
+.RegisterLogin li a{
+    padding: 0 15px;
+    border-bottom-left-radius: .8em;
+    border-bottom-right-radius: .8em;
+    border: 1px solid #f7931e;
+    color: #f7931e;
+    border-top: 0px none;
+    height: 40px;
+    font-size: 13px;
+    text-align: center;
+    line-height: 37px;
+    -webkit-box-shadow: 0px 8px 17px -7px rgba(34,34,34,0.57);
+    -moz-box-shadow: 0px 8px 17px -7px rgba(34,34,34,0.57);
+    box-shadow: 0px 8px 17px -7px rgba(34,34,34,0.57);
+    display: inline-block;
+    font-weight: 700;
+}
+.RegisterLogin li:first-child a{
+    border: none;
+    box-shadow: none;
+    height: 28px;
+    line-height: 28px;
+    position: relative;
+    top: -6px;
+    background: #D9CCBC;
+    border-radius: 0;
+    width: 120px;
+    font-size: 12px;
+}
+.RegisterLogin li:last-child a{
+    background: #f7931e;
+    color: #fff;
+}
+#search{
+    margin: 12px 10px 0 0;
+    position: relative;
+}
+#search input[type=text]{
+    width: 98%;
+    padding: 8px 10px;
+    border: 1px solid #bbb;
+    font-size: 15px;
+    font-family: 'Roboto Slab',serif;
+    font-style: italic;
+}
+#search input[type=text]:focus{
+    outline: none;
+}
+#search>a {
+    position: absolute;
+    right: 0;
+    top: 0;
+    display: inline-block;
+    height: 39px;
+    width: 40px;
+    vertical-align: top;
+    padding: 5px;
+    border-radius: 0px;
+    border-top-right-radius: 0.5em;
+    border-bottom-right-radius: 0.5em;
+    margin-top: 0px;
+    background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJod…IgaGVpZ2h0PSIxIiBmaWxsPSJ1cmwoI2dyYWQtdWNnZy1nZW5lcmF0ZWQpIiAvPgo8L3N2Zz4=);
+    background: -moz-linear-gradient(top, rgba(251,173,58,1) 0%, rgba(251,173,58,0.98) 21%, rgba(242,95,37,0.9) 100%);
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(251,173,58,1)), color-stop(21%,rgba(251,173,58,0.98)), color-stop(100%,rgba(242,95,37,0.9)));
+    background: -webkit-linear-gradient(top, rgba(251,173,58,1) 0%,rgba(251,173,58,0.98) 21%,rgba(242,95,37,0.9) 100%);
+    background: -o-linear-gradient(top, rgba(251,173,58,1) 0%,rgba(251,173,58,0.98) 21%,rgba(242,95,37,0.9) 100%);
+    background: -ms-linear-gradient(top, rgba(251,173,58,1) 0%,rgba(251,173,58,0.98) 21%,rgba(242,95,37,0.9) 100%);
+    background: linear-gradient(to bottom, rgba(251,173,58,1) 0%,rgba(251,173,58,0.98) 21%,rgba(242,95,37,0.9) 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fbad3a', endColorstr='#e6f25f25',GradientType=0 );
+}
+#search>a:after{
+    content: '';
+    display: inline-block;
+    width: 30px;
+    height: 30px;
+    background-position: -260px 0;
+    background-image: url('/tp/food/img/sprites.png');
+    background-repeat: no-repeat;
+}
+#searchFolding{
+    background: #FFF;
+    box-shadow: 0 2px 2px #6d6d6d;
+    padding: 10px 0;
+    display: none;
+    width: 100%;
+    position: absolute;
+    z-index: 2;
+}
+#searchFolding a{
+    display: block;
+    padding: 5px 10px;
+    color: #333;
+}
+#searchFolding a:nth-child(odd){
+    background: #f9f9f9;
+}
+#searchFolding a:hover{
+    background: #f7931e;
+    color: #FFF;
+}
+.head2{
+    background-image: url('/tp/food/img/bg-main-menu-green.png');
+    height: 50px;
+    -webkit-box-shadow: 0px 3px 9px -1px rgba(0,0,0,.6);
+    -moz-box-shadow: 0px 3px 9px -1px rgba(0,0,0,.6);
+    box-shadow: 0px 3px 9px -1px rgba(0,0,0,.6);
+    width: 100%;
+}
+.nav>ul{
+    padding: 0 30px;
+    display: inline-block;
+    width: 100%;
+    position: relative;
+}
+.nav>ul>li{
+    display: inline-block;
+    float: left;
+    margin: 0 8px;
+}
+.nav>ul>li:after{
+    content: '';
+    border-right: 1px solid #fff;
+    height: 30px;
+    position: absolute;
+    right: -9px;
+    top: 10px;
+}
+.nav>ul>li:last-child:after{
+    display: none;
+}
+.nav>ul>li>a{
+    height: 50px;
+    display: inline-block;
+    line-height: 50px;
+    color: #FFF;
+    padding: 0 20px;
+    font-family: 'Roboto Slab',serif;
+}
+.nav>ul>li:hover>a{
+    background-image: url('/tp/food/img/bg-green-paper.png');
+}
+.nav>ul>li>ul{
+    display: none;
+    background-image: url('/tp/food/img/bg-green-paper.png');
+    position: absolute;
+    left: 0;
+    text-align: center;
+    padding: 15px;
+}
+.nav>ul>li>ul li{
+    width: 150px;
+    margin: 0 0;
+    display: inline-block;
+    padding: 18px;
+}
+.nav>ul>li>ul li img{
+    max-width: 100%;
+    -webkit-transition: all 0.5s ease;
+    -moz-transition: all 0.5s ease;
+    -o-transition: all 0.5s ease;
+    transition: all 0.5s ease;
+    box-shadow: 0px 3px 9px -1px rgba(0,0,0,.6);
+}
+.nav>ul>li>ul li:hover img{
+    -webkit-transform: scale(1.1);
+    -moz-transform: scale(1.1);
+    -o-transform: scale(1.1);
+    -ms-transform: scale(1.1);
+    transform: scale(1.1);
+    box-shadow: 0 0 0 #a2a2a2;
+}
+.nav>ul>li>ul li:hover{
+    background: #fff;
+    box-shadow: 0px 3px 9px -1px rgba(0,0,0,.6);
+
+}
+.nav>ul>li>ul li h2{
+    margin: 10px -8px 0 -8px;
+    color: #FFF;
+    font-size: 18px;
+    font-family: 'Roboto Slab',serif;
+}
+.nav>ul>li>ul li:hover h2{
+    color: #333;
+}
+.nav>ul>li:hover>ul{
+    display: block;
+
+}
+
+/********** Main ************/
+.main{
+    margin: 150px 0 0 0;
+    background-image: url('/tp/food/img/bg-butcher1.jpg');
+}
+
+/**** Banner *****/
+#banner{
+    padding: 0 0;
+    margin: 0 0 0 0;
+    background: #f9f9f9;
+    position: relative;
+}
+#banner li{
+    list-style: none;
+    position: relative;
+    height: 400px;
+    width: 100%;
+    overflow: hidden;
+    text-align: center;
+}
+#banner li img{
+    max-height: 100%;
+    position: absolute;
+    left: -50%;
+    right: -50%;
+    display: inline-block;
+    margin: 0 auto;
+}
+.owl-carousel .owl-item img{
+    width: inherit;
+}
+#banner li figure div{
+    position: absolute;
+    left: 10%;
+    width: 300px;
+    z-index: 1;
+    background: rgba(25, 25, 25, 0.53);
+    top: 18%;
+    display: inline-block;
+    padding: 10px 15px;
+    color: #fff;
+    border-radius: 15px 0 0 15px;
+    text-align: left;
+}
+#banner li figure div h2{
+    margin: 0 0 5px 0;
+    padding: 0 0 5px 0;
+    border-bottom: 2px dotted #fff;
+    font-family: 'Roboto Slab',serif;
+}
+.owl-nav{
+    position: absolute;
+    top: 45%;
+    width: 100%;
+    /*opacity: 0;*/
+    -webkit-transition: all 0.2s ease;
+    -moz-transition: all 0.2s ease;
+    -o-transition: all 0.2s ease;
+    transition: all 0.2s ease;
+}
+.owl-nav .owl-prev{
+    left: 0px;
+    position: absolute;
+}
+.owl-nav .owl-next{
+    right: 0px;
+    position: absolute;
+}
+.owl-nav>div{
+    width: 51px;
+    height: 101px;
+    margin-top: -50px;
+    padding: 0;
+    cursor: pointer;
+    color: transparent;
+    border: none;
+    outline: none;
+    background: transparent;
+    background-image: url('/tp/food/img/sprites.png');
+    background-repeat: no-repeat;
+}
+.owl-nav>div.owl-next{
+    background-position: -60px -190px;
+}
+.owl-nav>div.owl-prev{
+    background-position: 0px -190px;
+}
+.owl-nav>div.disabled{
+    cursor: no-drop !important;
+}
+.owl-nav>div:hover{
+
+}
+.banner__image {
+    background-position: top center;
+    background-size: cover;
+    position: relative;
+}
+.banner__image:before {
+    content: '';
+    padding-top: 38%;
+    display: block;
+}
+
+/******** Category Home **********/
+
+.categoryHome>ul>li{
+    padding: 35px 0;
+    box-shadow: inset 0px 4px 7px rgba(51,51,51,0.37);
+    /*box-shadow: inset 0px 4px 4px rgba(51, 51, 51, 0.37);*/
+}
+.categoryHome>ul>li>a{
+    font-size: 55px;
+    font-family: 'Roboto Slab',serif;
+    display: block;
+    text-align: center;
+    color: #666;
+    text-transform: uppercase;
+    letter-spacing: 6px;
+    position: relative;
+}
+.categoryHome>ul>li>a>span{
+    font-size: 13px;
+    position: absolute;
+    right: 20px;
+    top: 30px;
+    letter-spacing: 3px;
+}
+.categoryHome>ul>li>a:focus{
+    text-decoration: none;
+}
+.categoryHome>ul>li>ul{
+    display: none;
+    padding: 0 30px;
+    text-align: center;
+}
+.categoryHome>ul>li>a:before{
+    content: '';
+    height: 16px;
+    width: 52px;
+    display: inline-block;
+    background-image: url('/tp/food/img/sprites.png');
+    background-position: -300px -40px;
+    background-repeat: no-repeat;
+    position: relative;
+    top: -7px;
+    margin: 0 10px 0 0;
+}
+
+.categoryHome>ul>li:nth-child(1)>a:before, .categoryHome>ul>li:nth-child(8)>a:before{
+    background-position: -300px -40px;
+}
+.categoryHome>ul>li:nth-child(1).open>a:before, .categoryHome>ul>li:nth-child(8).open>a:before{
+    background-position-x: -360px;
+}
+.categoryHome>ul>li:nth-child(2)>a:before, .categoryHome>ul>li:nth-child(9)>a:before{
+    background-position: -300px 0px;
+}
+.categoryHome>ul>li:nth-child(2).open>a:before, .categoryHome>ul>li:nth-child(9).open>a:before{
+    background-position-x: -360px;
+}
+.categoryHome>ul>li:nth-child(3)>a:before, .categoryHome>ul>li:nth-child(10)>a:before{
+    background-position: -300px -80px;
+}
+.categoryHome>ul>li:nth-child(3).open>a:before, .categoryHome>ul>li:nth-child(10).open>a:before{
+    background-position-x: -360px;
+}
+.categoryHome>ul>li:nth-child(4)>a:before{
+    background-position: -300px -60px;
+}
+.categoryHome>ul>li:nth-child(4).open>a:before{
+    background-position-x: -360px;
+}
+.categoryHome>ul>li:nth-child(5)>a:before{
+    background-position: -300px -80px;
+}
+.categoryHome>ul>li:nth-child(5).open>a:before{
+    background-position-x: -360px;
+}
+.categoryHome>ul>li:nth-child(6)>a:before{
+    background-position: -300px -40px;
+}
+.categoryHome>ul>li:nth-child(6).open>a:before{
+    background-position-x: -360px;
+}
+.categoryHome>ul>li:nth-child(7)>a:before{
+    background-position: -300px -120px;
+}
+.categoryHome>ul>li:nth-child(7).open>a:before{
+    background-position-x: -360px;
+}
+.categoryHome>ul>li:nth-child(1), .categoryHome>ul>li:nth-child(8){
+    background-image: url('/tp/food/img/bg-butcher1.jpg');
+    border-bottom: 2px solid #b68044;
+}
+.categoryHome>ul>li:nth-child(1)>a, .categoryHome>ul>li:nth-child(8)>a{
+    color: #e8eacd;
+}
+.categoryHome>ul>li:nth-child(2), .categoryHome>ul>li:nth-child(9){
+    background-image: url('/tp/food/img/bg-supermarket.png');
+    border-bottom: 2px solid #dedede;
+}
+.categoryHome>ul>li:nth-child(2)>a, .categoryHome>ul>li:nth-child(9)>a{
+    color: #736357;
+}
+.categoryHome>ul>li:nth-child(3){
+    background-image: url('/tp/food/img/leavesCanvas1.jpg');
+    border-bottom: 2px solid #ad9753;
+}
+.categoryHome>ul>li:nth-child(3)>a, .categoryHome>ul>li:nth-child(10)>a{
+    color: #595050;
+}
+.categoryHome>ul>li:nth-child(4){
+    background-image: url('/tp/food/img/bg-drugstore.png');
+    border-bottom: 2px solid #dde26d;
+}
+.categoryHome>ul>li:nth-child(4)>a, .categoryHome>ul>li:nth-child(11)>a{
+    color: #a1a71a;
+}
+.categoryHome>ul>li:nth-child(5){
+    background-image: url('/tp/food/img/bg-household.png');
+    border-bottom: 2px solid #ada681;
+}
+.categoryHome>ul>li:nth-child(5)>a{
+    color: #595050;
+}
+.categoryHome>ul>li:nth-child(6){
+    background-image: url('/tp/food/img/bg-organic.png');
+    border-bottom: 2px solid #8e9872;
+}
+.categoryHome>ul>li:nth-child(6)>a{
+    color: #e8eacd;
+}
+.categoryHome>ul>li:nth-child(7){
+    background-image: url('/tp/food/img/bg-sales-and-new.png');
+    border-bottom: 2px solid #ffb785;
+}
+.categoryHome>ul>li:nth-child(7)>a{
+    color: #FF6800;
+}
+
+.categoryHome>ul>li>ul li{
+    width: 220px;
+    margin: 0 0;
+    display: inline-block;
+    padding: 18px;
+    text-align: center;
+    vertical-align: top;
+}
+.categoryHome>ul>li>ul li img{
+    max-width: 100%;
+    -webkit-transition: all 0.5s ease;
+    -moz-transition: all 0.5s ease;
+    -o-transition: all 0.5s ease;
+    transition: all 0.5s ease;
+    -webkit-box-shadow: 0 6px 10px rgba(0,0,0,.4);
+    -moz-box-shadow: 0 6px 10px rgba(0,0,0,.4);
+    box-shadow: 0 6px 10px rgba(0,0,0,.4);
+}
+.categoryHome>ul>li>ul li:hover img{
+    -webkit-transform: scale(1.1);
+    -moz-transform: scale(1.1);
+    -o-transform: scale(1.1);
+    -ms-transform: scale(1.1);
+    transform: scale(1.1);
+    -webkit-box-shadow: 0 0 0 rgba(0,0,0,.4);
+    -moz-box-shadow: 0 0 0 rgba(0,0,0,.4);
+    box-shadow: 0 0 0 rgba(0,0,0,.4);
+}
+.categoryHome>ul>li>ul li:hover{
+    background: #fff;
+    -webkit-box-shadow: 0 6px 10px rgba(0,0,0,.4);
+    -moz-box-shadow: 0 6px 10px rgba(0,0,0,.4);
+    box-shadow: 0 6px 10px rgba(0,0,0,.4);
+}
+.categoryHome>ul>li>ul li h2{
+    margin: 10px -8px 0 -8px;
+    color: #FFF;
+    font-size: 18px;
+    font-family: 'Roboto Slab',serif;
+}
+.categoryHome>ul>li:nth-child(1)>ul li a h2, .categoryHome>ul>li:nth-child(8)>ul li a h2{
+    color: #e8eacd;
+}
+.categoryHome>ul>li:nth-child(2)>ul li a h2, .categoryHome>ul>li:nth-child(9)>ul li a h2{
+    color: #736357;
+}
+.categoryHome>ul>li:nth-child(3)>ul li a h2, .categoryHome>ul>li:nth-child(10)>ul li a h2{
+    color: #595050;
+}
+.categoryHome>ul>li:nth-child(4)>ul li a h2, .categoryHome>ul>li:nth-child(11)>ul li a h2{
+    color: #a1a71a;
+}
+.categoryHome>ul>li:nth-child(5)>ul li a h2, .categoryHome>ul>li:nth-child(12)>ul li a h2{
+    color: #595050;
+}
+.categoryHome>ul>li:nth-child(6)>ul li a h2, .categoryHome>ul>li:nth-child(13)>ul li a h2{
+    color: #e8eacd;
+}
+.categoryHome>ul>li:nth-child(7)>ul li a h2, .categoryHome>ul>li:nth-child(14)>ul li a h2{
+    color: #FF6800;
+}
+.categoryHome>ul>li>ul li:hover a h2{
+    color: #333;
+}
+
+
+/******* Footer ********/
+.footer{
+    text-align: center;
+    margin: 100px 0 0 0;
+    padding: 50px 0;
+    background: url(/tp/food/img/bg-footer.png);
+}
+.footer>div>div>h2{
+    color: #8a8a8a;
+    font-family: 'Roboto Slab',serif;
+}
+.appDownload a{
+    margin: 0 5px;
+}
+.footer>div>div>ul{
+    margin: 20px 0 0 0;
+}
+.footer>div>div>ul li{
+    display: inline-block;
+    margin: 0 10px;
+}
+.footer>div>div>ul li a{
+    color: #8a8a8a;
+    font-weight: 700;
+    font-size: 12px;
+}
+.about{
+    color: #8a8a8a;
+    width: 60%;
+    margin: 20px auto 0 auto;
+}

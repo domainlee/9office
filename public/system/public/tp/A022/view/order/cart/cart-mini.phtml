@@ -1,0 +1,17 @@
+<?php
+    $products = $this->products;
+?>
+
+<?php
+$c = 0;
+$d = 0;
+$q = 0;
+foreach($products as $p){
+    $c++;
+    $t = ($p->getPriceOld() ? $p->getPriceOld():$p->getPrice())*$p->getQuantity();
+    $q += $p->getQuantity();
+    $d += $t;
+}
+?>
+<a class="icon-font icon-basket" href="/cart"><span><?= $q ?></span></a>
+<a href="/cart"><span><?= number_format($d) ?> đ</span></a>

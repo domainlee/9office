@@ -1,0 +1,24 @@
+<?php if(!empty($this->introLayout['intro-title text']['value']) || !empty($this->introLayout['intro-content textarea']['value'])
+ || !empty($this->introLayout['intro-image file']['value'])):?>
+
+<section class="intro" style="background-image: url('<?= $this->introLayout['intro-image file']['value'] ? $this->introLayout['intro-image file']['value'] : ''?>')">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="intro__inner">
+
+                    <div class="intro__box">
+                        <h3 class="intro__title">
+                            <span><?= $this->introLayout['intro-title text']['value'] ? $this->introLayout['intro-title text']['value'] : ''?></span>
+                        </h3>
+                        <p class="intro__content">
+                            <?= $this->introLayout['intro-content textarea']['value'] ? $this->introLayout['intro-content textarea']['value'] : ''?>
+                        </p>
+                        <?= $this->introLayout['intro-link'] ? '<a href="'.$this->introLayout['intro-link'].'">Xem thêm</a>' : '' ?>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<?php endif;?>

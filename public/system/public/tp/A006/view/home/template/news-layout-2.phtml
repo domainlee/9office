@@ -1,0 +1,76 @@
+<?php
+use Home\Model\DateBase;
+if(!empty($this->newsLayout2['news-list-2 article']['news-list-2']) || !empty($this->newsLayout2['right-news-list article']['right-news-list'])):?>
+<section class="news-last">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <?= $this->newsLayout2['news-2-title text']['value'] ? '<h1 class="news-last__headline--white">'.$this->newsLayout2['news-2-title text']['value'].'</h1>' : ''?>
+                <div class="news-last__inner">
+                    <?php $slider = $this->newsLayout2['news-slider-checkbox-2 checkbox']['value'];
+                        if(!empty($slider)){
+                            if(!empty($this->newsLayout2['right-news-list article']['right-news-list'])) {
+                                $class = 'last-post__carousel--3 owl-carousel owl-theme';
+                            }
+                            else{
+                                $class = 'last-post__carousel--4 owl-carousel owl-theme';
+                            }
+                        }
+                        else{
+                            $class = '';
+                        }
+                    ?>
+                    <div class="news-last__left <?= $class?>" style="<?= $this->newsLayout2['right-news-list article']['right-news-list'] ? 'width:65%' : 'width:100%'?>">
+
+                            <?php
+                                foreach($this->newsLayout2['news-list-2 article']['news-list-2'] as $k => $n):
+                                    $image = json_decode($n['image'], true);
+                                    if(!empty($image)) {
+                                        $imageFirst = array_shift($image);
+                                    }
+                                    ?>
+                                    <div class="news-last__left--item">
+                                        <div class="news-last__date2">
+                                            <span>Tháng <?= DateBase::toFormat($n['date'], 'm') ?></span>
+                                            <span><?= DateBase::toFormat($n['date'], 'd') ?></span>
+                                        </div>
+                                        <a href="<?= $n['url'] ?>"><figure class="news-last__left--image lazy" data-src="<?= $imageFirst ?>"></figure></a>
+                                        <h3 class="news-last__left--title"><a href="<?= $n['url'] ?>"><?= $n['title'] ?></a></h3>
+                                        <div class="news-last__left--date">
+                                            <span><i class="fa fa-eye"></i> 0 Lượt xem</span>
+                                            <span><i class="fa fa-user"></i> Admin</span>
+                                        </div>
+                                        <div class="news-last__left--intro">
+                                            <?= $n['intro'] ?>
+                                            <a href="<?= $n['url'] ?>">Đọc tiếp</a>
+                                        </div>
+                                    </div>
+                                <?php endforeach;?>
+                    </div>
+                    <?php if(!empty($this->newsLayout2['right-news-list article']['right-news-list'])):?>
+                    <div class="news-last__right">
+                        <div class="news-last__right--inner">
+                            <h1 class="news-last__right--headline"><i class="fa fa-calendar"></i><?= $optionPage['tieu-de-danh-sach-bai-viet-ben-phai'] ? $optionPage['tieu-de-danh-sach-bai-viet-ben-phai'] : ''?></h1>
+                            <div class="news-last__right--list">
+                                <?php
+                                    foreach($this->newsLayout2['right-news-list article']['right-news-list'] as $k => $n):
+                                        ?>
+                                        <div class="news-last__right--item">
+                                            <div class="news-last__right--date">
+                                                <span>Tháng <?= DateBase::toFormat($n['date'], 'm') ?></span>
+                                                <span><?= DateBase::toFormat($n['date'], 'd') ?></span>
+                                            </div>
+                                            <h3 class="news-last__right--title"><a href="<?= $n['url'] ?>"><?= $n['title'] ?></a></h3>
+                                        </div>
+                                    <?php endforeach;?>
+                            </div>
+                            <a class="news-last__right--viewall" href="">Xem tất cả</a>
+                        </div>
+                    </div>
+                    <?php endif;?>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<?php endif;?>

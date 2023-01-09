@@ -1,0 +1,35 @@
+<?php
+    $category = $this->category;
+    $this->headTitle($this->escapeHtml($this->translate(html_entity_decode($category->getName()))));
+    $this->headMeta()->appendName('description', (html_entity_decode($category->getName())));
+    $this->headMeta()->appendName('keywords', (html_entity_decode($category->getName())));
+    $this->headMeta()->appendProperty('og:title', html_entity_decode($category->getName()));
+    $product = $this->paginator;
+    $product->setItemCountPerPage($this->uriParams()->getRequest()->getQuery('icpp') ? : 100);
+
+    $prodCategory = $this->category();
+
+    $cs = [
+        '/tp/food/css/p.css'
+    ];
+    echo '<link href="'.srcLink($cs,2).'" media="screen" rel="stylesheet" type="text/css">';
+?>
+
+<div class="container">
+
+    <div class="row">
+        <div class="col-md-12">
+
+            <?php
+                if(count($category->getChilds()) > 0 && !$category->getParentId()){
+                    echo $this->render('product/product/child1');
+                }elseif(count($category->getChilds()) > 0  && $category->getParentId()){
+                    echo $this->render('product/product/child2');
+                }elseif(count($category->getChilds()) == 0 ){
+                    echo $this->render('product/product/child3');
+                }
+            ?>
+
+        </div>
+    </div>
+</div>

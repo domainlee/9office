@@ -1,0 +1,94 @@
+<?php
+    echo $this->headTitle('Chia sẻ kiến thức kinh doanh hiệu quả')->setSeparator(' - ')->setAutoEscape(false);
+
+    $this->headMeta()->appendName('description', ('DWEB công cụ tạo website, bán hàng, giới thiệu công ty, thời trang, mỹ phẩm, kiến trúc ... Chúng tôi luôn quan tâm tới từng sản phẩm & lắng nghe khách hàng'));
+    $this->headMeta()->appendName('keywords', ('DWEB, công cụ tạo website, bán hàng, giới thiệu công ty, thời trang, mỹ phẩm, kiến trúc'));
+
+    $this->headMeta()->appendProperty('fb:app_id', '1697190970583102');
+    $this->headMeta()->appendProperty('article:author', 'https://www.facebook.com/dwebvietnam');
+    $this->headMeta()->appendProperty('og:locale', 'vi_VN');
+    $this->headMeta()->appendProperty('og:image', 'http://dweb.vn/tp/dweb/image/dweb-thumbnail.png');
+    $this->headMeta()->appendProperty('og:url', 'http://dweb.vn');
+    $this->headMeta()->appendProperty('og:title', 'DWEB website trải nghiệm người dùng');
+    $this->headMeta()->appendProperty('og:description', ('DWEB là công cụ tạo website, bán hàng, giới thiệu công ty, thời trang, mỹ phẩm, kiến trúc ... Chúng tôi luôn quan tâm tới từng sản phẩm & lắng nghe khách hàng'));
+
+    $this->headMeta()->appendProperty('twitter:card', 'DWEB.VN');
+    $this->headMeta()->appendProperty('twitter:title', 'DWEB website trải nghiệm người dùng');
+    $this->headMeta()->appendProperty('twitter:image', 'http://dweb.vn/tp/dweb/image/dweb-thumbnail.png');
+    $this->headMeta()->appendProperty('twitter:description', 'DWEB là công cụ tạo website, bán hàng, giới thiệu công ty, thời trang, mỹ phẩm, kiến trúc ... Chúng tôi luôn quan tâm tới từng sản phẩm & lắng nghe khách hàng');
+
+    $optionPage = $this->home()->optionPage();
+?>
+
+<?php
+    $news = $this->News()->searchPaginator();
+    $news->setItemCountPerPage($this->uriParams()->getRequest()->getQuery('icpp') ? : 26);
+    $news->setPageRange(5);
+    if(!empty($news)):
+    $category = $this->NewsCategory()->getCategories();
+?>
+<section class="news__category m-t-100">
+    <div class="news__category--inner">
+        <?= $this->partial('layout/category'); ?>
+    </div>
+</section>
+
+<section class="news">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="news__inner">
+
+                    <div class="news__list">
+                        <?php
+                            $i = 0;
+                            foreach($news as $n):
+                            $i++;
+                            $image = json_decode($n->getImage(), true);
+                            $imageFirst = '';
+                            if(!empty($image)){
+                                $imageFirst = array_shift($image);
+                            }
+                            if($i == 3):
+                        ?>
+                            <div class="adv-middle">
+                                <a href="http://dweb.vn/thiet-ke-web-gia-re-n356.html" target="_blank" title="thiet ke web gia re">
+                                    <figure>
+                                        <div class="landing-head-hero__content">
+                                            <h2 class=""><strong>Thiết kế website chuẩn seo</strong></h2>
+                                            <span>Dùng thử</span>
+                                        </div>
+                                    </figure>
+                                </a>
+                            </div>
+                            <?php endif; ?>
+                            <div class="news__item">
+                                <div class="news__item--inner">
+                                    <a href="<?= $n->getViewLink() ?>">
+                                        <figure class="lazy news__image" data-src="<?= $imageFirst ?>"></figure>
+                                    </a>
+                                    <div class="news__intro">
+                                        <h3 class="news__title">
+                                            <a href="<?= $n->getViewLink() ?>" target="_blank">
+                                                <?= $n->getTitle() ?>
+                                            </a>
+                                        </h3>
+                                        <div class="news__intro--sub">
+                                            <?= $n->getDescription() ?>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        <?php endforeach; ?>
+                    </div>
+                    <div class="news__paginator">
+                        <?php
+                            echo $this->paginationControl($news, 'Elastic', 'partial/listPage');
+                        ?>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<?php endif; ?>

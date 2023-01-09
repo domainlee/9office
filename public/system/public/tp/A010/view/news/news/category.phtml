@@ -1,0 +1,29 @@
+<?php
+    $theme = $this->NewsCategory()->featchTreeCategory(20);
+    $data = $this->paginator;
+    $data->setItemCountPerPage($this->uriParams()->getRequest()->getQuery('icpp') ? : 8);
+    $category = $this->category;
+
+    $cs = [
+        '/tp/A010/css/n.css'
+    ];
+    echo '<link href="'.srcLink($cs,2).'" media="screen" rel="stylesheet" type="text/css">';
+
+    $this->headTitle($this->escapeHtml($this->translate($category->getName())));
+    $this->headMeta()->appendName('description', ($category->getName()));
+    $this->headMeta()->appendName('keywords', ($category->getName()));
+    $this->headMeta()->appendProperty('og:title', $category->getName());
+    $optionPage = $this->home()->optionPage();
+    use Home\Model\DateBase;
+    $category2 = $this->NewsCategory()->getCategories();
+?>
+
+<?php
+    if(!empty($data)):
+        if($category->getType() == 2):
+            echo $this->render('news/news/category_grid');
+        else:
+            echo $this->render('news/news/category_list');
+        endif;
+    endif;
+ ?>

@@ -1,0 +1,83 @@
+<?php if(!empty($this->threeOptionLayout['option-content-1 text']['value']) || !empty($this->threeOptionLayout['option-content-2 text']['value']) || !empty($this->threeOptionLayout['option-content-3 text']['value'])
+|| !empty($this->threeOptionLayout['option-list-content-1 textarea']['value']) || !empty($this->threeOptionLayout['option-list-content-2 textarea']['value']) || !empty($this->threeOptionLayout['option-list-content-3 textarea']['value'])
+|| !empty($this->threeOptionLayout['option-list-content-1 textarea']['value']) || !empty($this->threeOptionLayout['option-list-content-2 textarea']['value']) || !empty($this->threeOptionLayout['option-list-content-3 textarea']['value'])):?>
+<section class="three-service">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="three-service__inner">
+                    <h1 class="three-service__headline"><?= $this->threeOptionLayout['three-option-title text']['value'] ? $this->threeOptionLayout['three-option-title text']['value'] : ''?></h1>
+                    <div class="three-service__list">
+                        <div class="three-service__row">
+                            <div>
+                                <h2 class="three-service__title"><?= $this->threeOptionLayout['option-title-1 text']['value'] ? $this->threeOptionLayout['option-title-1 text']['value'] : ''?></h2>
+                                <div class="three-service__intro">
+                                    <?= $this->threeOptionLayout['option-content-1 text']['value'] ? $this->threeOptionLayout['option-content-1 text']['value'] : ''?>
+                                </div>
+                                <?php
+                                if(!empty($this->threeOptionLayout['option-list-content-1 textarea']['value'])):
+                                    $text = preg_split('/\r\n|\r|\n/', $this->threeOptionLayout['option-list-content-1 textarea']['value']);
+                                    echo '<div class="three-service__row--list">';
+                                    ?>
+
+                                    <?php
+                                    for($i = 0; $i < sizeof($text); $i++){
+                                        ?>
+                                        <div class="three-service__item"><?= $text[$i] ?></div>
+                                    <?php };
+                                    echo '</div>';
+                                endif;
+                                ?>
+                            </div>
+                        </div>
+                        <div class="three-service__row">
+                            <div>
+                                <h2 class="three-service__title"><?= $this->threeOptionLayout['option-title-2 text']['value'] ? $this->threeOptionLayout['option-title-2 text']['value'] : ''?></h2>
+                                <div class="three-service__intro">
+                                    <?= $this->threeOptionLayout['option-content-2 text']['value'] ? $this->threeOptionLayout['option-content-2 text']['value'] : ''?>
+                                </div>
+                                <?php
+                                if(!empty($this->threeOptionLayout['option-list-content-2 textarea']['value'])):
+                                    $text = preg_split('/\r\n|\r|\n/', $this->threeOptionLayout['option-list-content-2 textarea']['value']);
+                                    echo '<div class="three-service__row--list">';
+                                    ?>
+
+                                    <?php
+                                    for($i = 0; $i < sizeof($text); $i++){
+                                        ?>
+                                        <div class="three-service__item"><?= $text[$i] ?></div>
+                                    <?php };
+                                    echo '</div>';
+                                endif;
+                                ?>
+                            </div>
+                        </div>
+                        <div class="three-service__row">
+                            <div>
+                                <h2 class="three-service__title"><?= $this->threeOptionLayout['option-title-3 text']['value'] ? $this->threeOptionLayout['option-title-3 text']['value'] : ''?></h2>
+                                <div class="three-service__intro">
+                                    <?= $this->threeOptionLayout['option-content-3 text']['value'] ? $this->threeOptionLayout['option-content-3 text']['value'] : ''?>
+                                </div>
+                                <?php
+                                if(!empty($this->threeOptionLayout['option-list-content-3 textarea']['value'])):
+                                    $text = preg_split('/\r\n|\r|\n/', $this->threeOptionLayout['option-list-content-3 textarea']['value']);
+                                    echo '<div class="three-service__row--list">';
+                                    ?>
+
+                                    <?php
+                                    for($i = 0; $i < sizeof($text); $i++){
+                                        ?>
+                                        <div class="three-service__item"><?= $text[$i] ?></div>
+                                    <?php };
+                                    echo '</div>';
+                                endif;
+                                ?>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<?php endif;?>

@@ -1,0 +1,14 @@
+<?php if(!empty($this->optionLayout['option-html texteditor']['value']) || !empty($this->optionLayout['option-background file']['value'])):?>
+    <section class="text-editor" style="background-image: url('<?= $this->optionLayout['option-background file']['value']?>')">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="text-editor__content">
+                        <?= $this->optionLayout['option-html texteditor']['value'] ?>
+                        <?= $this->optionLayout['option-button text']['value'] ? '<a href="'.$this->optionLayout['option-link text']['value'].'">'.$this->optionLayout['option-button text']['value'].'</a>' : ''?>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+<?php endif;?>

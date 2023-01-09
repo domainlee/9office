@@ -1,0 +1,27 @@
+<?php
+$products = $this->products;
+$c = 0;
+$d = 0;
+foreach($products as $p){
+    $c++;
+    $t = (($p->getPriceOld() ? $p->getPriceOld():$p->getPrice())-$p->getOptions()['priceOff'] )*$p->getQuantity();
+    $image = json_decode($p->getImage(), true);
+    if(is_array($image)){
+        $imageFirst = array_shift($image);
+    }
+    ?>
+    <div class="client__item-product">
+        <div><?= $p->getTitle() ?></div>
+        <div>
+            <?= number_format(($p->getPriceOld() ? $p->getPriceOld():$p->getPrice())).''.' * '. $p->getQuantity() ?>
+            <?= !empty($p->getOptions()['priceOff']) ? '<span><br/> - '.number_format( $p->getOptions()['priceOff']).'</span>':null ?>
+        </div>
+        <div><b><?= number_format((($p->getPriceOld() ? $p->getPriceOld():$p->getPrice())-$p->getOptions()['priceOff'] )*$p->getQuantity()).' đ'; ?></b></div>
+    </div>
+    <?php
+    $d += $t;
+}
+?>
+<div class="client__toltalmoney">
+    <h4 class="text-right">Tổng: <?= !empty($d) ? number_format($d):'0' ?> đ</h4>
+</div>

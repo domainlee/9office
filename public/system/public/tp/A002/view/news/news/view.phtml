@@ -1,0 +1,99 @@
+<?php
+    $view = $this->news;
+
+    $imageFirst = '';
+    if(!empty(json_decode($view->getImage(), true))){
+        $imageFirst = array_shift(json_decode($view->getImage(), true));
+    }
+
+    $current_page_URL = $_SERVER["SERVER_NAME"] . $_SERVER["REQUEST_URI"];
+    $a = json_decode($view->getExtraContent());
+    $cs = [
+        '/tp/A002/css/n.css'
+    ];
+    echo '<link href="'.srcLink($cs,1).'" media="screen" rel="stylesheet" type="text/css">';
+    $js = [
+        '/tp/A002/js/n.js'
+    ];
+    echo '<script type="text/javascript" src="'.srcLink($js,1).'"></script>';
+    ?>
+<?php
+    $image = 'http://'.$_SERVER['HTTP_HOST'].$imageFirst;
+    $imageInfo = getimagesize($image);
+    /**** Start SEO DWEB *****/
+    echo $this->headLink(['rel' => 'canonical', 'href' => 'http://'.$_SERVER['HTTP_HOST'].$view->getViewLink() ]);
+    $this->headTitle($this->escapeHtml($this->translate(!empty($view->getMetaTitle()) ? $view->getMetaTitle():null)));
+    $this->headMeta()->appendName('description', (!empty($view->getMetaDescription()) ? $view->getMetaDescription():null));
+    $this->headMeta()->appendName('keywords', (!empty($view->getMetaKeyword()) ? $view->getMetaKeyword():null));
+
+    $this->headMeta()->appendProperty('og:title', !empty($view->getMetaTitle()) ? $view->getMetaTitle():null);
+    $this->headMeta()->appendProperty('og:description', !empty($view->getMetaDescription()) ? $view->getMetaDescription():null);
+    $this->headMeta()->appendProperty('og:image', !empty($imageFirst) ? 'http://'.$_SERVER['HTTP_HOST'].$imageFirst:null);
+    $this->headMeta()->appendProperty('og:image:secure_url', !empty($imageFirst) ? 'http://'.$_SERVER['HTTP_HOST'].$imageFirst:null);
+    $this->headMeta()->appendProperty('og:image:width', $imageInfo['0']);
+    $this->headMeta()->appendProperty('og:image:height', $imageInfo['1']);
+    $this->headMeta()->appendProperty('og:type', 'Article');
+    $this->headMeta()->appendProperty('og:url', 'http://'.$_SERVER['HTTP_HOST'].$view->getViewLink());
+    $this->headMeta()->appendProperty('og:site_name', $optionBasic['sologan']);
+
+    $this->headMeta()->appendName('twitter:card', !empty($image) ? $image:'summary_large_image');
+    $this->headMeta()->appendName('twitter:title', !empty($view->getMetaTitle()) ? $view->getMetaTitle():null);
+    $this->headMeta()->appendName('twitter:description', (!empty($view->getMetaDescription()) ? $view->getMetaDescription():null));
+    $this->headMeta()->appendName('twitter:image', !empty($image) ? $image:null);
+    /**** End SEO DWEB *****/
+?>
+<?php if($view->getType() == 2): ?>
+<?php
+    echo $this->render('news/news/gallery');
+?>
+<?php else: ?>
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="detailNews">
+                <h1 class="detail-news__title"><?= html_entity_decode($view->getTitle()) ?></h1>
+
+                <?php
+                echo $view->getContent();
+                ?>
+
+                <?php
+                    $relation = json_decode($view->getArticleRelated(), true);
+                    if(!empty($relation)):
+                    echo '<ul class="lN lNCategory">';
+                    $i = 0;
+                    foreach($relation as $n) {
+                        $i++;
+                        $image = json_decode($n['image'], true);
+                        $imageFirst = '';
+                        if(!empty($image)){
+                            $imageFirst = array_shift($image);
+                        }
+                        if($i < 4):
+                            echo '<li>
+                                <a href="'.$n['url'].'">
+                                <figure class="lazy image-article" data-src="'.(!empty($imageFirst) ? $imageFirst : null).'">
+                                    <h2>'.$n['title'].'</h2>
+                                </figure>
+                                </a>
+                            </li>';
+                        endif;
+                    }
+                    echo '</ul>';
+                    endif;
+                ?>
+                <div class="social">
+                    <div style="float: left;margin: 0 5px 0 0;" class="fb-like" data-href="<?= $current_page_URL.$view->getViewLink() ?>" data-layout="button" data-action="like" data-show-faces="false" data-share="true"></div>
+                    <div class="g-plusone" data-size="medium"></div>
+                </div>
+                <script src="https://apis.google.com/js/platform.js" async defer>
+                    {lang: 'vi'}
+                </script>
+            </div>
+        </div>
+    </div>
+</div>
+<?php endif; ?>
+
+
+

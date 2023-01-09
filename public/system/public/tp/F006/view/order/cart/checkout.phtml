@@ -1,0 +1,85 @@
+<?php
+    $this->headTitle($this->escapeHtml($this->translate('Đặt hàng')));
+    $this->headMeta()->appendName('description', ('Đặt hàng'));
+    $this->headMeta()->appendName('keywords', ('Đặt hàng'));
+    $this->headMeta()->appendProperty('og:title', 'Đặt hàng');
+
+    $cartService = $this->cart()->getServiceCart();
+    $products = $cartService->getProducts();
+    $cs = [
+        '/tp/F006/css/p.css',
+        '/assets/css/components.css',
+    ];
+    echo '<link href="'.srcLink($cs,3).'" media="screen" rel="stylesheet" type="text/css">';
+    $js = [
+        '/tp/F006/js/c.js',
+        '/assets/plugins/parsleyjs/parsley.min.js',
+    ];
+    echo '<script type="text/javascript" src="'.srcLink($js,3).'"></script>';
+
+    $form = $this->form;
+?>
+
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('form').parsley();
+    });
+</script>
+
+<div class="container">
+    <div class="row">
+        <div class="checkout">
+            <div class="col-md-12">
+                <h1 class="titleHome"><span>Đặt hàng</span></h1>
+            </div>
+            <form method="post" enctype="multipart/form-data" data-parsley-validate novalidate>
+                <div class="col-md-6">
+                    <p><span>Sản phẩm</span></p>
+                    <?php
+                        $products = $cartService->getProducts();
+                        $d = 0;
+                        if(count($products)){
+                            echo '<ul>';
+                            foreach($products as $p){
+                                $t = ($p->getPriceOld() ? $p->getPriceOld():$p->getPrice())*$p->getQuantity();
+                                echo '<li>
+                                    <a href="../'.$p->getViewLink() .'">'.$p->getTitle() . (isset($p->getOptions()['dataSize']) ? ' - <span>'.$p->getOptions()['dataSize']->getName().'</span>':'').(isset($p->getOptions()['dataColor']) ? '<span class="colorAttr" style="background-color:'.$p->getOptions()['dataColor']->getColorCode().'">'.$p->getOptions()['dataColor']->getName().'</span>':'').'</a>
+                                    <p>'.number_format($p->getPriceOld() ? $p->getPriceOld():$p->getPrice()).'đ</p>
+                                    <p>Số lượng: <span>'.$p->getQuantity().'</span></p>
+                                </li>';
+                                $d += $t;
+                            }
+                            echo '</ul>';
+                            echo '<span>Tổng tiền: <strong>'.number_format($d).'đ</strong></span>';
+                        }
+                    ?>
+                </div>
+                <div class="col-md-6">
+                        <p><span>Khách hàng</span></p>
+                        <div>
+                            <label>Họ và tên: *</label>
+                            <?= $this->formelement($form->get('customerName')->setAttributes(['class' => '', 'data-parsley-minlength' => '3', 'placeholder'=>'Họ tên', 'required' => 'required', 'data-parsley-error-message' => 'Họ tên không được để trống'])) ?>
+                            <?= $this->formelementerrors($form->get('customerName'),['class' => 'parsley-errors-list filled']) ?>
+                        </div>
+                        <div>
+                            <label>Số điện thoại: *</label>
+                            <?= $this->formelement($form->get('customerMobile')->setAttributes(['class' => '', 'data-parsley-type' =>'digits', 'data-parsley-length' => '[10,11]', 'placeholder'=>'Số điện thoại', 'required' => 'required', 'data-parsley-error-message' => 'Số điện thoại không được để trống'])) ?>
+                            <?= $this->formelementerrors($form->get('customerMobile'),['class' => 'parsley-errors-list filled']) ?>
+                        </div>
+                        <div>
+                            <label>Email: *</label>
+                            <?= $this->formelement($form->get('customerEmail')->setAttributes(['class' => '', 'data-parsley-type' =>'email', 'placeholder'=>'Email', 'required' => 'required', 'data-parsley-error-message' => 'Email không được để trống'])) ?>
+                            <?= $this->formelementerrors($form->get('customerEmail'),['class' => 'parsley-errors-list filled']) ?>
+                        </div>
+                        <div>
+                            <label>Địa chỉ:</label>
+                            <?= $this->formelement($form->get('customerAddress')->setAttributes(['class' => '', 'placeholder'=>'Địa chỉ', 'required' => 'required'])) ?>
+                        </div>
+                        <div>
+                            <input type="submit" value="Đặt hàng" />
+                        </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

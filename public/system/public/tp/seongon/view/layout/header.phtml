@@ -1,0 +1,13 @@
+<?php $url = $this->UriParams()->getRequest()->getRequestUri(); ?>
+
+<header class="header">
+    <div class="container header-container">
+        <div class="header-inner">
+            <div class="header-logo">
+                <a href="/">
+                    <img src="/tp/seongon/image/logo-seongon.png" alt="seongon.com"/>
+                    <<?= $url == '/' ? 'h1':'h2' ?> class="header-sologan" title="DWEB nền tảng website chuẩn seo của SEONGON"><span class="logo-first-key">D</span>WEB.</<?= $url == '/' ? 'h1':'h2' ?>></a>
+            </div>
+        </div>
+    </div>
+</header>

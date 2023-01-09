@@ -1,0 +1,23 @@
+<?php if(!empty($this->videoLayout['video-title text']['value']) || !empty($this->videoLayout['video-link1 text']['vallue']) || !empty($this->videoLayout['video-link2 text']['vallue'])):?>
+<section class="video">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h2 class="titleHome"><span><?= $this->videoLayout['video-title text']['value'] ? $this->videoLayout['video-title text']['value'] : ''?></span></h2>
+                <div class="video__inner">
+                    <?php if(!empty($this->videoLayout['video-link1 text']['value'])):?>
+                        <div class="video__left" style="padding-bottom: <?= $this->videoLayout['video-link2 text']['value'] ? '33%' : '44%'?>">
+                            <iframe width="560" height="315" src="https://www.youtube.com/embed/<?= $this->videoLayout['video-link1 text']['value']?>" frameborder="0" allowfullscreen></iframe>
+                        </div>
+                    <?php endif;?>
+                    <?php if(!empty($this->videoLayout['video-link2 text']['value'])):?>
+                        <div class="video__right" style="padding-bottom: <?= $this->videoLayout['video-link1 text']['value'] ? '33%' : '44%'?>">
+                            <iframe width="560" height="315" src="https://www.youtube.com/embed/<?= $this->videoLayout['video-link2 text']['value']?>" frameborder="0" allowfullscreen></iframe>
+                        </div>
+                    <?php endif;?>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<?php endif;?>

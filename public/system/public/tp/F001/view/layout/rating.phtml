@@ -1,0 +1,119 @@
+<?php
+    $optionBasic = $this->home()->optionBasic();
+    if(isset($optionBasic['ratingArticle']) || isset($optionBasic['ratingProduct'])):
+    $item = $this->itemId;
+    $type = $this->type;
+    $style = $this->style;
+
+    $rating = $this->home()->rating($item, $type);
+    $count = $this->home()->countRating($item, $type);
+?>
+    <style>
+        <?= $style ?>
+    </style>
+<?php
+    $cs = [
+        '/assets/css/rating.css',
+    ];
+    echo '<link href="'.srcLink($cs,4).'" media="screen" rel="stylesheet" type="text/css">';
+    $js = [
+        '/assets/plugins/parsleyjs/parsley.min.js',
+        '/assets/js/web/rating.js',
+    ];
+    echo '<script type="text/javascript" src="'.srcLink($js,2).'"></script>';
+?>
+
+<div class="review-rating" itemscope="" itemtype="https://schema.org/Review">
+    <div class="rating-comment-crt" itemprop="reviewBody">
+        <div class="rating-comment-crt__inner">
+            <h4><?= $count ?> đánh giá</h4>
+            <div class="rating-comment-crt__row">
+                <div class="rating-comment-crt__average">
+                    <?php
+                        $total = 0;
+                        $total2 = 0;
+                        foreach ($rating as $k => $v):
+                            $total += ((int)$k * (int)$v);
+                            $total2 += (int)$v;
+                        endforeach;
+                    ?>
+                    <?php
+                        if($total == 0 || $total2 == 0) {
+                            $value = 3.5;
+                        } else {
+                            $value = number_format($total/$total2, 1);
+                        }
+                    ?>
+                    <b><?= $value ?> <i class="fa fa-star"></i></b>
+                    <span><?= $count ?> Đánh giá</span>
+                </div>
+                <div class="rating-comment-crt__list">
+                    <?php foreach ($rating as $k => $v): ?>
+                        <div class="rating-comment-crt__item">
+                            <?= $k ?> <i class="fa fa-star"></i>
+                            <div class="rating-comment-crt__item--percent">
+                                <span style="width: <?= ( $v * 100)/ $count ?>%"></span>
+                            </div>
+                            <a href=""><?= $v ? $v:'0' ?> Đánh giá</a>
+                        </div>
+                    <?php endforeach; ?>
+                </div>
+                <div class="rating-comment-crt__button">
+                    <a>Gửi đánh giá</a>
+                </div>
+            </div>
+            <div class="rating-comment-crt__comment">
+                <div class="rating-stars text-center">
+                    <label></label>
+                    <ul id="stars">
+                        <li class="star" title="Không thích" data-value="1">
+                            <i class="fa fa-star fa-fw"></i>
+                        </li>
+                        <li class="star" title='Tạm được' data-value="2">
+                            <i class="fa fa-star fa-fw"></i>
+                        </li>
+                        <li class="star" title="Bình thường" data-value="3">
+                            <i class="fa fa-star fa-fw"></i>
+                        </li>
+                        <li class="star" title="Rất tốt" data-value="4">
+                            <i class="fa fa-star fa-fw"></i>
+                        </li>
+                        <li class="star" title="Tuyệt vời quá" data-value="5">
+                            <i class="fa fa-star fa-fw"></i>
+                        </li>
+                    </ul>
+                    <b class="rating-comment-crt__comment--label" style="display: none;"></b>
+                </div>
+                <div class="rating-comment-crt__form--comment">
+                    <form class="rating-comment-crt__form" data-parsley-validate novalidate>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <input type="hidden" name="vote" class="rating-comment-crt__vote" />
+                                <input type="hidden" name="itemId" value="<?= $item ?>"  />
+                                <input type="hidden" name="type" value="<?= $type ?>" />
+                                <textarea class="rating-comment-crt__content" name="content" required="required" data-parsley-minlength="30" placeholder="Nhập đánh giá của bạn"></textarea>
+                            </div>
+                            <?php
+                                $user_rating = $_COOKIE['user_rating'];
+                                $user_rating = json_decode($user_rating, true);
+                            ?>
+                            <div class="col-md-6">
+                                <div class="row">
+                                    <div class="<?= empty($user_rating) ? 'col-md-6':'' ?>">
+                                        <input class="rating-comment-crt__name" value="<?= $user_rating['name'] ?>" name="name" required="required" data-parsley-length="[4,30]" type="<?= empty($user_rating) ? 'text':'hidden' ?>" placeholder="Họ và tên" />
+                                        <input class="rating-comment-crt__phone" value="<?= $user_rating['phone'] ?>" name="phone" data-parsley-type="digits" data-parsley-length="[10,11]" required="required" type="<?= empty($user_rating) ? 'text':'hidden' ?>" placeholder="Số điện thoại" />
+                                    </div>
+                                    <div class="col-md-6">
+                                        <input class="rating-comment-crt__email" value="<?= $user_rating['email'] ?>" name="email" data-parsley-type="email" required="required" type="<?= empty($user_rating) ? 'text':'hidden' ?>" placeholder="Email" />
+                                        <button class="rating-comment-crt__button--send" type="submit">Gửi đánh giá</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<?php endif; ?>

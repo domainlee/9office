@@ -1,0 +1,83 @@
+/*--------------------------------------------------------------
+	#home style 2
+--------------------------------------------------------------*/
+/*--------------------------------------------------------------
+#2.1	find-book-section
+--------------------------------------------------------------*/
+.find-book-section {
+	background: $white;
+	position: relative;
+
+	@include media-query(767px) {
+		padding: 20px 0 100px;
+
+	}
+
+	&:after {
+		content: "";
+		@include background-style("../images/find-book-flower.png", center center, cover, no-repeat, local);
+		width: 648px;
+		height: 413px;
+		position: absolute;
+		left: 50%;
+		@include translatingX();
+		bottom: -300px;
+	}
+
+	.grid {
+		width: 33.33%;
+		float: left;
+		padding: 20px 35px;
+		border-right: 1px solid #e4e4e4;
+
+		@include media-query(767px) {
+			width: 100%;
+			border-bottom: 1px solid #e4e4e4;
+			border-right: 0;
+			text-align: center;
+			padding: 40px 25px;
+		}
+	}
+
+	p,
+	ul {
+		font-size: 14px;
+		font-size: calc-rem-value(14);
+	}
+
+	ul {
+		list-style-type: none;
+		color: $text-color;
+	}
+
+	ul > li + li {
+		margin-top: 8px;
+	}
+
+	h4 {
+		font-size: 16px;
+		font-size: calc-rem-value(16);
+		text-transform: uppercase;
+		margin: 0 0 1em;
+	}
+
+	.grids > .grid:first-child {
+		text-align: right;
+
+		@include media-query(767px) {
+			text-align: center;
+		}
+	}
+
+	.grids > .grid:last-child {
+		border-right: 0;
+
+		@include media-query(767px) {
+			border-bottom: 0;
+		}
+	}
+
+	.grids > .grid:nth-child(2) {
+		text-align: center;
+	}
+}

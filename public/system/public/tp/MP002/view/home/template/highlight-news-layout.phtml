@@ -1,0 +1,40 @@
+<?php
+use Home\Model\DateBase;
+if(!empty($this->highlightNewsLayout['highlight-news-list article']['highlight-news-list'])):?>
+<section class="open-hours">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="open-hours__inner">
+                    <div class="open-hours__left">
+                        <?= $this->highlightNewsLayout['highlight-news-title text']['value'] ? '<h2>'.$this->highlightNewsLayout['highlight-news-title text']['value'].'</h2>' : '' ?>
+                        <?= $this->highlightNewsLayout['highlight-news-intro textarea']['value'] ? $this->highlightNewsLayout['highlight-news-intro textarea']['value'] : '' ?>
+                        <a href="<?=$this->highlightNewsLayout['news-button-links text']['value']?>" class="open-hours__url"><?=$this->highlightNewsLayout['highlight-news-button text']['value']?></a>
+                    </div>
+                    <div class="open-hours__right">
+                        <?php
+                            foreach($this->highlightNewsLayout['highlight-news-list article']['highlight-news-list'] as $k => $b):
+                                $image = json_decode($b['image'], true);
+                                $imageFirst = '';
+                                if(!empty($image)){
+                                    $imageFirst = array_shift($image);
+                                }
+                                ?>
+                                <div class="open-hours__right-inner">
+                                    <div class="open-hours__right-one">
+                                        <figure class="open-hours__image" style="background-image: url('<?= $imageFirst ?>')"></figure>
+                                    </div>
+                                    <div class="open-hours__right-two">
+                                        <h4>01</h4>
+                                        <p><?= DateBase::toFormat($b['date'], 'd/m/Y') ?></p>
+                                        <h3><a href="<?= $b['url'] ?>"><?= !empty($b['title']) ? $b['title']:null ?></a></h3>
+                                    </div>
+                                </div>
+                            <?php endforeach; ?>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<?php endif;?>

@@ -1,0 +1,77 @@
+<?php
+    $fourPost = $this->fourPost;
+    $title1 = $fourPost['intro-title-1 text']['value'];
+    $content1 = $fourPost['intro-content-1 textarea']['value'];
+
+    $title2 = $fourPost['intro-title-2 text']['value'];
+    $content2 = $fourPost['intro-content-2 textarea']['value'];
+
+    $title3 = $fourPost['intro-title-3 text']['value'];
+    $content3 = $fourPost['intro-content-3 textarea']['value'];
+
+    $title4 = $fourPost['intro-title-4 text']['value'];
+    $content4 = $fourPost['intro-content-4 textarea']['value'];
+?>
+
+<section class="four-post">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="four-post__list">
+                    <div class="four-post__item">
+                        <div class="four-post__item--inner">
+                            <div class="four-post__left">
+                                <figure class="lazy" data-src="">
+                                    <img src="/tp/daithanhmiennam/img/i-gift.png" alt="<?= $title1 ?>" />
+                                </figure>
+                            </div>
+                            <div class="four-post__right">
+                                <h3 class="four-post__title"><?= $title1 ?></h3>
+                                <div class="four-post__content"><?= $content1 ?></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="four-post__item">
+                        <div class="four-post__item--inner">
+                            <div class="four-post__left">
+                                <figure class="lazy" data-src="">
+                                    <img src="/tp/daithanhmiennam/img/i-setup.png" alt="<?= $title2 ?>" />
+                                </figure>
+                            </div>
+                            <div class="four-post__right">
+                                <h3 class="four-post__title"><?= $title2 ?></h3>
+                                <div class="four-post__content"><?= $content2 ?></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="four-post__item">
+                        <div class="four-post__item--inner">
+                            <div class="four-post__left">
+                                <figure class="lazy" data-src="">
+                                    <img src="/tp/daithanhmiennam/img/i-gt.png" alt="<?= $title3 ?>" />
+                                </figure>
+                            </div>
+                            <div class="four-post__right">
+                                <h3 class="four-post__title"><?= $title3 ?></h3>
+                                <div class="four-post__content"><?= $content3 ?></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="four-post__item">
+                        <div class="four-post__item--inner">
+                            <div class="four-post__left">
+                                <figure class="lazy" data-src="">
+                                    <img src="/tp/daithanhmiennam/img/i-time.png" alt="<?= $title4 ?>" />
+                                </figure>
+                            </div>
+                            <div class="four-post__right">
+                                <h3 class="four-post__title"><?= $title4 ?></h3>
+                                <div class="four-post__content"><?= $content4 ?></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

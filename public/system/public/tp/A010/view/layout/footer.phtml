@@ -1,0 +1,93 @@
+<?php
+    $optionBasic = $this->home()->optionBasic();
+    $optionPage = $this->home()->optionPage();
+    use Home\Model\DateBase;
+?>
+
+
+<div id="kmacb">
+    <a modal="kmacb-form" href="#" title="">
+        <div class="kmacb-circle"></div>
+        <div class="kmacb-circle-fill"></div>
+        <div class="kmacb-img-circle"></div>
+    </a>
+    <p>Gọi ngay: <?= !empty($optionPage['so-dien-thoai']) ? $optionPage['so-dien-thoai']:'0976171678' ?></p>
+</div>
+
+<footer class="footer">
+    <div class="footer__one">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-3">
+                    <h2 class="footer__title">Giới thiệu</h2>
+                    <div class="footer__content">
+                        <?= !empty($optionPage['gioi-thieu']) ? $optionPage['gioi-thieu']:'DWEB được viết tắt trong từ Difference Web, chúng tôi áp dụng những kỹ năng, sự khéo léo và tỉ mỉ đến từng dự án và phấn đấu để cung cấp giải pháp thiết kế sáng tạo, luôn muốn mang đến sự trải nghiệm khách hàng trong những sản phẩm mà chúng tôi tạo nên' ?>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <h2 class="footer__title">Dịch vụ</h2>
+                    <ul class="footer__list">
+                        <li>Dịch vụ Xây nhà trọn gói</li>
+                        <li>Thiết kế kiến trúc và nội thất</li>
+                        <li>Thi công hạng mục hoàn thiện</li>
+                        <li>Sản xuất và thi công đồ gỗ</li>
+                    </ul>
+                </div>
+                <div class="col-md-3">
+                    <h2 class="footer__title">Bài viết gần đây</h2>
+                    <?php
+                        $BVGD = $optionPage['bai-viet-gan-day'];
+                        if(!empty($BVGD)):
+                            echo '<ul class="footer__blog">';
+                            foreach($BVGD as $n):
+                                $image = json_decode($n['image'], true);
+                                $imageFirst = '';
+                                if(!empty($image)){
+                                    $imageFirst = array_shift($image);
+                                }
+                                echo '<li>
+                                        <div>
+                                            <a href="'.$n['url'].'"><figure class="footer__blog--image lazy" data-src="'.$imageFirst.'"></figure></a>
+                                        </div>
+                                        <div>
+                                            <h3><a href="'.$n['url'].'">'.$n['title'].'</a></h3>
+                                        </div>
+                                    </li>';
+                            endforeach;
+                            echo '</ul>';
+                        endif;
+                    ?>
+                </div>
+                <div class="col-md-3">
+                    <h2 class="footer__title">Nhận tin mới</h2>
+                    <form class="footer__newslatter">
+                        <input type="text" placeholder="Email" />
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer__two">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="footer--wrapper-copyright">
+                        <div class="footer--copyright">
+                            Copyright © 2017 DWEB.VN All right reserved. Design by: <a href="http://dweb.vn">DWEB.VN</a>
+                        </div>
+                        <div class="footer--design">
+                            <ul class="footer__social">
+                                <li><a href="<?= !empty($optionPage['facebook']) ? $optionPage['facebook']:null ?>"><i class="fa fa-facebook"></i></a></li>
+                                <li><a href="<?= !empty($optionPage['twitter']) ? $optionPage['twitter']:null ?>"><i class="fa fa-twitter"></i></a></li>
+                                <li><a href="<?= !empty($optionPage['google']) ? $optionPage['google']:null ?>"><i class="fa fa-google"></i></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</footer>
+

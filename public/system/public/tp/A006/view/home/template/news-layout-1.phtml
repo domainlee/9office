@@ -1,0 +1,114 @@
+<?php
+use Home\Model\DateBase;
+if(!empty($this->newsLayout1['news-list-1 article']['news-list-1'])):?>
+    <section class="last-post">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="last-post__inner">
+                        <?php $slider = $this->newsLayout1['news-slider-checkbox-1 checkbox']['value'];
+                            if(empty($slider)):
+                        ?>
+                            <?php
+                            if(!empty($this->newsLayout1['news-list-1 article']['news-list-1'])):?>
+                                <div class="last-post__list">
+                                    <div class="last-post__row">
+                                        <?php
+                                        $i = 0;
+                                        foreach($this->newsLayout1['news-list-1 article']['news-list-1'] as $k => $n):
+                                            $i++;
+                                            $image = json_decode($n['image'], true);
+                                            if(!empty($image)) {
+                                                $imageFirst = array_shift($image);
+                                            }
+                                            if($i == 1):
+                                                ?>
+                                                <div class="last-post__item last-post__item--first">
+                                                    <h3 class="last-post__title"><a href="<?= $n['url'] ?>"><?= $n['title'] ?></a></h3>
+                                                    <div class="last-post__intro">
+                                                        <?= $n['intro'] ?>
+                                                        <a href="<?= $n['url'] ?>">Đọc tiếp <i class="fa fa-long-arrow-right"></i></a>
+                                                    </div>
+                                                </div>
+                                            <?php endif; endforeach; ?>
+                                    </div>
+                                    <div class="last-post__row">
+                                        <?php
+                                        $i = 0;
+                                        foreach($this->newsLayout1['news-list-1 article']['news-list-1'] as $k => $n):
+                                            $i++;
+                                            $image = json_decode($n['image'], true);
+                                            if(!empty($image)) {
+                                                $imageFirst = array_shift($image);
+                                            }
+                                            if($i > 1):
+                                                ?>
+                                                <div class="last-post__item">
+                                                    <div class="last-post__item--inner">
+                                                        <div>
+                                                            <a href="<?= $n['url'] ?>"><figure class="last-post__image lazy" data-src="<?= $imageFirst ?>"></figure></a>
+                                                        </div>
+                                                        <div>
+                                                            <h3 class="last-post__title"><a href="<?= $n['url'] ?>"><?= $n['title'] ?></a></h3>
+                                                            <div class="last-post__intro">
+                                                                <?php
+                                                                $s = substr($n['intro'],0,70);
+                                                                $rs = substr($s,0,strrpos($s, ' '));
+                                                                if(strlen($n['intro']) > 70):
+                                                                    echo $rs;
+                                                                    echo '...';
+                                                                else:
+                                                                    echo $n['intro'];
+                                                                endif;
+
+                                                                ?>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                        <?php endif; endforeach;?>
+                                    </div>
+                                </div>
+                            <?php endif;?>
+                        <?php else:
+                            ?>
+                            <div class="last-post__carousel--4 owl-carousel owl-theme">
+                                <?php
+                                    foreach($this->newsLayout1['news-list-1 article']['news-list-1'] as $k => $n):
+                                    $image = json_decode($n['image'], true);
+                                    if(!empty($image)) {
+                                    $imageFirst = array_shift($image);
+                                    }
+                                ?>
+                                <div class="last-post__item">
+                                    <div class="last-post__item--inner">
+                                        <div>
+                                            <a href="<?= $n['url'] ?>"><figure class="last-post__image lazy" data-src="<?= $imageFirst ?>"></figure></a>
+                                        </div>
+                                        <div>
+                                            <h3 class="last-post__title"><a href="<?= $n['url'] ?>"><?= $n['title'] ?></a></h3>
+                                            <div class="last-post__intro">
+                                                <?php
+                                                $s = substr($n['intro'],0,70);
+                                                $rs = substr($s,0,strrpos($s, ' '));
+                                                if(strlen($n['intro']) > 70):
+                                                    echo $rs;
+                                                    echo '...';
+                                                else:
+                                                    echo $n['intro'];
+                                                endif;
+
+                                                ?>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <?php endforeach;?>
+                            </div>
+                        <?php endif;?>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+<?php endif;?>

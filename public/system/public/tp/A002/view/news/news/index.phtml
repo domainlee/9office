@@ -1,0 +1,83 @@
+<?php
+    $paginator = $this->paginator;
+    $paginator->setItemCountPerPage($this->uriParams()->getRequest()->getQuery('icpp') ? : 15);
+    $cs = [
+        '/tp/A002/css/n.css'
+    ];
+    echo '<link href="'.srcLink($cs,1).'" media="screen" rel="stylesheet" type="text/css">';
+    $optionPage = $this->home()->optionPage();
+    ?>
+<?php
+    /**** Start SEO DWEB *****/
+    $this->headTitle($this->escapeHtml($this->translate('Danh sách tin tức')));
+    $this->headMeta()->appendName('description', '');
+    $this->headMeta()->appendName('keywords', '');
+
+    $this->headMeta()->appendProperty('og:title', 'Danh sách tin tức');
+    $this->headMeta()->appendProperty('og:description', 'Danh sách tin tức');
+    $this->headMeta()->appendProperty('og:image', '');
+    $this->headMeta()->appendProperty('og:image:secure_url', '');
+    $this->headMeta()->appendProperty('og:image:width', '');
+    $this->headMeta()->appendProperty('og:image:height', '');
+    $this->headMeta()->appendProperty('og:type', 'Page');
+    $this->headMeta()->appendProperty('og:url', 'http://'.$_SERVER['HTTP_HOST'].'/bai-viet.html');
+    $this->headMeta()->appendProperty('og:site_name', $optionBasic['sologan']);
+
+    $this->headMeta()->appendName('twitter:card', '');
+    $this->headMeta()->appendName('twitter:title', 'Danh sách tin tức');
+    $this->headMeta()->appendName('twitter:description', 'Danh sách tin tức');
+    $this->headMeta()->appendName('twitter:image', '');
+    /**** End SEO DWEB *****/
+?>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <?php
+            if(count($paginator)){
+                $n = $this->newsCategory()->getCategories();
+                if(count($n)){
+                    echo '<ul class="navNews">';
+                    foreach($n as $b){
+                        echo '<li><a href="'.$b->getViewLink().'">'.$b->getName().'</a></li>';
+                    }
+                    echo '</ul>';
+                }
+                ?>
+
+                <div class="post-last__list post-last__list--category">
+                    <?php
+                    foreach($paginator as $n):
+                        $extraContent = json_decode($n->getExtracontent(), true);
+
+                        $image = json_decode($n->getImage(), true);
+                        $imageFirst = '';
+                        if(!empty($image)){
+                            $imageFirst = array_shift($image);
+                        }
+                        ?>
+                        <div class="post-last__item">
+                            <div class="post-last__image">
+                                <a href="<?= $n->getViewLink(); ?>">
+                                    <figure class="lazy" data-src="<?= $imageFirst ?>"></figure>
+                                </a>
+                            </div>
+                            <div class="post-last__content">
+                                <?= !empty($extraContent['nam']) ? '<span class="post-last__date">'.$extraContent['nam'].'</span>':null ?>
+                                <h2 class="post-last__title"><a href="<?= $n->getViewLink() ?>"><?= $n->getTitle() ?></a></h2>
+                                <div class="post-last__intro"><?= $n->getDescription() ?></div>
+                                <a class="post-last__link" href="<?= $n->getViewLink() ?>">Xem thêm <span class="icon-row"></span></a>
+                            </div>
+                        </div>
+                    <?php endforeach; ?>
+                </div>
+
+                <?php
+                echo '<div class="category__paginator">';
+                echo $this->paginationControl($this->paginator, 'Elastic', 'partial/listPage');
+                echo '</div>';
+            }
+            ?>
+        </div>
+    </div>
+</div>

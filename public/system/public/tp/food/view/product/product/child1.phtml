@@ -1,0 +1,28 @@
+<?php
+    $category = $this->category;
+    $product = $this->paginator;
+?>
+<div class="category Child1">
+    <?php
+    if($category->getChilds()){
+        echo '<ul>';
+            foreach($category->getChilds() as $c_){
+                $images = $this->home()->getImages(['id' => $c_->getId(), 'type' => 3]);
+                $img = '';
+                if(count($images)){
+                    $c = 0;
+                    foreach($images as $i){
+                        $c++;
+                        if($c == 1){
+                            $img = '<img src="'.$i->getOption('media')->getPictureUri().'" alt="'.$c_->getName().'" />';
+                        }
+                    }
+                }
+                echo '<li><a href="'.$c_->getViewLink().'">'.$img.'<h2>'.$c_->getName().'</h2></a></li>';
+            }
+        echo '</ul>';
+    }
+    ?>
+
+
+</div>

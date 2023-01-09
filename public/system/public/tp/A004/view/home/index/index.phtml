@@ -1,0 +1,261 @@
+<?php
+    use Home\Model\DateBase;
+    $optionBasic = $this->home()->optionBasic();
+    $optionPage = $this->home()->optionPage();
+    $homePage = $this->home()->homePage();
+    $fileLogo = getimagesize('http://'.$_SERVER['HTTP_HOST'].$optionBasic['logo']);
+?>
+<?php
+    /**** Start SEO DWEB *****/
+    echo $this->headLink(['rel' => 'canonical', 'href' => 'http://'.$_SERVER['HTTP_HOST'] ]);
+    $this->headTitle($this->escapeHtml($this->translate(!empty($optionBasic['metaTitle']) ? $optionBasic['metaTitle']:$optionBasic['sologan'])));
+    $this->headMeta()->appendName('description', (!empty($optionBasic['metaDescription']) ? $optionBasic['metaDescription']:null));
+    $this->headMeta()->appendName('keywords', (!empty($optionBasic['metaKeyword']) ? $optionBasic['metaKeyword']:null));
+    $this->headMeta()->appendProperty('og:title', !empty($optionBasic['metaTitle']) ? $optionBasic['metaTitle']:$optionBasic['sologan']);
+    $this->headMeta()->appendProperty('og:description', !empty($optionBasic['metaDescription']) ? $optionBasic['metaDescription']:null);
+    $this->headMeta()->appendProperty('og:image', !empty($optionBasic['logo']) ? 'http://'.$_SERVER['HTTP_HOST'].$optionBasic['logo']:null);
+    $this->headMeta()->appendProperty('og:image:secure_url', !empty($optionBasic['logo']) ? 'http://'.$_SERVER['HTTP_HOST'].$optionBasic['logo']:null);
+    $this->headMeta()->appendProperty('og:image:width', $fileLogo['0']);
+    $this->headMeta()->appendProperty('og:image:height', $fileLogo['1']);
+    $this->headMeta()->appendProperty('og:type', 'Website');
+    $this->headMeta()->appendProperty('og:url', 'http://'.$_SERVER['HTTP_HOST']);
+    $this->headMeta()->appendProperty('og:site_name', $optionBasic['sologan']);
+
+    $this->headMeta()->appendName('twitter:card', !empty($optionBasic['logo']) ? 'http://'.$_SERVER['HTTP_HOST'].$optionBasic['logo']:'summary_large_image');
+    $this->headMeta()->appendName('twitter:title', !empty($optionBasic['metaTitle']) ? $optionBasic['metaTitle']:null);
+    $this->headMeta()->appendName('twitter:description', (!empty($optionBasic['metaDescription']) ? $optionBasic['metaDescription']:null));
+    $this->headMeta()->appendName('twitter:image', !empty($optionBasic['logo']) ? 'http://'.$_SERVER['HTTP_HOST'].$optionBasic['logo']:null);
+    /**** End SEO DWEB *****/
+?>
+<?php
+if(!empty($homePage)):
+    $count = 0;
+    foreach($homePage as $k => $v ):
+        $layout = explode(' ',$k);
+        switch ($layout[0]) {
+            case "slider-layout":
+                echo $this->partial('home/template/slider', ['bannerList' => $v]);
+                break;
+            case "intro-layout":
+                echo $this->partial('home/template/intro-layout', ['introLayout' => $v]);
+                break;
+            case "option-layout":
+                echo $this->partial('home/template/option-layout', ['optionLayout' => $v]);
+                break;
+            case "news-layout":
+                echo $this->partial('home/template/news-layout', ['newsLayout' => $v]);
+                break;
+            case "project-layout":
+                echo $this->partial('home/template/project-layout', ['projectLayout' => $v]);
+                break;
+            case "tab-project-layout":
+                $count++;
+                echo $this->partial('home/template/tab-project-layout', ['tabProjectLayout' => $v, 'id' => $count]);
+                break;
+            case "feedback-layout":
+                echo $this->partial('home/template/feedback-layout', ['feedbackLayout' => $v]);
+                break;
+            case "html-layout":
+                echo $this->partial('home/template/html-layout', ['htmlLayout' => $v]);
+                break;
+            case "image-layout":
+                echo $this->partial('home/template/image-layout', ['imageLayout' => $v]);
+                break;
+            default:
+                break;
+        }
+    endforeach;
+else:
+
+    ?>
+    <?php
+        if(!empty($optionPage['view_banner'])):
+    ?>
+    <section class="slider">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <ul id="banner" class="owl-carousel owl-theme">
+                        <?php
+                        if(!empty($optionPage['banner'])):
+                            foreach($optionPage['banner'] as $b):
+                                $image = json_decode($b['image'], true);
+                                $imageFirst = '';
+                                if(!empty($image)){
+                                    $imageFirst = array_shift($image);
+                                }
+                        ?>
+                        <li>
+                            <a href="">
+                                <figure class="slider-image" style="background-image: url(<?= $imageFirst ?>)"></figure>
+                            </a>
+                        </li>
+                        <?php
+                            endforeach;
+                            endif;
+                        ?>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+    <?php endif; ?>
+    <?php if(!empty($optionPage['view_gioi-thieu'])): ?>
+    <section class="feature">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="feature--icons">
+                        <i class="icon-noun_35247_cc"></i>
+                        <i class="icon-noun_75842_cc"></i>
+                        <i class="icon-noun_301911_cc"></i>
+                    </div>
+                    <div class="feature--description">
+                        <?= $optionPage['gioi-thieu'] ? $optionPage['gioi-thieu']:'' ?>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <?php endif; ?>
+
+    <?php if(!empty($optionPage['view_du-an-tieu-bieu'])):?>
+    <section class="project">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="project--title">
+                        <h2 class="project--title-small"><?= $optionPage['tieu-de-du-an-tieu-bieu-nho'] ? $optionPage['tieu-de-du-an-tieu-bieu-nho']: ''?></h2>
+                        <h2 class="project--title-medium"><?= $optionPage['tieu-de-du-an-tieu-bieu-lon'] ? $optionPage['tieu-de-du-an-tieu-bieu-lon']: ''?></h2>
+                        <p class="project--title-description"><?= $optionPage['mo-ta-du-an-tieu-bieu'] ? $optionPage['mo-ta-du-an-tieu-bieu']: ''?></p>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="project--list">
+                        <?php
+                        $DATB = $optionPage['du-an-tieu-bieu'];
+                        if(!empty($DATB)){
+                        foreach($DATB as $n){
+                            $image = json_decode($n['image'], true);
+                            if(!empty($image)){
+                                $imageFirst = array_shift($image);
+                            }
+                        ?>
+                            <div class="project--item">
+                                <a href="<?= $n['url'] ?>">
+                                    <figure class="project--image" style="background-image: url(<?= $imageFirst ?>)"></figure>
+                                </a>
+                                <h3 class="project--item-title"><a href="<?= $n['url'] ?>"><?= $n['title'] ?></a></h3>
+                                <p class="project--item-description"></p>
+                            </div>
+                        <?php
+                            }
+                            }
+                        ?>
+                    </div>
+                    <a href="" class="project--button-view-all">View all</a>
+                </div>
+            </div>
+        </div>
+    </section>
+    <?php endif;?>
+    <?php
+        $KH = $optionPage['view_khach-hang'];
+        if(!empty($KH)):
+    ?>
+        <section class="client">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="project--title">
+                            <h2 class="client--title-small"><?=$optionPage['tieu-de-khach-hang-nho'] ? $optionPage['tieu-de-khach-hang-nho'] : ''?></h2>
+                            <h2 class="client--title-medium"><?=$optionPage['tieu-de-khach-hang-lon'] ? $optionPage['tieu-de-khach-hang-lon'] : ''?></h2>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <ul class="client--slider owl-carousel owl-theme">
+                        <?php if(!empty($optionPage['nhan-xet-cua-khach-hang-1'])): ?>
+                            <li class="client--slider-item">
+                                <div class="client--description"><?= $optionPage['nhan-xet-cua-khach-hang-1'] ? $optionPage['nhan-xet-cua-khach-hang-1'] : '' ?></div>
+                                <h2 class="client--name"><?= $optionPage['ten-khach-hang-1'] ? $optionPage['ten-khach-hang-1'] : '' ?></h2>
+                            </li>
+                        <?php endif;?>
+                        <?php if(!empty($optionPage['nhan-xet-cua-khach-hang-2'])): ?>
+                            <li class="client--slider-item">
+                                <div class="client--description"><?= $optionPage['nhan-xet-cua-khach-hang-2'] ? $optionPage['nhan-xet-cua-khach-hang-2'] : '' ?></div>
+                                <h2 class="client--name"><?= $optionPage['ten-khach-hang-2'] ? $optionPage['ten-khach-hang-2'] : '' ?></h2>
+                            </li>
+                        <?php endif;?>
+                        <?php if(!empty($optionPage['nhan-xet-cua-khach-hang-3'])): ?>
+                            <li class="client--slider-item">
+                                <div class="client--description"><?= $optionPage['nhan-xet-cua-khach-hang-3'] ? $optionPage['nhan-xet-cua-khach-hang-3'] : '' ?></div>
+                                <h2 class="client--name"><?= $optionPage['ten-khach-hang-3'] ? $optionPage['ten-khach-hang-3'] : '' ?></h2>
+                            </li>
+                        <?php endif;?>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+    <?php
+        endif;
+    ?>
+
+    <?php
+        $QT = $optionPage['view_5-tab-bai-viet'];
+        if(!empty($QT)):
+    ?>
+    <section class="workflow">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="project--title">
+                        <h2 class="project--title-medium"><?= $optionPage['tieu-de-tab-bai-viet'] ? $optionPage['tieu-de-tab-bai-viet'] : '' ?></h2>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <ul class="nav nav-tabs">
+                        <?php
+                            $t = 0;
+                            foreach($optionPage['bai-viet'] as $n):
+                            $t++;
+                        ?>
+                            <li <?= $t == 1 ? 'class="active"':null ?>><a data-toggle="tab" href="#tab-<?= $t ?>"><?= $n['title']; ?></a></li>
+                        <?php endforeach; ?>
+                    </ul>
+                    <div class="tab-content">
+                        <?php
+                            $t = 0;
+                            foreach($optionPage['bai-viet'] as $n):
+                                $t++;
+                                $image = json_decode($n['image'], true);
+                                if(!empty($image)){
+                                    $imageFirst = array_shift($image);
+                                }
+                        ?>
+                        <div id="tab-<?= $t; ?>" class="tab-pane fade<?= $t == 1 ? ' in active':null ?>">
+                            <div class="interior--content">
+                                <div class="interior--image" style="background-image: url(<?= $imageFirst ?>);"></div>
+                                <div class="interior--description">
+                                    <?php
+                                        echo substr($n['intro'],0, 300);
+                                    ?>
+                                </div>
+                            </div>
+                        </div>
+                        <?php endforeach; ?>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <?php
+        endif;
+    ?>
+<?php endif;?>

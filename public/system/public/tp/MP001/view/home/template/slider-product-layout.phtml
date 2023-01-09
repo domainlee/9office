@@ -1,0 +1,91 @@
+<?php if(!empty($this->sliderProductLayout['slider-1-product-list product']['slider-1-product-list'])
+|| $this->sliderProductLayout['slider-2-product-list product']['slider-2-product-list']
+|| $this->sliderProductLayout['slider-3-product-list product']['slider-3-product-list']):?>
+    <section class="three-up">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="three-up__inner">
+                        <?php if(!empty($this->sliderProductLayout['slider-1-product-list product']['slider-1-product-list'])):?>
+                            <div class="three-up__col">
+                                <h2 class="three-up__title"><?= $this->sliderProductLayout['slider-1-title text']['value'] ? $this->sliderProductLayout['slider-1-title text']['value'] : ''?></h2>
+                                <p class="three-up__sub-title"><?=$this->sliderProductLayout['slider-1-sub-title text']['value'] ? $this->sliderProductLayout['slider-1-sub-title text']['value'] : '' ?> </p>
+                                <div class="three-up__list">
+                                    <ul class="three-up__slider owl-carousel owl-theme">
+                                        <?php
+                                            foreach($this->sliderProductLayout['slider-1-product-list product']['slider-1-product-list'] as $k => $p):
+                                                $imgs = array_slice(json_decode($p['image'], true), 0, 2);
+                                                ?>
+                                                <li class="two-up__product-item">
+                                                    <div class="two-up__product-image__wrapper">
+                                                        <a href="<?= $p['url'] ?>">
+                                                            <figure class="lazy two-up__product-image" data-src="<?= !empty($imgs) ? $imgs['0']:null ?>"></figure>
+                                                            <figure class="lazy two-up__product-image two-up__product-image__two" data-src="<?= !empty($imgs) ? $imgs['1']:null ?>"></figure>
+                                                        </a>
+                                                    </div>
+                                                    <h3 class="two-up__product-title"><?= $p['title'] ?></h3>
+                                                    <p class="price"><?= $p['priceOld'] ? number_format($p['priceOld']).' đ<i>'.number_format($p['price']).' đ</i>':number_format($p['price']).' đ' ?></p>
+                                                </li>
+                                            <?php endforeach;?>
+                                    </ul>
+                                </div>
+                            </div>
+                        <?php endif;?>
+                        <?php if(!empty($this->sliderProductLayout['slider-2-product-list product']['slider-2-product-list'])):?>
+                            <div class="three-up__col">
+                                <h2 class="three-up__title"><?= $this->sliderProductLayout['slider-2-title text']['value'] ? $this->sliderProductLayout['slider-2-title text']['value'] : ''?></h2>
+                                <p class="three-up__sub-title"><?=$this->sliderProductLayout['slider-2-sub-title text']['value'] ? $this->sliderProductLayout['slider-2-sub-title text']['value'] : '' ?> </p>
+                                <div class="three-up__list">
+                                    <ul class="three-up__slider owl-carousel owl-theme">
+                                        <?php
+                                        if(!empty($this->sliderProductLayout['slider-2-product-list product']['slider-2-product-list'])):
+                                            foreach($this->sliderProductLayout['slider-2-product-list product']['slider-2-product-list'] as $k => $p):
+                                                $imgs = array_slice(json_decode($p['image'], true), 0, 2);
+                                                ?>
+                                                <li class="two-up__product-item">
+                                                    <div class="two-up__product-image__wrapper">
+                                                        <a href="<?= $p['url'] ?>">
+                                                            <figure class="lazy two-up__product-image" data-src="<?= !empty($imgs) ? $imgs['0']:null ?>"></figure>
+                                                            <figure class="lazy two-up__product-image two-up__product-image__two" data-src="<?= !empty($imgs) ? $imgs['1']:null ?>"></figure>
+                                                        </a>
+                                                    </div>
+                                                    <h3 class="two-up__product-title"><?= $p['title'] ?></h3>
+                                                    <p class="price"><?= $p['priceOld'] ? number_format($p['priceOld']).' đ<i>'.number_format($p['price']).' đ</i>':number_format($p['price']).' đ' ?></p>
+                                                </li>
+                                            <?php endforeach; endif; ?>
+                                    </ul>
+                                </div>
+                            </div>
+                        <?php endif;?>
+                        <?php if(!empty($this->sliderProductLayout['slider-3-product-list product']['slider-3-product-list'])):?>
+                            <div class="three-up__col">
+                                <h2 class="three-up__title"><?= $this->sliderProductLayout['slider-3-title text']['value'] ? $this->sliderProductLayout['slider-3-title text']['value'] : ''?></h2>
+                                <p class="three-up__sub-title"><?=$this->sliderProductLayout['slider-3-sub-title text']['value'] ? $this->sliderProductLayout['slider-3-sub-title text']['value'] : '' ?> </p>
+                                <div class="three-up__list">
+                                    <ul class="three-up__slider owl-carousel owl-theme">
+                                        <?php
+                                        if(!empty($this->sliderProductLayout['slider-3-product-list product']['slider-3-product-list'])):
+                                            foreach($this->sliderProductLayout['slider-3-product-list product']['slider-3-product-list'] as $k => $p):
+                                                $imgs = array_slice(json_decode($p['image'], true), 0, 2);
+                                                ?>
+                                                <li class="two-up__product-item">
+                                                    <div class="two-up__product-image__wrapper">
+                                                        <a href="<?= $p['url'] ?>">
+                                                            <figure class="lazy two-up__product-image" data-src="<?= !empty($imgs) ? $imgs['0']:null ?>"></figure>
+                                                            <figure class="lazy two-up__product-image two-up__product-image__two" data-src="<?= !empty($imgs) ? $imgs['1']:null ?>"></figure>
+                                                        </a>
+                                                    </div>
+                                                    <h3 class="two-up__product-title"><?= $p['title'] ?></h3>
+                                                    <p class="price"><?= $p['priceOld'] ? number_format($p['priceOld']).' đ<i>'.number_format($p['price']).' đ</i>':number_format($p['price']).' đ' ?></p>
+                                                </li>
+                                            <?php endforeach; endif; ?>
+                                    </ul>
+                                </div>
+                            </div>
+                        <?php endif;?>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+<?php endif;?>

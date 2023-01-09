@@ -1,0 +1,84 @@
+<?php
+    $js = [
+        '/tp/A019/js/a.js'
+    ];
+    echo '<script type="text/javascript" src="'.srcLink($js,1).'"></script>';
+?>
+
+<section class="choose">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <?php
+                    if(empty($this->questionNFormLayout['form-register text']['value']) && (empty($this->questionNFormLayout['question-1 text']['value']) && empty($this->questionNFormLayout['question-2 text']['value']) && empty($this->questionNFormLayout['question-3 text']['value']) && empty($this->questionNFormLayout['question-4 text']['value']) )){
+                        $padding = '0;';
+                    }
+                    if(!empty($this->questionNFormLayout['form-register text']['value']) && (!empty($this->questionNFormLayout['question-1 text']['value']) || !empty($this->questionNFormLayout['question-2 text']['value']) || !empty($this->questionNFormLayout['question-3 text']['value']) || !empty($this->questionNFormLayout['question-4 text']['value']) )){
+                        $padding = '0;';
+                    }
+                    else{
+                        $padding = '0 300px';
+                    }
+                ?>
+                <div class="choose__inner" style="padding:<?=$padding?>">
+                    <?php if(!empty($this->questionNFormLayout['question-1 text']['value']) || !empty($this->questionNFormLayout['question-2 text']['value']) ||!empty($this->questionNFormLayout['question-3 text']['value']) || !empty($this->questionNFormLayout['question-4 text']['value']) ):?>
+                    <div class="choose__left">
+                        <h3 class="choose__title"><?= $this->questionNFormLayout['question-title text']['value'] ? $this->questionNFormLayout['question-title text']['value']: '' ?></h3>
+                        <div class="choose__accordion">
+                            <?php if(!empty($this->questionNFormLayout['question-1 text']['value'])):?>
+                                <div>
+                                    <h3><?= $this->questionNFormLayout['question-1 text']['value']?></h3>
+                                    <div class="choose__accordion--content"><?= $this->questionNFormLayout['answer-1 text']['value'] ? $this->questionNFormLayout['answer-1 text']['value'] : ''?></div>
+                                </div>
+                            <?php endif;?>
+                            <?php if(!empty($this->questionNFormLayout['question-2 text']['value'])):?>
+                                <div>
+                                    <h3><?= $this->questionNFormLayout['question-2 text']['value']?></h3>
+                                    <div class="choose__accordion--content"><?= $this->questionNFormLayout['answer-2 text']['value'] ? $this->questionNFormLayout['answer-2 text']['value'] : ''?></div>
+                                </div>
+                            <?php endif;?>
+                            <?php if(!empty($this->questionNFormLayout['question-3 text']['value'])):?>
+                                <div>
+                                    <h3><?= $this->questionNFormLayout['question-3 text']['value'] ? $this->questionNFormLayout['question-3 text']['value'] : ''?></h3>
+                                    <div class="choose__accordion--content"><?= $this->questionNFormLayout['answer-3 text']['value'] ? $this->questionNFormLayout['answer-3 text']['value'] : ''?></div>
+                                </div>
+                            <?php endif;?>
+                            <?php if(!empty($this->questionNFormLayout['question-4 text']['value'])):?>
+                                <div>
+                                    <h3><?= $this->questionNFormLayout['question-4 text']['value'] ? $this->questionNFormLayout['question-4 text']['value'] : ''?></h3>
+                                    <div class="choose__accordion--content"><?= $this->questionNFormLayout['answer-4 text']['value'] ? $this->questionNFormLayout['answer-4 text']['value'] : ''?></div>
+                                </div>
+                            <?php endif;?>
+                        </div>
+                    </div>
+                    <?php endif;?>
+                    <?php if(!empty($this->questionNFormLayout['form-register text']['value'])):?>
+                    <div class="choose__right">
+                        <div class="choose__form">
+                            <h3 class="choose__form--title"><?= $this->questionNFormLayout['form-register text']['value']?></h3>
+                            <form class="contact__from-right" data-parsley-validate novalidate>
+
+                                <div class="form-group">
+                                    <input type="text" class="title" placeholder="Vui lòng nhập tên" required="required" data-parsley-error-message="Tiêu đề không được để trống" value="">
+                                </div>
+                                <div class="form-group">
+                                    <input type="text" name="email" class="email" data-parsley-type="email" placeholder="Vui lòng nhập địa chỉ email" required="required" data-parsley-error-message="Email không được để trống" value="">
+                                </div>
+                                <div class="form-group">
+                                    <input type="text" name="phone" class="phone" data-parsley-type="digits" data-parsley-length="[10,11]" placeholder="Vui lòng nhập số điện thoại" required="required" data-parsley-error-message="Số điện thoại không được để trống" value="">
+                                </div>
+                                <div class="form-group">
+                                    <textarea class="content" placeholder="Nội dung" required="required" data-parsley-error-message="Nội dung không được để trống"></textarea>
+                                </div>
+                                <div class="form-group">
+                                    <button class="btn-default-1" type="submit">Gửi</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <?php endif;?>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

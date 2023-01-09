@@ -1,0 +1,65 @@
+<?php
+    echo $this->doctype();
+    $optionBasic = $this->home()->optionBasic();
+    $url = $this->UriParams()->getRequest()->getRequestUri();
+?>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+        <?php
+        echo $this->headTitle()->setSeparator('')->setAutoEscape(false);
+
+        $this->headMeta()->appendName('DC.language', 'scheme=utf-8 content=vi');
+        echo $this->headMeta();
+
+        echo $this->headLink(['rel' => 'shortcut icon', 'type' => 'image/vnd.microsoft.icon', 'href' => $optionBasic['favicon'] ? $optionBasic['favicon']:null ]);
+
+        $cs = [
+            '/assets/css/web/owl.theme.css',
+            '/assets/css/web/owl.carousel.css',
+            '/assets/css/web/owl.transitions.css',
+            '/tp/T001/css/h.css',
+            '/tp/T001/css/u.css',
+            '/tp/T001/css/bootstrap.css',
+            '/tp/T001/css/font-awesome.min.css',
+        ];
+        echo '<link href="'.srcLink($cs,1).'" media="screen" rel="stylesheet" type="text/css">';
+        $js = [
+            '/assets/js/web/jquery-1.11.2.min.js',
+        ];
+        echo '<script type="text/javascript" src="'.srcLink($js,1).'"></script>';
+        echo !empty($optionBasic['scriptHead']) ? '<script>'.$optionBasic['scriptHead'].'</script>' : null;
+        ?>
+
+    </head>
+
+    <body <?= $url == '/' ? 'class="home"':null ?>>
+        <?php
+            echo $this->render('layout/header');
+            echo '<div class="main">';
+            echo $this->content;
+            echo '</div>';
+            echo $this->render('layout/footer');
+            echo !empty($optionBasic['scriptBody']) ? '<script>'.$optionBasic['scriptBody'].'</script>' : null;
+        ?>
+    </body>
+    <?php
+        $r = [
+            '/tp/T001/css/r.css',
+        ];
+        echo '<link href="'.srcLink($r,1).'" media="screen" rel="stylesheet" type="text/css">';
+        if(!empty($optionBasic['styleFooter'])) echo '<style>'.$optionBasic['styleFooter'].'</style>';
+        $js = [
+            '/assets/js/web/bootstrap.min.js',
+            '/assets/js/web/jquery.lazy.min.js',
+            '/assets/js/web/owl.carousel.js',
+            '/assets/js/web/jquery-ui-1.10.3.custom.min.js',
+            '/assets/plugins/parsleyjs/parsley.min.js',
+            '/tp/T001/js/a.js'
+        ];
+        echo '<script type="text/javascript" src="'.srcLink($js,1).'"></script>';
+        echo !empty($optionBasic['scriptFooter']) ? '<script>'.$optionBasic['scriptFooter'].'</script>' : null;
+        echo $this->render('layout/modal');
+    ?>
+</html>

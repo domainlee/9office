@@ -1,0 +1,57 @@
+<?php
+$products = $this->products;
+?>
+<?php
+if(count($products)){
+?>
+    <?php
+    $c = 0;
+    $d = 0;
+    foreach($products as $p){
+        $c++;
+        $t = ($p->getPriceOld() ? $p->getPriceOld():$p->getPrice())*$p->getQuantity();
+        $image = json_decode($p->getImage(), true);
+        if(is_array($image)){
+            $imageFirst = array_shift($image);
+        }
+    ?>
+        <tr class="">
+            <td>
+                <img src="<?= $imageFirst ?>" alt="contact-img" title="contact-img" class="img-circle thumb-sm">
+            </td>
+            <td><?= $p->getTitle() ?></td>
+            <td>
+                <?php
+                if($p->getOptions()['quantity']){
+                    echo '<select class="form-control changeQuantity" data-id="'.$p->getId().'" data-color="'.(isset($p->getOptions()['dataColor']) ? $p->getOptions()['dataColor']->getId():'').'" data-size="'.(isset($p->getOptions()['dataSize']) ? $p->getOptions()['dataSize']->getId():'').'">';
+                    for($a = 1; $a <= $p->getOptions()['quantity'];$a++){
+                        if($a == $p->getQuantity()){
+                            echo '<option value="'.$a.'" selected="">'.$a.'</option>';
+                        }else{
+                            echo '<option value="'.$a.'">'.$a.'</option>';
+                        }
+                    }
+                    echo '</select>';
+                }
+                ?>
+            </td>
+            <td>
+                <b>
+                    <?= number_format(($p->getPriceOld() ? $p->getPriceOld():$p->getPrice())).' đ'; ?>
+                    <br/>
+                    <a href="#" class="fieldEditor" data-id="<?= $p->getId() ?>" data-emptytext="Giảm tiền" data-type="text" data-pk="1" data-placement="right" data-placeholder="Số tiền" data-title="Giảm giá" data-value="<?=  $p->getOptions()['priceOff'] ?>"><?= number_format( $p->getOptions()['priceOff']) ?></a>
+                </b>
+            </td>
+            <td><b><?= number_format((($p->getPriceOld() ? $p->getPriceOld():$p->getPrice())-$p->getOptions()['priceOff'] )*$p->getQuantity()).' đ'; ?></b></td>
+            <td style="text-align: center">
+                <a data-id="<?= $p->getId() ?>" class="sale__button-remove table-action-btn"><i class="md md-close"></i></a>
+            </td>
+        </tr>
+        <?php
+        $d += $t;
+    }
+    ?>
+
+    <?php
+}
+?>

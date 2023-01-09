@@ -1,0 +1,166 @@
+
+
+/****** Category News ********/
+.news {
+
+}
+.sidebar #search{
+    border: 1px solid #EAE8E8;
+}
+.image-article {
+    margin: 0 15px 0 0;
+    position: relative;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center top;
+    width: 250px;
+    border: 1px solid #FFF;
+    box-shadow: 0 0 0 1px #CCC;
+}
+.image-article:before {
+    content: '';
+    padding-top: 75%;
+    display: block;
+}
+.news__left {
+    border: 4px solid #eee;
+}
+.news__left>h2 {
+    margin: 0 0;
+    text-transform: uppercase;
+    background-color: #ff5722;
+    color: #FFF;
+    font-size: 13px;
+    padding: 15px;
+    font-weight: 600;
+}
+.navNews{
+}
+.navNews li{
+    padding: 10px 15px;
+    border-bottom: 1px solid #f8f8f8;
+}
+.navNews li a{
+    color: #333;
+    font-size: 13px;
+}
+.navNews li a:hover, .navNews li a.active{
+    color: #ff5722;
+}
+.lNCategory li{
+    margin: 0 0 30px;
+    padding: 0 0 30px;
+    display: flex;
+    border-bottom: 1px solid #e6e6e6;
+}
+.news__category {
+    font-size: 12px;
+    background-color: #ff5722;
+    display: inline-block;
+    color: #FFF;
+    padding: 5px 10px;
+}
+.news__title {
+    margin: 0 0 10px 0;
+    font-size: 15px;
+    font-weight: 600;
+}
+.news__title a{
+    color: #333;
+}
+/****** paginator *******/
+
+/****** DetailNews ******/
+.detailNews{
+    overflow: hidden;
+    margin: 0;
+}
+.detailNews p{
+    line-height: 26px !important;
+}
+.detailNews>div{
+    border-bottom: 1px dashed #CCC;
+}
+.detailNews>div>h1{
+    color: #333;
+    margin: 0;
+    font-size: 20px;
+    font-weight: 600;
+    padding-bottom: 10px;
+}
+.social-share .social{
+    display: flex;
+    margin: 10px 0;
+}
+.detailNews img{
+    max-width: 100%;
+    height: inherit !important;
+}
+.detailNews *{
+    max-width: 100%;
+}
+.related-post__item--title{
+    font-size: 16px;
+}
+.related-post__item--title i{
+    padding-right: 5px;
+}
+.review-rating .rating-comment-crt__button a,
+.review-rating .rating-comment-crt__button--send,
+.form__comment .box-comment__button button{
+    color: #fff;
+    border-radius: 0;
+    background-color: #ff5722;
+    border: none;
+}
+/*********sidebar*******/
+.sidebar__title{
+    color: #333;
+    border-bottom: 1px solid #ccc;
+    background: #ff5722;
+    color: #fff;
+    padding: 15px !important;
+}
+.news__list-category li{
+    border-bottom: 1px solid #EAE8E8;
+}
+.news__list-category li a{
+    color: #909090;
+}
+.news__list-category li a:hover{
+    color: #ff5722;
+}
+.sidebar__box input{
+    border:1px solid #EAE8E8;
+}
+.sidebar{
+    background: #fff;
+    padding: 0 !important;
+}
+.sidebar__content p{
+    color: #888;
+}
+.sidebar__content a{
+    color: #333;
+    transition: all 0.4s ease;
+}
+.news__list-category{
+    margin-left: 15px;
+}
+/*********contact*******/
+.contactForm{
+    background: #fff;
+}
+.contactForm .form-group input, .contactForm .form-group textarea {
+    border: 1px solid #CCC;
+}
+.contact__logo{
+    margin-top: 0;
+}
+.contact__description::after {
+    background-color: #EAE8E8;
+}
+.contactForm .form-group button[type="submit"] {
+    background: #ff5722;
+    color:#fff ;
+}

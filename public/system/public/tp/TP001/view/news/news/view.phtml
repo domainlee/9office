@@ -1,0 +1,120 @@
+<?php
+    $view = $this->news;
+    $current_page_URL = $_SERVER["SERVER_NAME"] . $_SERVER["REQUEST_URI"];
+    $a = json_decode($view->getExtraContent());
+    $image = json_decode($view->getImage(), true);
+    $imageFirst = '';
+    if(!empty($image)){
+        $imageFirst = array_shift($image);
+    }
+    $cs = [
+        '/tp/TP001/css/n.css',
+        '/tp/TP001/css/p.css'
+    ];
+    echo '<link href="'.srcLink($cs,1).'" media="screen" rel="stylesheet" type="text/css">';
+    $js = [
+        '/tp/TP001/js/n.js'
+    ];
+    echo '<script type="text/javascript" src="'.srcLink($js,1).'"></script>';
+    $category = $this->category;
+    $optionPage = $this->home()->optionPage();
+    $menuOption = $this->home()->getMenu();
+?>
+<?php
+    $image = 'http://'.$_SERVER['HTTP_HOST'].$imageFirst;
+    $imageInfo = getimagesize($image);
+    /**** Start SEO DWEB *****/
+    echo $this->headLink(['rel' => 'canonical', 'href' => 'http://'.$_SERVER['HTTP_HOST'].$view->getViewLink() ]);
+    $this->headTitle($this->escapeHtml($this->translate(!empty($view->getMetaTitle()) ? $view->getMetaTitle():$view->getTitle())));
+    $this->headMeta()->appendName('description', (!empty($view->getMetaDescription()) ? $view->getMetaDescription():null));
+    $this->headMeta()->appendName('keywords', (!empty($view->getMetaKeyword()) ? $view->getMetaKeyword():null));
+
+    $this->headMeta()->appendProperty('og:title', !empty($view->getMetaTitle()) ? $view->getMetaTitle():$view->getTitle());
+    $this->headMeta()->appendProperty('og:description', !empty($view->getMetaDescription()) ? $view->getMetaDescription():null);
+    $this->headMeta()->appendProperty('og:image', !empty($imageFirst) ? 'http://'.$_SERVER['HTTP_HOST'].$imageFirst:null);
+    $this->headMeta()->appendProperty('og:image:secure_url', !empty($imageFirst) ? 'http://'.$_SERVER['HTTP_HOST'].$imageFirst:null);
+    $this->headMeta()->appendProperty('og:image:width', $imageInfo['0']);
+    $this->headMeta()->appendProperty('og:image:height', $imageInfo['1']);
+    $this->headMeta()->appendProperty('og:type', 'Article');
+    $this->headMeta()->appendProperty('og:url', 'http://'.$_SERVER['HTTP_HOST'].$view->getViewLink());
+    $this->headMeta()->appendProperty('og:site_name', $optionBasic['sologan']);
+
+    $this->headMeta()->appendName('twitter:card', !empty($image) ? $image:'summary_large_image');
+    $this->headMeta()->appendName('twitter:title', !empty($view->getMetaTitle()) ? $view->getMetaTitle():null);
+    $this->headMeta()->appendName('twitter:description', (!empty($view->getMetaDescription()) ? $view->getMetaDescription():null));
+    $this->headMeta()->appendName('twitter:image', !empty($image) ? $image:null);
+    /**** End SEO DWEB *****/
+?>
+<div class="product-single-hero">
+    <?php
+    $imgs = array_slice(json_decode($view->getImage(), true), 0, 2);
+    ?>
+    <div class="bg-hero" style="background-image: url(<?= !empty($imgs[0]) ? $imgs[0]:null  ?>)"></div>
+    <h3><?= $view->getTitle() ?></h3>
+</div>
+
+<div class="container">
+    <div class="row">
+        <?php
+            if(!empty($optionPage['view_danh-muc-sidebar-1']) || !empty($optionPage['view_danh-muc-sidebar-2']) || !empty($optionPage['view_banner-sidebar'])):
+                echo '<div class="col-md-8">';
+            else:
+                echo '<div class="col-md-12">';
+            endif;
+        ?>
+
+            <div class="detailNews">
+                <div>
+                    <h1><?= html_entity_decode($view->getTitle()) ?></h1>
+                </div>
+                <?php
+                    echo html_entity_decode($view->getContent());
+                ?>
+                <div class="social">
+                    <?php
+                    ?>
+                    <div style="float: left;margin: 0 5px 0 0;" class="fb-like" data-href="<?= $current_page_URL.$view->getViewLink() ?>" data-layout="button" data-action="like" data-show-faces="false" data-share="true"></div>
+                    <div class="g-plusone" data-size="medium"></div>
+                </div>
+                <script src="https://apis.google.com/js/platform.js" async defer>
+                    {lang: 'vi'}
+                </script>
+                <?php
+                $relation = json_decode($view->getArticleRelated(), true);
+                if(!empty($relation)):
+                    echo '<h3 class="single__relation--headline">Bài viết liên quan</h3>';
+                    echo '<div class="single__relation">';
+                    $i = 0;
+                    foreach($relation as $n) {
+                        $i++;
+                        $image = json_decode($n['image'], true);
+                        $imageFirst = '';
+                        if(!empty($image)){
+                            $imageFirst = array_shift($image);
+                        }
+                        if($i < 7):
+                            ?>
+                            <div class="single__relation__item">
+                                <div class="single__relation__item--inner">
+                                    <div class="single__relation__content">
+                                        <h3 class="single__relation__title"><a href="<?= $n['url']  ?>"><i class="fa fa-angle-right"></i><?= $n['title'] ?></a></h3>
+                                    </div>
+                                </div>
+                            </div>
+                        <?php
+                        endif;
+                    }
+                    echo '</div>';
+                endif;
+                ?>
+            </div>
+        </div>
+    <?php
+    if(!empty($optionPage['view_danh-muc-sidebar-1']) || !empty($optionPage['view_danh-muc-sidebar-2']) || !empty($optionPage['view_banner-sidebar'])){
+        echo $this->render('news/news/sidebar');
+    }
+    ?>
+    </div>
+</div>
+
+

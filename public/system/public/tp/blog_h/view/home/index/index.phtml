@@ -1,0 +1,164 @@
+<?php
+    use Home\Model\DateBase;
+    $optionBasic = $this->home()->optionBasic();
+    $optionPage = $this->home()->optionPage();
+    $homePage = $this->home()->homePage();
+    $fileLogo = getimagesize('http://'.$_SERVER['HTTP_HOST'].$optionBasic['logo']);
+?>
+<?php
+/**** Start SEO DWEB *****/
+echo $this->headLink(['rel' => 'canonical', 'href' => 'http://'.$_SERVER['HTTP_HOST'] ]);
+$this->headTitle($this->escapeHtml($this->translate(!empty($optionBasic['metaTitle']) ? $optionBasic['metaTitle']:$optionBasic['sologan'])));
+$this->headMeta()->appendName('description', (!empty($optionBasic['metaDescription']) ? $optionBasic['metaDescription']:null));
+$this->headMeta()->appendName('keywords', (!empty($optionBasic['metaKeyword']) ? $optionBasic['metaKeyword']:null));
+$this->headMeta()->appendProperty('og:title', !empty($optionBasic['metaTitle']) ? $optionBasic['metaTitle']:$optionBasic['sologan']);
+$this->headMeta()->appendProperty('og:description', !empty($optionBasic['metaDescription']) ? $optionBasic['metaDescription']:null);
+$this->headMeta()->appendProperty('og:image', !empty($optionBasic['logo']) ? 'http://'.$_SERVER['HTTP_HOST'].$optionBasic['logo']:null);
+$this->headMeta()->appendProperty('og:image:secure_url', !empty($optionBasic['logo']) ? 'http://'.$_SERVER['HTTP_HOST'].$optionBasic['logo']:null);
+$this->headMeta()->appendProperty('og:image:width', $fileLogo['0']);
+$this->headMeta()->appendProperty('og:image:height', $fileLogo['1']);
+$this->headMeta()->appendProperty('og:type', 'Website');
+$this->headMeta()->appendProperty('og:url', 'http://'.$_SERVER['HTTP_HOST']);
+$this->headMeta()->appendProperty('og:site_name', $optionBasic['sologan']);
+
+$this->headMeta()->appendName('twitter:card', !empty($optionBasic['logo']) ? 'http://'.$_SERVER['HTTP_HOST'].$optionBasic['logo']:'summary_large_image');
+$this->headMeta()->appendName('twitter:title', !empty($optionBasic['metaTitle']) ? $optionBasic['metaTitle']:null);
+$this->headMeta()->appendName('twitter:description', (!empty($optionBasic['metaDescription']) ? $optionBasic['metaDescription']:null));
+$this->headMeta()->appendName('twitter:image', !empty($optionBasic['logo']) ? 'http://'.$_SERVER['HTTP_HOST'].$optionBasic['logo']:null);
+/**** End SEO DWEB *****/
+?>
+
+<?php
+    $news = $this->News()->searchPaginator();
+    $news->setItemCountPerPage($this->uriParams()->getRequest()->getQuery('icpp') ? : 14);
+    $news->setPageRange(5);
+    if(!empty($news)):
+    $category = $this->NewsCategory()->getCategories();
+?>
+
+<section class="hero">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="hero__inner">
+                    <div class="hero__left">
+                        <h2 class="hero__hearline"><?= $optionPage['tieu-de-head'] ?></h2>
+                        <div class="hero__intro">
+                            <?= $optionPage['tom-tat-head'] ?>
+                        </div>
+                    </div>
+                    <div class="hero__right">
+                        <?php if($optionPage['anh-dai-dien-head']): ?>
+                            <?php foreach($optionPage['anh-dai-dien-head'] as $n):
+                                $image = json_decode($n['image'], true);
+                                if(!empty($image)) {
+                                    $imageFirst = array_shift($image);
+                                }
+                                ?>
+                                <figure class="lazy hero__image" data-src="<?= $imageFirst ?>"></figure>
+                            <?php endforeach; ?>
+                        <?php endif ?>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="news">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="news__inner">
+                    <div class="news__left">
+                        <div class="news__list">
+                            <?php
+                                $i = 0;
+                                foreach($news as $n):
+                                $i++;
+                                $image = json_decode($n->getImage(), true);
+                                $imageFirst = '';
+                                if(!empty($image)){
+                                    $imageFirst = array_shift($image);
+                                }
+                                if($i == 3):
+                            ?>
+                                <div class="adv-middle">
+                                    <a href="http://dweb.vn/thiet-ke-web-gia-re-n356.html" target="_blank" title="thiet ke web gia re">
+                                        <figure>
+                                            <div class="landing-head-hero__content">
+                                                <h2 class=""><strong>Thiết kế website chuẩn seo</strong></h2>
+                                                <span>Dùng thử</span>
+                                            </div>
+                                        </figure>
+                                    </a>
+                                </div>
+                                <?php endif; ?>
+                                <div class="news__item">
+                                    <div class="news__item--inner">
+                                        <h3 class="news__title">
+                                            <a href="<?= $n->getViewLink() ?>" target="_blank">
+                                                <?= $n->getTitle() ?>
+                                            </a>
+                                        </h3>
+                                        <a href="<?= $n->getViewLink() ?>">
+                                            <figure class="lazy news__image" data-src="https://blog.dweb.vn<?= $imageFirst ?>"></figure>
+                                        </a>
+                                        <div class="news__intro">
+
+                                            <div class="news__intro--sub">
+                                                <?= $n->getDescription() ?>
+                                            </div>
+                                            <a class="news__url" href="<?= $n->getViewLink() ?>">Đọc tiếp</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            <?php endforeach; ?>
+                        </div>
+                        <div class="news__paginator">
+                            <?php
+                                echo $this->paginationControl($news, 'Elastic', 'partial/listPage');
+                            ?>
+                        </div>
+                    </div>
+                    <div class="news__right">
+                        <div class="news__sidebar">
+                            <div class="sidebar__item">
+                                <?php if($optionPage['anh-dai-dien']): ?>
+                                <?php foreach($optionPage['anh-dai-dien'] as $n):
+                                    $image = json_decode($n['image'], true);
+                                    if(!empty($image)) {
+                                        $imageFirst = array_shift($image);
+                                    }
+                                    ?>
+                                    <figure class="sidebar__image lazy" data-src="<?= $imageFirst ?>"></figure>
+                                <?php endforeach; ?>
+                                <?php endif ?>
+                                <h3 class="sidebar__headline"><?= $optionPage['tieu-de'] ? $optionPage['tieu-de']:'Nổi bật' ?></h3>
+                                <div class="sidebar__intro">
+                                    <?= $optionPage['tom-tat'] ? $optionPage['tom-tat']:'Nổi bật' ?>
+                                </div>
+                            </div>
+
+                            <div class="sidebar__popular">
+                                <h3 class="sidebar__popular--headline"><?= $optionPage['tieu-de-2'] ? $optionPage['tieu-de-2']:'Nổi bật' ?></h3>
+                                <?php
+                                if($optionPage['bai-viet-dashboard']):
+                                ?>
+                                <ul class="sidebar__popular--list">
+                                    <?php foreach ($optionPage['bai-viet-dashboard'] as $p): ?>
+                                    <li class="wpa-article">
+                                        <i class="fa fa-star" aria-hidden="true"></i>
+                                        <a href="<?= $p['url'] ?>" title="<?= $p['title'] ?>" class="wpa-article-link"><?= $p['title'] ?></a>
+                                    </li>
+                                    <?php endforeach; ?>
+                                </ul>
+                                <?php endif; ?>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<?php endif; ?>

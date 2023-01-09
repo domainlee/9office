@@ -1,0 +1,184 @@
+<?php
+$optionBasic = $this->home()->optionBasic();
+$optionPage = $this->home()->optionPage();
+$url = $this->UriParams()->getRequest()->getRequestUri();
+?>
+<div class="head">
+    <div class="head1">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-6">
+                    <ul class="head1__user--inner">
+                        <?php
+                        if ($this->user()->hasIdentity()) {
+                            ?>
+                            <li>
+                                <a href="/admin">Xin chào: <?= $this->user()->getUser()->getFullName() ? $this->user()->getUser()->getFullName():ucfirst($this->user()->getUser()->getUserName()) ?></a>
+                            </li>
+                            <li>
+                                <a href="/user/signout">Thoát</a>
+                            </li>
+                            <?php
+                        }else{
+                            ?>
+                            <li><a href="/user/signup">Đăng ký</a></li>
+                            <li><a href="/user/signin">Đăng nhập</a></li>
+                            <?php
+                        }
+                        ?>
+                    </ul>
+                </div>
+                <div class="col-sm-6">
+                    <?php
+                        $cartService = $this->cart()->getServiceCart();
+                        $products = $cartService->getProducts();
+                    ?>
+                    <div class="head1__social">
+                        <ul>
+                            <li><a href="<?= !empty($optionPage['facebook']) ? $optionPage['facebook']:null ?>" class="facebook" title="Facebook" target="_blank" rel="nofollow"><i class="fa fa-facebook"></i></a></li>
+                            <li><a href="<?= !empty($optionPage['twitter']) ? $optionPage['twitter']:null ?>" class="twitter" title="Twitter" target="_blank" rel="nofollow"><i class="fa fa-twitter"></i></a></li>
+                            <li><a href="<?= !empty($optionPage['pinterest']) ? $optionPage['pinterest']:null ?>" class="pinterest" title="Pinterest" target="_blank" rel="nofollow"><i class="fa fa-pinterest-p"></i></a></li>
+                        </ul>
+                        <div class="cart">
+                            <a class="icon-font icon-basket" href="/cart"><span><?= $cartService->getTotalProducts() ?></span></a>
+                            <a href="/cart"><span><?= number_format($cartService->getTotalMoney()) ?> đ</span></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="head__inner">
+                    <a id="menuMobile">
+                        <i class="icon-menu icons" aria-hidden="true"></i>
+                    </a>
+                    <div class="logo">
+                        <a href="/">
+                            <?php if(!empty($optionBasic['logo'])): ?>
+                                <img src="<?= $optionBasic['logo'] ?>" alt="Fashion" />
+                            <?php endif; ?>
+                        </a>
+                    </div>
+                    <?php
+                        $menuOption = $this->home()->getMenu();
+                        if(!empty($menuOption['head_menu'])):
+                    ?>
+                            <div class="navHome">
+                                <?php
+                                $menuOption = $this->home()->getMenu();
+                                if(!empty($menuOption['head_menu'])) {
+                                    ?>
+                                    <ul>
+                                        <?php
+                                        if(!empty($menuOption['head_menu'])){
+                                            foreach($menuOption['head_menu'] as $m){
+                                                ?>
+                                                <li>
+                                                <a href="<?= $m['url'] ?>"><?= $m['name'] ?></a>
+                                                <?php
+                                                if($m['children']){
+                                                    echo '<div>';
+                                                    echo '<ul class="nav3">';
+                                                    foreach($m['children'] as $mc){
+                                                        ?>
+                                                        <li><a href="<?= $mc['url'] ?>"><?= $mc['name'] ?></a>
+                                                        <?php
+                                                        if($mc['children']){
+                                                            echo '<ul>';
+                                                            foreach($mc['children'] as $mcc){
+                                                                ?>
+                                                                <li><a href="<?= $mcc['url'] ?>"><?= $mcc['name'] ?></a>
+                                                                <?php
+                                                            }
+                                                            echo '</ul>';
+                                                        }
+                                                        ?>
+                                                        </li>
+                                                        <?php
+                                                    }
+                                                    echo '</div>';
+                                                }
+                                                ?>
+                                                </li>
+                                                <?php
+                                            }
+                                        }
+                                        ?>
+                                    </ul>
+                                <?php } ?>
+                            </div>
+                    <?php endif; ?>
+
+                    <div class="navTool">
+                        <div class="formSearch">
+                            <a class="icon-font icon-magnifier open-search"></a>
+                            <div class="form-search">
+                                <form id="search" action="/search" method="get">
+                                    <input type="text" name="q" placeholder="Tìm kiếm ..."/>
+                                    <a class="icon-font icon-magnifier" onclick="document.getElementById('search').submit();"></a>
+                                    <div id="searchFolding"></div>
+                                </form>
+                            </div>
+                        </div>
+
+                    </div>
+                    <?php
+                    $menuOption = $this->home()->getMenu();
+                    if(!empty($menuOption['head_menu'])):
+                        ?>
+                        <div class="navMobile">
+                            <?php
+                            $menuOption = $this->home()->getMenu();
+                            if(!empty($menuOption['head_menu'])) {
+                                ?>
+                                <ul>
+                                    <?php
+                                    if(!empty($menuOption['head_menu'])){
+                                        foreach($menuOption['head_menu'] as $m){
+                                            ?>
+                                            <li>
+                                                <?= $m['children'] ? '<button></button>' : null ?><a href="<?= $m['url'] ?>"><?= $m['name'] ?></a>
+                                                <?php
+                                                if($m['children']){
+
+                                                    echo '<ul class="nav2">';
+                                                    foreach($m['children'] as $mc){
+                                                        ?>
+                                                        <li><?= $mc['children'] ? '<button></button>' : null ?><a href="<?= $mc['url'] ?>"><?= $mc['name'] ?></a>
+                                                        <?php
+                                                        if($mc['children']){
+                                                            echo '<ul>';
+                                                            foreach($mc['children'] as $mcc){
+                                                                ?>
+                                                                <li><a href="<?= $mcc['url'] ?>"><?= $mcc['name'] ?></a></li>
+                                                                <?php
+                                                            }
+                                                            echo '</ul>';
+                                                        }
+                                                        ?>
+                                                        </li>
+                                                        <?php
+                                                    }
+                                                    echo '</ul>';
+                                                }
+                                                ?>
+                                            </li>
+                                            <?php
+                                        }
+                                    }
+                                    ?>
+                                </ul>
+                            <?php } ?>
+                        </div>
+                    <?php
+                    endif;
+                    ?>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>

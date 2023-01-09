@@ -1,0 +1,771 @@
+/******** Category ***********/
+
+img{
+    max-width: 100%;
+}
+.breadcrumb{
+    padding: 8px 0;
+    background: none;
+    margin: 5px 0;
+}
+.breadcrumb li a{
+    color: #999;
+}
+/******* Child 1 *********/
+.Child1 ul{
+    background-image: url('/tp/food/img/bg-butcher1.jpg');
+    text-align: center;
+    padding: 30px 0 200px 0;
+}
+
+.Child1 ul li{
+    width: 230px;
+    margin: 0 0;
+    display: inline-block;
+    padding: 15px;
+    text-align: center;
+    vertical-align: top;
+}
+.Child1 ul li img{
+    max-width: 100%;
+    -webkit-transition: all 0.5s ease;
+    -moz-transition: all 0.5s ease;
+    -o-transition: all 0.5s ease;
+    transition: all 0.5s ease;
+    -webkit-box-shadow: 0 6px 10px rgba(0,0,0,.4);
+    -moz-box-shadow: 0 6px 10px rgba(0,0,0,.4);
+    box-shadow: 0 6px 10px rgba(0,0,0,.4);
+}
+.Child1 ul li:hover img{
+    -webkit-transform: scale(1.1);
+    -moz-transform: scale(1.1);
+    -o-transform: scale(1.1);
+    -ms-transform: scale(1.1);
+    transform: scale(1.1);
+    -webkit-box-shadow: 0 0 0 rgba(0,0,0,.4);
+    -moz-box-shadow: 0 0 0 rgba(0,0,0,.4);
+    box-shadow: 0 0 0 rgba(0,0,0,.4);
+}
+.Child1 ul li:hover{
+    background: #fff;
+    -webkit-box-shadow: 0 6px 10px rgba(0,0,0,.4);
+    -moz-box-shadow: 0 6px 10px rgba(0,0,0,.4);
+    box-shadow: 0 6px 10px rgba(0,0,0,.4);
+}
+.Child1 ul h2{
+    margin: 10px -8px 0 -8px;
+    color: #FFF;
+    font-size: 18px;
+    font-family: 'Roboto Slab',serif;
+}
+.Child1 ul li:hover a h2{
+    color: #333;
+}
+.Child2{
+    background-image: url('/tp/food/img/bg-butcher1.jpg');
+    padding: 0 0 50px 0;
+}
+.breadcrumdChild{
+    display: inline-block;
+    width: 100%;
+}
+.breadcrumdChild li{
+    display: inline-block;
+    float: left;
+}
+.breadcrumdChild li:first-child{
+    margin: 0 15px 0 0;
+}
+.breadcrumdChild li a{
+    display: inline-block;
+    color: #FFF;
+    height: 60px;
+    line-height: 60px;
+    padding: 0 15px;
+    font-family: 'Roboto Slab',serif;
+    position: relative;
+    font-size: 25px;
+}
+.breadcrumdChild li:first-child a{
+    background-color: #736256;
+    font-size: 15px;
+    font-weight: normal;
+}
+.breadcrumdChild li:first-child a:after{
+    content: '';
+    background-image: url('/tp/food/img/sprites.png');
+    background-position: -300px -150px;
+    height: 60px;
+    width: 12px;
+    display: inline-block;
+    position: absolute;
+    right: -12px;
+    top: 0;
+}
+.childMulti{
+    display: inline-block;
+    width: 100%;
+    padding: 10px 20px;
+}
+.childMulti li{
+    width: 100px;
+    display: inline-block;
+    float: left;
+    text-align: center;
+    margin: 0 3px;
+    padding: 0 0 10px 0;
+    overflow: hidden;
+}
+.childMulti li:hover{
+    box-shadow: 0px 3px 9px -1px rgba(0,0,0,.6);
+    background-color: #fff;
+}
+.childMulti>li>a>img{
+    max-width: 100%;
+    background: #FFF;
+    -webkit-transition: all 0.3s ease;
+    -moz-transition: all 0.3s ease;
+    -o-transition: all 0.3s ease;
+    transition: all 0.3s ease;
+    box-shadow: 0px 3px 9px -1px rgba(0,0,0,.6);
+}
+.childMulti>li:hover img{
+    -webkit-transform: scale(1.05);
+    -moz-transform: scale(1.05);
+    -o-transform: scale(1.05);
+    -ms-transform: scale(1.05);
+    transform: scale(1.05);
+    box-shadow: 0px 0 0 0 rgba(0,0,0,.6);
+}
+.childMulti li a h2{
+    margin: 6px 0 0 0;
+    font-size: 15px;
+    color: #e8eacd;
+    font-family: 'Roboto Slab',serif;
+}
+.childMulti li:hover a h2{
+    color: #333;
+}
+.productChild2{
+    margin: 0 10px;
+}
+.listProductChild2{
+    background: #FFF;
+    box-shadow: 0 4px 15px #232323;
+    display: inline-block;
+    width: 100%;
+}
+.listProductChild2>li{
+    text-align: center;
+}
+.listProductChild2>li>a{
+    display: inline-block;
+}
+.listProductChild2>li>a>h2{
+    font-family: 'Roboto Slab',serif;
+    color: #f7941e;
+    font-size: 40px;
+    display: inline-block;
+    border-right: 1px dotted #ccc;
+    padding: 0px 20px 15px;
+    margin: 20px 20px 0 0;
+}
+.listProductChild2>li>a>span{
+    color: #f7941e;
+    position: relative;
+    top: -5px;
+}
+.listProductChild2>li>ul{
+    border-top: 1px solid #CCC;
+    border-bottom: 1px solid #CCC;
+    margin: 0 0 50px 0;
+    text-align: left;
+    display: inline-block;
+    width: 100%;
+    overflow-x: scroll;
+    white-space: nowrap;
+}
+.listProductChild2>li>ul>li{
+    text-align: left;
+    width: 230px;
+    display: inline-block;
+    border-right: 1px solid #CCC;
+    padding: 15px 15px 30px 15px;
+    white-space: initial;
+    vertical-align: top;
+}
+.listProductChild2>li>ul>li:hover{
+    box-shadow: 0 0 5px #9c9c9c;
+}
+.listProductChild2>li>ul>li img{
+    max-width: 100%;
+    margin: auto;
+    -webkit-transition: all 0.5s ease;
+    -moz-transition: all 0.5s ease;
+    -o-transition: all 0.5s ease;
+    transition: all 0.5s ease;
+}
+.listProductChild2>li>ul>li:hover img{
+    -webkit-transform: scale(1.05);
+    -moz-transform: scale(1.05);
+    -o-transform: scale(1.05);
+    -ms-transform: scale(1.05);
+    transform: scale(1.05);
+}
+.listProductChild2>li>ul>li>a>h2{
+    font-family: 'Roboto Slab',serif;
+    font-size: 16px;
+    font-weight: 700;
+    color: #333;
+    margin: 20px 10px 15px 10px;
+}
+.listProductChild2>li>ul>li>p{
+    font-weight: 700;
+    font-size: 13px;
+    color: #333;
+    margin: 0 10px;
+}
+.listProductChild2>li>ul>li>p span.PriceOld{
+    margin: 0 0 0 7px;
+    text-decoration: line-through;
+    color: #999;
+    font-weight: 400;
+}
+.listProductChild2>li>ul>li>p .price{
+    border: none;
+}
+
+.productChild3{
+    margin: 30px 10px 0 10px;
+    background: #FFF;
+    box-shadow: 0 4px 15px #232323;
+}
+.productChild3>ul{
+    border-top: 1px solid #CCC;
+    border-bottom: 1px solid #CCC;
+    margin: 25px 0;
+    display: inline-block;
+    width: 100%;
+}
+.listProductChild2>li>ul{
+    border-top: 1px solid #CCC;
+    border-bottom: 1px solid #CCC;
+    margin: 0 0 50px 0;
+    text-align: left;
+    display: inline-block;
+    width: 100%;
+    overflow-x: scroll;
+    white-space: nowrap;
+}
+.productChild3>ul>li{
+    text-align: left;
+    width: 230px;
+    display: inline-block;
+    border-right: 1px solid #CCC;
+    border-bottom: 1px solid #CCC;
+    padding: 15px 15px 30px 15px;
+}
+.productChild3>ul>li:hover{
+    box-shadow: 0 0 5px #9c9c9c;
+}
+.productChild3>ul>li img{
+    max-width: 100%;
+    margin: auto;
+    -webkit-transition: all 0.5s ease;
+    -moz-transition: all 0.5s ease;
+    -o-transition: all 0.5s ease;
+    transition: all 0.5s ease;
+}
+.productChild3>ul>li:hover img{
+    -webkit-transform: scale(1.05);
+    -moz-transform: scale(1.05);
+    -o-transform: scale(1.05);
+    -ms-transform: scale(1.05);
+    transform: scale(1.05);
+}
+.productChild3>ul>li>a>h2{
+    font-family: 'Roboto Slab',serif;
+    font-size: 16px;
+    font-weight: 700;
+    color: #333;
+    margin: 20px 10px 15px 10px;
+}
+.productChild3>ul>li>p{
+    font-weight: 700;
+    font-size: 13px;
+    color: #333;
+    margin: 0 10px;
+}
+.productChild3>ul>li>p .price{
+    border: none;
+}
+.productChild3>ul>li>p>span.PriceOld{
+    margin: 0 0 0 7px;
+    text-decoration: line-through;
+    color: #999;
+    font-weight: 400;
+}
+/********** View Product **********/
+.viewProduct{
+    background-image: url('/tp/food/img/bg-butcher1.jpg');
+}
+/****** paginator *******/
+.paginatorProduct .paginator{
+    text-align: right;
+    padding: 15px;
+}
+.paginatorProduct .paginator a{
+    display: inline-block;
+    padding: 6px 13px;
+    text-align: center;
+    border: 1px solid #999;
+    margin: 0 0 0 5px;
+    color: #333;
+    font: normal normal normal 14px/1 FontAwesome;
+    font-size: inherit;
+    text-rendering: auto;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+.paginatorProduct .paginator a.currentPage{
+    background: #f8f8f8;
+}
+.paginatorProduct .paginator a.paging-first:after{
+    content: "\f100";
+}
+.paginatorProduct .paginator a.paging-previous:after{
+    content: "\f104";
+}
+.paginatorProduct .paginator a.paging-next:after{
+    content: "\f105";
+}
+.paginatorProduct .paginator a.paging-first, .paginatorProduct .paginator a.paging-previous, .paginatorProduct .paginator a.paging-last, .paginatorProduct .paginator a.paging-next{
+
+}
+.paginatorProduct .paginator a.labelPage{
+    display: none;
+}
+.paginatorProduct .paginator a.paging-last:after{
+    content: "\f101";
+}
+
+
+/****** Detail Product *******/
+.detailProduct{
+    margin: 20px 25px;
+}
+.detailProduct>div{
+    display: inline-block;
+    width: 100%;
+    border-radius: 20px;
+    background: #FFF;
+    padding: 30px 15px;
+}
+.imageViewProduct{
+    width: 30%;
+    float: left;
+}
+.descriptionProduct{
+    float: left;
+    width: 65%;
+    margin: 0 0 0 5%;
+}
+#product li{
+    text-align: center
+}
+#product li img{
+    margin: 0 auto;
+}
+.descriptionProduct>h1{
+    margin: 0 0;
+    font-family: 'Roboto Slab',serif;
+    font-size: 38px;
+    font-weight: 700;
+}
+.PriceQuantityAddcart{
+    padding: 25px 0;
+    border-top: 1px solid #c2b59b;
+    border-bottom: 1px solid #c2b59b;
+    margin: 20px 0 0 0;
+}
+.priceView{
+    font-size: 23px;
+    display: inline-block;
+    margin: 0 30px 0 0;
+}
+.priceView label{
+    margin: 0 10px 0 0;
+}
+.priceView .PriceOld{
+    margin: 0 0 0 10px;
+    color: #CCC;
+    text-decoration: line-through;
+}
+.productQuantity{
+    display: inline-block;
+    position: relative;
+    top: -5px;
+    margin: 0 0;
+}
+.productQuantity i#QttDown{
+    height: 20px;
+    width: 20px;
+    display: inline-block;
+    background-image: url('/tp/food/img/sprites.png');
+    background-position: -40px -60px;
+    text-indent: -1000px;
+    position: relative;
+    left: 12px;
+    top: 1px;
+    cursor: pointer;
+    -webkit-transition: all 0.3s ease;
+    -moz-transition: all 0.3s ease;
+    -o-transition: all 0.3s ease;
+    transition: all 0.3s ease;
+    opacity: 0;
+}
+.productQuantity i#QttUp{
+    height: 30px;
+    width: 30px;
+    display: inline-block;
+    background-image: url('/tp/food/img/sprites.png');
+    background-position: -70px -60px;
+    text-indent: -1000px;
+    position: relative;
+    cursor: pointer;
+    left: -10px;
+    top: -3px;
+    opacity: 0;
+    -webkit-transition: all 0.3s ease;
+    -moz-transition: all 0.3s ease;
+    -o-transition: all 0.3s ease;
+    transition: all 0.3s ease;
+}
+.productQuantity i#Quantity{
+    width: 48px;
+    border-right: none;
+    border-left: none;
+    background: #FFF;
+    height: 48px;
+    display: inline-block;
+    background-image: url('/tp/food/img/sprites.png');
+    background-position: -50px 0px;
+    text-align: center;
+    font-style: normal;
+    color: #FFF;
+    line-height: 46px;
+    font-size: 12px;
+
+}
+.PriceQuantityAddcart:hover .productQuantity i#QttUp, .PriceQuantityAddcart:hover .productQuantity i#QttDown{
+    opacity: 1;
+}
+.productQuantity i:focus{
+
+}
+.lAddCard{
+    display: inline-block;
+    margin: 0 0;
+}
+.lAddCard a{
+    cursor: pointer;
+    font-family: 'Roboto Slab',serif;
+    color: #f7941e;
+    font-size: 15px;
+}
+.descriptionView>h2{
+    margin: 20px 0;
+    font-family: 'Roboto Slab',serif;
+    font-size: 30px;
+    font-weight: 700;
+}
+
+
+.detailPayorder{
+    margin: 30px 0 0 0;
+}
+.detailPayorder>div>label{
+    font-weight: 400;
+    margin: 0 0;
+    text-transform: uppercase;
+}
+.detailPayorder>div>label i{
+    display: inline-block;
+    width: 15px;
+    text-align: center;
+}
+.detailPayorder>div>div *{
+    margin: 0 0;
+    padding: 0 0;
+}
+.detailPayorder>div>div{
+    display: none;
+    margin: 10px 0 0 15px;
+}
+.detailPayorder>div>div ul{
+    margin: 0 0 0 13px;
+}
+.detailPayorder>div>div ul li{
+    list-style: disc;
+    color: #999;
+    margin: 3px 0;
+}
+
+.detailPayorder>div.active>div{
+    /*display: block;*/
+}
+.detailPayorder .description{
+    border-top: 1px solid #CCC;
+}
+.detailPayorder>div{
+    padding: 10px 0;
+    border-bottom: 1px solid #CCC;
+}
+/******** Card **********/
+.cart{
+    margin: 50px 0;
+}
+.cart h1{
+    text-align: left;
+    font-family: 'Roboto Slab',serif;
+    color: #e8eacd;
+}
+.cart>table{
+    background: #FFF;
+}
+.cart table tr{
+    border: 1px solid #DCDCDC;
+}
+.cart table tr th{
+    border-right: 1px solid #DCDCDC;
+    padding: 8px 10px;
+    background: #f9f9f9;
+}
+.cart table tr td{
+    border-right: 1px solid #DCDCDC;
+    padding: 8px 10px;
+}
+.cart table tr td a{
+    color: #333;
+}
+.cart table tr td a span{
+    display: inline-block;
+    width: 15px;
+    height: 15px;
+    line-height: 15px;
+    font-size: 10px;
+    font-weight: 300;
+    border-radius: 50%;
+    text-align: center;
+    background: #B3B3B3;
+    color: #FFF;
+    overflow: hidden;
+    position: relative;
+    top: 2px;
+    margin: 0 0;
+}
+.cart table tr td a span.colorAttr{
+    text-indent: -1500px;
+    margin: 0 0 0 5px;
+}
+.cart table tr td select{
+    border-radius: 0;
+    border: 1px solid #CCC;
+    width: 50px;
+}
+.cart table tr td select:focus{
+    outline: none;
+}
+.cart table tr td .deleteCart{
+    cursor: pointer;
+}
+.backhomeCheckout{
+    display: inline-block;
+    width: 100%;
+}
+.backhomeCheckout a{
+    margin: 10px 0 0 0;
+    display: inline-block;
+    padding: 5px 15px;
+    background: url(/tp/food/img/bg-header.png);
+    font-family: 'Roboto Slab',serif;
+    color: #353535;
+    font-size: 14px;
+    text-transform: uppercase;
+    float: right;
+    -webkit-transition: all 0.3s ease;
+    -moz-transition: all 0.3s ease;
+    -o-transition: all 0.3s ease;
+    transition: all 0.3s ease;
+}
+.backhomeCheckout a:first-child:hover{
+    opacity: 0.9;
+}
+.backhomeCheckout a:last-child{
+    background: none;
+    text-transform: none;
+    font-family: 'Roboto Slab',serif;
+    color: #e8eacd;
+}
+
+/****** Checkout *******/
+.checkout .col-md-10 form{
+    display: inline-block;
+    width: 100%;
+    background: #FFF;
+    margin: 10px 0 50px 0;
+}
+.checkout .col-md-10 form>div{
+    padding: 15px;
+}
+.checkout .col-md-10 form>div>p{
+    border-bottom: 1px solid #ccc;
+    font-family: 'Roboto Slab',serif;
+    padding: 0 0 10px;
+    margin: 0 0;
+    font-size: 20px;
+    color: #f7941e;
+}
+.checkout .col-md-10 form>div>ul{
+    margin: 0 0 10px 0;
+}
+.checkout .col-md-10 form>div>ul>li{
+    border-bottom: 1px solid #CCC;
+    padding: 10px 0;
+}
+.checkout .col-md-10 form>div>ul>li>a{
+    font-size: 25px;
+    font-family: 'Roboto Slab',serif;
+    color: #333;
+    margin: 0 0 10px 0;
+    display: block;
+}
+.checkout .col-md-10>.titleHome{
+    text-align: left;
+    font-family: 'Roboto Slab',serif;
+    color: #e8eacd;
+    margin: 50px 0 0 0;
+}
+.checkout .col-md-10 form div div label{
+    display: none;
+}
+.checkout .col-md-10 form>div>div{
+    margin: 15px 0 10px 0;
+}
+.checkout .col-md-10 form>div>div>input, .checkout .col-md-10 form>div>div>textarea{
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #c7c7c7;
+}
+.checkout .col-md-10 form>div>div>input:focus, .checkout .col-md-10 form>div>div>textarea:focus{
+    outline: none;
+}
+.checkout .col-md-10 form>div>div>input[type=submit]{
+    border: none;
+    background: #f7941e;
+    color: #FFF;
+    text-transform: uppercase;
+    font-family: 'Roboto Slab',serif;
+}
+
+/*}*/
+/*.checkout>form>.col-md-6>p{*/
+    /*border-bottom: 1px solid #CCC;*/
+    /*padding: 0 0 5px 0;*/
+    /*margin: 0 0 20px 0;*/
+/*}*/
+/*.checkout>form>.col-md-6>p>span{*/
+    /*text-transform: uppercase;*/
+    /*font-size: 16px;*/
+    /*width: 36px;*/
+    /*height: 36px;*/
+    /*display: inline-block;*/
+    /*border-radius: 50%;*/
+    /*border: 1px solid #CCC;*/
+    /*text-align: center;*/
+    /*line-height: 34px;*/
+    /*color: #999;*/
+/*}*/
+/*.checkout>form>.col-md-6 >div{*/
+    /*margin: 10px 0 0 0;*/
+/*}*/
+/*.checkout>form>.col-md-6 div>label{*/
+    /*display: block;*/
+    /*font-weight: 400;*/
+/*}*/
+/*.checkout>form>.col-md-6 div>input{*/
+    /*width: 100%;*/
+    /*padding: 6px 10px;*/
+    /*border: 1px solid #ccc;*/
+    /*-webkit-transition: all 0.3s ease;*/
+    /*-moz-transition: all 0.3s ease;*/
+    /*-o-transition: all 0.3s ease;*/
+    /*transition: all 0.3s ease;*/
+/*}*/
+/*.checkout>form>.col-md-6 div>textarea{*/
+    /*width: 100%;*/
+    /*border: 1px solid #ccc;*/
+    /*height: 60px;*/
+    /*padding: 5px 10px;*/
+    /*-webkit-transition: all 0.3s ease;*/
+    /*-moz-transition: all 0.3s ease;*/
+    /*-o-transition: all 0.3s ease;*/
+    /*transition: all 0.3s ease;*/
+/*}*/
+/*.checkout>form>.col-md-6 div>input[type=submit]{*/
+    /*background: #111;*/
+    /*color: #FFF;*/
+    /*border: none;*/
+    /*text-transform: uppercase;*/
+    /*font-size: 13px;*/
+    /*padding: 8px 0;*/
+    /*-webkit-transition: all 0.3s ease;*/
+    /*-moz-transition: all 0.3s ease;*/
+    /*-o-transition: all 0.3s ease;*/
+    /*transition: all 0.3s ease;*/
+/*}*/
+/*.checkout>form>.col-md-6 div>input[type=submit]:hover{*/
+    /*background: #333;*/
+/*}*/
+/*.checkout>form>.col-md-6 div>input[type=submit]:focus{*/
+    /*outline: none;*/
+    /*background: #333;*/
+    /*border: none;*/
+    /*box-shadow: 0 2px #989898;*/
+/*}*/
+/*.checkout>form>.col-md-6 div>input:focus, .checkout>form>.col-md-6 div>textarea:focus{*/
+    /*outline: none;*/
+    /*border: 1px solid #3DC3E0;*/
+/*}*/
+/*.checkout>form>.col-md-6 ul li{*/
+    /*border-bottom: 1px solid #DDD;*/
+    /*margin: 0 0 10px 0;*/
+/*}*/
+/*.checkout>form>.col-md-6 ul li a{*/
+    /*color: #333;*/
+    /*font-size: 14px;*/
+    /*margin: 0 0 10px 0;*/
+    /*display: block;*/
+    /*font-weight: 600;*/
+    /*text-transform: uppercase;*/
+/*}*/
+/*.checkout>form>.col-md-6 ul li a span{*/
+    /*display: inline-block;*/
+    /*width: 15px;*/
+    /*height: 15px;*/
+    /*line-height: 15px;*/
+    /*font-size: 10px;*/
+    /*font-weight: 300;*/
+    /*border-radius: 50%;*/
+    /*text-align: center;*/
+    /*background: #B3B3B3;*/
+    /*color: #FFF;*/
+    /*overflow: hidden;*/
+    /*position: relative;*/
+    /*top: 2px;*/
+    /*margin: 0 0;*/
+/*}*/
+/*.checkout>form>.col-md-6 ul li a span.colorAttr{*/
+    /*text-indent: -1500px;*/
+    /*margin: 0 0 0 5px;*/
+/*}*/

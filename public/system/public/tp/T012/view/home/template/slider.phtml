@@ -1,0 +1,76 @@
+<?php
+if(!empty($bannerList['banner-list banner']['banner-list']) || !empty($bannerList['2-banner-list banner']['2-banner-list'])):
+    $sliderHasNews = !empty($bannerList['news-list article']['news-list']);
+    $sliderHasSubBanner = !empty($bannerList['sub-banner-list banner']['sub-banner-list']);
+    ?>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="top-slider__outter">
+                    <div class="top-slider<?= $sliderHasNews ? '' : ' top-slider--wide' ?>">
+                        <?php
+                        echo '<div class="banner">';
+                        echo '<ul id="banner" class="owl-carousel owl-theme">';
+                        foreach ($bannerList['banner-list banner']['banner-list'] as $b) {
+                            $imageFirst = '';
+                            if (!empty(json_decode($b['image'], true))) {
+                                $imageFirst = array_shift(json_decode($b['image'], true));
+                            }
+                            ?>
+                            <li>
+                                <a href="<?= $b['url'] ?>">
+                                    <figure class="owl-lazy banner-image" data-src="<?= $imageFirst ?>"></figure>
+                                </a>
+                            </li>
+                            <?php
+                        }
+                        echo '</ul></div>';
+                        ?>
+                    </div>
+                    <?php if($sliderHasNews): ?>
+                        <div class="top-slider__right">
+                            <div class="top-slider__news">
+                                <div class="top-slider__news-title">
+                                    <h2>TIN TỨC</h2>
+                                </div>
+                                <div class="top-slider__news-content">
+                                    <?php foreach($bannerList['news-list article']['news-list'] as $n):
+                                        $imageFirst = '';
+                                        if(!empty(json_decode($n['image'], true))){
+                                            $imageFirst = array_shift(json_decode($n['image'], true));
+                                        }
+                                        ?>
+                                        <div class="home-news__item">
+                                            <div class="home-news__image-wrapper">
+                                                <a href="<?= $n['url'] ?>" title="<?= $n['title'] ?>">
+                                                    <h3 class="home-news__title">
+                                                        <?= $n['title'] ?>
+                                                    </h3>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    <?php endforeach;?>
+                                </div>
+                            </div>
+                            <?php if($sliderHasSubBanner): ?>
+                                <div class="top-slider__banner">
+                                    <?php
+                                    foreach ($bannerList['sub-banner-list banner']['sub-banner-list'] as $b):
+                                        $imageFirst = '';
+                                        if (!empty(json_decode($b['image'], true))) {
+                                            $imageFirst = array_shift(json_decode($b['image'], true));
+                                        }
+                                        ?>
+                                        <figure class="lazy banner-image" data-src="<?= $imageFirst ?>"></figure>
+                                        <?php
+                                    endforeach;
+                                    ?>
+                                </div>
+                            <?php endif; ?>
+                        </div>
+                    <?php endif; ?>
+                </div>
+            </div>
+        </div>
+    </div>
+<?php endif;?>

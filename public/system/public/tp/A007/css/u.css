@@ -1,0 +1,51 @@
+#a-pro-add{
+    margin: 30px 0;
+}
+#a-pro-add>h4{
+    text-align: center;
+    text-transform: uppercase;
+    font-weight: 300;
+    font-size: 26px;
+    margin: 20px 0 15px 0;
+}
+#a-pro-add>form>ul{
+    width: 420px;
+    margin: 0 auto;
+    background: #f9f9f9;
+    padding: 15px 25px 10px 25px;
+    border-top: 2px solid #333;
+}
+#a-pro-add>form>ul>li{
+    margin: 10px 0;
+}
+#a-pro-add>form>ul>li label{
+    float: left;
+    width: 120px;
+    margin: 5px 0 0 0;
+    font-weight: 400;
+}
+#a-pro-add ul li input{
+    border: 1px solid #CCC;
+    padding: 5px 10px;
+    width: 250px;
+}
+#a-pro-add ul li input:focus{
+    outline: none;
+}
+#a-pro-add ul li input[type=submit]{
+    background: #333;
+    border-radius: 0;
+    color: #FFF;
+    border: none;
+    text-transform: uppercase;
+    padding: 6px 0;
+    width: 130px;
+}
+#a-pro-add ul li input[type=submit]:focus{
+    outline: none;
+    background: #111;
+}
+.errors {
+    margin: 10px 0 0 120px;
+    font-size: 12px;
+}

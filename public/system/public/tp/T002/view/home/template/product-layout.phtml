@@ -1,0 +1,61 @@
+<?php if(!empty($this->productLayout['product-list product']['product-list'])): ?>
+    <div class="product">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <?php if(!empty($this->productLayout)): ?>
+                        <div class="product__inner">
+                            <div class="product-title">
+                                <?php if(!empty($productLayout['product-title text']['value'])): ?>
+                                    <h2><?= $productLayout['product-title text']['value'] ?></h2>
+                                <?php endif; ?>
+                                <?php
+                                if(!empty($this->productLayout['product-category productcategory'])){
+                                    ?>
+                                    <ul>
+                                        <?php
+                                        foreach($this->productLayout['product-category productcategory']['product-category'] as $pc){
+                                            echo '<li><a href="'.$pc['url'].'">'.$pc['title'].'</a></li>';
+                                        }
+                                        ?>
+                                    </ul>
+                                    <?php
+                                }
+                                ?>
+                            </div>
+                            <?php $slider = $this->productLayout['product-slider-checkbox checkbox']['value'] ?>
+                            <ul class="<?= $slider ? ' product-slider owl-carousel owl-theme' : 'product__list'?>">
+                                <?php
+                                foreach($this->productLayout['product-list product']['product-list'] as $p):
+                                    $imageFirst = '';
+                                    if(!empty(json_decode($p['image'], true))){
+                                        $imageFirst = array_shift(json_decode($p['image'], true));
+                                    } ?>
+                                    <li class="product__item">
+                                        <div class="product__item--inner">
+                                            <a class="pI" href="<?= $p['url'] ?>">
+                                                <figure class="lazy product_image product_image--two" data-src="<?= $imageFirst ?>"></figure>
+                                            </a>
+                                            <h3 class="product__item--title">
+                                                <a href="<?= $p['url'] ?>">
+                                                    <?= $p['title'] ?>
+                                                </a>
+                                            </h3>
+                                            <p class="product-horizontal__price">
+                                                <?= $p['priceOld']
+                                                    ? '<span>'.number_format($p['priceOld']).' ₫</span><i>'.number_format($p['price']).'₫</i>'
+                                                    : '<span>'.number_format($p['price']).'₫</span><i></i>'
+                                                ?>
+                                            </p>
+                                            <a class="btnAddCart" data-quantity="1" data-id="<?=$p['id']?>">Giỏ hàng</a>
+                                        </div>
+                                    </li>
+                                <?php endforeach; ?>
+                            </ul>
+                        </div>
+                    <?php endif; ?>
+                </div>
+            </div>
+        </div>
+    </div>
+<?php endif;?>

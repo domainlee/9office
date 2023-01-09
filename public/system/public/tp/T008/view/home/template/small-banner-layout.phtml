@@ -1,0 +1,26 @@
+<?php if(!empty($this->smallBannerList)): ?>
+    <section class="small-banner">
+        <div class="container">
+            <div class="row">
+                    <div class="col-md-12">
+                        <div class="small-banner__list owl-carousel owl-theme">
+                            <?php
+                            if(!empty($this->smallBannerList)):
+                                foreach($this->smallBannerList as $b):
+                                    $imageFirst = '';
+                                    if(!empty(json_decode($b['image'], true))){
+                                        $imageFirst = array_shift(json_decode($b['image'], true));
+                                    }
+                                    ?>
+                                    <div class="small-banner__item">
+                                        <a href="<?= $b['url'] ?>">
+                                            <figure class="owl-lazy small-banner__image" data-src="<?= $imageFirst ?>"></figure>
+                                        </a>
+                                    </div>
+                                <?php endforeach; endif; ?>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    </section>
+<?php endif;?>

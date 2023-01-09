@@ -1,0 +1,86 @@
+<?php
+    $optionBasic = $this->home()->optionBasic();
+    $optionPage = $this->home()->optionPage();
+    $this->headTitle($this->escapeHtml($this->translate(!empty($optionBasic['metaTitle']) ? $optionBasic['metaTitle']:'Trang chủ')));
+    $this->headMeta()->appendName('description', (!empty($optionBasic['metaDescription']) ? $optionBasic['metaDescription']:'Trang chủ'));
+    $this->headMeta()->appendName('keywords', (!empty($optionBasic['metaKeyword']) ? $optionBasic['metaKeyword']:'Trang chủ'));
+    $this->headMeta()->appendProperty('og:title', !empty($optionBasic['metaTitle']) ? $optionBasic['metaTitle']:'Trang chủ');
+    $this->headMeta()->appendProperty('og:image', !empty($optionBasic['logo']) ? $optionBasic['logo']:null);
+    use Home\Model\DateBase;
+?>
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <?php if(!empty($optionPage['banner'])): ?>
+                <?php
+                echo '<ul id="banner" class="owl-carousel owl-theme">';
+                foreach($optionPage['banner'] as $b):
+                    $image = json_decode($b['image'], true);
+                    $imageFirst = '';
+                    if(!empty($image)){
+                        $imageFirst = array_shift($image);
+                    }
+                    ?>
+                    <li>
+                        <a href="<?= $b['url'] ? $b['url']:'' ?>">
+                            <figure data-src="<?= $imageFirst ?>" class="lazy banner__image">
+                                <div>
+                                    <h2><?= $b['title'] ?></h2>
+                                    <p><?= $b['description'] ?></p>
+                                </div>
+                            </figure>
+                        </a>
+                    </li>
+
+                <?php
+                endforeach;
+                echo '</ul>';
+                ?>
+            <?php endif; ?>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="categoryHome">
+                <?php
+                $category = $this->category()->getCategories();
+                ?>
+                <ul>
+                    <?php
+                    if(count($category)){
+                        foreach($category as $c){
+                            ?>
+                            <li>
+                            <a href="<?= $c->getViewLink() ?>"><?= $c->getName() ?><span>Nhấn để xem</span></a>
+                            <?php
+                            if($c->getChilds()){
+                                echo '<ul class="nav2">';
+                                foreach($c->getChilds() as $cc){
+                                    $images = $this->home()->getImages(['id' => $cc->getId(), 'type' => 3]);
+                                    $img = '';
+                                    if(count($images)){
+                                        $c = 0;
+                                        foreach($images as $i){
+                                            $c++;
+                                            if($c == 1){
+                                                $img = '<img src="'.$i->getOption('media')->getPictureUri().'" alt="'.$cc->getName().'" />';
+                                            }
+                                        }
+                                    }
+                                    ?>
+                                    <li><a href="<?= $cc->getViewLink() ?>"><?= $img ?><h2><?= $cc->getName() ?></h2></a></li>
+                                <?php
+                                }
+                                echo '</ul>';
+                            }
+                            ?>
+                            </li>
+                        <?php
+                        }
+                    }
+                    ?>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>

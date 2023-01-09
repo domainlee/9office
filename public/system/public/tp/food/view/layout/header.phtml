@@ -1,0 +1,102 @@
+<div class="head">
+    <div class="head1">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-2">
+                    <div class="logo">
+                        <a href="/"><img src="http://www.urbanfetch.com/nkz/images/v2/uflogo50.gif" alt="Logo" /></a>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="timeWork">
+<!--                        <p>Bạn chọn được sản phẩm nào của chúng tôi ? <br/><span>Miễn phí giao hàng cho bạn</span></p>-->
+                        <p>Chúng tôi có thể giúp gì cho bạn ?</br><span>Miễn phí giao hàng</span></p>
+                        <p>
+                            <span>Giao hàng </br>trong 1 giờ</span>
+                            <strong>Giờ làm việc<br/>
+                            7:00AM - 21:00PM</strong>
+                        </p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <ul class="RegisterLogin">
+                        <?php
+                            $cartService = $this->cart()->getServiceCart();
+                            $products = $cartService->getProducts();
+                        ?>
+                        <li><a class="totalCart" href="/cart"><i class="fa fa-shopping-cart" aria-hidden="true"></i> Giỏ hàng: <span><?= $cartService->getTotalProducts() ?></span></a></li>
+
+                        <?php
+                        if ($this->user()->hasIdentity()) {
+                            ?>
+                            <li><a>Xin chào: <?= $this->user()->getUser()->getFullName() ? $this->user()->getUser()->getFullName():ucfirst($this->user()->getUser()->getUserName()) ?></a></li>
+                            <li><a href="/user/signout">Thoát</a></li>
+                        <?php
+                        }else{
+                            ?>
+                            <li><a href="/user/signup">Đăng ký</a></li>
+                            <li><a href="/user/signin">Đăng nhập</a></li>
+                        <?php
+                        }
+                        ?>
+
+                    </ul>
+
+                    <form id="search" action="/search" method="get">
+                        <input type="text" name="q" placeholder="Chúng tôi có thể giúp gì cho bạn ? "/>
+                        <a href="javascript:{}" onclick="document.getElementById('search').submit();"></a>
+                        <div id="searchFolding"></div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="head2">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="nav">
+                        <?php
+                            $category = $this->category()->getCategories();
+                        ?>
+                        <ul>
+                            <?php
+                                if(count($category)){
+                                foreach($category as $c){
+                            ?>
+                                    <li>
+                                        <a href="<?= $c->getViewLink() ?>"><?= $c->getName() ?></a>
+                                        <?php
+                                        if($c->getChilds()){
+                                            echo '<ul class="nav2">';
+                                            foreach($c->getChilds() as $cc){
+                                                $images = $this->home()->getImages(['id' => $cc->getId(), 'type' => 3]);
+                                                $img = '';
+                                                if(count($images)){
+                                                    $c = 0;
+                                                    foreach($images as $i){
+                                                        $c++;
+                                                        if($c == 1){
+                                                            $img = '<img src="'.$i->getOption('media')->getPictureUri().'" alt="'.$cc->getName().'" />';
+                                                        }
+                                                    }
+                                                }
+                                                ?>
+                                                    <li><a href="<?= $cc->getViewLink() ?>"><?= $img ?><h2><?= $cc->getName() ?></h2></a></li>
+                                                <?php
+                                            }
+                                            echo '</ul>';
+                                        }
+                                        ?>
+                                    </li>
+                            <?php
+                                }
+                                }
+                            ?>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,297 @@
+@media only screen and (min-width:200px) and (max-width: 640px) {
+    .logo img {
+        max-height: 40px;
+    }
+    .head1 .logo{
+        justify-content: center;
+    }
+    .navHome{
+        display: none;
+    }
+    .navigation-button{
+        display: block;
+    }
+    .navigation-mobile__js-open .navigation-mobile {
+        opacity: 1;
+        visibility: visible;
+        z-index: 4;
+    }
+    .head1 .row{
+        position: relative;
+    }
+    .head1 .col-md-9{
+        position: absolute;
+        left: 0;
+        right: 0;
+    }
+    .feature--icons {
+        margin: 0 0 15px 0;
+    }
+    .feature--icons i {
+        font-size: 80px;
+    }
+    .feature--icons i.icon-noun_35247_cc{
+        margin: 0 25px 0 0;
+    }
+    .feature {
+        padding: 60px 0;
+    }
+    .feature--description {
+        font-size: 22px;
+    }
+    .project {
+        padding: 60px 0;
+    }
+    .project--title-small {
+        font-size: 14px;
+    }
+    .project--title-medium {
+        font-size: 50px;
+    }
+    .project--item {
+        width: 100%;
+        padding: 0 15px;
+        margin: 0 0 15px 0;
+    }
+    .project--button-view-all {
+        width: 160px;
+        padding: 15px 0;
+        font-size: 13px;
+    }
+    .client {
+        background: url(/tp/v1/img/client-words.jpg) no-repeat fixed center;
+        background-size: 600%;
+        padding: 60px 0;
+    }
+    .client--title-small{
+        font-size: 14px;
+    }
+    .client--title-medium {
+        font-size: 50px;
+    }
+    .client--description{
+        margin: 30px 0 20px 0;
+        font-size: 16px;
+        line-height: 30px;
+    }
+    .client--name {
+        font-size: 16px;
+    }
+    .client--slider .owl-controls {
+        margin: 20px 0 0 0;
+    }
+    .client--slider .owl-buttons {
+        display: none;
+    }
+    .workflow {
+        padding: 60px 0;
+    }
+    .tab-content {
+        margin: 30px 0 0 0;
+    }
+    .nav-tabs {
+        flex-wrap: wrap;
+        margin: 0;
+    }
+    .nav-tabs>li {
+        width: 100%;
+        flex: 1 0 100%;
+    }
+    .nav-tabs>li>a{
+        border: none;
+        padding: 10px 15px;
+        font-size: 13px;
+    }
+    .interior--image {
+        width: 100%;
+        margin: 0 0;
+    }
+    .interior--description {
+        width: 100%;
+        margin: 0 0;
+        font-size: 18px;
+        line-height: 30px;
+    }
+    .big-text {
+        font-size: 40px;
+    }
+    .interior--content {
+        flex-direction: column;
+    }
+
+    .slider-single.owl-theme .owl-controls .owl-page span{
+        margin: 5px;
+        height: 2px;
+        width: 10px;
+    }
+    .info-article {
+        flex-direction: column;
+    }
+    .info-article--col {
+        margin: 0 0 30px 0;
+    }
+    .title-single{
+        font-size: 30px;
+    }
+    .news-type-2__list{
+        flex-wrap: wrap;
+        margin: -15px 0;
+    }
+    .news-type-1__list{
+        margin: 0;
+    }
+    .news-type-1__item {
+        flex: 1 0 100%;
+    }
+    .five-post__list{
+        flex-wrap: wrap;
+    }
+    .news-type-2__item{
+        flex: 1 0 100%;
+    }
+    .choose__inner{
+        flex-wrap: wrap;
+        padding: 0 15px;
+    }
+    .choose__left,
+    .choose__right{
+        width: 100%;
+        padding: 0;
+    }
+    .choose__right{
+        margin-top: 30px;
+    }
+    .three-post-2__list{
+        flex-wrap: wrap;
+    }
+    .three-post-2__item{
+        width: 100%;
+        margin-bottom: 15px;
+    }
+    .three-post-2__item:last-child{
+        margin-bottom: 0;
+    }
+    .three-post-image__list{
+        flex-wrap: wrap;
+        margin: 30px 0 -15px;
+    }
+    .three-post-image__item{
+        width: 50%;
+    }
+    .book__inner{
+        flex-wrap: wrap;
+        justify-content: center;
+        text-align: center;
+    }
+    .book__inner a{
+        margin-top: 15px;
+    }
+    .single-news .col-sm-4{
+        width: 100%;
+    }
+    .slider-image::before{
+        padding-top: 56.25%;
+    }
+    .slider__content h3{
+        font-size: 30px;
+    }
+    .slider__content p{
+        font-size: 15px;
+    }
+    .news__item--inner{
+        flex-direction: column;
+    }
+    .category-news__wrapper--image{
+        width: 100%;
+    }
+    .news__image{
+        width: 100%;
+    }
+    .news__intro{
+        margin-top: 15px;
+        width: 100%;
+    }
+    .category-news__inner{
+        padding: 15px;
+    }
+    .sidebar{
+        padding: 15px;
+    }
+    .single-news__detail{
+        padding: 15px;
+    }
+
+    /******footer***********/
+    .footer__list > li{
+        width: 100%;
+    }
+    .footer__list{
+        padding: 0 30px;
+        flex-direction: column;
+    }
+    .footer--wrapper {
+        flex-direction: column;
+        padding: 80px 0 180px 0;
+    }
+    .footer--item {
+        width: 100%;
+        padding: 0;
+        margin: 0 0 30px 0;
+    }
+    .footer--title {
+        font-size: 20px;
+    }
+    .footer--title:after {
+        margin: 15px auto 15px auto;
+    }
+    .footer--content {
+        font-size: 18px;
+    }
+    .social li a {
+        padding: 10px 0;
+        width: 75px;
+    }
+    .footer--wrapper-copyright {
+        flex-direction: column;
+    }
+    .footer--copyright {
+        width: 100%;
+        text-align: left;
+        margin: 0 0 5px 0;
+    }
+    .footer--design {
+        width: 100%;
+        text-align: center;
+    }
+}
+@media only screen and (min-width:640px) and (max-width:700px){
+    .single-news .col-sm-4{
+        width: 100%;
+    }
+}
+@media only screen and (min-width:700px) and (max-width:800px){
+    .single-news .col-sm-4{
+        width: 100%;
+    }
+}
+@media only screen and (min-width:800px) and (max-width:900px){
+    .single-news .col-sm-4{
+        width: 100%;
+    }
+}
+@media only screen and (min-width:900px) and (max-width:1024px){
+
+}
+@media only screen and (min-width:1024px) and (max-width:1366px){
+}
+@media only screen and (min-width:1366px){
+    .container{
+        width: 1170px;
+    }
+}
+@media only screen and (min-width:1366px) and (max-width:1600px){
+
+}
+@media only screen and (min-width:1600px) and (max-width:1900px) {
+
+}

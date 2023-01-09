@@ -1,0 +1,72 @@
+<?php
+    $optionBasic = $this->home()->optionBasic();
+    $optionPage = $this->home()->optionPage();
+    $menuOption = $this->home()->getMenu();
+?>
+
+<section class="footer">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="footer__inner">
+                    <div class="footer__arrow">
+                        <?= $optionPage['noi-dung-footer'] ?>
+                    </div>
+                    <div class="footer__arrow">
+                        <h3 class="footer__headline">Danh mục sản phẩm</h3>
+                        <ul>
+                            <?php
+                            if(!empty($menuOption['footer_menu'])) {
+                                foreach($menuOption['footer_menu'] as $m) {
+                                    ?>
+                                    <li>
+                                        <a href="<?= $m['url'] ?>"><?= $m['name'] ?></a>
+                                    </li>
+                                    <?php
+                                }
+                            }
+                            ?>
+                        </ul>
+                    </div>
+                    <div class="footer__arrow">
+                        <h3 class="footer__headline">Hỗ trợ khách hàng</h3>
+                        <ul>
+                            <?php
+                            if(!empty($menuOption['footer_menu_2'])) {
+                                foreach($menuOption['footer_menu_2'] as $m) {
+                                    ?>
+                                    <li>
+                                        <a href="<?= $m['url'] ?>"><?= $m['name'] ?></a>
+                                    </li>
+                                    <?php
+                                }
+                            }
+                            ?>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="footer__two">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="footer__two--inner">
+                    <div class="footer__two--left">
+                        Phát triển bởi <a href="">DWEB.VN</a>
+                    </div>
+                    <div class="footer__two--right">
+                        <ul>
+                            <li><a href="<?= $optionPage['facebook'] ?>"><i class="fa fa-facebook"></i></a></li>
+                            <li><a href="<?= $optionPage['google'] ?>"><i class="fa fa-google-plus"></i></a></li>
+                            <li><a href="<?= $optionPage['twitter'] ?>"><i class="fa fa-twitter"></i></a></li>
+                            <li><a href="<?= $optionPage['skype'] ?>"><i class="fa fa-skype"></i></a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

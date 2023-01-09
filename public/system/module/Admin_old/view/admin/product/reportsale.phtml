@@ -1,0 +1,23 @@
+<?php
+    echo $this->headtitle($this->escapehtml($this->translate('Danh sách khách hàng')));
+?>
+<input type="hidden" class="updateHomepage" />
+<div class="row">
+    <div class="col-sm-12">
+        <div class="card-box">
+            <div class="portlet-body">
+                <div id="sample_editable_1_wrapper" class="dataTables_wrapper form-inline" role="grid">
+                    <?php
+                    echo $dg = new \Admin\Dg\DgReportSale ( array (
+                        'data' => $this->results->getData (),
+                        'paging' => $this->results->getPaging (),
+                        'rowCount' => $this->results->getRowCount (),
+                        'rowInPage' => $this->results->getRowInPage (),
+                        'uri' => $this->url,
+                    ));
+                    ?>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,26 @@
+<ul class="news__list-category category__slider owl-carousel owl-theme">
+    <?php
+    $category = $this->NewsCategory()->getCategories();
+    ?>
+    <?php $url = $this->UriParams()->getRequest()->getRequestUri(); ?>
+    <?php if(!empty($category)): ?>
+        <?php foreach($category as $t):
+            $image = json_decode($t->getImage(), true);
+            $imageFirst = '';
+            if(!empty($image)){
+                $imageFirst = array_shift($image);
+            }
+        ?>
+            <li>
+                <a <?= $url == $t->getViewLink() ? 'class="active"':null ?> href="<?= $t->getViewLink() ?>">
+                    <figure class="news__list--image owl-lazy" data-src="<?= $imageFirst ?>">
+                        <div class="news__list--content">
+                            <h3 class="news__list--title"><?= $t->getName() ?></h3>
+                            <div class="news__list--intro"><?= $t->getDescription() ?></div>
+                        </div>
+                    </figure>
+                </a>
+            </li>
+        <?php endforeach; ?>
+    <?php endif; ?>
+</ul>

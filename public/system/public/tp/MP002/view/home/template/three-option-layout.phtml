@@ -1,0 +1,35 @@
+<?php if(!empty($this->threeOptionLayout['option-1-title text']['value']) || !empty($this->threeOptionLayout['option-1-content text']['value'])
+    || !empty($this->threeOptionLayout['option-2-title text']['value']) || !empty($this->threeOptionLayout['option-2-content text']['value'])
+    || !empty($this->threeOptionLayout['option-3-title text']['value']) || !empty($this->threeOptionLayout['option-3-content text']['value'])):?>
+    <section class="service">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-12">
+                    <!--<div class="button-to-top">
+                        <a class="backToTop"><i class="fa fa-angle-up" aria-hidden="true"></i></a>
+                    </div>-->
+                    <div class="service__inner">
+                        <?php if(!empty($this->threeOptionLayout['option-1-title text']['value']) || !empty($this->threeOptionLayout['option-1-content text']['value'])):?>
+                        <div class="service__item">
+                            <h3><?= $this->threeOptionLayout['option-1-title text']['value'] ? $this->threeOptionLayout['option-1-title text']['value'] : ''?></h3>
+                            <?= $this->threeOptionLayout['option-1-content text']['value'] ? $this->threeOptionLayout['option-1-content text']['value'] : ''?>
+                        </div>
+                    <?php endif;?>
+                    <?php if(!empty($this->threeOptionLayout['option-2-title text']['value']) || !empty($this->threeOptionLayout['option-2-content text']['value'])):?>
+                        <div class="service__item">
+                            <h3><?= $this->threeOptionLayout['option-2-title text']['value'] ? $this->threeOptionLayout['option-2-title text']['value'] : ''?></h3>
+                            <?= $this->threeOptionLayout['option-2-content text']['value'] ? $this->threeOptionLayout['option-2-content text']['value'] : ''?>
+                        </div>
+                    <?php endif;?>
+                    <?php if(!empty($this->threeOptionLayout['option-3-title text']['value']) || !empty($this->threeOptionLayout['option-3-content text']['value'])):?>
+                        <div class="service__item">
+                            <h3><?= $this->threeOptionLayout['option-3-title text']['value'] ? $this->threeOptionLayout['option-3-title text']['value'] : ''?></h3>
+                            <?= $this->threeOptionLayout['option-3-content text']['value'] ? $this->threeOptionLayout['option-3-content text']['value'] : ''?>
+                        </div>
+                    <?php endif;?>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+<?php endif;?>

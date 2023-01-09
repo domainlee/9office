@@ -1,0 +1,57 @@
+<?php
+    use Home\Model\DateBase;
+    $view = $this->news;
+    $url = $this->UriParams()->getRequest()->getRequestUri();
+    $image = json_decode($view->getImage(), true);
+    $imageFirst = '';
+    if(!empty($image)){
+        $imageFirst = array_shift($image);
+    }
+    $category = $this->NewsCategory()->getCategories();
+
+    $this->headTitle($this->escapeHtml($this->translate(html_entity_decode($view->getTitle()))));
+
+    $this->headMeta()->appendName('keywords', ($view->getMetaKeyword()));
+    $this->headMeta()->appendName('description', ($view->getMetaDescription()));
+
+    $this->headMeta()->appendProperty('fb:app_id', '1697190970583102');
+    $this->headMeta()->appendProperty('article:author', 'https://www.facebook.com/dwebvietnam');
+    $this->headMeta()->appendProperty('og:locale', 'vi_VN');
+    $this->headMeta()->appendProperty('og:image',  'http://'.$_SERVER["SERVER_NAME"].$imageFirst );
+    $this->headMeta()->appendProperty('og:url', 'http://'.$_SERVER["SERVER_NAME"].$url);
+    $this->headMeta()->appendProperty('og:title', $view->getTitle() );
+    $this->headMeta()->appendProperty('og:description', ($view->getMetaDescription()));
+
+    $this->headMeta()->appendProperty('twitter:card', $_SERVER["SERVER_NAME"]);
+    $this->headMeta()->appendProperty('twitter:title', $view->getTitle());
+    $this->headMeta()->appendProperty('twitter:image', 'http://'.$_SERVER["SERVER_NAME"].$imageFirst);
+    $this->headMeta()->appendProperty('twitter:description', $view->getMetaDescription());
+
+    $optionPage = $this->home()->optionPage();
+
+    $cs = [
+        '/tp/dweb/css/page.css'
+    ];
+    echo '<link href="'.srcLink($cs,2).'" media="screen" rel="stylesheet" type="text/css">';
+?>
+
+<?php
+    echo $view->getContent();
+?>
+
+<section class="support-module">
+    <div class="container">
+        <div class="support-module__inner">
+            <h2 class="support-module__headline">Tư vấn miễn phí</h2>
+            <div class="support-module__sub">Hãy để chuyên viên tư vấn Marketing SEONGON hỗ trợ bạn tư vấn website, bán hàng, quảng cáo adwords, facebook. Bạn có thể đọc kinh nghiệm bán hàng với <a href="http://blog.dweb.vn" target="_blank">blog</a> dweb</div>
+            <form class="support-module__form" data-parsley-validate novalidate>
+                <div>
+                    <input type="text" data-parsley-type="digits" data-parsley-length="[10,11]" required="required" placeholder="Số điện thoại *" />
+                </div>
+                <div>
+                    <button type="submit">Gửi</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</section>

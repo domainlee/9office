@@ -1,0 +1,302 @@
+<?php
+    use Home\Model\DateBase;
+    $optionBasic = $this->home()->optionBasic();
+    $optionPage = $this->home()->optionPage();
+    $homePage = $this->home()->homePage();
+    $fileLogo = getimagesize('http://'.$_SERVER['HTTP_HOST'].$optionBasic['logo']);
+?>
+<?php
+    /**** Start SEO DWEB *****/
+    echo $this->headLink(['rel' => 'canonical', 'href' => 'http://'.$_SERVER['HTTP_HOST'] ]);
+    $this->headTitle($this->escapeHtml($this->translate(!empty($optionBasic['metaTitle']) ? $optionBasic['metaTitle']:$optionBasic['sologan'])));
+    $this->headMeta()->appendName('description', (!empty($optionBasic['metaDescription']) ? $optionBasic['metaDescription']:null));
+    $this->headMeta()->appendName('keywords', (!empty($optionBasic['metaKeyword']) ? $optionBasic['metaKeyword']:null));
+    $this->headMeta()->appendProperty('og:title', !empty($optionBasic['metaTitle']) ? $optionBasic['metaTitle']:$optionBasic['sologan']);
+    $this->headMeta()->appendProperty('og:description', !empty($optionBasic['metaDescription']) ? $optionBasic['metaDescription']:null);
+    $this->headMeta()->appendProperty('og:image', !empty($optionBasic['logo']) ? 'http://'.$_SERVER['HTTP_HOST'].$optionBasic['logo']:null);
+    $this->headMeta()->appendProperty('og:image:secure_url', !empty($optionBasic['logo']) ? 'http://'.$_SERVER['HTTP_HOST'].$optionBasic['logo']:null);
+    $this->headMeta()->appendProperty('og:image:width', $fileLogo['0']);
+    $this->headMeta()->appendProperty('og:image:height', $fileLogo['1']);
+    $this->headMeta()->appendProperty('og:type', 'Website');
+    $this->headMeta()->appendProperty('og:url', 'http://'.$_SERVER['HTTP_HOST']);
+    $this->headMeta()->appendProperty('og:site_name', $optionBasic['sologan']);
+
+    $this->headMeta()->appendName('twitter:card', !empty($optionBasic['logo']) ? 'http://'.$_SERVER['HTTP_HOST'].$optionBasic['logo']:'summary_large_image');
+    $this->headMeta()->appendName('twitter:title', !empty($optionBasic['metaTitle']) ? $optionBasic['metaTitle']:null);
+    $this->headMeta()->appendName('twitter:description', (!empty($optionBasic['metaDescription']) ? $optionBasic['metaDescription']:null));
+    $this->headMeta()->appendName('twitter:image', !empty($optionBasic['logo']) ? 'http://'.$_SERVER['HTTP_HOST'].$optionBasic['logo']:null);
+    /**** End SEO DWEB *****/
+?>
+<?php
+if(!empty($homePage)):
+    $count = 0;
+    foreach($homePage as $k => $v ):
+        $layout = explode(' ',$k);
+        switch ($layout[0]) {
+            case "banner-layout":
+                echo $this->partial('home/template/banner-layout', ['bannerList' => $v]);
+                break;
+            case "intro-layout":
+                echo $this->partial('home/template/intro-layout', ['introLayout' => $v]);
+                break;
+            case "product-layout":
+                echo $this->partial('home/template/product-layout', ['productLayout' => $v]);
+                break;
+            case "option-layout":
+                echo $this->partial('home/template/option-layout', ['optionLayout' => $v]);
+                break;
+            case "four-option-layout":
+                echo $this->partial('home/template/four-option-layout', ['fourOptionLayout' => $v]);
+                break;
+            case "html-layout":
+                echo $this->partial('home/template/html-layout', ['htmlLayout' => $v]);
+                break;
+            case "tab-product-layout":
+                $count++;
+                echo $this->partial('home/template/tab-product-layout', ['tabProductLayout' => $v, 'id' => $count]);
+                break;
+            case "image-layout":
+                echo $this->partial('home/template/image-layout', ['imageLayout' => $v]);
+                break;
+            default:
+                break;
+        }
+    endforeach;
+else:
+
+?>
+    <?php if(!empty($optionPage['view_banner'])): ?>
+    <section class="hero-slider">
+            <?php
+            if(!empty($optionPage['banner'])):
+                foreach($optionPage['banner'] as $b):
+                $image = json_decode($b['image'], true);
+                $imageFirst = '';
+                if(!empty($image)){
+                    $imageFirst = array_shift($image);
+                }
+            ?>
+                    <figure class="lazy banner-image" style="background-image: url(<?= !empty($imageFirst) ? $imageFirst:null ?>)">
+                        <div>
+                            <div class="container">
+                                <div class="col-sm-12">
+                                    <h2><?= $b['title'] ?></h2>
+                                    <p><?= $b['description'] ?></p>
+                                    <a class="button-arrow" href="<?= $b['url'] ?>">Mua ngay</a>
+                                </div>
+                            </div>
+                        </div>
+                    </figure>
+            <?php endforeach; endif;?>
+    </section>
+    <?php endif; ?>
+
+    <?php if(!empty($optionPage['view_banner-nho-ben-phai'])): ?>
+    <section class="banner-one">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="banner-one__inner">
+                        <div class="banner-one__left">
+                            <div class="banner-one__content">
+                                <?php if(!empty($optionPage['noi-dung-trai-banner'])): ?>
+                                    <?= $optionPage['noi-dung-trai-banner'] ?>
+                                    <span class="row-right"></span>
+                                <?php endif; ?>
+                            </div>
+                        </div>
+                        <?php if(!empty($optionPage['banner-phai'])): ?>
+                        <div class="banner-one__right">
+                            <?php
+                            foreach($optionPage['banner-phai'] as $b):
+                                $image = json_decode($b['image'], true);
+                                $imageFirst = '';
+                                if(!empty($image)){
+                                    $imageFirst = array_shift($image);
+                                }
+                                ?>
+                                <a href="<?= $b['url'] ?>">
+                                    <figure class="lazy banner-one__image" data-src="<?= !empty($imageFirst) ? $imageFirst:null ?>"></figure>
+                                </a>
+                            <?php endforeach; ?>
+                        </div>
+                        <?php endif; ?>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <?php endif;?>
+    <?php if(!empty($optionPage['view_dong-chu-quang-cao'])):?>
+
+    <section class="sales">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="sales__inner">
+                        <span class="icon-left"></span>
+                        <h3 class="sales__title"><?= $optionPage['tieu-de-quang-cao'] ? $optionPage['tieu-de-quang-cao']:'' ?></h3>
+                        <p class="icon-arrow1"></p>
+                        <p class="sales__content"><?= $optionPage['noi-dung-quang-cao'] ? $optionPage['noi-dung-quang-cao']:'' ?></p>
+                        <span class="icon-right"></span>
+                        <a class="button-arrow" href="<?= $optionPage['duong-dan'] ? $optionPage['duong-dan']:'#' ?>"><?= $optionPage['ten-duong-dan'] ? $optionPage['ten-duong-dan'] : '' ?></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <?php endif; ?>
+    <?php if(!empty($optionPage['view_3-tab-san-pham'])):?>
+    <section class="feature-product">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="feature-product__inner">
+                        <?php if(!empty($optionPage['tieu-de'])): ?>
+                            <h2 class="title"><?= $optionPage['tieu-de'] ?></h2>
+                        <?php endif; ?>
+                        <ul class="feature-product__tab nav nav-tabs" role="tablist">
+                            <?php if(!empty($optionPage['tieu-de-tab-1'])): ?>
+                            <li role="presentation" class="active"><a href="#nam" aria-controls="nam" role="tab" data-toggle="tab"><?= $optionPage['tieu-de-tab-1'] ?></a></li>
+                            <?php endif; ?>
+                            <?php if(!empty($optionPage['tieu-de-tab-2'])): ?>
+                            <li role="presentation"><a href="#nu" aria-controls="nu" role="tab" data-toggle="tab"><?= $optionPage['tieu-de-tab-2'] ?></a></li>
+                            <?php endif; ?>
+                            <?php if(!empty($optionPage['tieu-de-tab-3'])): ?>
+                            <li role="presentation"><a href="#treem" aria-controls="treem" role="tab" data-toggle="tab"><?= $optionPage['tieu-de-tab-3'] ?></a></li>
+                            <?php endif; ?>
+                        </ul>
+                        <div class="tab-content">
+                            <div role="tabpanel" class="tab-pane fade in active" id="nam">
+                                <?php if(!empty($optionPage['san-pham-tab-1'])): ?>
+                                    <ul class="feature-product__list">
+                                        <?php
+                                        foreach($optionPage['san-pham-tab-1'] as $p):
+                                            $imgs = array_slice(json_decode($p['image'], true), 0, 2);
+                                            ?>
+                                            <li class="two-up__product-item">
+                                                <div class="two-up__product-image__wrapper">
+                                                    <a href="<?= $p['url'] ?>">
+                                                        <figure class="lazy two-up__product-image" data-src="<?= !empty($imgs) ? $imgs['0']:null ?>"></figure>
+                                                        <figure class="lazy two-up__product-image two-up__product-image__two" data-src="<?= !empty($imgs) ? $imgs['1']:null ?>"></figure>
+                                                    </a>
+                                                </div>
+                                                <h3 class="two-up__product-title"><?= $p['title'] ?></h3>
+                                                <p class="price"><?= $p['priceOld'] ? number_format($p['priceOld']).' đ<i>'.number_format($p['price']).' đ</i>':number_format($p['price']).' đ' ?></p>
+                                                <a class="btnAddCart" data-quantity="1" data-id="<?= $p['id'] ?>">Giỏ hàng</a>
+                                            </li>
+                                        <?php endforeach; ?>
+                                    </ul>
+                                <?php endif; ?>
+                            </div>
+                            <div role="tabpanel" class="tab-pane fade" id="nu">
+                                <?php if(!empty($optionPage['san-pham-tab-2'])): ?>
+                                    <ul class="feature-product__list">
+                                        <?php
+                                        foreach($optionPage['san-pham-tab-2'] as $p):
+                                            $imgs = array_slice(json_decode($p['image'], true), 0, 2);
+                                            ?>
+                                            <li class="two-up__product-item">
+                                                <div class="two-up__product-image__wrapper">
+                                                    <a href="<?= $p['url'] ?>">
+                                                        <figure class="lazy two-up__product-image" data-src="<?= !empty($imgs) ? $imgs['0']:null ?>"></figure>
+                                                        <figure class="lazy two-up__product-image two-up__product-image__two" data-src="<?= !empty($imgs) ? $imgs['1']:null ?>"></figure>
+                                                    </a>
+                                                </div>
+                                                <h3 class="two-up__product-title"><?= $p['title'] ?></h3>
+                                                <p class="price"><?= $p['priceOld'] ? number_format($p['priceOld']).' đ<i>'.number_format($p['price']).' đ</i>':number_format($p['price']).' đ' ?></p>
+                                                <a class="btnAddCart" data-quantity="1" data-id="<?= $p['id'] ?>">Giỏ hàng</a>
+                                            </li>
+                                        <?php endforeach; ?>
+                                    </ul>
+                                <?php endif; ?>
+                            </div>
+                            <div role="tabpanel" class="tab-pane fade" id="treem">
+                                <?php if(!empty($optionPage['san-pham-tab-3'])): ?>
+                                    <ul class="feature-product__list">
+                                        <?php
+                                        foreach($optionPage['san-pham-tab-3'] as $p):
+                                            $imgs = array_slice(json_decode($p['image'], true), 0, 2);
+                                            ?>
+                                            <li class="two-up__product-item">
+                                                <div class="two-up__product-image__wrapper">
+                                                    <a href="<?= $p['url'] ?>">
+                                                        <figure class="lazy two-up__product-image" data-src="<?= !empty($imgs) ? $imgs['0']:null ?>"></figure>
+                                                        <figure class="lazy two-up__product-image two-up__product-image__two" data-src="<?= !empty($imgs) ? $imgs['1']:null ?>"></figure>
+                                                    </a>
+                                                </div>
+                                                <h3 class="two-up__product-title"><?= $p['title'] ?></h3>
+                                                <p class="price"><?= $p['priceOld'] ? number_format($p['priceOld']).' đ<i>'.number_format($p['price']).' đ</i>':number_format($p['price']).' đ' ?></p>
+                                                <a class="btnAddCart" data-quantity="1" data-id="<?= $p['id'] ?>">Giỏ hàng</a>
+                                            </li>
+                                        <?php endforeach; ?>
+                                    </ul>
+                                <?php endif; ?>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <?php endif; ?>
+    <?php if(!empty($optionPage['view_slider-chu'])): ?>
+        <section class="client">
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="client__inner">
+
+                            <h2 class="title"><?= $optionPage['tieu-de-slider'] ? $optionPage['tieu-de-slider'] : ''?></h2>
+                            <ul class="client__slider owl-carousel owl-theme">
+                                <?= $optionPage['noi-dung-slider-1'] ? '<li><p class="client__content">'.$optionPage['noi-dung-slider-1'].'</p></li>' : null?>
+                                <?= $optionPage['noi-dung-slider-2'] ? '<li><p class="client__content">'.$optionPage['noi-dung-slider-2'].'</p></li>' : null?>
+                                <?= $optionPage['noi-dung-slider-3'] ? '<li><p class="client__content">'.$optionPage['noi-dung-slider-3'].'</p></li>' : null?>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    <?php endif; ?>
+    <?php if(!empty($optionPage['view_4-cot-thong-tin'])): ?>
+    <section class="service">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="service__inner">
+                        <?php if(!empty($optionPage['tieu-de-cot-1'])): ?>
+                            <div class="service__item">
+                                <i class="fa fa-camera"></i>
+                                <h3><?= $optionPage['tieu-de-cot-1'] ?></h3>
+                                <p><?=$optionPage['noi-dung-cot-1'] ? $optionPage['noi-dung-cot-1'] : ''?></p>
+                            </div>
+                        <?php endif; ?>
+                        <?php if(!empty($optionPage['tieu-de-cot-2'])): ?>
+                            <div class="service__item">
+                                <i class="fa fa-paypal"></i>
+                                <h3><?= $optionPage['tieu-de-cot-2'] ?></h3>
+                                <p><?=$optionPage['noi-dung-cot-2'] ? $optionPage['noi-dung-cot-2'] : ''?></p>
+                            </div>
+                        <?php endif; ?>
+                        <?php if(!empty($optionPage['noi-dung-cot-3'])): ?>
+                            <div class="service__item">
+                                <i class="fa fa-heart-o"></i>
+                                <h3><?= $optionPage['tieu-de-cot-3'] ?></h3>
+                                <p><?=$optionPage['noi-dung-cot-3'] ? $optionPage['noi-dung-cot-3'] : ''?></p>
+                            </div>
+                        <?php endif; ?>
+                        <?php if(!empty($optionPage['tieu-de-cot-4'])): ?>
+                            <div class="service__item">
+                                <i class="fa fa-question"></i>
+                                <h3><?= $optionPage['tieu-de-cot-4'] ?></h3>
+                                <p><?=$optionPage['noi-dung-cot-4'] ? $optionPage['noi-dung-cot-4'] : ''?></p>
+                            </div>
+                        <?php endif; ?>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <?php endif;?>
+<?php endif;?>

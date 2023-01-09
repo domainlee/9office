@@ -1,0 +1,330 @@
+<?php
+    $form = $this->form;
+    $type = $this->type;
+    $field = $this->field;
+    $extraContent = $this->extraContent;
+    echo $this->headtitle($this->escapehtml($this->translate('Sửa - '.$form->get('title')->getValue())));
+?>
+<input type="hidden" id="articleId" value="<?= $this->itemId; ?>" />
+
+<form method="post" enctype="multipart/form-data" data-parsley-validate novalidate>
+    <div class="row">
+        <div class="col-sm-8">
+            <div class="card-box">
+                <div class="portlet-title">
+                    <h4 class="m-t-0 header-title m-b-20"><b>Sửa bài viết</b></h4>
+                </div>
+                <div class="portlet-body form">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <label class="control-label" for="firstName">Tiêu đề</label>
+                                <?= $this->formelement($form->get('title')->setAttributes(['class' => 'form-control', 'placeholder'=>'Tiêu đề', 'required' => 'required', 'data-parsley-error-message' => 'Tiêu đề không được để trống'])) ?>
+                                <?= $this->formelementerrors($form->get('title'),['class' => 'parsley-errors-list filled']) ?>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <label class="control-label" for="firstName">Tóm tắt</label>
+                                <?= $this->formelement($form->get('description')->setAttributes(['class' => 'form-control','placeholder'=>'Nội dung', 'required' => 'required', 'data-parsley-error-message' => 'Nội dung không được để trống'])) ?>
+                                <?= $this->formelementerrors($form->get('description'),['class' => 'parsley-errors-list filled'])?>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <label class="control-label" for="firstName">Nội dung</label>
+                                <?= $this->formelement($form->get('content')->setAttributes(['class' => 'summernote form-control','placeholder'=>'Nội dung', 'required' => 'required', 'data-parsley-error-message' => 'Nội dung không được để trống'])) ?>
+                                <?= $this->formelementerrors($form->get('content'),['class' => 'parsley-errors-list filled'])?>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-actions">
+                        <?=$this->formelement($form->get('submit')->setAttributes(['class' => 'loadHomepage btn btn-default']))?>
+                        <?=$this->formelement($form->get('reset')->setAttributes(['class' => 'btn']))?>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-sm-4">
+            <div class="card-box" style="display: none">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="control-group">
+                            <label class="control-label" for="firstName">Kiểu bài viết</label>
+                            <div class="radio radio-custom">
+                                <input type="radio" name="typeArticle" id="article" value="1" <?= $type == 1 ? 'checked':null ?>>
+                                <label for="article">Bài viết</label>
+                            </div>
+                            <div class="radio radio-custom">
+                                <input type="radio" name="typeArticle" id="gallery" value="2" <?= $type == 2 ? 'checked':null ?>>
+                                <label for="gallery">Ảnh</label>
+                            </div>
+                            <div class="radio radio-custom">
+                                <input type="radio" name="typeArticle" id="video" value="3" <?= $type == 3 ? 'checked':null ?>>
+                                <label for="video">Video</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <?php if(!empty($field)): ?>
+                <div class="card-box">
+                    <?php foreach($field as $k => $v): ?>
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="control-group">
+                                    <label class="control-label" for="<?= $v ?>"><?= $v ?></label>
+                                    <div class="input-group m-b-15">
+                                        <input type="text" name="field <?= $k ?>" class="form-control" value="<?= !empty($extraContent[$k]) ? $extraContent[$k]:null ?>" placeholder="<?= $v ?>">
+                                        <span data-key="<?= $k ?>" class="deleteField input-group-addon b-0"><i class="icon-trash"></i></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    <?php endforeach; ?>
+                </div>
+            <?php endif; ?>
+
+            <div class="card-box">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="control-group">
+                            <div class="form-group">
+                                <label class="control-label" for="firstName">Danh mục</label>
+                                <?=$this->formelement($form->get('categoryId')->setAttributes(['class' => 'form-control','tabindex' => '1','required' => 'required', 'data-parsley-error-message' => 'Danh mục không được để trống']))?>
+                                <?= $this->formelementerrors($form->get('categoryId'),['class' => 'parsley-errors-list filled'])?>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card-box">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="form-group">
+                            <label class="control-label" for="firstName">Hình ảnh</label>
+                            <a id="abc" role="button" class="btn btn-block btn-default" data-toggle="modal" data-target="#full-width-modal">Hình ảnh <i class="fa fa-upload"></i></a>
+                            <ul id="imagesLibrary" class="list-image-insert">
+                            </ul>
+                            <?=$this->formelement($form->get('images')->setAttributes(['class' => 'm-wrap span12','id' => 'images']))?>
+                            <div id="full-width-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="full-width-modalLabel" aria-hidden="true" style="display: none;">
+                                <div class="modal-dialog modal-full">
+                                    <div class="modal-content">
+                                        <ul class="nav nav-tabs navtab-bg nav-justified">
+                                            <li class="active">
+                                                <a href="#list" data-toggle="tab" aria-expanded="false">
+                                                    <span class="">Thư viện</span>
+                                                </a>
+                                            </li>
+                                            <li class="">
+                                                <a href="#upload" data-toggle="tab" aria-expanded="false">
+                                                    <span class="">Upload</span>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                        <div class="tab-content">
+                                            <div class="tab-pane active" id="list">
+                                                <div class="list-image"></div>
+                                            </div>
+                                            <div class="tab-pane" id="upload">
+                                                <label id="percentComplete">Lưu ý ảnh nhỏ hơn 3Mb</label>
+                                                <input type="file" name="imagemulti[]" class="m-wrap btn-block" id="imagemulti" multiple="multiple">
+                                            </div>
+                                        </div>
+
+                                        <div class="modal-footer">
+                                            <input type="hidden" data-value="1" id="pageImage">
+                                            <button type="button" class="btn btn-prev-image btn-load-more btn-inverse waves-effect waves-light"><i class="ion-chevron-left"></i></button>
+                                            <button type="button" class="btn btn-next-image btn-load-more btn-inverse waves-effect waves-light"><i class="ion-chevron-right"></i></button>
+                                            <button type="button" class="btn btn-insert btn-default waves-effect waves-light">Sử dụng</button>
+                                            <button type="button" class="btn" data-dismiss="modal">Đóng</button>
+                                        </div>
+                                    </div><!-- /.modal-content -->
+                                </div><!-- /.modal-dialog -->
+                            </div><!-- /.modal -->
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="portlet related-box">
+                <div class="portlet-heading portlet-default">
+                    <h3 class="portlet-title text-dark">Bài viết liên quan</h3>
+                    <div class="portlet-widgets">
+                        <a data-toggle="collapse" data-parent="#accordion1" class="collapsed" href="#related"><i class="ion-minus-round"></i></a>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+                <div id="related" class="panel-collapse collapse">
+                    <div class="portlet-body portlet-body-option">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="control-group">
+                                    <div class="form-group">
+                                        <div class="form-group">
+                                            <label class="control-label" for="firstName">Bài viết liên quan</label>
+                                            <?= $this->formelement($form->get('articleRelated')->setAttributes(['class' => 'form-control select-ajax-article', 'multiple'=>'multiple'])) ?>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="portlet seo-box">
+                <div class="portlet-heading portlet-default">
+                    <h3 class="portlet-title text-dark">SEO</h3>
+                    <div class="portlet-widgets">
+                        <a data-toggle="collapse" data-parent="#accordion1" class="collapsed" href="#seo-box"><i class="ion-minus-round"></i></a>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+                <div id="seo-box" class="panel-collapse collapse">
+                    <div class="portlet-body portlet-body-option">
+
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="control-group">
+                                    <div class="form-group">
+                                        <div class="form-group">
+                                            <label class="control-label" for="firstName">Thẻ</label>
+                                            <div class="tags-default">
+                                                <?= $this->formelement($form->get('tags')->setAttributes(['class' => 'form-control', 'data-role' => 'tagsinput', 'placeholder'=>'Thẻ'])) ?>
+                                                <?= $this->formelementerrors($form->get('tags'),['class' => 'parsley-errors-list filled']) ?>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="control-group">
+                                    <div class="form-group">
+                                        <div class="form-group">
+                                            <label class="control-label" for="firstName">Tiêu đề</label>
+                                            <?= $this->formelement($form->get('metaTitle')->setAttributes(['class' => 'form-control', 'placeholder'=>'Tiêu đề'])) ?>
+                                            <?= $this->formelementerrors($form->get('metaTitle'),['class' => 'parsley-errors-list filled']) ?>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="control-group">
+                                    <div class="form-group">
+                                        <div class="form-group">
+                                            <label class="control-label" for="firstName">Đường dẫn</label>
+                                            <?= $this->formelement($form->get('url')->setAttributes(['class' => 'form-control', 'placeholder'=>'Đường dẫn'])) ?>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="control-group">
+                                    <div class="form-group">
+                                        <div class="form-group">
+                                            <label class="control-label" for="firstName">Mô tả</label>
+                                            <?= $this->formelement($form->get('metaDescription')->setAttributes(['class' => 'form-control', 'placeholder'=>'Mô tả'])) ?>
+                                            <?= $this->formelementerrors($form->get('metaDescription'),['class' => 'parsley-errors-list filled']) ?>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="control-group">
+                                    <div class="form-group">
+                                        <div class="form-group">
+                                            <label class="control-label" for="firstName">Từ khoá chính</label>
+                                            <div class="tags-default">
+                                                <?= $this->formelement($form->get('metaKeyword')->setAttributes(['class' => 'form-control', 'data-role' => 'tagsinput', 'placeholder'=>'Từ khoá chính'])) ?>
+                                                <?= $this->formelementerrors($form->get('metaKeyword'),['class' => 'parsley-errors-list filled']) ?>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row box-view">
+                            <div class="col-sm-12">
+                                <div class="control-group">
+                                    <div class="form-group">
+                                        <div class="box-view__inner">
+                                            <input type="hidden" class="box-view__home" value="<?= 'http://'.$_SERVER['HTTP_HOST'] ?>" />
+                                            <h2 class="box-view__title"><?= $form->get('metaTitle')->getValue() ?></h2>
+                                            <?php
+                                            $url = 'http://'.$_SERVER['HTTP_HOST'].'/'.\Base\Model\Resource::slugify($form->get('url')->getValue() ? $form->get('url')->getValue():$form->get('metaTitle')->getValue()).'.html';
+                                            ?>
+                                            <a href="<?= $url ?>" class="box-view__url" target="_blank"><?= $url ?></a>
+                                            <div class="box-view__desciption"><?= $form->get('metaDescription')->getValue() ?></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+
+
+            <div class="portlet seo-box" style="display: none">
+                <div class="portlet-heading portlet-default">
+                    <h3 class="portlet-title text-dark">Thêm trường</h3>
+                    <div class="portlet-widgets">
+                        <a data-toggle="collapse" data-parent="#accordion1" class="collapsed" href="#field"><i class="ion-minus-round"></i></a>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+                <div id="field" class="panel-collapse collapse">
+                    <div class="portlet-body portlet-body-option">
+
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="control-group">
+                                    <div class="form-group">
+                                        <div class="form-group">
+                                            <label class="control-label" for="firstName">Tên trường</label>
+                                            <input class="form-control inputField" type="text" placeholder="Tên trường" />
+                                        </div>
+                                        <div class="form-actions">
+                                            <input id="addField" class="addField btn btn-default" value="Thêm">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+        <!-- End col-sm-8 -->
+
+    </div>
+</form>
+
+

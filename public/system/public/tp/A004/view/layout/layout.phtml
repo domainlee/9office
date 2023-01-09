@@ -1,0 +1,68 @@
+<?php
+    echo $this->doctype();
+    $optionBasic = $this->home()->optionBasic();
+    echo $this->doctype();
+?>
+
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+        <link href="https://fonts.googleapis.com/css?family=Roboto+Slab:300,400" rel="stylesheet" type="text/css">
+        <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,700" rel="stylesheet">
+
+        <?php
+            echo $this->headTitle()->setSeparator('')->setAutoEscape(false);
+            $this->headMeta()->appendName('DC.language', 'scheme=utf-8 content=vi');
+            echo $this->headMeta();
+            echo $this->headLink(['rel' => 'shortcut icon', 'type' => 'image/vnd.microsoft.icon', 'href' => $optionBasic['favicon'] ? $optionBasic['favicon']:null ]);
+        ?>
+        <?php
+            echo '<link href="/tp/A004/css/i.css" media="screen" rel="stylesheet" type="text/css">';
+            $cs = [
+                '/tp/A004/css/bootstrap.css',
+                '/tp/A004/css/font-awesome.min.css',
+                '/tp/A004/css/owl.carousel.css',
+                '/tp/A004/css/owl.theme.css',
+                '/tp/A004/css/owl.transitions.css',
+                '/tp/A004/css/h.css',
+            ];
+            echo '<link href="'.srcLink($cs,4).'" media="screen" rel="stylesheet" type="text/css">';
+            $js = [
+                '/tp/A004/js/jquery-1.11.2.min.js',
+            ];
+            echo '<script type="text/javascript" src="'.srcLink($js,2).'"></script>';
+            echo !empty($optionBasic['scriptHead']) ? '<script>'.$optionBasic['scriptHead'].'</script>' : null;
+        ?>
+    </head>
+
+    <body>
+        <?php
+            echo $this->render('layout/header');
+            echo $this->content;
+            echo $this->render('layout/footer');
+            echo !empty($optionBasic['scriptBody']) ? '<script>'.$optionBasic['scriptBody'].'</script>' : null;
+        ?>
+    </body>
+
+    <?php
+        $r = [
+            '/tp/A004/css/r.css',
+        ];
+        echo '<link href="'.srcLink($r,1).'" media="screen" rel="stylesheet" type="text/css">';
+        if(!empty($optionBasic['styleFooter'])) echo '<style>'.$optionBasic['styleFooter'].'</style>';
+        $js = [
+            '/tp/A004/js/bootstrap.min.js',
+            '/assets/js/web/jquery.lazy.min.js',
+            '/tp/A004/js/owl.carousel.js',
+            '/assets/js/web/jquery-ui-1.10.3.custom.min.js',
+            '/tp/A004/js/a.js',
+            '/assets/plugins/parsleyjs/parsley.min.js',
+            '/tp/dweb/js/waypoint/jquery.waypoints.min.js',
+            '/tp/dweb/js/jquery-modal-video.min.js'
+        ];
+        echo '<script type="text/javascript" src="'.srcLink($js,3).'"></script>';
+        echo !empty($optionBasic['scriptFooter']) ? '<script>'.$optionBasic['scriptFooter'].'</script>' : null;
+    ?>
+    <?= $this->render('layout/modal');?>
+</html>

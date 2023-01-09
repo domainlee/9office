@@ -1,0 +1,52 @@
+<?php
+    $optionBasic = $this->home()->optionBasic();
+    $optionPage = $this->home()->optionPage();
+    use Home\Model\DateBase;
+?>
+
+
+<footer class="footer">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="footer__inner">
+                    <div class="footer__row footer__row--1">
+                        <img src="/tp/A009/img/logo-footer.png" alt="Logo" height="32" width="150" />
+                        <form class="footer__newslatter">
+                            <input type="text" placeholder="Tìm kiếm ..." />
+                            <button type="submit"></button>
+                        </form>
+                    </div>
+                    <?php if(!empty($optionPage['view_footer-1'])):?>
+                    <div class="footer__row footer__row--2">
+                        <div>
+                            <h2><?=$optionPage['tieu-de-cot-1'] ? $optionPage['tieu-de-cot-1'] : ''?></h2>
+                            <?=$optionPage['noi-dung-cot-1'] ? $optionPage['noi-dung-cot-1'] : ''?>
+                        </div>
+                        <div>
+                            <h2><?=$optionPage['tieu-de-cot-2'] ? $optionPage['tieu-de-cot-2'] : ''?></h2>
+                            <?=$optionPage['noi-dung-cot-2'] ? $optionPage['noi-dung-cot-2'] : ''?>
+                        </div>
+                        <div>
+                            <h2><?=$optionPage['tieu-de-cot-3'] ? $optionPage['tieu-de-cot-3'] : ''?></h2>
+                            <?=$optionPage['noi-dung-cot-3'] ? $optionPage['noi-dung-cot-3'] : ''?>
+                        </div>
+                    </div>
+                    <?php endif;?>
+                    <?php if(!empty($optionPage['view_footer-2'])):?>
+                    <div class="footer__row footer__row--3">
+                        <div>
+                            <?=$optionPage['thong-tin-1'] ? $optionPage['thong-tin-1'] : ''?>
+                        </div>
+                        <div>
+                            <?=$optionPage['thong-tin-2'] ? $optionPage['thong-tin-2'] : ''?>
+                        </div>
+                    </div>
+                    <?php endif;?>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</footer>
+

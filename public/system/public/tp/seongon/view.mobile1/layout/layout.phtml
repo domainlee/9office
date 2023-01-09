@@ -1,0 +1,107 @@
+<?php
+echo $this->doctype();
+$optionBasic = $this->home()->optionBasic();
+$optionPage = $this->home()->optionPage();
+?>
+<html lang="en">
+    <head>
+        <?php
+            echo $this->headTitle('DWEB | Difference Web')->setSeparator(' - ')->setAutoEscape(false);
+            $this->headMeta()->appendName('DC.language', 'scheme=utf-8 content=vi');
+            $this->headMeta()->appendName('author', 'DWEB.VN');
+            $this->headMeta()->appendName('format-detection', 'telephone=no');
+            $this->headMeta()->appendName('viewport', 'width=device-width, initial-scale=1, maximum-scale=1');
+            echo $this->headMeta();
+            echo $this->headLink(['rel' => 'shortcut icon', 'type' => 'image/vnd.microsoft.icon', 'href' => $optionBasic['favicon'] ? $optionBasic['favicon']:null ]);
+
+        ?>
+
+        <link href='https://fonts.googleapis.com/css?family=Roboto:300,500,700' rel='stylesheet' type='text/css'>
+        <?php
+            $cs = [
+                '/tp/dweb/css/bootstrap.css',
+                '/tp/dweb/css/font-awesome.min.css',
+                '/tp/dweb/css/animate.min.css',
+                '/tp/dweb/css/a.mobile.css',
+                '/assets/css/icons.css',
+                '/tp/dweb/css/r.css',
+                '/assets/css/web/owl.carousel.css',
+                '/assets/css/web/owl.theme.css',
+                '/assets/css/web/owl.transitions.css',
+                '/assets/css/components.css',
+            ];
+            echo '<link href="'.srcLink($cs,6).'" media="screen" rel="stylesheet" type="text/css">';
+            $js = [
+                '/assets/js/web/jquery-1.11.2.min.js',
+            ];
+            echo '<script type="text/javascript" src="'.srcLink($js,2).'"></script>';
+        ?>
+        <!-- Facebook Pixel Code -->
+        <script>
+            !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+                n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+                n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+                t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
+                document,'script','https://connect.facebook.net/en_US/fbevents.js');
+            fbq('init', '1971198599778175'); // Insert your pixel ID here.
+            fbq('track', 'PageView');
+        </script>
+        <noscript><img height="1" width="1" style="display:none"
+                       src="https://www.facebook.com/tr?id=1971198599778175&ev=PageView&noscript=1"
+            /></noscript>
+        <!-- DO NOT MODIFY -->
+        <!-- End Facebook Pixel Code -->
+
+    </head>
+    <?php
+        $url = $this->UriParams()->getRequest()->getRequestUri();
+        $url2 = $this->home()->getMcaName('action');
+        $classPage = substr($url, 1, -5);
+    ?>
+    <body <?= $url == '/' | $url2 == 'view' | $url2 == 'viewall' ? 'class="home-page single-news"':'class="'.$classPage.'"' ?>>
+        <?php
+            echo $this->render('layout/header');
+            echo $this->content;
+            echo $this->render('layout/footer');
+        ?>
+        <div class="support" style="">
+            <div>
+                <form class="support__form" data-parsley-validate novalidate>
+                    <input type="text" data-parsley-type="digits" data-parsley-length="[10,11]" required="required" placeholder="Nhập số điện thoại" />
+                    <button type="submit">Gửi</button>
+                </form>
+            </div>
+        </div>
+    </body>
+    <?php
+        $cs = [
+            '/tp/dweb/css/r.css',
+        ];
+        echo '<link href="'.srcLink($cs,3).'" media="screen" rel="stylesheet" type="text/css">';
+        $js = [
+//            '/tp/dweb/js/jquery-1.10.1.min.js',
+            '/tp/dweb/js/bootstrap.min.js',
+            '/assets/js/web/jquery.lazy.min.js',
+            '/tp/dweb/js/a.mobile.js',
+            '/assets/plugins/parsleyjs/parsley.min.js',
+            '/tp/dweb/js/form.js',
+
+        ];
+        echo '<script type="text/javascript" src="'.srcLink($js,1).'"></script>';
+    ?>
+
+    <!-- Load Facebook SDK for JavaScript -->
+    <div id="fb-root"></div>
+    <script>(function(d, s, id) {
+            var js, fjs = d.getElementsByTagName(s)[0];
+            if (d.getElementById(id)) return;
+            js = d.createElement(s); js.id = id;
+            js.src = 'https://connect.facebook.net/vi_VN/sdk/xfbml.customerchat.js#xfbml=1&version=v2.12&autoLogAppEvents=1';
+            fjs.parentNode.insertBefore(js, fjs);
+        }(document, 'script', 'facebook-jssdk'));</script>
+
+
+
+
+
+</html>

@@ -1,0 +1,37 @@
+<?php
+use Home\Model\DateBase;
+if(!empty($this->newsCategoryLayout['news-category articlecategory']['news-category'])):?>
+    <div class="main__category">
+        <?php
+            foreach($this->newsCategoryLayout['news-category articlecategory']['news-category'] as $n):
+                ?>
+                <div class="main__col">
+                    <h1 class="main__category--headline"><a href="<?= $n['url'] ?>"><?= $n['title'] ?></a></h1>
+                    <div class="main__category--list">
+                        <?php
+                        $newsCategory = $this->news()->getLastestNews(['categoryId' => $n['id'], 'limit' => 6]);
+                        if(!empty($newsCategory)):
+                            $c = 0;
+                            foreach($newsCategory as $nn):
+                                $c++;
+                                $imageFirst = '';
+                                if(!empty(json_decode($nn->getImage(), true))){
+                                    $imageFirst = array_shift(json_decode($nn->getImage(), true));
+                                }
+                                ?>
+
+                                <div class="main__category--item <?= $c == 1 ? 'main__category--first':null ?>">
+                                    <?php if($c == 1): ?>
+                                        <a href="<?= $nn->getViewLink() ?>"><figure class="main__category--image lazy" data-src="<?= $imageFirst ?>"></figure></a>
+                                    <?php endif ?>
+                                    <h3 class="main__category--title"><a href="<?= $nn->getViewLink() ?>"><?= $nn->getTitle() ?></a></h3>
+                                    <div class="date-time"><span><?= $nn->getCateName() ?></span><span><?= DateBase::toFormat($nn->getCreatedDateTime(), 'd M y') ?></span></div>
+                                </div>
+                            <?php endforeach; endif;?>
+                    </div>
+                </div>
+            <?php endforeach;?>
+
+    </div>
+
+<?php endif;?>

@@ -1,0 +1,51 @@
+<?php
+$optionBasic = $this->home()->optionBasic();
+?>
+<?php if($optionBasic['popup_setup']): ?>
+    <div class="modal-global">
+        <style>
+            #modalGlobalDWEB.in {
+                display: flex !important;
+            }
+            #modalGlobalDWEB {
+                align-items: center !important;
+                justify-content: center !important;
+            }
+            .modal.fade.in .modal-dialog {
+                position: relative;
+                z-index: 1041;
+            }
+            #modalGlobalDWEB .modal-content {
+                border: none !important;
+                border-radius: 0 !important;
+                box-shadow: none !important;
+                outline: none !important;
+            }
+            #modalGlobalDWEB .modal-content img {
+                max-width: 100%;
+            }
+        </style>
+        <div id="modalGlobalDWEB" class="modal fade" role="dialog">
+            <div class="modal-dialog <?= $optionBasic['popup_size'] ? 'modal-lg':null ?>">
+                <div class="modal-content">
+                    <?= $optionBasic['popup_url'] ? '<a href="'.$optionBasic['popup_url'].'">':null ?>
+                    <img src="<?= $optionBasic['popup_image'] ?>" alt="" />
+                    <?= $optionBasic['popup_url'] ? '</a>':null ?>
+                </div>
+            </div>
+        </div>
+        <script>
+            <?php if($optionBasic['popup_display']): ?>
+            localStorage.removeItem('modalShow');
+            <?php endif; ?>
+//            $(function(){
+            $(document).ready(function() {
+                var modal = localStorage.getItem('modalShow');
+                if (modal === null) {
+                    localStorage.setItem('modalShow', 1);
+                    $('#modalGlobalDWEB').modal('show');
+                }
+            });
+        </script>
+    </div>
+<?php endif; ?>

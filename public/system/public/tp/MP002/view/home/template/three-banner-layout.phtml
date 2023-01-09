@@ -1,0 +1,34 @@
+<?php if(!empty($this->threeBannerList['three-banner-list banner']['three-banner-list'])):?>
+    <section class="three-up">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-12">
+                    <?= $this->threeBannerList['three-banner-sub-title text']['value'] ? '<span class="title-sub">'.$this->threeBannerList['three-banner-sub-title text']['value'].'</span>' : '' ?>
+                    <?= $this->threeBannerList['three-banner-title text']['value'] ? '<h2 class="title">'.$this->threeBannerList['three-banner-title text']['value'].'</h2>' : '' ?>
+
+                    <ul class="three-up__list">
+                        <?php
+                            foreach($this->threeBannerList['three-banner-list banner']['three-banner-list'] as $k => $b):
+                                $image = json_decode($b['image'], true);
+                                $imageFirst = '';
+                                if(!empty($image)){
+                                    $imageFirst = array_shift($image);
+                                }
+                                ?>
+                                <li class="three-up__item">
+                                    <a href="<?= $b['url'] ?>">
+                                        <figure class="lazy four-up__image" data-src="<?= !empty($imageFirst) ? $imageFirst:null ?>"></figure>
+                                        <div>
+                                            <h3><?= $b['title'] ?></h3>
+                                            <p><?= $b['description'] ?></p>
+                                            <span>Xem</span>
+                                        </div>
+                                    </a>
+                                </li>
+                            <?php endforeach;?>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+<?php endif;?>

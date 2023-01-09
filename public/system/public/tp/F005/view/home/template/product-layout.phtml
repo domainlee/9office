@@ -1,0 +1,38 @@
+<?php if(!empty($this->productLayout['product-list product']['product-list'])):?>
+<section class="product">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <?= $this->productLayout['product-title text']['value'] ? '<h2 class="titleHome"><span>'.$this->productLayout['product-title text']['value'].'</span></h2>' : '' ?>
+                <?= $this->productLayout['product-sub-title text']['value'] ? '<span class="titleHome-sub">'.$this->productLayout['product-sub-title text']['value'].'</span>' : ''?>
+                <?php $slider = $this->productLayout['product-slider-checkbox checkbox']['value']?>
+                <ul class="<?= $slider ? 'product-slider owl-carousel owl-theme' : 'lP' ?> product__list">
+                    <?php foreach($this->productLayout['product-list product']['product-list'] as $k => $p):
+                        $image = json_decode($p['image'], true);
+                        if(!empty($image)){
+                            $imageFirst = array_shift($image);
+                        }
+                        $imgs = array_slice(json_decode($p['image'], true), 0, 2);
+                        ?>
+                        <li class="product__item">
+                            <div class="product__image--wrapper">
+                                <a class="pI" href="<?= $p['url'] ?>">
+                                    <figure class="lazy product-image" data-src="<?= !empty($imageFirst) ? $imageFirst:'' ?>"></figure>
+                                    <figure class="lazy product-image product-image--two" data-src="<?= !empty($imgs) ? $imgs['1']:null ?>"></figure>
+                                </a>
+                            </div>
+                            <div>
+                                <h3 class="product__item--title"><a href="<?= $p['url'] ?>"><?= $p['title'] ?></a></h3>
+                                <p class="price <?= ($p['priceOld'] ? 'priceOld':null) ?>">
+                                    <?=  (!empty($p['priceOld']) ? '<span>'.number_format($p['priceOld']).'</span><i>'.number_format($p['price']).'</i>':number_format($p['price']) ) ?>
+                                </p>
+                            </div>
+                        </li>
+                    <?php endforeach; ?>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
+
+<?php endif;?>

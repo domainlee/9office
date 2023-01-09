@@ -1,0 +1,140 @@
+<?php
+$q = $this->request->getQuery('n');
+$category = $this->category;
+
+$theme = $this->NewsCategory()->featchTreeCategory(20);
+$data = $this->paginator;
+$data->setItemCountPerPage($this->uriParams()->getRequest()->getQuery('icpp') ? : 16);
+
+$user = $this->user;
+
+
+$image = json_decode($category->getImage(), true);
+$imageFirst = '';
+if(!empty($image)){
+    $imageFirst = array_shift($image);
+}
+
+$optionPage = $this->home()->optionPage();
+$optionBasic = $this->home()->optionBasic();
+?>
+<?php
+$image = 'http://'.$_SERVER['HTTP_HOST'].$imageFirst;
+$imageInfo = getimagesize($image);
+/**** Start SEO DWEB *****/
+echo $this->headLink(['rel' => 'canonical', 'href' => 'http://'.$_SERVER['HTTP_HOST'].$category->getViewLink() ]);
+
+$this->headTitle(!empty($category->getMetaTitle()) ? $category->getMetaTitle():$category->getName());
+$this->headMeta()->appendName('description', (!empty($category->getMetaDescription()) ? $category->getMetaDescription():null));
+$this->headMeta()->appendName('keywords', (!empty($category->getMetaKeyword()) ? $category->getMetaKeyword():null));
+
+$this->headMeta()->appendProperty('og:title', !empty($category->getMetaTitle()) ? $category->getMetaTitle():$category->getName());
+$this->headMeta()->appendProperty('og:description', !empty($category->getMetaDescription()) ? $category->getMetaDescription():null);
+$this->headMeta()->appendProperty('og:image', !empty($imageFirst) ? 'http://'.$_SERVER['HTTP_HOST'].$imageFirst:null);
+$this->headMeta()->appendProperty('og:image:secure_url', !empty($imageFirst) ? 'http://'.$_SERVER['HTTP_HOST'].$imageFirst:null);
+$this->headMeta()->appendProperty('og:image:width', $imageInfo['0']);
+$this->headMeta()->appendProperty('og:image:height', $imageInfo['1']);
+$this->headMeta()->appendProperty('og:type', 'Category Article');
+$this->headMeta()->appendProperty('og:url', 'http://'.$_SERVER['HTTP_HOST'].$category->getViewLink());
+$this->headMeta()->appendProperty('og:site_name', $optionBasic['sologan']);
+
+$this->headMeta()->appendName('twitter:card', !empty($image) ? $image:'summary_large_image');
+$this->headMeta()->appendName('twitter:title', !empty($category->getMetaTitle()) ? $category->getMetaTitle():$category->getName());
+$this->headMeta()->appendName('twitter:description', (!empty($category->getMetaDescription()) ? $category->getMetaDescription():null));
+$this->headMeta()->appendName('twitter:image', !empty($image) ? $image:null);
+/**** End SEO DWEB *****/
+
+
+$cs = [
+    '/tp/dweb_v2/css/page.css'
+];
+echo '<link href="'.srcLink($cs,2).'" media="screen" rel="stylesheet" type="text/css">';
+?>
+
+<section class="m-t-100 theme">
+    <div class="price__hero theme__hero">
+        <div class="price__hero-inner">
+            <h1 class="price__hero-title theme__hero-title">Kho <span>giao diện</span></h1>
+            <p class="price__hero-description">Với kho giao diện chất lượng, chúng tôi hi vọng định hình thương hiệu của bạn</p>
+        </div>
+    </div>
+    <div class="container">
+        <div class="theme__inner">
+
+            <form id="search" action="/kho-giao-dien.html" class="theme__search" method="get">
+                <input type="text" name="n" placeholder="Thiết kế nhà, công ty, giáo dục, mỹ phẩm, thời trang ..."/>
+                <a href="javascript:{}" onclick="document.getElementById('search').submit();"><i class="fa fa-search" aria-hidden="true"></i></a>
+            </form>
+
+            <ul class="theme__list-category">
+                <?php $url = $this->UriParams()->getRequest()->getRequestUri(); ?>
+
+                <?php if(!empty($theme)): ?>
+                    <?php foreach($theme as $t): ?>
+                        <li><a <?= $url == $t->getViewLink() ? 'class="active"':null ?> href="<?= $t->getViewLink() ?>"><?= $t->getName() ?></a></li>
+                    <?php endforeach; ?>
+                <?php endif; ?>
+            </ul>
+            <?= !empty($q) ? '<p class="theme__result">Bạn đang tìm kiếm với từ khoá: <span>'.$q.'</span></p>':null ?>
+
+            <?php if(!empty($data)): ?>
+                <div class="project-list">
+                    <?php foreach ($data as $p):
+                        $image = json_decode($p->getImage(), true);
+                        if(!empty($image)){
+                            $imageFirst = array_shift($image);
+                        }
+                        $extraContent = json_decode($p->getExtraContent(), true);
+                    ?>
+                        <div class="project-item">
+                            <div class="project-inner">
+                                <figure class="project-image lazy" data-src="<?= $imageFirst ?>"></figure>
+                                <div class="project-control">
+                                    <?php if($user): ?>
+                                        <a class="btn-d project__button-reviewer" target="_blank" href="<?= $p->getDescription() ?>">Xem thử</a>
+                                        <a class="btn-d project__button-detail project__button-change" data-theme="<?= end(explode('-', vnString($p->getTitle())))  ?>">Sử dụng</a>
+                                    <?php else: ?>
+                                        <a class="btn-d project__button-reviewer" target="_blank" href="<?= $p->getDescription() ?>">Xem thử</a>
+                                        <a class="btn-d project__button-detail" href="/register-<?= vnString($p->getTitle()) ?>.html">Tạo website</a>
+                                    <?php endif; ?>
+                                    <h3 class="project__title"><?= $p->getTitle(); ?></h3>
+                                    <p class="project__description"><?= !empty($extraContent['mo-ta']) ? $extraContent['mo-ta']:null ?></p>
+                                </div>
+                            </div>
+                        </div>
+                    <?php endforeach; ?>
+                </div>
+            <?php
+                echo '<div class="news__paginator">';
+                echo $this->paginationControl($this->paginator, 'Elastic', 'partial/listPage');
+                echo '</div>';
+                endif;
+            ?>
+
+            <div class="single-news__button">
+                <span>Nếu bạn chưa tìm thấy giao diện phù hợp, bạn có thể gửi cho chúng tôi mẫu website bạn cần<br/>chúng tôi sẽ cố gắng bổ sung giao diện bạn gửi lên kho giao diện trong thời gian sớm nhất. </span><a class="btn-d" href="/lien-he.html">Gửi mẫu giao diện</a>
+            </div>
+
+        </div>
+    </div>
+</section>
+<?php
+    echo $this->paginationControl($this->paginator, 'Elastic', 'partial/listPage');
+?>
+
+<section class="support-module">
+    <div class="container">
+        <div class="support-module__inner">
+            <h2 class="support-module__headline">Tư vấn miễn phí</h2>
+            <div class="support-module__sub">Chúng tôi sẽ liên hệ với bạn trong thời gian sớm nhất. Tư vấn website, bán hàng, quảng cáo adwords, facebook. Bạn có thể đọc kinh nghiệm bán hàng với <a href="http://blog.dweb.vn" target="_blank">blog</a> dweb</div>
+            <form class="support-module__form" data-parsley-validate novalidate>
+                <div>
+                    <input type="text" data-parsley-type="digits" data-parsley-length="[10,11]" required="required" placeholder="Số điện thoại *" />
+                </div>
+                <div>
+                    <button type="submit">Gửi</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</section>

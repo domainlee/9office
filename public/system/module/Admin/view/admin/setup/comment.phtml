@@ -1,0 +1,32 @@
+<?php
+echo $this->headtitle($this->escapehtml($this->translate('Danh sách bình luận')));
+$domainUrl = $this->home()->getDomain();
+$domainUrl ? $_SERVER['HTTP_HOST'] = $domainUrl:$_SERVER['HTTP_HOST'];
+$option = $this->option;
+?>
+<input type="hidden" class="updateHomepage" />
+<div class="row">
+    <div class="col-sm-12">
+        <div class="card-box">
+            <div class="portlet-body">
+                <div id="sample_editable_1_wrapper" class="dataTables_wrapper form-inline" role="grid">
+                    <div class="btn-toolbar">
+                        <div class="btn-group focus-btn-group"></div>
+                        <div class="btn-group dropdown-btn-group pull-right">
+                            <div class="dataTables_filter mb-15"></div>
+                        </div>
+                    </div>
+                    <?php
+                    echo $dg = new \Admin\Dg\DgComment ( array (
+                        'data' => $this->results->getData (),
+                        'paging' => $this->results->getPaging (),
+                        'rowCount' => $this->results->getRowCount (),
+                        'rowInPage' => $this->results->getRowInPage (),
+                    ));
+                    ?>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

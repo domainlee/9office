@@ -1,0 +1,288 @@
+<style>
+    .banner{
+        padding: 0;
+        position: relative;
+        margin: 0;
+    }
+    .banner__content{
+        position: absolute;
+        top:40%;
+        left: 0;
+        right: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        -webkit-transition: all 1s ease;
+        -moz-transition: all 1s ease;
+        -o-transition: all 1s ease;
+        transition: all 1s ease;
+        max-width: 500px;
+        margin: 0 auto;
+        text-align: center;
+    }
+    .banner__title{
+        color: #fff;
+        font-size: 50px;
+    }
+    .breadcrumb{
+        margin: 0 0;
+        padding: 0 0;
+        background: none;
+        border-radius: 0;
+        z-index: 2;
+    }
+    .breadcrumb li a{
+        color: #fff;
+    }
+    .breadcrumb>li+li:before {
+        display: inline-block;
+        font-size: 16px;
+        font-family: 'simple-line-icons';
+        content: "/";
+        line-height: 25px;
+        padding: 0 2px;
+        color: #FFF;
+    }
+    .banner-2{
+        padding: 0;
+        position: relative;
+        z-index: 3;
+        margin: 0;
+    }
+    .banner-2 .owl-dots{
+        top: 70%;
+        flex-direction: row;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        position: absolute;
+        left: 0;
+        right: 0;
+    }
+    .banner-2__content{
+        position: absolute;
+        bottom: 60px;
+        left: 0;
+        right: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        -webkit-transition: all 1s ease;
+        -moz-transition: all 1s ease;
+        -o-transition: all 1s ease;
+        transition: all 1s ease;
+        max-width: 600px;
+        margin: 0 auto;
+        text-align: center;
+    }
+    .banner-2__title{
+        color: #00284C;
+        font-weight: 600;
+    }
+    .banner-2__sub-tile{
+        font-weight: 600;
+        color: #636363;
+    }
+    .banner-2__intro{
+        color: #636363;
+    }
+    .banner-2__sub-tile:after {
+        content: '';
+        width: 160px;
+        margin: 15px auto;
+        display: block;
+        border-bottom: 1px solid #636363;
+    }
+    .owl-dots .owl-dot{
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        margin: 0 5px;
+        background: #E1E1E1;
+    }
+    .owl-dot.active{
+        background: #00284C;
+    }
+    .slider-image {
+        position: relative;
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center top;
+    }
+    .slider-2-image:before {
+        content: '';
+        display: block;
+        padding-top: 75%;
+    }
+    .slider-2-image {
+        position: relative;
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center top;
+    }
+    .slider-image:before {
+        content: '';
+        display: block;
+        padding-top: 75%;
+    }
+    .two-post{
+        height: 250px;
+    }
+    .two-post__image {
+        z-index: 3;
+        position: relative;
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center top;
+    }
+    .two-post__image:before {
+        content: '';
+        padding-top: 100%;
+        display: block;
+    }
+    .two-post__inner{
+        display: flex;
+        position: relative;
+    }
+    .two-post__left{
+        width: 50%;
+        position: absolute;
+        left:0;
+        z-index: 4;
+        padding-right: 30px;
+    }
+    .two-post__right{
+        width: 50%;
+        right: 0;
+        top: -120px;
+        position: absolute;
+        z-index: 2;
+        padding-left: 30px;
+    }
+    .two-post__title{
+        color: #00284C;
+        margin: 30px 0 0;
+    }
+    .two-post__left span{
+        color: #00284C;
+        font-weight: 600;
+        font-size: 30px;
+    }
+    .two-post__intro{
+        color: #666;
+        line-height: 26px;
+        margin-top: 30px;
+    }
+    @media only screen and (min-width:300px) and (max-width: 640px) {
+        .two-post__right, .two-post__left{
+            position: relative;
+            width: 100%;
+            padding: 0;
+        }
+        .two-post__right{
+            top: 0;
+        }
+        .two-post{
+            height: auto;
+        }
+        .two-post__inner{
+            flex-direction: column;
+        }
+        .banner-2 .owl-dots{
+            top: 90%;
+        }
+        .banner-2__content{
+            bottom: 30px;
+        }
+        .banner__content{
+            top:20%
+        }
+    }
+    @media only screen and (min-width:1300px){
+        .container{
+            width: 1170px;
+        }
+    }
+</style>
+
+<section class="hero-slider banner-image">
+    <figure class="slider-image" style="background-image: url('/tp/A022/img/001-011-002.png');">
+        <div class="banner__content">
+            <h1 class="banner__title">Cách Calista<br> tạo nên trang sức</h1>
+            <ul class="breadcrumb">
+                <li><a href="#">Trang chủ</a></li>
+                <li><a href="#">Về Calista</a></li>
+                <li><a href="#">Cách Calista tạo nên trang sức</a></li>
+            </ul>
+        </div>
+    </figure>
+</section>
+
+<section class="two-post">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="two-post__inner">
+                    <div class="two-post__left">
+                        <h2 class="two-post__title">Cách Calista</h2>
+                        <span>tạo nên trang sức</span>
+                        <div class="two-post__intro">
+                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                        </div>
+                    </div>
+
+                    <div class="two-post__right">
+                        <figure class="lazy two-post__image" style="background-image: url('/tp/A022/img/001-008.png')"></figure>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="shape-top alt-side"></div>
+</section>
+<section class="banner-image">
+    <ul class="banner-2 owl-carousel owl-theme">
+        <li>
+            <a href="">
+                <figure class="slider-2-image" style="background-image: url('/tp/A022/img/001-006.png');">
+                    <div class="banner-2__content">
+                        <h3 class="banner-2__title">Bước 5</h3>
+                        <p class="banner-2__sub-tile">Nắn giũa mài</p>
+                        <p class="banner-2__intro">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                    </div>
+                </figure>
+            </a>
+        </li>
+        <li>
+            <figure class="slider-2-image" style="background-image: url('/tp/A022/img/001-006.png');">
+                <div class="banner-2__content">
+                    <h3 class="banner-2__title">Bước 5</h3>
+                    <p class="banner-2__sub-tile">Nắn giũa mài</p>
+                    <p class="banner-2__intro">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                </div>
+            </figure>
+        </li>
+        <li>
+            <figure class="slider-2-image" style="background-image: url('/tp/A022/img/001-006.png');">
+                <div class="banner-2__content">
+                    <h3 class="banner-2__title">Bước 5</h3>
+                    <p class="banner-2__sub-tile">Nắn giũa mài</p>
+                    <p class="banner-2__intro">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                </div>
+            </figure>
+        </li>
+        <li>
+            <figure class="slider-2-image" style="background-image: url('/tp/A022/img/001-006.png');">
+                <div class="banner-2__content">
+                    <h3 class="banner-2__title">Bước 5</h3>
+                    <p class="banner-2__sub-tile">Nắn giũa mài</p>
+                    <p class="banner-2__intro">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                </div>
+            </figure>
+        </li>
+    </ul>
+</section>

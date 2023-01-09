@@ -1,0 +1,229 @@
+<style>
+    .banner{
+        padding: 0;
+        position: relative;
+        margin: 0;
+    }
+    .banner-story__content{
+        position: absolute;
+        top:35%;
+        left: 0;
+        right: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        -webkit-transition: all 1s ease;
+        -moz-transition: all 1s ease;
+        -o-transition: all 1s ease;
+        transition: all 1s ease;
+        max-width: 600px;
+        margin: 0 auto;
+        text-align: center;
+    }
+    .banner-story__title{
+        color: #00284C;
+        font-size: 50px;
+    }
+    .banner-story__image {
+        position: relative;
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center bottom;
+    }
+    .banner-story__image:before {
+        content: '';
+        display: block;
+        padding-top: 75%;
+    }
+    .breadcrumb{
+        margin: 0 0;
+        padding: 0 0;
+        background: none;
+        border-radius: 0;
+        z-index: 2;
+    }
+    .breadcrumb li a{
+        color: #fff;
+    }
+    .breadcrumb>li+li:before {
+        display: inline-block;
+        font-size: 16px;
+        font-family: 'simple-line-icons';
+        content: "/";
+        line-height: 25px;
+        padding: 0 2px;
+        color: #FFF;
+    }
+    .story {
+        position: relative;
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center;
+        padding: 120px 0;
+    }
+    .story__box{
+        margin: 0 auto;
+        max-width: 600px;
+        padding: 30px;
+        background: #fff;
+        position: relative;
+        z-index: 3;
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+    }
+    .story__title{
+        color: #464646;
+        font-weight: 600;
+        margin: 15px 0;
+        font-size: 30px;
+    }
+    .story__sub-title{
+        letter-spacing: 5px;
+        font-size: 16px;
+        color: #464646;
+        text-transform: uppercase;
+    }
+    .story__intro{
+        color: #464646;
+        font-weight: 600;
+        margin: 0 0 30px;
+    }
+    .story__content{
+        color: #636363;
+    }
+    .story__signature{
+        display: flex;
+        justify-content: right;
+    }
+    .story-intro{
+        height: 500px;
+        background-repeat: no-repeat;
+        position: relative;
+    }
+
+    .story-intro__inner{
+        display: flex;
+        position: relative;
+    }
+    .story-intro__left{
+        width: 50%;
+        position: absolute;
+        left:0;
+        top:-300px;
+        z-index: 4;
+        padding-right: 30px;
+    }
+    .story-intro__right{
+        width: 50%;
+        right: 0;
+        top: -300px;
+        position: absolute;
+        z-index: 2;
+        padding-left: 30px;
+    }
+    .story-intro__title{
+        color: #00284C;
+        margin: 30px 0 0;
+        text-transform: uppercase;
+    }
+    .story-intro__left span{
+        color: #00284C;
+        font-weight: 600;
+        font-size: 30px;
+        text-transform: uppercase;
+    }
+    .story-intro__intro{
+        color: #666;
+        line-height: 26px;
+        margin-top: 30px;
+    }
+    .story-intro__image {
+        z-index: 3;
+        position: relative;
+        background-size: cover;
+        background-repeat: no-repeat;
+    }
+    .story-intro__image:before {
+        content: '';
+        padding-top: 100%;
+        display: block;
+    }
+    @media only screen and (min-width:300px) and (max-width: 640px) {
+        .story-intro__left{
+            width: 100%;
+            position: relative;
+            padding: 0 0 30px;
+            top:0;
+        }
+        .story-intro__right{
+            width: 80%;
+            top:30px;
+        }
+        .story-intro{
+            height: auto;
+        }
+        .story__box{
+            max-width:300px;
+        }
+        .story{
+            padding: 30px 0;
+        }
+    }
+    @media only screen and (min-width:1300px){
+        .container{
+            width: 1170px;
+        }
+    }
+</style>
+
+<section class="hero-slider banner-image">
+    <a href="">
+        <figure class="banner-story__image" style="background-image: url('/tp/A022/img/001-019-000.png');">
+            <div class="banner-story__content">
+                <h1 class="banner-story__title">Câu chuyện thương hiệu</h1>
+                <ul class="breadcrumb">
+                    <li><a href="#">Trang chủ</a></li>
+                    <li><a href="#">Về Calista</a></li>
+                    <li><a href="#">Cách Calista tạo nên trang sức</a></li>
+                </ul>
+            </div>
+        </figure>
+    </a>
+</section>
+<section class="story-intro">
+    <div class="container">
+        <div class="col-md-12">
+            <div class="row">
+                <div class="story-intro__inner">
+                    <div class="story-intro__left">
+                        <h2 class="story-intro__title">Câu chuyện</h2>
+                        <span>về Calista</span>
+                        <div class="story-intro__intro">
+                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="story-intro__right">
+        <figure class="lazy story-intro__image" style="background-image: url('/tp/A022/img/001-015.png')"></figure>
+    </div>
+</section>
+<section class="story" style="background-image:url('/tp/A022/img/001-010.png');">
+    <div class="story__inner">
+        <div class="story__box">
+            <p class="story__sub-title">Câu chuyện</p>
+            <h3 class="story__title"> Lorem ipsum</h3>
+            <p class="story__intro">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+            <p class="story__content">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+            <div class="story__signature">
+                <img src="/tp/A022/img/001-003.png" alt="Chữ ký">
+            </div>
+        </div>
+    </div>
+</section>
+

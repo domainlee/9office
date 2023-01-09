@@ -1,0 +1,208 @@
+<?php
+$menuOption = $this->home()->getMenu();
+$optionPage = $this->home()->optionPage();
+$optionBasic = $this->home()->optionPage();
+use Home\Model\DateBase;
+?>
+<?php if(!empty($menuOption['news_sidebar']) || !empty($optionPage['view_danh-muc-sidebar-1']) || !empty($optionPage['view_danh-muc-sidebar-2']) || !empty($optionPage['view_banner-sidebar'])):?>
+    <div class="col-md-3">
+        <div class="sidebar">
+            <div class="sidebar__box">
+                <h3 class="sidebar__title">Tìm kiếm</h3>
+                <form id="search" action="/search" method="get">
+                    <input type="text" name="q" placeholder="Tìm kiếm ..."/>
+                    <!-- <a class="icon-font icon-magnifier" onclick="document.getElementById('search').submit();"></a>-->
+                    <div id="searchFolding"></div>
+                </form>
+            </div>
+            <?php if(!empty($menuOption['news_sidebar'])): ?>
+                <div class="sidebar__box">
+                    <h3 class="sidebar__title">Danh mục</h3>
+                    <ul class="news__list-category">
+                        <?php
+                        foreach ($menuOption['news_sidebar'] as $m):
+                            ?>
+                            <li <?= $m['children'] ? 'class="navIsset"':null ?>><?= $m['children'] ? '<button><i class="fa fa-caret-down"></i></button>':null ?><a href="<?= $m['url'] ?>"><?= $m['name'] ?></a>
+                                <?php if(!empty($m['children'])): ?>
+                                    <ul class="nav2">
+                                        <?php foreach($m['children'] as $mm): ?>
+                                            <li <?= $mm['children'] ? 'class="navIsset"':null ?>><?= $mm['children'] ? '<button><i class="fa fa-caret-down"></i></button>':null ?><a href="<?= $mm['url'] ?>"><?= $mm['name'] ?></a>
+                                                <?php if(!empty($mm['children'])): ?>
+                                                    <ul>
+                                                        <?php foreach($mm['children'] as $mmm): ?>
+                                                            <li><a href="<?= $mmm['url'] ?>"><?= $mmm['name'] ?></a></li>
+                                                        <?php endforeach; ?>
+                                                    </ul>
+                                                <?php endif; ?>
+                                            </li>
+                                        <?php endforeach; ?>
+                                    </ul>
+                                <?php endif; ?>
+                            </li>
+                        <?php endforeach;?>
+                    </ul>
+                </div>
+            <?php endif; ?>
+            <?php if(!empty($optionPage['view_danh-muc-sidebar-1'])): ?>
+                <div class="sidebar__box">
+                    <h3 class="sidebar__title"><?= $optionPage['tieu-de-danh-muc-tin-tuc-1'] ? $optionPage['tieu-de-danh-muc-tin-tuc-1'] : ''?></h3>
+                    <ul class="sidebar__news">
+                        <?php foreach($optionPage['bai-viet-danh-muc-1'] as $n):
+                            $image = json_decode($n['image'], true);
+                            if(!empty($image)) {
+                                $imageFirst = array_shift($image);
+                            }
+                            ?>
+                            <li>
+                                <div class="sidebar__wrapper--image"><a href="<?= $n['url'] ?>"><figure class="lazy sidebar__image" data-src="<?= $imageFirst ?>"></figure></a></div>
+                                <div class="sidebar__content">
+                                    <h4>
+                                        <a href="<?= $n['url'] ?>" title="<?=$n['title']?>">
+                                            <?php
+                                            $s = substr($n['title'],0,30);
+                                            $rs = substr($s,0,strrpos($s, ' '));
+                                            if(strlen($n['title']) > 30):
+                                                echo $rs;
+                                                echo '...';
+                                            else:
+                                                echo $n['title'];
+                                            endif;
+
+                                            ?>
+                                        </a>
+                                    </h4>
+                                    <p><?= DateBase::toFormat($n['date'], 'M d, Y') ?></p>
+                                </div>
+                            </li>
+                        <?php endforeach; ?>
+                    </ul>
+                </div>
+            <?php endif; ?>
+
+            <?php if(!empty($optionPage['view_danh-muc-sidebar-2'])): ?>
+                <div class="sidebar__box">
+                    <h3 class="sidebar__title"><?= $optionPage['tieu-de-danh-muc-tin-tuc-2'] ? $optionPage['tieu-de-danh-muc-tin-tuc-2'] : ''?></h3>
+                    <ul class="sidebar__news">
+                        <?php foreach($optionPage['bai-viet-danh-muc-2'] as $n):
+                            $image = json_decode($n['image'], true);
+                            if(!empty($image)) {
+                                $imageFirst = array_shift($image);
+                            }
+                            ?>
+                            <li>
+                                <div class="sidebar__wrapper--image"><a href="<?= $n['url'] ?>"><figure class="lazy sidebar__image" data-src="<?= $imageFirst ?>"></figure></a></div>
+                                <div class="sidebar__content">
+                                    <h4>
+                                        <a href="<?= $n['url'] ?>" title="<?=$n['title']?>">
+                                            <?php
+                                            $s = substr($n['title'],0,30);
+                                            $rs = substr($s,0,strrpos($s, ' '));
+                                            if(strlen($n['title']) > 30):
+                                                echo $rs;
+                                                echo '...';
+                                            else:
+                                                echo $n['title'];
+                                            endif;
+
+                                            ?>
+                                        </a>
+                                    </h4>
+                                    <p><?= DateBase::toFormat($n['date'], 'M d, Y') ?></p>
+                                </div>
+                            </li>
+                        <?php endforeach; ?>
+                    </ul>
+                </div>
+            <?php endif; ?>
+
+            <?php if(!empty($optionPage['view_banner-sidebar'])): ?>
+                <div class="sidebar__box">
+                    <?php foreach($optionPage['banner-sidebar'] as $n):
+                        $image = json_decode($n['image'], true);
+                        if(!empty($image)) {
+                            $imageFirst = array_shift($image);
+                        }
+                        ?>
+                        <a href="<?= $n['url'] ?>">
+                            <figure class="post-last__image lazy" data-src="<?= $imageFirst ?>"></figure>
+                        </a>
+                    <?php endforeach; ?>
+                </div>
+            <?php endif; ?>
+
+            <div class="sidebar__box">
+                <div class="adv-middle">
+                    <a href="http://dweb.vn/thiet-ke-web-gia-re-n356.html" target="_blank" title="thiet ke web gia re">
+                        <figure>
+                            <div class="landing-head-hero__content">
+                                <h2 class=""><strong>Thiết kế website chuẩn seo</strong></h2>
+                                <span>Dùng thử</span>
+                            </div>
+                        </figure>
+                    </a>
+                </div>
+
+                <style>
+                    .adv-middle {
+                        margin: 30px 0;
+                        font-family: 'Roboto',sans-serif;
+                    }
+                    .adv-middle a {
+                        color: #FFF;
+                    }
+                    .adv-middle figure {
+                        background-size: cover;
+                        background-position: 0 -55px;
+                        overflow: hidden;
+                        height: 300px;
+                        background-repeat: no-repeat;
+                        background: rgb(255,87,87);
+                        background: -moz-linear-gradient(-45deg, rgba(255,87,87,1) 0%, rgba(255,150,110,1) 100%);
+                        background: -webkit-linear-gradient(-45deg, rgba(255,87,87,1) 0%,rgba(255,150,110,1) 100%);
+                        background: linear-gradient(135deg, rgba(255,87,87,1) 0%,rgba(255,150,110,1) 100%);
+                        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ff5757', endColorstr='#ff966e',GradientType=1 );
+                    }
+                    .landing-head-hero__content {
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        min-height: 100px;
+                        flex-direction: column;
+                        text-align: center;
+                        height: 100%;
+                    }
+                    .landing-head-hero__content h2 {
+                        color: #fff;
+                        margin: 30px;
+                        text-transform: uppercase;
+                        font-size: 20px;
+                        font-weight: normal;
+                        line-height: 30px;
+                    }
+                    .landing-head-hero__content h2 strong {
+                        font-weight: 400;
+                    }
+                    .landing-head-hero__content>span {
+                        padding: 0 30px;
+                        height: 40px;
+                        border-radius: 30px;
+                        text-transform: uppercase;
+                        border: 1px solid #FFF;
+                        background-color: #FFF;
+                        color: #ff7f0b;
+                        font-weight: 300;
+                        font-size: 18px;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        -webkit-transition: all 0.3s ease;
+                        -moz-transition: all 0.3s ease;
+                        -o-transition: all 0.3s ease;
+                        transition: all 0.3s ease;
+                    }
+                </style>
+            </div>
+
+        </div>
+    </div>
+<?php endif;?>

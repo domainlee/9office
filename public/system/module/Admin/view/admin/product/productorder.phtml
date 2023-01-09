@@ -1,0 +1,29 @@
+<input type="hidden" class="currentPage" data-value="<?= $this->currentPage ?>">
+<input type="hidden" class="totalPage" data-value="<?= $this->totalPage ?>">
+
+<div class="pagination__label">
+    <p><span><?= $this->currentPage; ?></span><?= '/'.$this->totalPage ?></p>
+</div>
+<div class="sale__product-list">
+    <?php
+    foreach($this->results->getData () as $p):
+        $imageFirst = '';
+        $i = json_decode($p->getImage(), true);
+        if(is_array($i) && !empty($i)) {
+            $imageFirst = array_shift($i);
+        }
+        ?>
+        <div class="sale__item">
+            <div class="sale__item--inner" data-title="<?= $p->getTitle(); ?>" data-price="<?= $p->getPriceOld() ? $p->getPriceOld():$p->getPrice() ?>" data-image="<?= $imageFirst ?>" data-quantity="1" data-quantity-total="<?= $p->getQuantity() ?>" data-id="<?= $p->getId() ?>">
+                <a data-id="<?= $p->getId() ?>">
+                    <figure data-src="<?= $imageFirst ?>" class="lazy sale__image"></figure>
+                    <p><?= $p->getTitle() ?></p>
+                    <span>SL: <?= $p->getQuantity() ? $p->getQuantity():0 ?></span>
+                    <div>
+                        <?= number_format($p->getPriceOld() ? $p->getPriceOld():$p->getPrice()); ?>
+                    </div>
+                </a>
+            </div>
+        </div>
+    <?php endforeach; ?>
+</div>

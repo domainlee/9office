@@ -1,0 +1,31 @@
+<?php if(!empty($this->productLayout['product-list product']['product-list'])):?>
+<section class="product">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <?= $this->productLayout['product-title text']['value'] ? '<h2 class="titleHome">'.$this->productLayout['product-title text']['value'].'</h2>' : '' ?>
+                <?php $slider = $this->productLayout['product-slider-checkbox checkbox']['value']?>
+                <ul class="<?= $slider ? 'product-slider owl-carousel owl-theme' : 'lP' ?> product__list">
+                    <?php foreach($this->productLayout['product-list product']['product-list'] as $k => $p):
+                        $image = json_decode($p['image'], true);
+                        if(!empty($image)){
+                            $imageFirst = array_shift($image);
+                        }
+                        ?>
+                        <li>
+                            <a class="pI" href="<?= $p['url'] ?>"><figure class="lazy image-product" data-src="<?= !empty($imageFirst) ? $imageFirst:'' ?>"></figure></a>
+                            <div>
+                                <h3><a href="<?= $p['url'] ?>"><?= $p['title'] ?></a></h3>
+                                <p class="price <?= ($p['priceOld'] ? 'oldPrice':null) ?>">
+                                    <?=  (!empty($p['priceOld']) ? '<span>'.number_format($p['priceOld']).'</span><i>'.number_format($p['price']).'</i>':number_format($p['price']) ) ?>
+                                </p>
+                            </div>
+                        </li>
+                    <?php endforeach; ?>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
+<?php endif;?>
+

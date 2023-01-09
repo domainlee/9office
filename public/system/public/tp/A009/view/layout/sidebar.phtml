@@ -1,0 +1,119 @@
+<?php
+$menuOption = $this->home()->getMenu();
+$optionPage = $this->home()->optionPage();
+use Home\Model\DateBase;
+?>
+<div class="sidebar">
+    <?php if(!empty($optionPage['view_banner-sidebar'])): ?>
+        <div class="sidebar__box">
+            <?php foreach($optionPage['banner-sidebar'] as $n):
+                $image = json_decode($n['image'], true);
+                if(!empty($image)) {
+                    $imageFirst = array_shift($image);
+                }
+                ?>
+                <a href="<?= $n['url'] ?>">
+                    <img src="<?= $imageFirst ?>" title="<?= $n['title'] ?>" />
+                </a>
+            <?php endforeach; ?>
+        </div>
+    <?php endif; ?>
+    <?php if(!empty($optionPage['view_danh-muc-tin-tuc-sidebar'])):?>
+        <div class="sidebar__box">
+            <h3 class="sidebar__title"><span><?= $optionPage['tieu-de-danh-muc-tin-tuc-sidebar'] ? $optionPage['tieu-de-danh-muc-tin-tuc-sidebar'] : ''?></h3></span>
+            <ul class="news__list-category">
+                <?php foreach($menuOption['sidebar_menu'] as $m): ?>
+              <!--  <li <?/*= $url == $m['url'] ? 'class="active"':null */?>><a href="<?/*= $m['url'] */?>"><?/*= $m['name'] */?></a>-->
+
+                <li <?= $m['children'] ? 'class="navIsset"':null ?>><?= $m['children'] ? '<i class="fa fa-angle-right"></i>':null ?><a href="<?= $m['url'] ?>"><?= $m['name'] ?></a>
+                    <?php if(!empty($m['children'])): ?>
+                        <ul class="nav2">
+                            <?php foreach($m['children'] as $mm): ?>
+                                <li <?= $mm['children'] ? 'class="navIsset"':null ?>><?= $mm['children'] ? '<i class="fa fa-angle-right"></i>':null ?><a href="<?= $mm['url'] ?>"><?= $mm['name'] ?></a>
+                                    <?php if(!empty($mm['children'])): ?>
+                                        <ul>
+                                            <?php foreach($mm['children'] as $mmm): ?>
+                                                <li><a href="<?= $mmm['url'] ?>"><?= $mmm['name'] ?></a></li>
+                                            <?php endforeach; ?>
+                                        </ul>
+                                    <?php endif; ?>
+                                </li>
+                            <?php endforeach; ?>
+                        </ul>
+                    <?php endif; ?>
+                </li>
+                <?php endforeach; ?>
+            </ul>
+        </div>
+    <?php endif;?>
+    <?php if(!empty($optionPage['view_muc-bai-viet-1'])): ?>
+        <div class="sidebar__box">
+            <h3 class="sidebar__title"><span><?= $optionPage['tieu-de-muc-1'] ? $optionPage['tieu-de-muc-1'] : ''?></h3></span>
+            <ul class="sidebar__news">
+                <?php foreach($optionPage['bai-viet-muc-1'] as $n):
+                    $image = json_decode($n['image'], true);
+                    if(!empty($image)) {
+                        $imageFirst = array_shift($image);
+                    }
+                    ?>
+                    <li>
+                        <div class="sidebar__wrapper--image"><a href="<?= $n['url'] ?>"><figure class="lazy sidebar__image" data-src="<?= $imageFirst ?>"></figure></a></div>
+                        <div class="sidebar__content">
+
+                            <a href="<?= $n['url'] ?>" title="<?=$n['title']?>">
+                                <?php
+                                $s = substr($n['title'],0,50);
+                                $rs = substr($s,0,strrpos($s, ' '));
+                                if(strlen($n['title']) > 50):
+                                    echo $rs;
+                                    echo '...';
+                                else:
+                                    echo $n['title'];
+                                endif;
+
+                                ?>
+                            </a>
+
+                            <p><?= DateBase::toFormat($n['date'], 'M d, Y') ?></p>
+                        </div>
+                    </li>
+                <?php endforeach; ?>
+            </ul>
+        </div>
+    <?php endif; ?>
+
+    <?php if(!empty($optionPage['view_muc-bai-viet-2'])): ?>
+        <div class="sidebar__box">
+            <h3 class="sidebar__title"><span><?= $optionPage['tieu-de-muc-2'] ? $optionPage['tieu-de-muc-2'] : ''?></h3></span>
+            <ul class="sidebar__news">
+                <?php foreach($optionPage['bai-viet-muc-2'] as $n):
+                    $image = json_decode($n['image'], true);
+                    if(!empty($image)) {
+                        $imageFirst = array_shift($image);
+                    }
+                    ?>
+                    <li>
+                        <div class="sidebar__wrapper--image"><a href="<?= $n['url'] ?>"><figure class="lazy sidebar__image" data-src="<?= $imageFirst ?>"></figure></a></div>
+                        <div class="sidebar__content">
+                            <a href="<?= $n['url'] ?>" title="<?=$n['title']?>">
+                                <?php
+                                $s = substr($n['title'],0,50);
+                                $rs = substr($s,0,strrpos($s, ' '));
+                                if(strlen($n['title']) > 50):
+                                    echo $rs;
+                                    echo '...';
+                                else:
+                                    echo $n['title'];
+                                endif;
+
+                                ?>
+                            </a>
+                            <p><?= DateBase::toFormat($n['date'], 'M d, Y') ?></p>
+                        </div>
+                    </li>
+                <?php endforeach; ?>
+            </ul>
+        </div>
+    <?php endif; ?>
+</div>
+

@@ -1,0 +1,225 @@
+<?php
+//    $this->translate('Trang chủ');
+    echo $this->headTitle('Nền tảng website chuẩn SEO duy nhất tại Việt Nam do SEONGON phát triển');
+
+    $this->headMeta()->appendName('description', ('Là đơn vị chuyên tư vấn thiết kế website, chúng tôi hiểu hơn ai hết nỗi đau của một doanh nghiệp khi đổ công sức marketing cho một website mà không chắc nền móng, không chuẩn SEO. Giống như xây nhà mà nền móng không vững chắc, tới lúc tiến thoái lưỡng nan. Tiếp tục xây dựng thì tốn công sức mà hiệu quả không cao, đập bỏ đi thì khó khăn vì dữ liệu đã quá lớn nên khó chuyển đổi.'));
+    $this->headMeta()->appendName('keywords', ('website chuẩn seo, thiết kế website chuẩn seo, tạo website chuẩn seo, dịch vụ quản trị website, quản lý website, quảng cáo Google Ads, Facebook Ads'));
+
+    $this->headMeta()->appendProperty('fb:app_id', '1697190970583102');
+    $this->headMeta()->appendProperty('article:author', 'https://www.facebook.com/dwebvietnam');
+    $this->headMeta()->appendProperty('og:locale', 'vi_VN');
+    $this->headMeta()->appendProperty('og:image', 'http://dweb.vn/tp/dweb/image/dweb-thumbnail.png');
+    $this->headMeta()->appendProperty('og:url', 'http://dweb.vn');
+    $this->headMeta()->appendProperty('og:title', 'Nền tảng website chuẩn SEO duy nhất tại Việt Nam do SEONGON phát triển');
+    $this->headMeta()->appendProperty('og:description', ('Là đơn vị chuyên tư vấn thiết kế website, chúng tôi hiểu hơn ai hết nỗi đau của một doanh nghiệp khi đổ công sức marketing cho một website mà không chắc nền móng, không chuẩn SEO. Giống như xây nhà mà nền móng không vững chắc, tới lúc tiến thoái lưỡng nan. Tiếp tục xây dựng thì tốn công sức mà hiệu quả không cao, đập bỏ đi thì khó khăn vì dữ liệu đã quá lớn nên khó chuyển đổi.'));
+
+    $this->headMeta()->appendProperty('twitter:card', 'DWEB.VN');
+    $this->headMeta()->appendProperty('twitter:title', 'Nền tảng website chuẩn SEO duy nhất tại Việt Nam do SEONGON phát triển');
+    $this->headMeta()->appendProperty('twitter:image', 'http://dweb.vn/tp/dweb/image/dweb-thumbnail.png');
+    $this->headMeta()->appendProperty('twitter:description', 'Là đơn vị chuyên tư vấn thiết kế website, chúng tôi hiểu hơn ai hết nỗi đau của một doanh nghiệp khi đổ công sức marketing cho một website mà không chắc nền móng, không chuẩn SEO. Giống như xây nhà mà nền móng không vững chắc, tới lúc tiến thoái lưỡng nan. Tiếp tục xây dựng thì tốn công sức mà hiệu quả không cao, đập bỏ đi thì khó khăn vì dữ liệu đã quá lớn nên khó chuyển đổi.');
+    $optionPage = $this->home()->optionPage();
+    use Home\Model\DateBase;
+?>
+
+<section class="hero">
+    <div id="" class="hero-inner">
+        <div class="main-title">
+            <div style="padding: 0 100px 0 0" class="hero-content">
+                <h2 class="hero-title">Bạn đang cần một <br/><b>Website</b> để ?</h2>
+                <ul class="hero-list">
+                    <li title="">Bán hàng online</li>
+                    <li>Giới thiệu công ty</li>
+                    <li>Bất động sản</li>
+                    <li>Thương mại điện tử</li>
+                    <li>...</li>
+                </ul>
+                <div>
+                    <p class="hero-description">Tạo website miễn phí với nền tảng website chuẩn seo DWEB.</p>
+                </div>
+                <div>
+                    <a class="hero-button_link" href="/created">Tạo website</a>
+                </div>
+            </div>
+            <img style="margin: 100px 0 0;" width="540px" src="/tp/dweb_v2/image/main-banner.png" title="website-chuan-seo" />
+        </div>
+    </div>
+</section>
+<section class="about">
+    <div class="container">
+        <p class="about__sub">Về chúng tôi</p>
+        <h2 class="about__headline">Chúng tôi hỗ trợ những gì cho bạn<br/>trong việc kinh doanh</h2>
+        <p class="about__intro">
+            Trong việc xây dựng một doanh nghiệp việc để có thể duy trì một doanh nghiệp là doanh thu, kinh doanh tốt.
+            Dưới đây là các bước mà chúng tôi tạo nên một doanh nghiệp hiệu quả và lấy trọng tâm website làm kinh doanh, từng bước để tạo nên một sản phẩm hoàn thiện.
+        </p>
+    </div>
+    <div class="container">
+        <div class="about__service about__service--odd">
+            <div class="about__service--left">
+                <img src="/tp/dweb_v2/image/service_2.png" alt="Thiết kế website chuẩn seo" />
+            </div>
+            <div class="about__service--right">
+                <span class="about__service--number">.01</span>
+                <h3 class="about__service--title">Thiết kế website chuẩn seo</h3>
+                <p class="about__service--description">
+                    Là đơn vị chuyên tư vấn thiết kế website, chúng tôi hiểu hơn ai hết nỗi đau của một doanh nghiệp khi đổ công sức marketing cho một website mà không chắc nền móng, không chuẩn SEO. Giống như xây nhà mà nền móng không vững chắc, tới lúc tiến thoái lưỡng nan. Tiếp tục xây dựng thì tốn công sức mà hiệu quả không cao, đập bỏ đi thì khó khăn vì dữ liệu đã quá lớn nên khó chuyển đổi.
+                </p>
+                <p class="about__service--description">
+                    Bởi vậy DWEB, dưới sự tư vấn của đội ngũ kỹ thuật SEONGON (Đơn vị cung cấp dịch vụ SEO hàng đầu Việt Nam), cung cấp dịch vụ <a href="https://dweb.vn/thiet-ke-website-chuan-seo.html" target="_blank"> thiết kế website chuẩn SEO</a> uy tín.
+                </p>
+                <p class="about__service--description">
+                    <a class="btn-default__custom" href="https://dweb.vn/thiet-ke-website-chuan-seo.html" target="_blank">Chi tiết</a>
+                </p>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="about__service">
+            <div class="about__service--left">
+                <img src="/tp/dweb_v2/image/service_1.png" alt="Quảng cáo google ads, adwords, facebook ads" />
+            </div>
+            <div class="about__service--right">
+                <span class="about__service--number">.02</span>
+                <h3 class="about__service--title">Lập kế hoạch nội dung website</h3>
+                <p class="about__service--description">
+                    Sau khi có được một <a href="https://dweb.vn/thiet-ke-website-chuan-seo.html" target="_blank">website chuẩn seo </a> việc lên kế hoạch triển khai nội dung website là vô cùng quan trọng, một trong số ít các doanh nghiệp đang kinh doanh với website
+                    hiện nay đang không làm, hoặc đang hời hợt với nội dung chuyên sâu, về sản phẩm, dịch vụ của doanh nghiệp đang kinh doanh.
+                </p>
+                <p class="about__service--description">
+                    Để tránh lãng phí trong việc marketing nói chung và bỏ ngân sách cho các chiến dịch quảng cáo nói riêng, việc có một nội dung chuyên sâu giúp khách hàng tin tưởng, hiểu rõ, sử dụng dịch vụ của doanh nghiệp.
+                </p>
+                <p class="about__service--description">
+                    Việc có những nội dung và những chia sẻ hữu ích liên quan dịch vụ, sản phẩm đang cung cấp sẽ thúc đẩy niềm tin khách hàng vào website của doanh nghiệp hơn.
+                </p>
+                <p class="about__service--description">
+                    <a class="btn-default__custom" href="https://dweb.vn/quan-tri-website-chuyen-nghiep.html" target="_blank">Chi tiết</a>
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="about__service">
+            <div class="about__service--left">
+                <img src="/tp/dweb_v2/image/service_3.png" alt="" />
+            </div>
+            <div class="about__service--right">
+                <span class="about__service--number">.03</span>
+                <h3 class="about__service--title">Triển khai marketing tổng thể</h3>
+                <p class="about__service--description">
+                    Sau khi có được những tối ưu về website chuẩn SEO, nội dung chia sẻ chuyên sâu & hữu ích, đây là lúc doanh nghiệp cần mở rộng và phân phối
+                    marketing tổng thể về thương hiệu để nhiều người biết đến hơn, khách hàng quen, khách hàng mới, đối tác tiềm năng, báo chí.
+                </p>
+                <p class="about__service--description">
+                    Mua hàng theo nhu cầu, cảm xúc là một trong những hành vi được theo dõi và lựa chọn kênh phân phối hợp lý để giúp doanh nghiệp giảm bớt thời gian công sức. <br/>
+                </p>
+                <p class="about__service--description">
+                    VD1: Chúng ta không thể mua thuốc hôi nách, chữa ysl trên Facebook ads wall, thật dễ hiểu khi chúng ta không có nhu cầu, một số mặt hàng có thể kinh doanh với Facebook Quần áo, dày dép, đồ ăn ... chúng ta có thể bộc phát để quyết định mua một món hàng nhanh -> Mua hàng theo cảm xúc.
+                </p>
+                <p class="about__service--description">
+                    VD2: Tivi 55 inch SamSung, thiết kế nhà đẹp, thiết kế nội thất, phẫu thuật nâng mũi, chữa hôi nách ... Là nhóm nghành mua hàng và hành vi tìm kiếm Google -> Nhóm nghành hàng mua hàng theo nhu cầu.
+                </p>
+                <p class="about__service--description">
+                    Google Ads, SEO, Facebook ads, Zalo. Đâu là kênh có những khách hàng tiềm năng của bạn, DWEB tự hào là đơn vị tư vấn giải pháp Marketing tổng thể cho sản phẩm, dịch vụ hiệu quả nhất.
+                </p>
+
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <h2 class="about__headline">Lời kết</h2>
+        <p class="about__intro">
+            Để hiệu quả với website làm kinh doanh từng bước 1,2,3 là vô cùng quan trọng trong từng bước để taọ nên một tệp khách hàng tiềm năng, tin tưởng và nhiều người biết đến hơn.
+        </p>
+        <form class="support-module__form support-module__form--label" data-parsley-validate="" novalidate="">
+            <div class="support-module__col">
+                <label>Trung tâm tư vấn</label><input type="text" data-parsley-type="digits" data-parsley-length="[10,11]" required="required" placeholder="Số điện thoại *">
+            </div>
+            <div>
+                <button type="submit">Gửi</button>
+            </div>
+        </form>
+    </div>
+</section>
+
+<?php if(!empty($optionPage['du-an-tieu-bieu'])): ?>
+<section class="project project--custom">
+    <div class="container">
+        <h2 class="project-title title-h2 align-center">Kho giao diện</h2>
+        <div class="project-description">
+            Ngay từ bây giờ bạn có thể bắt đầu kinh doanh với một<br/>website chuẩn seo chỉ với <b>597.000k</b> Với kho giao diện website phong phú.
+        </div>
+        <div class="project-list">
+
+            <?php $i = 0; foreach ($optionPage['du-an-tieu-bieu'] as $p):
+                $i++;
+                $image = json_decode($p['image'], true);
+                if(!empty($image)){
+                    $imageFirst = array_shift($image);
+                }
+                $extraContent = json_decode($p['extraContent'], true);
+                $themeId = end(explode('-', vnString($p['title'])));
+                ?>
+            <div class="project-item">
+                <div class="project-inner">
+                    <figure class="lazy project-image" data-src="https://dweb.vn<?= $imageFirst ?>"></figure>
+                    <div class="project-control">
+                        <a class="btn-d project__button-reviewer" target="_blank" href="/demo<?= $p['url'] ?>">Xem thử</a>
+                        <a class="btn-d project__button-detail" target="_blank" href="/created/<?= $themeId ?>">Tạo website</a>
+                        <h3 class="project__title"><?= $p['title'] ?></h3>
+                        <p class="project__description"><?= !empty($extraContent['mo-ta']) ? $extraContent['mo-ta']:null ?></p>
+                    </div>
+                </div>
+            </div>
+            <?php endforeach; ?>
+        </div>
+        <div class="project__button-load-more">
+            <a class="project__button-link" href="/kho-giao-dien.html">Xem tất cả</a>
+        </div>
+    </div>
+</section>
+<?php endif; ?>
+
+<section class="blog">
+    <div class="container">
+        <h2 class="project-title title-h2 align-center">Blog</h2>
+        <div class="blog-description">
+            Những chia sẻ hữu ích về seo, bán hàng, nguồn hàng,<br/> khởi nghiệp. Được chúng tôi cập nhật <a href="http://blog.dweb.vn" target="_blank">tại đây</a>.
+        </div>
+        <?php
+            $optionPage = $this->home()->optionPage(23);
+            $newsDashboard = $optionPage['bai-viet-trang-chu'];
+        ?>
+        <div class="blog__list">
+            <?php
+            foreach($newsDashboard as $n):
+                $image = json_decode($n['image'], true);
+                $imageFirst = '';
+                if(!empty($image)){
+                    $imageFirst = array_shift($image);
+                }
+                ?>
+                <div class="blog__item">
+                    <div class="blog__item--inner">
+                        <a href="https://blog.dweb.vn<?= $n['url'] ?>" target="_blank">
+                            <figure class="lazy blog__image" data-src="https://blog.dweb.vn<?= $imageFirst ?>">
+                                <img src="https://blog.dweb.vn<?= $imageFirst ?>" alt="<?= $n['title'] ?>" />
+                            </figure>
+                        </a>
+                        <div class="blog__content">
+                            <span class="blog__date"><?= DateBase::toFormat( $n['date'], 'd/m/Y') ?></span>
+                            <h3 class="blog__title"><a href="https://blog.dweb.vn<?= $n['url'] ?>" target="_blank"><?= $n['title'] ?></a></h3>
+                            <a class="blog__link" href="https://blog.dweb.vn<?= $n['url'] ?>">Đọc tiếp →</a>
+                        </div>
+                    </div>
+                </div>
+
+                <?php
+            endforeach;
+            ?>
+        </div>
+        <div class="project__button-load-more blog__button">
+            <a class="project__button-link" href="http://blog.dweb.vn" target="_blank">Xem tất cả</a>
+        </div>
+    </div>
+</section>

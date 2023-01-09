@@ -1,0 +1,134 @@
+<?php
+    $url = $this->UriParams()->getRequest()->getRequestUri();
+    $menuOption = $this->home()->getMenu();
+    $optionBasic = $this->home()->optionBasic();
+    $optionPage = $this->home()->optionPage();
+?>
+<header class="head">
+    <div class="head1">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <?php if(!empty($optionPage['dong-chu-ben-trai']) || !empty($optionPage['dong-chu-ben-trai']) ):?>
+                    <div class="head1__inner">
+                        <div class="head1__left">
+                            <?= $optionPage['dong-chu-ben-trai'] ? $optionPage['dong-chu-ben-trai'] : ''?>
+                        </div>
+                        <div class="head1__right">
+                            <?= $optionPage['dong-chu-ben-phai'] ? $optionPage['dong-chu-ben-phai'] : ''?>
+                        </div>
+                    </div>
+                    <?php endif;?>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="head2">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="head2__inner">
+                        <?php if(!empty($optionBasic['logo'])): ?>
+                            <div class="logo">
+                                <a href="/">
+                                    <img src="<?= $optionBasic['logo'] ?>" alt="Fashion" />
+                                </a>
+                            </div>
+                        <?php endif; ?>
+                        <a class="navigation-button">
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                        </a>
+                        <div class="head2__right">
+                            <div class="head2__item">
+                                <?php if(!empty($optionPage['so-dien-thoai'])):?>
+                                    <i class="fa fa-phone"></i>
+                                    <div class="">
+                                        <?= $optionPage['so-dien-thoai'] ? $optionPage['so-dien-thoai'] : ''?>
+                                    </div>
+                                <?php endif;?>
+                            </div>
+                            <?php if(!empty($optionPage['dia-chi'])):?>
+                                <div class="head2__item">
+                                    <i class="fa fa-map-marker"></i>
+                                    <div class="">
+                                        <?= $optionPage['dia-chi'] ? $optionPage['dia-chi'] : ''?>
+                                    </div>
+                                </div>
+                            <?php endif;?>
+                            <?php if(!empty($optionPage['thoi-gian-lam-viec'])):?>
+                                <div class="head2__item">
+                                    <i class="fa fa-clock-o"></i>
+                                    <div class="">
+                                        <?= $optionPage['thoi-gian-lam-viec'] ? $optionPage['thoi-gian-lam-viec'] : ''?>
+                                    </div>
+                                </div>
+                            <?php endif;?>
+                            <div class="head2__item">
+                                <a class="btn-default" href="/">Đăng ký học</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="head3">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+
+                    <div class="navHome">
+                        <ul>
+                            <?php foreach($menuOption['head_menu'] as $m): ?>
+                                <li <?= $url == $m['url'] ? 'class="active"':null ?>><a href="<?= $m['url'] ?>"><?= $m['name'] ?></a>
+                                    <?php if(!empty($m['children'])): ?>
+                                        <ul class="navHome__list">
+                                            <?php foreach($m['children'] as $mm): ?>
+                                                <li><a href="<?= $mm['url'] ?>"><?= $mm['name'] ?></a>
+                                                    <?php if(!empty($mm['children'])): ?>
+                                                        <ul>
+                                                            <?php foreach ($mm['children'] as $mcc):?>
+                                                                <li><a href="<?= $mcc['url'] ?>"><?= $mcc['name'] ?></a></li>
+                                                            <?php endforeach;?>
+                                                        </ul>
+                                                    <?php endif;?>
+                                                </li>
+                                            <?php endforeach; ?>
+                                        </ul>
+                                    <?php endif; ?>
+                                </li>
+                            <?php endforeach; ?>
+                        </ul>
+                    </div>
+                    <div class="navigation-mobile">
+                        <ul class="navigation-mobile__list">
+                            <?php foreach($menuOption['head_menu'] as $m): ?>
+                                <li <?= $url == $m['url'] ? 'class="active"':null ?>><?= $m['children'] ? '<button></button>' : null ?><a href="<?= $m['url'] ?>"><?= $m['name'] ?></a>
+                                    <?php if(!empty($m['children'])): ?>
+                                        <ul class="nav2">
+                                            <?php foreach($m['children'] as $mm): ?>
+                                                <li><?= $mm['children'] ? '<button></button>' : null ?><a href="<?= $mm['url'] ?>"><?= $mm['name'] ?></a>
+                                                    <?php if(!empty($mm['children'])): ?>
+                                                        <ul>
+                                                            <?php foreach ($mm['children'] as $mcc):?>
+                                                                <li><a href="<?= $mcc['url'] ?>"><?= $mcc['name'] ?></a></li>
+                                                            <?php endforeach;?>
+                                                        </ul>
+                                                    <?php endif;?>
+                                                </li>
+                                            <?php endforeach; ?>
+                                        </ul>
+                                    <?php endif; ?>
+                                </li>
+                            <?php endforeach; ?>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>

@@ -1,0 +1,114 @@
+<?php
+    $view = $this->news;
+    $current_page_URL = $_SERVER["SERVER_NAME"] . $_SERVER["REQUEST_URI"];
+    $a = json_decode($view->getExtraContent());
+    $optionPage = $this->home()->optionPage();
+    $optionBasic = $this->home()->optionBasic();
+    $menuOption = $this->home()->getMenu();
+    $imageFirst = '';
+    if(!empty(json_decode($view->getImage(), true))){
+        $imageFirst = array_shift(json_decode($view->getImage(), true));
+    }
+    $cs = [
+        '/tp/T009/css/n.css',
+    ];
+    echo '<link href="'.srcLink($cs,1).'" media="screen" rel="stylesheet" type="text/css">';
+    $js = [
+        '/tp/T009/js/n.js'
+    ];
+    echo '<script type="text/javascript" src="'.srcLink($js,1).'"></script>';
+?>
+<?php
+    $image = 'http://'.$_SERVER['HTTP_HOST'].$imageFirst;
+    $imageInfo = getimagesize($image);
+    /**** Start SEO DWEB *****/
+    echo $this->headLink(['rel' => 'canonical', 'href' => 'http://'.$_SERVER['HTTP_HOST'].$view->getViewLink() ]);
+    $this->headTitle($this->escapeHtml($this->translate(!empty($view->getMetaTitle()) ? $view->getMetaTitle():$view->getTitle())));
+    $this->headMeta()->appendName('description', (!empty($view->getMetaDescription()) ? $view->getMetaDescription():null));
+    $this->headMeta()->appendName('keywords', (!empty($view->getMetaKeyword()) ? $view->getMetaKeyword():null));
+
+    $this->headMeta()->appendProperty('og:title', !empty($view->getMetaTitle()) ? $view->getMetaTitle():null);
+    $this->headMeta()->appendProperty('og:description', !empty($view->getMetaDescription()) ? $view->getMetaDescription():null);
+    $this->headMeta()->appendProperty('og:image', !empty($imageFirst) ? 'http://'.$_SERVER['HTTP_HOST'].$imageFirst:null);
+    $this->headMeta()->appendProperty('og:image:secure_url', !empty($imageFirst) ? 'http://'.$_SERVER['HTTP_HOST'].$imageFirst:null);
+    $this->headMeta()->appendProperty('og:image:width', $imageInfo['0']);
+    $this->headMeta()->appendProperty('og:image:height', $imageInfo['1']);
+    $this->headMeta()->appendProperty('og:type', 'Article');
+    $this->headMeta()->appendProperty('og:url', 'http://'.$_SERVER['HTTP_HOST'].$view->getViewLink());
+    $this->headMeta()->appendProperty('og:site_name', $optionBasic['sologan']);
+
+    $this->headMeta()->appendName('twitter:card', !empty($image) ? $image:'summary_large_image');
+    $this->headMeta()->appendName('twitter:title', !empty($view->getMetaTitle()) ? $view->getMetaTitle():null);
+    $this->headMeta()->appendName('twitter:description', (!empty($view->getMetaDescription()) ? $view->getMetaDescription():null));
+    $this->headMeta()->appendName('twitter:image', !empty($image) ? $image:null);
+    /**** End SEO DWEB *****/
+?>
+<div class="news">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <ul class="breadcrumb breadcrumb-category">
+                    <li><a href="/">Trang chủ</a></li>
+                    <li><a href="/bai-viet.html">Tin tức</a></li>
+                    <li><a href="<?= $category->getViewLink(); ?>"><?= $category->getName();?></a></li>
+                    <li><a href="<?= $view->getViewLink(); ?>"><?= $view->getTitle();?></a></li>
+                </ul>
+            </div>
+            <?php
+                if(!empty($menuOption['news_sidebar']) || !empty($optionPage['view_danh-muc-sidebar-1']) || !empty($optionPage['view_danh-muc-sidebar-2']) || !empty($optionPage['view_banner-sidebar'])):
+                    echo $this->render('news/news/sidebar');
+                    echo '<div class="col-md-9">';
+                else:
+                    echo '<div class="col-md-12">';
+                endif;
+            ?>
+                <div class="detailNews">
+                    <div>
+                        <h1><?= html_entity_decode($view->getTitle()) ?></h1>
+                    </div>
+                    <?php
+                        echo html_entity_decode($view->getContent());
+                    ?>
+                    <div class="social">
+                        <?php
+                        ?>
+                        <div style="float: left;margin: 0 5px 0 0;" class="fb-like" data-href="<?= $current_page_URL.$view->getViewLink() ?>" data-layout="button" data-action="like" data-show-faces="false" data-share="true"></div>
+                        <div class="g-plusone" data-size="medium"></div>
+                    </div>
+                    <script src="https://apis.google.com/js/platform.js" async defer>
+                        {lang: 'vi'}
+                    </script>
+                    <?php
+                    $relation = json_decode($view->getArticleRelated(), true);
+                    if(!empty($relation)):
+                        echo '<h2 class="related-post__headline">Bài viết liên quan</h2>';
+                        echo '<div class="related-post__list">';
+                        $i = 0;
+                        foreach($relation as $n) {
+                            $i++;
+                            $image = json_decode($n['image'], true);
+                            $imageFirst = '';
+                            if(!empty($image)){
+                                $imageFirst = array_shift($image);
+                            }
+                            if($i < 7):
+                                ?>
+                                <div class="related-post__item">
+                                    <div class="related-post__item--inner">
+                                        <div class="related-post__item--content">
+                                            <h3 class="related-post__item--title"><a href="<?= $n['url']  ?>"><i class="fa fa-angle-right"></i><?= $n['title'] ?></a></h3>
+                                        </div>
+                                    </div>
+                                </div>
+                            <?php
+                            endif;
+                        }
+                        echo '</div>';
+                    endif;
+                    ?>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

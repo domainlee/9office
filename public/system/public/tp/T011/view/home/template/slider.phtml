@@ -1,0 +1,23 @@
+<?php
+if(!empty($this->bannerList['banner-list banner']['banner-list']) || !empty($this->bannerList['2-banner-list banner']['2-banner-list'])): ?>
+    <div class="NavBannerAds">
+        <?php
+        echo '<div class="banner">';
+        echo '<ul id="banner" class="owl-carousel owl-theme">';
+        foreach ($this->bannerList['banner-list banner']['banner-list'] as $b) {
+            $imageFirst = '';
+            if (!empty(json_decode($b['image'], true))) {
+                $imageFirst = array_shift(json_decode($b['image'], true));
+            }
+            ?>
+            <li>
+                <a href="<?= $b['url'] ?>">
+                    <figure class="owl-lazy banner-image" data-src="<?= $imageFirst ?>"></figure>
+                </a>
+            </li>
+            <?php
+        }
+        echo '</ul></div>';
+        ?>
+    </div>
+<?php endif;?>

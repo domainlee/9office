@@ -1,0 +1,80 @@
+<?php if(!empty($this->tabProductLayout)):?>
+<div class="tab-product product">
+    <div class="col-md-12">
+                <ul class="tab-product__title nav nav-products nav-tabs" role="tablist">
+                    <li role="presentation" class="active">
+                        <a  href="#tab1-<?=$this->id?>" aria-controls="tab1-<?=$this->id?>" role="tab" data-toggle="tab"><?= $this->tabProductLayout['tab1-title text']['value']?></a>
+                    </li>
+                    <li role="presentation">
+                        <a href="#tab2-<?=$this->id?>" aria-controls="tab2-<?=$this->id?>" role="tab" data-toggle="tab"><?= $this->tabProductLayout['tab2-title text']['value']?></a>
+                    </li>
+                    <li role="presentation">
+                        <a href="#tab3-<?=$this->id?>" aria-controls="tab3-<?=$this->id?>" role="tab" data-toggle="tab"><?= $this->tabProductLayout['tab3-title text']['value']?></a>
+                    </li>
+                </ul>
+                <div class="tab-content">
+                    <div id="tab1-<?=$this->id?>" role="tabpanel" class="tab-pane fade in active">
+                        <ul class="lP">
+                            <?php foreach($this->tabProductLayout['tab-product1 product']['tab-product1'] as $k => $p):
+                                $image = json_decode($p['image'], true);
+                                if(!empty($image)){
+                                    $imageFirst = array_shift($image);
+                                }
+                                ?>
+                                <li>
+                                    <a class="pI" href="<?= $p['url'] ?>"><figure class="lazy image-product" data-src="<?= !empty($imageFirst) ? $imageFirst:'' ?>"></figure></a>
+                                    <div>
+                                        <h2><a href="<?= $p['url'] ?>"><?= $p['title'] ?></a></h2>
+                                        <p class="price <?= ($p['priceOld'] ? 'priceOld':null) ?>">
+                                            <?=  (!empty($p['priceOld']) ? '<span>'.number_format($p['priceOld']).'</span><i>'.number_format($p['price']).'</i>':number_format($p['price']) ) ?>
+                                        </p>
+                                    </div>
+                                </li>
+                            <?php endforeach; ?>
+                        </ul>
+                    </div>
+                    <div id="tab2-<?=$this->id?>" role="tabpanel" class="tab-pane fade">
+                        <ul class="lP">
+                            <?php foreach($this->tabProductLayout['tab-product2 product']['tab-product2'] as $k => $p):
+                                $image = json_decode($p['image'], true);
+                                if(!empty($image)){
+                                    $imageFirst = array_shift($image);
+                                }
+                                ?>
+                                <li>
+                                    <a class="pI" href="<?= $p['url'] ?>"><figure class="lazy image-product" data-src="<?= !empty($imageFirst) ? $imageFirst:'' ?>"></figure></a>
+                                    <div>
+                                        <h2><a href="<?= $p['url'] ?>"><?= $p['title'] ?></a></h2>
+                                        <p class="price <?= ($p['priceOld'] ? 'priceOld':null) ?>">
+                                            <?=  (!empty($p['priceOld']) ? '<span>'.number_format($p['priceOld']).'</span><i>'.number_format($p['price']).'</i>':number_format($p['price']) ) ?>
+                                        </p>
+                                    </div>
+                                </li>
+                            <?php endforeach; ?>
+                        </ul>
+                    </div>
+                    <div id="tab3-<?=$this->id?>" role="tabpanel" class="tab-pane fade">
+                        <ul class="lP">
+                            <?php foreach($this->tabProductLayout['tab-product3 product']['tab-product3'] as $k => $p):
+                                $image = json_decode($p['image'], true);
+                                if(!empty($image)){
+                                    $imageFirst = array_shift($image);
+                                }
+                                ?>
+                                <li>
+                                    <a class="pI" href="<?= $p['url'] ?>"><figure class="lazy image-product" data-src="<?= !empty($imageFirst) ? $imageFirst:'' ?>"></figure></a>
+                                    <div>
+                                        <h2><a href="<?= $p['url'] ?>"><?= $p['title'] ?></a></h2>
+                                        <p class="price <?= ($p['priceOld'] ? 'priceOld':null) ?>">
+                                            <?=  (!empty($p['priceOld']) ? '<span>'.number_format($p['priceOld']).'</span><i>'.number_format($p['price']).'</i>':number_format($p['price']) ) ?>
+                                        </p>
+                                    </div>
+                                </li>
+                            <?php endforeach; ?>
+                        </ul>
+                    </div>
+                </div>
+
+            </div>
+</div>
+<?php endif;?>

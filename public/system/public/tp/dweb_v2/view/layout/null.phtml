@@ -1,0 +1,47 @@
+<?php
+echo $this->doctype();
+?>
+<html lang="en">
+    <head>
+        <?php
+            echo $this->headTitle('DWEB | Difference Web')->setSeparator(' - ')->setAutoEscape(false);
+            $this->headMeta()->appendName('DC.language', 'scheme=utf-8 content=vi');
+            $this->headMeta()->appendName('author', 'DWEB.VN');
+            $this->headMeta()->appendName('format-detection', 'telephone=no');
+            $this->headMeta()->appendName('viewport', 'width=device-width, initial-scale=1, maximum-scale=1');
+            echo $this->headMeta();
+            echo $this->headLink(['rel' => 'Shortcut Icon', 'type' => 'image/x-icon', 'href' => '/tp/dweb/image/favicon.ico']);
+        ?>
+
+        <link href='https://fonts.googleapis.com/css?family=Roboto:300,500,700' rel='stylesheet' type='text/css'>
+        <?php
+            $cs = [
+                '/tp/dweb/css/bootstrap.css',
+                '/tp/dweb/css/font-awesome.min.css',
+                '/tp/dweb/css/animate.min.css',
+                '/tp/dweb/css/a.css',
+            ];
+            echo '<link href="'.srcLink($cs,3).'" media="screen" rel="stylesheet" type="text/css">';
+            $js = [
+                '/assets/js/web/jquery-1.11.2.min.js',
+            ];
+            echo '<script type="text/javascript" src="'.srcLink($js,2).'"></script>';
+        ?>
+
+    </head>
+    <?php
+        $url = $this->UriParams()->getRequest()->getRequestUri();
+        $classPage = substr($url, 1, -5);
+    ?>
+    <body class="<?= $url == '/' ? 'home-page':$classPage ?>">
+        <?php
+            echo $this->content;
+        ?>
+    </body>
+    <?php
+        $cs = [
+            '/tp/dweb/css/r.css',
+        ];
+        echo '<link href="'.srcLink($cs,3).'" media="screen" rel="stylesheet" type="text/css">';
+    ?>
+</html>

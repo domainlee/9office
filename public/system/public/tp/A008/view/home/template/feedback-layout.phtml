@@ -1,0 +1,65 @@
+<?php if(!empty($this->feedbackLayout['feedback-1 textarea']['value']) || !empty($this->feedbackLayout['feedback-2 textarea']['value']) || !empty($this->feedbackLayout['feedback-3 textarea']['value']) || !empty($this->feedbackLayout['feedback-4 textarea']['value'])):?>
+<section class="feedback" style="background-image: url('<?= $this->feedbackLayout['feedback-background file']['value']?>')">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="post-course__inner">
+                    <div class="feedback__headline">
+                        <h2><?= $this->feedbackLayout['feedback-title text']['value'] ? $this->feedbackLayout['feedback-title text']['value'] : '' ?></h2>
+                        <div>
+                            <?= $this->feedbackLayout['feedback-sub-title text']['value'] ? $this->feedbackLayout['feedback-sub-title text']['value'] : '' ?>
+                        </div>
+                        <span><img src="/tp/A008/img/learn.svg" /></span>
+                    </div>
+                    <div class="feedback__slider owl-carousel owl-theme">
+                        <?php if(!empty($this->feedbackLayout['feedback-1 textarea']['value'])):?>
+                        <div class="feedback__item">
+                            <div class="feedback__item--inner">
+                                <a href="#"><figure class="feedback__image lazy" data-src="<?= $this->feedbackLayout['avatar-1 file']['value'] ? $this->feedbackLayout['avatar-1 file']['value']: '' ?>"></figure></a>
+                                <div>
+                                    <div class="feedback__intro"><?= $this->feedbackLayout['feedback-1 textarea']['value'] ? $this->feedbackLayout['feedback-1 textarea']['value'] : '' ?></div>
+                                    <h3 class="feedback__title"><?= $this->feedbackLayout['name-1 text']['value'] ? $this->feedbackLayout['name-1 text']['value'] : '' ?></h3>
+                                </div>
+                            </div>
+                        </div>
+                        <?php endif;?>
+                        <?php if(!empty($this->feedbackLayout['feedback-2 textarea']['value'])):?>
+                            <div class="feedback__item">
+                                <div class="feedback__item--inner">
+                                    <a href="#"><figure class="feedback__image lazy" data-src="<?= $this->feedbackLayout['avatar-2 file']['value'] ? $this->feedbackLayout['avatar-2 file']['value'] : '' ?>"></figure></a>
+                                    <div>
+                                        <div class="feedback__intro"><?= $this->feedbackLayout['feedback-2 textarea']['value'] ? $this->feedbackLayout['feedback-2 textarea']['value'] : '' ?></div>
+                                        <h3 class="feedback__title"><?= $this->feedbackLayout['name-2 text']['value'] ? $this->feedbackLayout['name-2 text']['value'] : '' ?></h3>
+                                    </div>
+                                </div>
+                            </div>
+                        <?php endif;?>
+                        <?php if(!empty($this->feedbackLayout['feedback-3 textarea']['value'])):?>
+                            <div class="feedback__item">
+                                <div class="feedback__item--inner">
+                                    <a href="#"><figure class="feedback__image lazy" data-src="<?= $this->feedbackLayout['avatar-3 file']['value'] ? $this->feedbackLayout['avatar-3 file']['value']: '' ?>"></figure></a>
+                                    <div>
+                                        <div class="feedback__intro"><?= $this->feedbackLayout['feedback-3 textarea']['value'] ? $this->feedbackLayout['feedback-3 textarea']['value'] : '' ?></div>
+                                        <h3 class="feedback__title"><?= $this->feedbackLayout['name-3 text']['value'] ? $this->feedbackLayout['name-3 text']['value'] : ''?></h3>
+                                    </div>
+                                </div>
+                            </div>
+                        <?php endif;?>
+                        <?php if(!empty($this->feedbackLayout['feedback-4 textarea']['value'])):?>
+                            <div class="feedback__item">
+                                <div class="feedback__item--inner">
+                                    <a href="#"><figure class="feedback__image lazy" data-src="<?= $this->feedbackLayout['avatar-4 file']['value'] ? $this->feedbackLayout['avatar-4 file']['value'] : '' ?>"></figure></a>
+                                    <div>
+                                        <div class="feedback__intro"><?= $this->feedbackLayout['feedback-4 textarea']['value'] ? $this->feedbackLayout['feedback-4 textarea']['value'] : '' ?></div>
+                                        <h3 class="feedback__title"><?= $this->feedbackLayout['name-4 text']['value'] ? $this->feedbackLayout['name-4 text']['value'] : '' ?></h3>
+                                    </div>
+                                </div>
+                            </div>
+                        <?php endif;?>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<?php endif;?>

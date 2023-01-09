@@ -1,0 +1,27 @@
+<?php if(!empty($this->bannerList['banner-list banner']['banner-list'])):?>
+<ul class="hero-slider">
+    <?php
+        echo '<ul class="banner owl-carousel owl-theme">';
+        foreach($this->bannerList['banner-list banner']['banner-list'] as $k => $b):
+            $image = json_decode($b['image'], true);
+            if(!empty($image)) {
+                $imageFirst = array_shift($image);
+            }
+            ?>
+            <li>
+                <figure class="owl-lazy banner-image" data-src="<?= !empty($imageFirst) ? $imageFirst:null ?>">
+                    <div>
+                        <?php if(!empty($b['description'])):?>
+                            <div>
+                                <p><?= substr($b['description'],0, 50);?></p>
+                                <!--<p>--><?/*= $b['description'] */?>
+                                <?= $b['url'] ? '<a href="'.$b['url'].'">Xem</a>' : ''?>
+                            </div>
+                        <?php endif;?>
+                    </div>
+                </figure>
+            </li>
+    <?php endforeach;?>
+    </ul>
+</section>
+<?php endif;?>

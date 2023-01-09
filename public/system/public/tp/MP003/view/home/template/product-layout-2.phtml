@@ -1,0 +1,42 @@
+<?php if(!empty($this->productLayout2['product-list-2 product']['product-list-2'])):?>
+    <section class="product-2">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="product-2__inner">
+                        <div class="product-2__left">
+                            <div class="product-2__left--inner" style="background-image: url('<?= $this->productLayout2['product-image file']['value'] ? $this->productLayout2['product-image file']['value'] : ''?> ')">
+                                <?= $this->productLayout2['product-title-2 text']['value'] ? '<h2 class="product-2__title">'.$this->productLayout2['product-title-2 text']['value'].'</h2>' : ''?>
+                                <?= $this->productLayout2['product-link text']['value'] ? '<a class="product-2__button" href="'.$this->productLayout2['product-link text']['value'].'">Xem thêm</a>' : ''?>
+                            </div>
+                        </div>
+                        <div class="product-2__right">
+                            <ul class="product-slider-2 owl-carousel owl-theme">
+                                <?php foreach($this->productLayout2['product-list-2 product']['product-list-2'] as $k => $p):
+                                    $image = json_decode($p['image'], true);
+                                    if(!empty($image)){
+                                        $imageFirst = array_shift($image);
+                                    }
+                                    ?>
+                                    <li class="product__item">
+                                        <div class="product__item--inner">
+                                            <?= $p['priceOld'] ? '<div class="tag-sale">Sale</div>' : ''?>
+                                            <a class="pI" href="<?= $p['url'] ?>"><figure class="lazy image-product" data-src="<?= !empty($imageFirst) ? $imageFirst:'' ?>"></figure></a>
+                                            <div>
+                                                <h3><a href="<?= $p['url'] ?>"><?= $p['title'] ?></a></h3>
+                                                <p class="price <?= ($p['priceOld'] ? 'priceOld':null) ?>">
+                                                    <?=  (!empty($p['priceOld']) ? '<span>'.number_format($p['priceOld']).'</span><i>'.number_format($p['price']).'</i>':number_format($p['price']) ) ?>
+                                                </p>
+                                            </div>
+                                            <a class="btnAddCart" data-quantity="1" data-id="<?=$p['id']?>">Mua hàng</a>
+                                        </div>
+                                    </li>
+                                <?php endforeach; ?>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+<?php endif;?>

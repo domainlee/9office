@@ -1,0 +1,58 @@
+<?php
+    $optionBasic = $this->home()->optionBasic();
+    $url = $this->UriParams()->getRequest()->getRequestUri();
+    $optionPage = $this->home()->optionPage();
+?>
+<div class="head">
+    <div class="container">
+        <div class="row">
+
+            <div class="col-md-12">
+                <?php if(!empty($optionBasic['logo'])): ?>
+                <div class="logo">
+                    <a href="/">
+                        <img src="<?= $optionBasic['logo'] ?>" alt="<?= !empty($optionBasic['sologan']) ? $optionBasic['sologan']:null ?>" />
+                    </a>
+                </div>
+                <?php else: ?>
+                <div class="logo">
+                    <a class="logo-text" href="/">FASHION<p>Make of style</p></a>
+                </div>
+                <?php endif; ?>
+            </div>
+
+            <div class="col-md-12">
+                <div class="nav">
+                    <?php
+                        $menuOption = $this->home()->getMenu();
+                    ?>
+                    <ul>
+                        <?php
+                            if(!empty($menuOption['head_menu'])){
+                            foreach($menuOption['head_menu'] as $c){
+                        ?>
+                                <li <?= $url == $c['url'] ? 'class="active"':null ?>><a href="<?= $c['url'] ?>"><?= $c['name'] ?></a>
+                                <?php
+                                    if($c['chilrend']){
+                                        echo '
+                                        <ul class="nav2">';
+                                        foreach($c->getChilds() as $cc){
+                                            ?>
+                                                <li><a href="<?= $cc->getViewLink() ?>"><?= $cc->getName() ?></a></li>
+                                            <?php
+                                        }
+                                        echo '</ul>';
+                                        $new = [];
+                                    }
+                                    ?>
+                                </li>
+                        <?php
+                            }
+                            }
+                        ?>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

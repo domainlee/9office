@@ -1,0 +1,90 @@
+.contactForm .form-group label{
+    display: none;
+}
+.contactForm .form-group input, .contactForm .form-group textarea {
+    padding: 10px 15px;
+    width: 100%;
+    border: 1px solid #CCC;
+}
+.contact__inner{
+    width: 80%;
+    margin:0  auto;
+    padding: 150px 0 100px;
+    display: flex;
+}
+.contact__logo{
+    margin-top:0;
+}
+.contact__from-right{
+    padding: 0 0 0 60px;
+}
+.contact__description {
+    font-weight: 300;
+    font-size: 16px;
+}
+.contact__description::after {
+    margin: 30px 0;
+    content: '';
+    display: block;
+    width: 100px;
+    height: 2px;
+    background-color: #EAE8E8;
+}
+.contactForm .form-group button[type="submit"] {
+    width: 100%;
+    border: none;
+    font-weight: 700;
+    font-size: 20px;
+    text-transform: uppercase;
+    padding: 6px 0;
+    background: #EAE8E8;
+    color:#8E4248 ;
+}
+.contact_col-title {
+    margin: 0 0 15px;
+    text-transform: uppercase;
+    font-size: 18px;
+}
+.contact__address a {
+    color: #8E4248;
+}
+.contact__address{
+    margin-bottom: 20px;
+}
+.contact__pay {
+    border-top: 1px solid #DDD;
+    padding: 30px 0 0;
+}
+.contact__pay--list li {
+    margin: 10px 0 0;
+    border-bottom: 1px solid #DDD;
+}
+.contact__pay--list li:last-child{
+    border-bottom: none;
+}
+.parsley-custom-error-message{
+    color: #8E4248;
+}
+@media only screen and (min-width:300px) and (max-width:640px){
+    /****contact****/
+    .contact__inner{
+        flex-direction: column;
+        width: 90%;
+    }
+    .contact__from-right{
+        padding: 0;
+    }
+    .title-page{
+        width: 90%;
+    }
+}
+@media only screen and (min-width:640px) and (max-width:990px){
+    /****contact****/
+    .contact__inner{
+        flex-direction: column;
+        width: 80%;
+    }
+    .contact__from-right{
+        padding: 0;
+    }
+}

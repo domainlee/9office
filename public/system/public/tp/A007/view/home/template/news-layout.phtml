@@ -1,0 +1,71 @@
+<?php
+use Home\Model\DateBase;
+if(!empty($this->newsLayout['news-list article']['news-list']) || !empty($this->newsLayout['news-right article']['news-right'])):?>
+<section class="last-post">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="last-post__inner">
+                    <?php   if(!empty($this->newsLayout['news-list article']['news-list']) ):?>
+                        <div class="last-post__left" style ="width: <?= $this->newsLayout['news-right article']['news-right'] ? '70%' : '100%; padding: 0'?>">
+                        <h2 class="last-post__left--headline"><?= $this->newsLayout['news-title text']['value'] ? $this->newsLayout['news-title text']['value'] : ''?></h2>
+                        <?php
+                        $slider = $this->newsLayout['news-slider-checkbox checkbox']['value'];
+                        if(!empty($this->newsLayout['news-list article']['news-list'])):
+                            ?>
+                            <div class="last-post__left--list">
+                                <ul class="<?=$slider ? ($this->newsLayout['news-right article']['news-right'] ? 'last-post__carousel--2 owl-carousel owl-theme' : 'last-post__carousel--4 owl-carousel owl-theme' ) : 'news__list' ?>">
+                                    <?php
+                                    foreach($this->newsLayout['news-list article']['news-list'] as $k => $n):
+                                        $image = json_decode($n['image'], true);
+                                        if(!empty($image)) {
+                                            $imageFirst = array_shift($image);
+                                        }
+                                        ?>
+                                        <li style ="width: <?= $slider ? '100%' : ($this->newsLayout['news-right article']['news-right'] ? '50%' : '25%')?>">
+                                            <div class="last-post__item">
+                                                <a href="<?= $n['url'] ?>"><figure class="last-post__image lazy" data-src="<?= $imageFirst ?>"></figure></a>
+                                                <h3 class="last-post__title"><a href="<?= $n['url'] ?>"><?= $n['title'] ?></a></h3>
+                                                <div class="last-post__date"><?= DateBase::toFormat($n['date'], 'd M Y') ?></div>
+                                                <div class="last-post__intro">
+                                                    <?= $n['intro'] ?>
+                                                </div>
+                                                <a href="<?= $n['url'] ?>" class="last-post__readmore">[Đọc tiếp]</a>
+                                            </div>
+                                        </li>
+                                    <?php endforeach; ?>
+                                </ul>
+                            </div>
+                        <?php endif ?>
+                    </div>
+                    <?php endif;?>
+                    <?php if(!empty($this->newsLayout['news-right article']['news-right'])):?>
+                        <div class="<?= !empty($this->newsLayout['news-list article']['news-list']) ? 'last-post__right' : 'last-post__right-2'?>">
+                        <h2 class="last-post__left--headline"><?= $this->newsLayout['news-right-title text']['value'] ? $this->newsLayout['news-right-title text']['value'] : ''?></h2>
+                        <div class="last-post__right--inner">
+                            <?php
+                                foreach($this->newsLayout['news-right article']['news-right'] as $k => $n):
+                                    $image = json_decode($n['image'], true);
+                                    if(!empty($image)) {
+                                        $imageFirst = array_shift($image);
+                                    }
+                                    ?>
+                                    <div class="last-post__right--item">
+                                        <div>
+                                            <a href="<?= $n['url'] ?>"><figure class="last-post__right--image lazy" data-src="<?= $imageFirst ?>"></figure></a>
+                                        </div>
+                                        <div>
+                                            <h3 class="last-post__right--title"><a href="<?= $n['url'] ?>"><?= $n['title'] ?></a></h3>
+                                            <div class="last-post__right--date"><?= DateBase::toFormat($n['date'], 'd M Y') ?></div>
+                                        </div>
+                                    </div>
+                                <?php endforeach;?>
+                        </div>
+                    </div>
+                    <?php endif;?>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<?php endif;?>

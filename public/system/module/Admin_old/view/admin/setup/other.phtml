@@ -1,0 +1,86 @@
+<?php
+    echo $this->headtitle($this->escapehtml($this->translate('Cấu hình khác Facebook App Id, Email ...')));
+    $form = $this->form;
+    $value = $this->value;
+    $token = $this->token;
+?>
+
+<form method="post" enctype="multipart/form-data" data-parsley-validate novalidate>
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="card-box ">
+                <ol class="breadcrumb p-t-0 m-b-0">
+                    <li>
+                        <a class="header-title" href="/admin/setup"><i class="ion-reply"></i> Cấu hình</a>
+                    </li>
+                </ol>
+                <p class="text-muted m-b-15 font-13">
+                    Cấu hình khác Facebook App Id, Email nhận thông báo, Quản lý tên miền riêng, Thay đổi giao diện khác.
+                </p>
+                <hr/>
+                <div class="row">
+                    <div class="col-sm-4">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="form-group">
+                                    <label class="control-label" for="facebookAppId">Facebook App ID</label>
+                                    <p class="text-muted m-b-15 font-13">
+                                        Facebook Pixel giúp bạn tạo chiến dịch quảng cáo để tìm khách hàng mới.
+                                    </p>
+                                    <?= $this->formelement($form->get('facebookAppId')->setAttributes(['class' => 'form-control', 'placeholder'=>'Facebook App ID'])) ?>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="form-group">
+                                    <label class="control-label" for="domain">Email</label>
+                                    <p class="text-muted m-b-15 font-13">
+                                        Email nhận thông báo.
+                                    </p>
+                                    <?= $this->formelement($form->get('email')->setAttributes(['class' => 'form-control', 'parsley-type' => 'email', 'placeholder'=>'Email', 'data-parsley-error-message' => 'Email'])) ?>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-actions m-t-10">
+                            <?=$this->formelement($form->get('submit')->setAttributes(['class' => 'btn btn-default']))?>
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="form-group">
+                                    <label class="control-label" for="domain">Tên miền</label>
+                                    <p class="text-muted m-b-15 font-13">
+                                        Bạn trỏ tên miền về địa chỉ IP 103.221.220.135
+                                    </p>
+                                    <?= $this->formelement($form->get('domain')->setAttributes(['class' => 'form-control', 'parsley-type' => 'url', 'placeholder'=>'Tên miền', 'data-parsley-error-message' => 'Định dạng tên miền không đúng'])) ?>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="form-group">
+                                    <label class="control-label" for="uitemplateId">Đổi giao diện</label>
+                                    <p class="text-muted m-b-15 font-13">
+                                        Lưu ý khi đổi giao diện dữ liệu không phù hợp với giao diện mới, nên website không còn dữ liệu<br/>bạn có thể cập nhật <a href="/admin/setup/template">tại đây</a>
+                                    </p>
+                                    <p class="text-muted m-b-15 font-13">
+                                        <?php
+                                            $host = $_SERVER['HTTP_HOST'];
+                                            $ha = explode('.', $host);
+                                        ?>
+                                        Xem danh <a href="http://<?= $ha[1] == 'home' || $ha[0] == 'home' ? 'home.com':'dweb.vn' ?>/user/token?key=<?= $token ?>&redirect=http://<?= $ha[1] == 'home' || $ha[0] == 'home' ? 'home.com':'dweb.vn' ?>/kho-giao-dien.html" target="_blank">sách giao diện</a> và bấm nút "Sử dụng"
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

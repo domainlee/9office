@@ -1,0 +1,363 @@
+<?php
+    use Home\Model\DateBase;
+    $optionBasic = $this->home()->optionBasic();
+    $optionPage = $this->home()->optionPage();
+    $fileLogo = getimagesize('http://'.$_SERVER['HTTP_HOST'].$optionBasic['logo']);
+?>
+<?php
+    /**** Start SEO DWEB *****/
+    echo $this->headLink(['rel' => 'canonical', 'href' => 'http://'.$_SERVER['HTTP_HOST'] ]);
+    $this->headTitle($this->escapeHtml($this->translate(!empty($optionBasic['metaTitle']) ? $optionBasic['metaTitle']:null)));
+    $this->headMeta()->appendName('description', (!empty($optionBasic['metaDescription']) ? $optionBasic['metaDescription']:null));
+    $this->headMeta()->appendName('keywords', (!empty($optionBasic['metaKeyword']) ? $optionBasic['metaKeyword']:null));
+    $this->headMeta()->appendProperty('og:title', !empty($optionBasic['metaTitle']) ? $optionBasic['metaTitle']:null);
+    $this->headMeta()->appendProperty('og:description', !empty($optionBasic['metaDescription']) ? $optionBasic['metaDescription']:null);
+    $this->headMeta()->appendProperty('og:image', !empty($optionBasic['logo']) ? 'http://'.$_SERVER['HTTP_HOST'].$optionBasic['logo']:null);
+    $this->headMeta()->appendProperty('og:image:secure_url', !empty($optionBasic['logo']) ? 'http://'.$_SERVER['HTTP_HOST'].$optionBasic['logo']:null);
+    $this->headMeta()->appendProperty('og:image:width', $fileLogo['0']);
+    $this->headMeta()->appendProperty('og:image:height', $fileLogo['1']);
+    $this->headMeta()->appendProperty('og:type', 'Website');
+    $this->headMeta()->appendProperty('og:url', 'http://'.$_SERVER['HTTP_HOST']);
+    $this->headMeta()->appendProperty('og:site_name', $optionBasic['sologan']);
+
+    $this->headMeta()->appendName('twitter:card', !empty($optionBasic['logo']) ? 'http://'.$_SERVER['HTTP_HOST'].$optionBasic['logo']:'summary_large_image');
+    $this->headMeta()->appendName('twitter:title', !empty($optionBasic['metaTitle']) ? $optionBasic['metaTitle']:null);
+    $this->headMeta()->appendName('twitter:description', (!empty($optionBasic['metaDescription']) ? $optionBasic['metaDescription']:null));
+    $this->headMeta()->appendName('twitter:image', !empty($optionBasic['logo']) ? 'http://'.$_SERVER['HTTP_HOST'].$optionBasic['logo']:null);
+    /**** End SEO DWEB *****/
+?>
+
+<?php if(!empty($optionPage['view_banner'])):
+    foreach($optionPage['banner'] as $b):
+        $image = json_decode($b['image'], true);
+        $imageFirst = '';
+        if(!empty($image)){
+            $imageFirst = array_shift($image);
+        }
+?>
+<section class="hero-slider banner-image" style="background-image: url(<?= !empty($imageFirst) ? $imageFirst:null ?>)">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="hero-slider__content">
+                    <h2><?= $b['title'] ?></h2>
+                    <p><?= $b['description'] ?></p>
+                    <a href="<?= $b['url'] ?>">Đọc tiếp</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<?php endforeach; endif; ?>
+
+<?php
+    if(!empty($optionPage['view_gioi-thieu'])):
+    foreach($optionPage['gioi-thieu'] as $b):
+        $image = json_decode($b['image'], true);
+        $imageFirst = '';
+        if(!empty($image)){
+            $imageFirst = array_shift($image);
+        }
+?>
+<section class="two-up">
+    <div class="two-up__inner">
+        <div class="two-up__left">
+            <a href="<?= $b['url'] ?>">
+                <figure class="lazy two-up__image" data-src="<?= $imageFirst ?>"></figure>
+            </a>
+        </div>
+        <div class="two-up__right">
+            <h3 class="two-up__title"><?= $b['title'] ?></h3>
+            <div class="two-up__description">
+                <?= $b['description'] ?>
+            </div>
+            <a class="two-up__link button__link" href="<?= $b['url'] ?>"><span>Đọc tiếp</span><i class="fa fa-angle-right"></i></a>
+        </div>
+    </div>
+</section>
+<?php endforeach; endif; ?>
+
+<?php if(!empty($optionPage['view_3-banner-trai'])): ?>
+    <section class="three-up">
+        <div class="three-up__inner">
+            <div class="three-up__left">
+                <?php
+                    $i = 0;
+                    foreach($optionPage['3-banner-trai'] as $b):
+                    $i++;
+                    $image = json_decode($b['image'], true);
+                    $imageFirst = '';
+                    if(!empty($image)){
+                        $imageFirst = array_shift($image);
+                    }
+                    if($i == 1):
+                ?>
+                <div class="three-up__item">
+                    <a class="three-up__link" href="<?= $b['url'] ?>">
+                        <div class="three-up__item--left">
+                            <div class="three-up__item--content">
+                                <h3><?= $b['title'] ?></h3>
+                                <p><?= $b['description'] ?></p>
+                                <div class="button__link"><span>Đọc tiếp</span><i class="fa fa-angle-right"></i></div>
+                            </div>
+                        </div>
+                        <div class="three-up__item--right">
+                            <figure class="lazy two-up__image" data-src="<?= $imageFirst ?>"></figure>
+                        </div>
+                    </a>
+                </div>
+                <?php
+                    endif;
+                    endforeach;
+                ?>
+                <?php
+                    $i = 0;
+                    foreach($optionPage['3-banner-trai'] as $b):
+                    $i++;
+                    $image = json_decode($b['image'], true);
+                    $imageFirst = '';
+                    if(!empty($image)){
+                        $imageFirst = array_shift($image);
+                    }
+                    if($i == 2):
+                ?>
+                <div class="three-up__item">
+                    <a class="three-up__link" href="<?= $b['url'] ?>">
+                        <figure class="three-up__left--image lazy" data-src="<?= $imageFirst ?>"></figure>
+                        <div class="three-up__item--link button__link"><span>Đọc tiếp</span><i class="fa fa-angle-right"></i></div>
+                    </a>
+                </div>
+                <?php
+                    endif;
+                    endforeach;
+                ?>
+            </div>
+            <div class="three-up__right">
+                <?php
+                    $i = 0;
+                    foreach($optionPage['3-banner-trai'] as $b):
+                    $i++;
+                    $image = json_decode($b['image'], true);
+                    $imageFirst = '';
+                    if(!empty($image)){
+                        $imageFirst = array_shift($image);
+                    }
+                    if($i == 3):
+                ?>
+                <figure class="lazy two-up__image" data-src="<?= $imageFirst ?>">
+                    <a href="<?= $b['url'] ?>">
+                        <div class="three-up__content">
+                            <h3><?= $b['title'] ?></h3>
+                            <p><?= $b['description'] ?></p>
+                            <div class="three-up__right--link button__link"><span>Đọc tiếp</span><i class="fa fa-angle-right"></i></div>
+                        </div>
+                    </a>
+                </figure>
+                <?php
+                    endif;
+                    endforeach;
+                ?>
+            </div>
+        </div>
+    </section>
+<?php endif; ?>
+
+<?php if(!empty($optionPage['view_3-banner-phai'])): ?>
+    <section class="three-up three-up--two">
+        <div class="three-up__inner">
+            <div class="three-up__right">
+            <?php
+                $i = 0;
+                foreach($optionPage['3-banner-phai'] as $b):
+                $i++;
+                $image = json_decode($b['image'], true);
+                $imageFirst = '';
+                if(!empty($image)){
+                    $imageFirst = array_shift($image);
+                }
+                if($i == 1):
+            ?>
+                <figure class="lazy two-up__image" data-src="<?= $imageFirst ?>">
+                    <a href="<?= $b['url'] ?>">
+                        <div class="three-up__content">
+                            <h3><?= $b['title'] ?></h3>
+                            <p><?= $b['description'] ?></p>
+                            <div class="three-up__right--link button__link"><span>Đọc tiếp</span><i class="fa fa-angle-right"></i></div>
+                        </div>
+                    </a>
+                </figure>
+            <?php
+                endif;
+                endforeach;
+            ?>
+            </div>
+            <div class="three-up__left">
+                <?php
+                $i = 0;
+                foreach($optionPage['3-banner-phai'] as $b):
+                $i++;
+                $image = json_decode($b['image'], true);
+                $imageFirst = '';
+                if(!empty($image)){
+                    $imageFirst = array_shift($image);
+                }
+                if($i == 2):
+                ?>
+                <div class="three-up__item">
+                    <a class="three-up__link" href="<?= $b['url'] ?>">
+                        <div class="three-up__item--right">
+                            <figure class="lazy two-up__image" data-src="<?= $imageFirst ?>"></figure>
+                        </div>
+                        <div class="three-up__item--left">
+                            <div class="three-up__item--content">
+                                <h3><?= $b['title'] ?></h3>
+                                <p><?= $b['description'] ?></p>
+                                <div class="button__link"><span>Đọc tiếp</span><i class="fa fa-angle-right"></i></div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <?php
+                    endif;
+                    endforeach;
+                ?>
+                <?php
+                    $i = 0;
+                    foreach($optionPage['3-banner-phai'] as $b):
+                    $i++;
+                    $image = json_decode($b['image'], true);
+                    $imageFirst = '';
+                    if(!empty($image)){
+                        $imageFirst = array_shift($image);
+                    }
+                    if($i == 3):
+                ?>
+                <div class="three-up__item">
+                    <a class="three-up__link" href="<?= $b['url'] ?>">
+                        <figure class="three-up__left--image lazy" data-src="<?= $imageFirst ?>"></figure>
+                        <div class="three-up__item--link button__link"><span>Đọc tiếp</span><i class="fa fa-angle-right"></i></div>
+                    </a>
+                </div>
+                <?php
+                    endif;
+                    endforeach;
+                ?>
+            </div>
+        </div>
+    </section>
+<?php endif; ?>
+
+<?php if(!empty($optionPage['view_dich-vu'])): ?>
+<section class="three-up-service">
+    <h2 class="category-title"><?= !empty($optionPage['tieu-de-dich-vu']) ? $optionPage['tieu-de-dich-vu']:'Dịch vụ' ?></h2>
+    <div class="three-up-service__inner">
+        <?php
+            $i = 0;
+            foreach ($optionPage['dich-vu'] as $b):
+            $i++;
+            $image = json_decode($b['image'], true);
+            $imageFirst = '';
+            if(!empty($image)){
+                $imageFirst = array_shift($image);
+            }
+        ?>
+        <div class="three-up-service__item">
+            <figure class="lazy three-up-service__image" data-src="<?= $imageFirst ?>">
+                <div class="three-up-service__content">
+                    <span><?= '0'.$i ?></span>
+                    <h3><?= $b['title'] ?></h3>
+                    <p><?= $b['intro'] ?></p>
+                </div>
+            </figure>
+        </div>
+        <?php endforeach; ?>
+    </div>
+</section>
+<?php endif; ?>
+
+<?php if(!empty($optionPage['view_phan-hoi'])): ?>
+<section class="client">
+    <h2 class="category-title"><?= !empty($optionPage['tieu-de-phan-hoi']) ? $optionPage['tieu-de-phan-hoi']:'' ?></h2>
+    <div class="client__inner lazy" data-src="/tp/A001/img/unithumb-testimonialhomebg.jpg">
+        <ul class="client__slider owl-carousel owl-theme">
+        <?php
+            foreach ($optionPage['phan-hoi'] as $b):
+            $image = json_decode($b['image'], true);
+            $imageFirst = '';
+            if(!empty($image)){
+                $imageFirst = array_shift($image);
+            }
+        ?>
+            <li>
+                <div class="client__content">
+                    <figure class="client__image lazy two-up__image" style="background-image: url(<?= $imageFirst ?>)"></figure>
+                    <h3><?= $b['title'] ?></h3>
+                    <div><?= $b['intro'] ?></div>
+                </div>
+            </li>
+        <?php endforeach; ?>
+        </ul>
+    </div>
+</section>
+<?php endif; ?>
+
+<?php if(!empty($optionPage['view_banner-doi-tac'])): ?>
+<section class="our-client">
+    <h2 class="category-title"><?= $optionPage['tieu-de-banner-doi-tac'] ? $optionPage['tieu-de-banner-doi-tac']:'' ?></h2>
+    <div class="our-client__inner">
+        <?php
+            foreach ($optionPage['phan-hoi'] as $b):
+            $image = json_decode($b['image'], true);
+            $imageFirst = '';
+            if(!empty($image)){
+                $imageFirst = array_shift($image);
+            }
+        ?>
+        <div class="our-client__item">
+            <figure class="our-client__image lazy two-up__image" data-src="<?= $imageFirst ?>"></figure>
+        </div>
+        <?php endforeach; ?>
+    </div>
+</section>
+<?php endif; ?>
+
+<div class="footer__inner">
+    <div class="footer__maps">
+        <?php
+        if(!empty($optionPage['ban-do'])):
+            foreach ($optionPage['ban-do'] as $b):
+                $image = json_decode($b['image'], true);
+                $imageFirst = '';
+                if(!empty($image)){
+                    $imageFirst = array_shift($image);
+                }
+                ?>
+                <figure class="footer__maps--image lazy two-up__image" data-src="<?= $imageFirst ?>"></figure>
+            <?php endforeach; endif; ?>
+    </div>
+    <div class="footer__contact">
+        <h3 class="footer__title">Liên hệ với chúng tôi</h3>
+        <div class="footer__list">
+            <?php if(!empty($optionPage['dia-chi'])): ?>
+                <div class="footer__item">
+                    <i class="icon-location"></i>
+                    <?= $optionPage['dia-chi'] ?>
+                </div>
+            <?php endif; ?>
+
+            <?php if(!empty($optionPage['dien-thoai'])): ?>
+                <div class="footer__item">
+                    <i class="icon-phone1"></i>
+                    <?= $optionPage['dien-thoai'] ?>
+                </div>
+            <?php endif; ?>
+
+            <?php if(!empty($optionPage['email'])): ?>
+                <div class="footer__item">
+                    <i class="icon-mail"></i>
+                    <?= $optionPage['email'] ?>
+                </div>
+            <?php endif; ?>
+        </div>
+    </div>
+</div>

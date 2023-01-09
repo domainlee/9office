@@ -1,0 +1,51 @@
+<?php if(!empty($this->bannerList['banner-list banner']['banner-list']) || !empty($this->bannerList['2-banner-list banner']['2-banner-list'])):
+    ?>
+    <div class="NavBannerAds">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="width200">&nbsp;</div>
+                    <?php
+                    if(!empty($this->bannerList['2-banner-list banner']['2-banner-list'])){
+                        $width = '780px';
+                    }
+                    else{
+                        $width = '980px';
+                    }
+                    echo '<div class="banner" style="width:'.$width.'">';
+                    echo '<ul id="banner" class="owl-carousel owl-theme">';
+                    foreach ($this->bannerList['banner-list banner']['banner-list'] as $b) {
+                        $imageFirst = '';
+                        if (!empty(json_decode($b['image'], true))) {
+                            $imageFirst = array_shift(json_decode($b['image'], true));
+                        }
+                        ?>
+                        <li>
+                            <a href="<?= $b['url'] ?>">
+                                <figure class="owl-lazy banner-image" data-src="<?= $imageFirst ?>"></figure>
+                            </a>
+                        </li>
+                        <?php
+                    }
+                    echo '</ul></div>';
+                    ?>
+                    <?php if(!empty($this->bannerList['2-banner-list banner']['2-banner-list'])):?>
+                        <div class="width200 ADsRight">
+                            <ul>
+                                <?php
+                                    foreach($this->bannerList['2-banner-list banner']['2-banner-list'] as $b):
+                                        $imageFirst = '';
+                                        if(!empty(json_decode($b['image'], true))){
+                                            $imageFirst = array_shift(json_decode($b['image'], true));
+                                        }
+                                        ?>
+                                        <li><a href="<?= $b['url'] ?>"><figure class="lazy banner-trai" data-src="<?= $imageFirst ?>"></figure> </a> </li>
+                                    <?php endforeach;?>
+                            </ul>
+                        </div>
+                    <?php endif;?>
+                </div>
+            </div>
+        </div>
+    </div>
+<?php endif;?>

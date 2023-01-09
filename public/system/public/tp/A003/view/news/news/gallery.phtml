@@ -1,0 +1,67 @@
+<?php
+    use Home\Model\DateBase;
+    $view = $this->news;
+    $url = $this->UriParams()->getRequest()->getRequestUri();
+    $image = json_decode($view->getImage(), true);
+
+    $category = $this->NewsCategory()->getCategories();
+?>
+<section class="single-news">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="single-news__detail single-news__detail--gallery">
+                    <h1 class="single-news__title single-news__title--gallery"><?= $view->getTitle() ?></h1>
+
+                    <?php if(!empty($image)): ?>
+                        <div class="single-news__slider">
+                            <ul class="gallery__slider owl-carousel owl-theme">
+                            <?php foreach($image as $i): ?>
+                                <li>
+                                    <figure class="single-news__slider--image lazy" data-src="<?= $i ?>"></figure>
+                                </li>
+                            <?php endforeach; ?>
+                            </ul>
+                        </div>
+                    <?php endif; ?>
+
+                    <div class="single-news__profile">
+                        <div class="single-news__profile--row">
+                            <h4>Ngày tháng</h4>
+                            <p><?= DateBase::toFormat($view->getCreatedDateTime(), 'd/m/Y') ?></p>
+                        </div>
+                        <div class="single-news__profile--row">
+                            <h4>Kiểu dự án</h4>
+                            <p><?= $view->getCateName() ?></p>
+                        </div>
+                        <div class="single-news__profile--row">
+                            <h4>Khách hàng</h4>
+                            <p></p>
+                        </div>
+                        <div class="single-news__profile--row">
+                            <h4>Diện tích</h4>
+                            <p></p>
+                        </div>
+                    </div>
+
+                    <div class="single-news__relation">
+                        <?php
+                            $relation = json_decode($view->getArticleRelated(), true);
+                            if(!empty($relation)) {
+                                echo '<h2 class="single-news__relation--title">Bài viết liên quan</h2>';
+                                echo '<ul>';
+                                foreach($relation as $r) {
+                        ?>
+                            <li><i class="fa fa-caret-right"></i><a href="<?= $r['url'] ?>"><?= $r['title'] ?></a></li>
+                        <?php
+                                }
+                            echo '</ul>';
+                            }
+                        ?>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+

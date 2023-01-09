@@ -1,0 +1,66 @@
+<?php if(!empty($this->productLayout)):
+    $slider = $this->productLayout['product-slider-checkbox checkbox']['value']; ?>
+    <section class="product">
+        <div class="row">
+                <div class="col-md-12">
+                    <div class="tab-product__inner">
+                        <div class="tab-product__title">
+                            <h2>
+                                <a href="">
+                                    <?= ($this->productLayout['product-title text']['value']?:'') ?>
+                                </a>
+                            </h2>
+                        </div>
+                        <div class="tab-product__banner">
+                            <?php if(!empty($this->productLayout['sub-banner-list banner']['sub-banner-list'])): ?>
+                                <ul class='tab-product__banner-list'>
+                                <?php foreach ($this->productLayout['sub-banner-list banner']['sub-banner-list'] as $b):
+                                    $imageFirst = '';
+                                    if (!empty(json_decode($b['image'], true))) {
+                                        $imageFirst = array_shift(json_decode($b['image'], true));
+                                    }
+                                    ?>
+                                    <a href="<?= $b['url'] ?>">
+                                        <figure class="lazy banner-image el-shaking" data-src="<?= $imageFirst ?>"></figure>
+                                    </a>
+                                <?php endforeach; ?>
+                                </ul>
+                            <?php endif; ?>
+                        </div>
+                        <ul class="<?= $slider ? ' product-slider owl-carousel owl-theme' : 'tab-product__list' ?>">
+                            <?php if(!empty($this->productLayout['product-list product']['product-list'])):
+                                foreach($this->productLayout['product-list product']['product-list'] as $p):
+                                    $imageFirst = '';
+                                    if(!empty(json_decode($p['image'], true))){
+                                        $imageFirst = array_shift(json_decode($p['image'], true));
+                                    } ?>
+                                    <li class="tab-product__item">
+                                        <div class="tab-product__item--inner">
+                                            <a class="pI" href="<?= $p['url'] ?>">
+                                                <figure class="<?= $slider ? 'owl-lazy' : 'lazy' ?> product__image" data-src="<?= $imageFirst ?>">
+                                                    <button class="btnAddCart el-shaking" data-quantity="1" data-id="<?= $p['id'] ?>"><i class="fa fa-shopping-basket"></i></button>
+                                                </figure>
+                                            </a>
+                                            <h3 class="tab-product__item--title">
+                                                <a href="<?= $p['url'] ?>">
+                                                    <?= $p['title'] ?>
+                                                </a>
+                                            </h3>
+                                            <div class="product__price-cart">
+                                                <p class="product-horizontal__price">
+                                                    <?= $p['priceOld']
+                                                        ? '<span>'.number_format($p['priceOld'], 0, ',', '.').' ₫</span>'
+                                                            .'<i>'.number_format($p['price'], 0, ',', '.').' ₫</i>'
+                                                        : '<span>'.number_format($p['price'], 0, ',', '.').' ₫</span>'
+                                                            .'<i></i>' ?>
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </li>
+                                <?php endforeach; endif;?>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+    </section>
+<?php endif;?>

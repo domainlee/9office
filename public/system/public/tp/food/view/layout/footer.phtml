@@ -1,0 +1,25 @@
+<div class="footer">
+    <div class="container">
+        <div class="row" style="">
+            <h2>Tải ứng dụng miễn phí</h2>
+            <div class="appDownload"><a class="appleStore"><img src="http://www.urbanfetch.com/nkz/images/logo/google_play_180x60.png"></a><a class="googleStore"><img src="http://urbanfetch.com/nkz/images/logo/app_store_180x60.png"></a></div>
+            <ul>
+                <li><a href="/">Trang chủ</a></li>
+                <?php
+                    $category = $this->category()->getCategories();
+                    if(count($category)){
+                        foreach($category as $c){
+                            ?>
+                            <li><a href="<?= $c->getViewLink() ?>"><?= $c->getName() ?></a></li>
+                        <?php
+                        }
+                    }
+                ?>
+                <li><a href="/contact">Liên hệ</a></li>
+            </ul>
+            <div class="about">
+                <p>Foody là những chuỗi cửa hàng bán lẻ thực phẩm được kiểm duyệt an toàn và thực phẩm của thành phố</p>
+            </div>
+        </div>
+    </div>
+</div>

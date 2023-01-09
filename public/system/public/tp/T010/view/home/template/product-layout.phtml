@@ -1,0 +1,49 @@
+<?php if(!empty($this->productLayout['product-list product']['product-list'])):?>
+<section class="product">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="product-title">
+                    <?= $this->productLayout['product-title text']['value'] ? '<h2 class="titleHome">'.$this->productLayout['product-title text']['value'].'</h2>' : ''?>
+                    <?php
+                    $slider = $this->productLayout['product-slider-checkbox checkbox']['value'];
+                    if(!empty($this->productLayout['product-category productcategory'])){
+                        ?>
+                        <ul <?= $slider ? 'style="margin-right: 95px;"' : null?>>
+                            <?php
+                            foreach($this->productLayout['product-category productcategory']['product-category'] as $pc){
+                                echo '<li><a href="'.$pc['url'].'">'.$pc['title'].'</a></li>';
+                            }
+                            ?>
+                        </ul>
+                        <?php
+                    }
+                    ?>
+                </div>
+                <ul class="<?= $slider ? 'product-slider owl-carousel owl-theme' : 'lP' ?>">
+                    <?php foreach($this->productLayout['product-list product']['product-list'] as $k => $p):
+                        $image = json_decode($p['image'], true);
+                        if(!empty($image)){
+                            $imageFirst = array_shift($image);
+                        }
+                        ?>
+                        <li class="product__item">
+                            <div class="product__item--inner">
+                                <?= $p['priceOld'] ? '<div class="tag-sale">'.- round(100 - $p['priceOld']/$p['price'] * 100, 0).'%</div>' : ''?>
+                                <a class="pI" href="<?= $p['url'] ?>"><figure class="lazy image-product" data-src="<?= !empty($imageFirst) ? $imageFirst:'' ?>"></figure></a>
+                                <div class="product__info">
+                                    <h3><a href="<?= $p['url'] ?>"><?= $p['title'] ?></a></h3>
+                                    <p class="price <?= ($p['priceOld'] ? 'priceOld':null) ?>">
+                                        <?=  (!empty($p['priceOld']) ? '<span>'.number_format($p['priceOld']).'₫</span><i>'.number_format($p['price']).'₫</i>':number_format($p['price']).'₫' ) ?>
+                                    </p>
+                                    <a class="btnAddCart" data-quantity="1" data-id="<?=$p['id']?>">Mua ngay</a>
+                                </div>
+                            </div>
+                        </li>
+                    <?php endforeach; ?>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
+<?php endif;?>

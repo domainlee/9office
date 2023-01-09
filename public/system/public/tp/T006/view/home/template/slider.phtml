@@ -1,0 +1,58 @@
+<?php if(!empty($this->bannerList)):?>
+    <section class="NavBannerAds">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="NavBannerAds__inner">
+                        <div class="banner">
+                            <ul id="banner" class="owl-carousel owl-theme">
+                                <?php if(!empty($this->bannerList['banner-option-list banner'])):
+                                    foreach ($this->bannerList['banner-option-list banner']['banner-option-list'] as $b):
+                                        $imageFirst = '';
+                                        if (!empty(json_decode($b['image'], true))) {
+                                            $imageFirst = array_shift(json_decode($b['image'], true));
+                                        }
+                                        ?>
+                                        <li>
+                                            <a href="<?= $b['url'] ?>">
+                                                <figure class="owl-lazy banner-image" data-src="<?= $imageFirst ?>"></figure>
+                                            </a>
+                                        </li>
+                                    <?php endforeach;endif; ?>
+                            </ul>
+                            <ul id='banner-custom-dots' class='owl-dots owl-carousel owl-theme'>
+                                <?php foreach ($this->bannerList['banner-option-list banner']['banner-option-list'] as $b):
+                                    ?>
+                                    <li class="owl-dot">
+                                        <a href="javascript:void(0)">
+                                            <b><?= $b['title']; ?></b>
+                                            <span><?= $b['description']; ?></span>
+                                        </a>
+                                    </li>
+                                <?php endforeach; ?>
+                            </ul>
+                        </div>
+                        <?php if(!empty($this->bannerList['sub-banner-list banner']['sub-banner-list'])): ?>
+                            <div class="sub-banner">
+                                <ul>
+                                    <?php foreach ($this->bannerList['sub-banner-list banner']['sub-banner-list'] as $b):
+                                        $imageFirst = '';
+                                        if (!empty(json_decode($b['image'], true))) {
+                                            $imageFirst = array_shift(json_decode($b['image'], true));
+                                        }
+                                        ?>
+                                        <li>
+                                            <a href="<?= $b['url'] ?>">
+                                                <figure class="lazy" data-src="<?= $imageFirst ?>"></figure>
+                                            </a>
+                                        </li>
+                                    <?php endforeach; ?>
+                                </ul>
+                            </div>
+                        <?php endif; ?>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+<?php endif; ?>

@@ -1,0 +1,85 @@
+<?php if(!empty($this->galeryLayout)):?>
+<section class="four-post">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="four-post__inner">
+                    <h2 class="headline-default news__headline"><?= $this->galeryLayout['galery-title text']['value'] ? $this->galeryLayout['galery-title text']['value']:'' ?></h2>
+                    <?= $this->galeryLayout['galery-sub-title text']['value'] ? '<div class="headline-intro"><span>'.$this->galeryLayout['galery-sub-title text']['value'].'</span></div>':'' ?>
+                    <?php if(!empty($this->galeryLayout['galery-1-list banner']['galery-1-list'])):?>
+                        <div class="four-post__item">
+                        <div class="four-post__item--left">
+                            <div class="four-post__slider owl-carousel owl-theme">
+                                <?php
+                                    foreach($this->galeryLayout['galery-1-list banner']['galery-1-list'] as $k => $b):
+                                        $imageFirst = '';
+                                        $i = json_decode($b['image'], true);
+                                        if(is_array($i) && !empty($i)) {
+                                            $imageFirst = array_shift($i);
+                                        }
+                                        ?>
+                                        <div class="four-post__slider--item">
+                                            <a href="<?= $b['url'] ?>">
+                                                <figure class="four-post__slider--image lazy" style="background-image: url(<?= $imageFirst ?>)"></figure>
+                                            </a>
+                                        </div>
+                                    <?php
+                                    endforeach;
+                                ?>
+                            </div>
+                        </div>
+                        <div class="four-post__item--right">
+                            <h2 class="four-post__title"><?= $this->galeryLayout['galery-1-title text']['value'] ? $this->galeryLayout['galery-1-title text']['value'] :'' ?></h2>
+                            <div class="four-post__description">
+                                <?= $this->galeryLayout['galery-1-description textarea']['value'] ? $this->galeryLayout['galery-1-description textarea']['value'] : '' ?>
+                            </div>
+                            <?php if(!empty($this->galeryLayout['galery-1-link text']['value'])):?>
+                            <div class="four-post__button">
+                                <a class="btn-default1" href="<?= $this->galeryLayout['galery-1-link text']['value'] ?>">Chi tiết</a>
+                            </div>
+                            <?php endif;?>
+                        </div>
+                    </div>
+                    <?php endif;?>
+                    <?php if(!empty($this->galeryLayout['galery-2-list banner']['galery-2-list'])):?>
+                    <div class="four-post__item">
+                        <div class="four-post__item--right">
+                            <h2 class="four-post__title"><?= $this->galeryLayout['galery-2-title text']['value'] ? $this->galeryLayout['galery-2-title text']['value'] :'' ?></h2>
+                            <div class="four-post__description">
+                                <?= $this->galeryLayout['galery-2-description textarea']['value'] ? $this->galeryLayout['galery-2-description textarea']['value'] : '' ?>
+                            </div>
+                            <?php if(!empty($this->galeryLayout['galery-2-link text']['value'])):?>
+                                <div class="four-post__button">
+                                    <a class="btn-default1" href="<?= $this->galeryLayout['galery-2-link text']['value'] ?>">Chi tiết</a>
+                                </div>
+                            <?php endif;?>
+                        </div>
+                        <div class="four-post__item--left">
+                            <div class="four-post__slider owl-carousel owl-theme">
+                                <?php
+                                    foreach($this->galeryLayout['galery-2-list banner']['galery-2-list'] as $k => $b):
+                                        $imageFirst = '';
+                                        $i = json_decode($b['image'], true);
+                                        if(is_array($i) && !empty($i)) {
+                                            $imageFirst = array_shift($i);
+                                        }
+                                        ?>
+                                        <div class="four-post__slider--item">
+                                            <a href="<?= $b['url'] ?>">
+                                                <figure class="four-post__slider--image lazy" style="background-image: url(<?= $imageFirst ?>)"></figure>
+                                            </a>
+                                        </div>
+                                    <?php
+                                    endforeach;
+                                ?>
+                            </div>
+                        </div>
+
+                    </div>
+                    <?php endif;?>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<?php endif;?>

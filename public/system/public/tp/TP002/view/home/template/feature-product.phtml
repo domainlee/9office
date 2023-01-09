@@ -1,0 +1,30 @@
+<?php if(!empty($this->featureProduct['feature-product-list product']['feature-product-list'])):?>
+<section class="feature-product">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+
+                <div class="feature-product__inner">
+                    <?php
+                        foreach($this->featureProduct['feature-product-list product']['feature-product-list'] as $k => $p):
+                            $imgs = array_slice(json_decode($p['image'], true), 0, 2);
+                            ?>
+                        <div class="feature-product__left">
+                            <a href="<?= $p['url'] ?>">
+                                <figure class="lazy product-image" data-src="<?= !empty($imgs) ? $imgs['0']:null ?>"></figure>
+                            </a>
+                        </div>
+                        <div class="feature-product__right">
+                            <?= $this->featureProduct['feature-product-title text']['value'] ? ' <h2 class="feature-title">'.$this->featureProduct['feature-product-title text']['value'].'</h2>' : ''?>
+                            <h3 class="feature-product__title"><a href="<?= $p['url']?>"><?= $p['title'] ?></a></h3>
+                            <p class="price"><?= $p['priceOld'] ? number_format($p['priceOld']).' đ<i>'.number_format($p['price']).' đ</i>':number_format($p['price']).' đ' ?></p>
+                            <p class="feature-product__intro"><?= $p['intro']?></p>
+                            <a class="btnAddCart" data-quantity="1" data-id="<?= $p['id'] ?>">Mua ngay</a>
+                        </div>
+                        <?php endforeach; ?>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<?php endif;?>

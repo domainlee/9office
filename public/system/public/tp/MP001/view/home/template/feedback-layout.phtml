@@ -1,0 +1,50 @@
+<?php if(!empty($this->feedbackLayout['feedback-1 textarea']['value'])
+        || !empty($this->feedbackLayout['feedback-2 textarea']['value'])
+        || !empty($this->feedbackLayout['feedback-3 textarea']['value'])):?>
+    <section class="client-say" style="background-image: url('<?= $this->feedbackLayout['feedback-background file']['value']?>')">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-12">
+                    <h2 class="feature-product__title"><?= $this->feedbackLayout['feedback-title text']['value'] ? $this->feedbackLayout['feedback-title text']['value'] : ''?></h2>
+                    <span class="feature-product__title-sub"><?=$this->feedbackLayout['feedback-sub-title text']['value'] ? $this->feedbackLayout['feedback-sub-title text']['value'] : '' ?> </span>
+
+                    <div class="client-say__inner">
+                        <?php if(!empty($this->feedbackLayout['feedback-1 textarea']['value'])):?>
+                            <div class="client-say__item">
+                                <div class="client-say__avatar">
+                                    <figure class="lazy client-say__image" style="background-image: url(<?= $this->feedbackLayout['avatar-1 file']['value'] ?>)"></figure>
+                                </div>
+                                <div>
+                                    <p class="client-say__intro"><?= $this->feedbackLayout['feedback-1 textarea']['value'] ?></p>
+                                    <h3 class="client-say__name"><?= $this->feedbackLayout['name-1 text']['value'] ? $this->feedbackLayout['name-1 text']['value'] : ''?></h3>
+                                </div>
+                            </div>
+                        <?php endif;?>
+                        <?php if(!empty($this->feedbackLayout['feedback-2 textarea']['value'])):?>
+                            <div class="client-say__item">
+                                <div class="client-say__avatar">
+                                    <figure class="lazy client-say__image" style="background-image: url(<?= $this->feedbackLayout['avatar-2 file']['value'] ?>)"></figure>
+                                </div>
+                                <div>
+                                    <p class="client-say__intro"><?= $this->feedbackLayout['feedback-2 textarea']['value'] ?></p>
+                                    <h3 class="client-say__name"><?= $this->feedbackLayout['name-2 text']['value'] ? $this->feedbackLayout['name-2 text']['value'] : '' ?></h3>
+                                </div>
+                            </div>
+                        <?php endif;?>
+                        <?php if(!empty($this->feedbackLayout['feedback-3 textarea']['value'])):?>
+                            <div class="client-say__item">
+                                <div class="client-say__avatar">
+                                    <figure class="lazy client-say__image" style="background-image: url(<?= $this->feedbackLayout['avatar-3 file']['value'] ?>)"></figure>
+                                </div>
+                                <div>
+                                    <p class="client-say__intro"><?= $this->feedbackLayout['feedback-3 textarea']['value'] ?></p>
+                                    <h3 class="client-say__name"><?= $this->feedbackLayout['name-3 text']['value'] ? $this->feedbackLayout['name-3 text']['value'] : '' ?></h3>
+                                </div>
+                            </div>
+                        <?php endif;?>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+<?php endif;?>

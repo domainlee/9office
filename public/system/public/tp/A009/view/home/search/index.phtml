@@ -1,0 +1,71 @@
+<?php
+$q = $this->request->getQuery('q');
+
+$this->headTitle($this->escapeHtml($this->translate('Tìm kiếm tin tức "'.$q.'"')));
+$this->headMeta()->appendName('description', ('Tìm kiếm tin tức "'.$q.'"'));
+$this->headMeta()->appendName('keywords', ('Tìm kiếm tin tức"'.$q.'"'));
+$this->headMeta()->appendProperty('og:title', 'Tìm kiếm tin tức "'.$q.'"');
+$cs = [
+    '/tp/v1/css/n.css'
+];
+echo '<link href="'.srcLink($cs,1).'" media="screen" rel="stylesheet" type="text/css">';
+$paginator = $this->paginator;
+use Home\Model\DateBase;
+
+?>
+
+<div class="container">
+
+    <div class="row">
+        <div class="col-md-12">
+            <ul class="breadcrumb">
+                <li><a href="/">Trang chủ</a></li>
+                <li><a>Tìm kiếm với từ khóa "<?= $q ?>"</a></li>
+            </ul>
+
+            <div class="category box_view">
+                <div class="left">
+                    <?php
+                        if(count($paginator)){
+                            echo '<ul class="lNCategory">';
+                            foreach($paginator as $n){
+                                $images = $this->home()->getImages(['id' => $n->getId(), 'type' => 1]);
+                                $img = '';
+                                if(count($images)){
+                                    $c = 0;
+                                    foreach($images as $i){
+                                        $c++;
+                                        if($c == 1){
+                                            $img = '<img class="lazy" src="/tp/v1/img/grey.gif" data-original="'.$i->getOption('media')->getPictureUri().'" alt="'.$n->getTitle().'" />';
+                                        }
+                                    }
+                                }
+                                echo '<li>
+                                        <a href="'.$n->getViewLink().'">'.$img.'</a>
+                                        <div>
+                                            <h2><a href="'.$n->getViewLink().'">'.$n->getTitle().'</a></h2>
+                                            <div><span><i class="fa fa-clock-o" aria-hidden="true"></i>'.DateBase::toFormat($n->getCreatedDateTime(), 'd/m/Y').'</span></div><p>'.html_entity_decode($n->getDescription()).'</p>
+                                        </div>
+                                    </li>';
+                            }
+                            echo '</ul>';
+                            echo '<div class="paginatorProduct">';
+                            echo $this->paginationControl($this->paginator, 'Elastic', 'partial/listPage');
+                            echo '</div>';
+                        }else{
+                            echo '<p>Không có kết quả nào cho từ khóa này</p>';
+                        }
+                    ?>
+                </div>
+                <div class="right">
+                    <div class="sideBar">
+                        <?php
+                        echo $this->render('news/news/sidebar');
+                        ?>
+                    </div>
+                </div>
+                <div class="clear"></div>
+            </div>
+        </div>
+    </div>
+</div>

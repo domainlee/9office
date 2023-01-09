@@ -1,0 +1,42 @@
+<?php
+use Home\Model\DateBase;
+if(!empty($this->newsLayout['news-list article']['news-list'])):?>
+    <section class="news">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="project--title">
+                        <?= $this->newsLayout['news-small-title text']['value'] ? '<h2 class="project--title-small">'.$this->newsLayout['news-small-title text']['value'].'</h2>' : '' ?>
+                        <?= $this->newsLayout['news-big-title text']['value'] ? '<h2 class="project--title-medium">'.$this->newsLayout['news-big-title text']['value'].'</h2>' : ''?>
+                        <?= $this->newsLayout['news-sub-title text']['value'] ? '<p class="project--title-description">'.$this->newsLayout['news-sub-title text']['value'].'</p>': '' ?>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <?php $slider = $this->newsLayout['news-slider-checkbox checkbox']['value'];?>
+                    <ul class=" <?= $slider ? 'project__carousel owl-carousel owl-theme project__slider' : 'project--list'?>">
+                        <?php
+                        foreach($this->newsLayout['news-list article']['news-list'] as $k => $n):
+                            $image = json_decode($n['image'], true);
+                            if(!empty($image)){
+                                $imageFirst = array_shift($image);
+                            }
+                            ?>
+                            <li class="project--item">
+                                <a href="<?= $n['url'] ?>">
+                                    <figure class="project--image" style="background-image: url(<?= $imageFirst ?>)"></figure>
+                                </a>
+                                <h3 class="project--item-title"><a href="<?= $n['url'] ?>"><?= $n['title'] ?></a></h3>
+                                <p><?= DateBase::toFormat($n['date'], 'M d, Y') ?></p>
+                            </li>
+                        <?php
+                        endforeach;
+                        ?>
+                    </ul>
+                    <?= $this->newsLayout['news-button text']['value'] ? '<a class="project--button-view-all" href="'.$this->newsLayout['news-link text']['value'].'">'.$this->newsLayout['news-button text']['value'].'</a>' : ''?>
+                </div>
+            </div>
+        </div>
+    </section>
+<?php endif;?>

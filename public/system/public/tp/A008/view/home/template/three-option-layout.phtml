@@ -1,0 +1,54 @@
+<?php if(!empty($this->threeOptionLayout['option-title-1 text']['value']) || !empty($this->threeOptionLayout['option-title-2 text']['value']) || !empty($this->threeOptionLayout['option-title-3 text']['value'])):?>
+<section class="three-course">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="three-course__inner">
+                    <?php if(!empty($this->threeOptionLayout['option-image-1 file']['value']) || !empty($this->threeOptionLayout['option-title-1 text']['value']) || !empty($this->threeOptionLayout['option-content-1 text']['value'])): ?>
+                        <div class="three-course__item">
+                            <div>
+                                <?=$this->threeOptionLayout['option-image-1 file']['value'] ? '<img src="'.$this->threeOptionLayout['option-image-1 file']['value'].'">' : ''?>
+                            </div>
+                            <div>
+                                <h2 class="three-course__title"><?= $this->threeOptionLayout['option-title-1 text']['value'] ? $this->threeOptionLayout['option-title-1 text']['value'] : ''?></h2>
+                                <div class="three-course__intro">
+                                    <?= $this->threeOptionLayout['option-content-1 text']['value'] ? $this->threeOptionLayout['option-content-1 text']['value'] : ''?>
+                                </div>
+                                <?= $this->threeOptionLayout['option-link-1 text']['value'] ? '<a class="three-course__link" href="'.$this->threeOptionLayout['option-link-1 text']['value'].'">Xem Thêm <i class="fa fa-arrow-right"></i></a>' : ''?>
+                            </div>
+                        </div>
+                    <?php endif;?>
+                    <?php if(!empty($this->threeOptionLayout['option-image-2 file']['value']) || !empty($this->threeOptionLayout['option-title-2 text']['value']) || !empty($this->threeOptionLayout['option-content-2 text']['value'])): ?>
+                        <div class="three-course__item">
+                            <div>
+                                <?=$this->threeOptionLayout['option-image-2 file']['value'] ? '<img src="'.$this->threeOptionLayout['option-image-2 file']['value'].'">' : ''?>
+                            </div>
+                            <div>
+                                <h2 class="three-course__title"><?= $this->threeOptionLayout['option-title-2 text']['value'] ? $this->threeOptionLayout['option-title-2 text']['value'] : ''?></h2>
+                                <div class="three-course__intro">
+                                    <?= $this->threeOptionLayout['option-content-2 text']['value'] ? $this->threeOptionLayout['option-content-2 text']['value'] : ''?>
+                                </div>
+                                <?= $this->threeOptionLayout['option-link-2 text']['value'] ? '<a class="three-course__link" href="'.$this->threeOptionLayout['option-link-2 text']['value'].'">Xem Thêm <i class="fa fa-arrow-right"></i></a>' : ''?>
+                            </div>
+                        </div>
+                    <?php endif;?>
+                    <?php if(!empty($this->threeOptionLayout['option-image-3 file']['value']) || !empty($this->threeOptionLayout['option-title-3 text']['value']) || !empty($this->threeOptionLayout['option-content-3 text']['value'])): ?>
+                        <div class="three-course__item">
+                            <div>
+                                <?=$this->threeOptionLayout['option-image-3 file']['value'] ? '<img src="'.$this->threeOptionLayout['option-image-3 file']['value'].'">' : ''?>
+                            </div>
+                            <div>
+                                <h2 class="three-course__title"><?= $this->threeOptionLayout['option-title-3 text']['value'] ? $this->threeOptionLayout['option-title-3 text']['value'] : ''?></h2>
+                                <div class="three-course__intro">
+                                    <?= $this->threeOptionLayout['option-content-3 text']['value'] ? $this->threeOptionLayout['option-content-3 text']['value'] : ''?>
+                                </div>
+                                <?= $this->threeOptionLayout['option-link-3 text']['value'] ? '<a class="three-course__link" href="'.$this->threeOptionLayout['option-link-3 text']['value'].'">Xem Thêm <i class="fa fa-arrow-right"></i></a>' : ''?>
+                            </div>
+                        </div>
+                    <?php endif;?>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<?php endif;?>

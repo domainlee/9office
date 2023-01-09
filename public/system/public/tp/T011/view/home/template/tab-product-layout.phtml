@@ -1,0 +1,164 @@
+<?php if(!empty($this->tabProductLayout)):
+//    echo "<pre>"; print_r($this->tabProductLayout); die;
+    ?>
+    <div class="ProductOptionHome">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="ProductOptionHomeContent">
+                        <ul class="NavProductOption">
+                            <?php if(!empty($this->tabProductLayout["tab-product1 product"]['tab-product1'])): ?>
+                                <li><a class="active" data-tab="#tab1"><?= $this->tabProductLayout['tab1-title text']['value'] ?></a></li>
+                            <?php endif; ?>
+                            <?php if(!empty($this->tabProductLayout['tab-product2 product']['tab-product2'])): ?>
+                                <li><a  data-tab="#tab2"><?= $this->tabProductLayout['tab2-title text']['value'] ?></a></li>
+                            <?php endif; ?>
+                            <?php if(!empty($this->tabProductLayout['tab-product3 product']['tab-product3'])): ?>
+                                <li><a data-tab="#tab3"><?= $this->tabProductLayout['tab3-title text']['value'] ?></a></li>
+                            <?php endif; ?>
+                            <?php if(!empty($this->tabProductLayout['tab-product4 product']['tab-product4'])): ?>
+                                <li><a  data-tab="#tab4"><?= $this->tabProductLayout['tab4-title text']['value'] ?></a></li>
+                            <?php endif; ?>
+                        </ul>
+                        <div id="tab1" class="tab newHome active">
+                            <?php if(!empty($this->tabProductLayout['tab-product1 product']['tab-product1'])
+                                && !empty($this->tabProductLayout['tab1-title text']['value'])): ?>
+                                <div class="product-horizontal">
+                                    <?php foreach($this->tabProductLayout['tab-product1 product']['tab-product1'] as $p):
+                                        $imgs = array_slice(json_decode($p['image'], true), 0, 2); ?>
+                                        <div class="product-horizontal__item">
+                                            <div class="product-horizontal__item-inner">
+                                                <div class="product-horizontal__image-wrapper">
+                                                    <a href="<?= $p['url'] ?>">
+                                                        <figure class="lazy product-horizontal__image" data-src="<?= !empty($imgs) ? $imgs['0']:null ?>">
+                                                            <button class="btnAddCart" data-quantity="1" data-id="<?= $p['id'] ?>">
+                                                                <i class="fa fa-shopping-cart" aria-hidden="true"></i>
+                                                            </button>
+                                                        </figure>
+                                                    </a>
+                                                </div>
+                                                <div class="product-horizontal__content">
+                                                    <h3 class="product-horizontal__title"><?= $p['title'] ?></h3>
+                                                    <p class="product-horizontal__price">
+                                                        <?= $p['priceOld'] ? number_format($p['priceOld']).'₫<i>'.number_format($p['price']).'₫</i>':number_format($p['price']).'₫' ?>
+                                                        <?php if($p['priceOld']): ?>
+                                                            <span class="promote">
+                                                                -<?= round(100 - ($p['priceOld'])/$p['price']*100) ?>%
+                                                            </span>
+                                                        <?php endif; ?>
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    <?php endforeach; ?>
+                                </div>
+                            <?php endif; ?>
+                        </div>
+                        <div id="tab2" class="tab">
+                            <?php if(!empty($this->tabProductLayout['tab-product2 product']['tab-product2'])
+                                && !empty($this->tabProductLayout['tab2-title text']['value'])): ?>
+                                <div class="product-horizontal">
+                                    <?php foreach($this->tabProductLayout['tab-product2 product']['tab-product2'] as $p):
+                                        $imgs = array_slice(json_decode($p['image'], true), 0, 2); ?>
+                                        <div class="product-horizontal__item">
+                                            <div class="product-horizontal__item-inner">
+                                                <div class="product-horizontal__image-wrapper">
+                                                    <a href="<?= $p['url'] ?>">
+                                                        <figure class="lazy product-horizontal__image" data-src="<?= !empty($imgs) ? $imgs['0']:null ?>">
+                                                            <button class="btnAddCart" data-quantity="1" data-id="<?= $p['id'] ?>">
+                                                                <i class="fa fa-shopping-cart" aria-hidden="true"></i>
+                                                            </button>
+                                                        </figure>
+                                                    </a>
+                                                </div>
+                                                <div class="product-horizontal__content">
+                                                    <h3 class="product-horizontal__title"><?= $p['title'] ?></h3>
+                                                    <p class="product-horizontal__price">
+                                                        <?= $p['priceOld'] ? number_format($p['priceOld']).'₫<i>'.number_format($p['price']).'₫</i>':number_format($p['price']).'₫' ?>
+                                                        <?php if($p['priceOld']): ?>
+                                                            <span class="promote">
+                                                                -<?= round(100 - ($p['priceOld'])/$p['price']*100) ?>%
+                                                            </span>
+                                                        <?php endif; ?>
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    <?php endforeach; ?>
+                                </div>
+                            <?php endif; ?>
+                        </div>
+                        <div id="tab3" class="tab">
+                            <?php if(!empty($this->tabProductLayout['tab-product3 product']['tab-product3'])
+                                && !empty($this->tabProductLayout['tab3-title text']['value'])): ?>
+                                <div class="product-horizontal">
+                                    <?php foreach($this->tabProductLayout['tab-product3 product']['tab-product3'] as $p):
+                                        $imgs = array_slice(json_decode($p['image'], true), 0, 2); ?>
+                                        <div class="product-horizontal__item">
+                                            <div class="product-horizontal__item-inner">
+                                                <div class="product-horizontal__image-wrapper">
+                                                    <a href="<?= $p['url'] ?>">
+                                                        <figure class="lazy product-horizontal__image" data-src="<?= !empty($imgs) ? $imgs['0']:null ?>">
+                                                            <button class="btnAddCart" data-quantity="1" data-id="<?= $p['id'] ?>">
+                                                                <i class="fa fa-shopping-cart" aria-hidden="true"></i>
+                                                            </button>
+                                                        </figure>
+                                                    </a>
+                                                </div>
+                                                <div class="product-horizontal__content">
+                                                    <h3 class="product-horizontal__title"><?= $p['title'] ?></h3>
+                                                    <p class="product-horizontal__price">
+                                                        <?= $p['priceOld'] ? number_format($p['priceOld']).'₫<i>'.number_format($p['price']).'₫</i>':number_format($p['price']).'₫' ?>
+                                                        <?php if($p['priceOld']): ?>
+                                                            <span class="promote">
+                                                                -<?= round(100 - ($p['priceOld'])/$p['price']*100) ?>%
+                                                            </span>
+                                                        <?php endif; ?>
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    <?php endforeach; ?>
+                                </div>
+                            <?php endif; ?>
+                        </div>
+                        <div id="tab4" class="tab">
+                            <?php if(!empty($optionPage['san-pham-tab-4']) && !empty($optionPage['tieu-de-tab-4'])): ?>
+                                <div class="product-horizontal">
+                                    <?php foreach($optionPage['san-pham-tab-4'] as $p):
+                                        $imgs = array_slice(json_decode($p['image'], true), 0, 2); ?>
+                                        <div class="product-horizontal__item">
+                                            <div class="product-horizontal__item-inner">
+                                                <div class="product-horizontal__image-wrapper">
+                                                    <a href="<?= $p['url'] ?>">
+                                                        <figure class="lazy product-horizontal__image" data-src="<?= !empty($imgs) ? $imgs['0']:null ?>">
+                                                            <button class="btnAddCart" data-quantity="1" data-id="<?= $p['id'] ?>">
+                                                                <i class="fa fa-shopping-cart" aria-hidden="true"></i>
+                                                            </button>
+                                                        </figure>
+                                                    </a>
+                                                </div>
+                                                <div class="product-horizontal__content">
+                                                    <h3 class="product-horizontal__title"><?= $p['title'] ?></h3>
+                                                    <p class="product-horizontal__price">
+                                                        <?= $p['priceOld'] ? number_format($p['priceOld']).'₫<i>'.number_format($p['price']).'₫</i>':number_format($p['price']).'₫' ?>
+                                                        <?php if($p['priceOld']): ?>
+                                                            <span class="promote">
+                                                                -<?= round(100 - ($p['priceOld'])/$p['price']*100) ?>%
+                                                            </span>
+                                                        <?php endif; ?>
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    <?php endforeach; ?>
+                                </div>
+                            <?php endif; ?>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+<?php endif;?>

@@ -1,0 +1,61 @@
+<?php if(!empty($this->introLayout['intro-content textarea']['value']) || !empty($this->introLayout['question-title text']['value'])):?>
+    <section class="choose">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="choose__inner">
+                        <div class="choose__left">
+                            <h3 class="choose__title"><?= $this->introLayout['intro-title text']['value'] ? $this->introLayout['intro-title text']['value'] : ''?></h3>
+                            <div class="choose__intro">
+                                <?= $this->introLayout['intro-content textarea']['value'] ? $this->introLayout['intro-content textarea']['value'] : ''?>
+                            </div>
+                            <?php
+                            if(!empty($this->introLayout['intro-list-content textarea']['value'])):
+                                $text = preg_split('/\r\n|\r|\n/', $this->introLayout['intro-list-content textarea']['value']);
+                                echo '<ul class="choose__list">';
+                                ?>
+
+                                <?php
+                                for($i = 0; $i < sizeof($text); $i++){
+                                    ?>
+                                    <li><i class="fa fa-angle-right"></i><?= $text[$i] ?></li>
+                                <?php };
+                                echo '</ul>';
+                            endif;
+                            ?>
+                        </div>
+                        <div class="choose__right">
+                            <h3 class="choose__title"><?= $this->introLayout['question-title text']['value'] ? $this->introLayout['question-title text']['value']: '' ?></h3>
+                            <div class="choose__accordion">
+                                <?php if(!empty($this->introLayout['question-1 text']['value'])):?>
+                                    <div>
+                                        <h3><?= $this->introLayout['question-1 text']['value']?></h3>
+                                        <div class="choose__accordion--content"><?= $this->introLayout['answer-1 text']['value'] ? $this->introLayout['answer-1 text']['value'] : ''?></div>
+                                    </div>
+                                <?php endif;?>
+                                <?php if(!empty($this->introLayout['question-2 text']['value'])):?>
+                                    <div>
+                                        <h3><?= $this->introLayout['question-2 text']['value']?></h3>
+                                        <div class="choose__accordion--content"><?= $this->introLayout['answer-2 text']['value'] ? $this->introLayout['answer-2 text']['value'] : ''?></div>
+                                    </div>
+                                <?php endif;?>
+                                <?php if(!empty($this->introLayout['question-3 text']['value'])):?>
+                                    <div>
+                                        <h3><?= $this->introLayout['question-3 text']['value'] ? $this->introLayout['question-3 text']['value'] : ''?></h3>
+                                        <div class="choose__accordion--content"><?= $this->introLayout['answer-3 text']['value'] ? $this->introLayout['answer-3 text']['value'] : ''?></div>
+                                    </div>
+                                <?php endif;?>
+                                <?php if(!empty($this->introLayout['question-4 text']['value'])):?>
+                                    <div>
+                                        <h3><?= $this->introLayout['question-4 text']['value'] ? $this->introLayout['question-4 text']['value'] : ''?></h3>
+                                        <div class="choose__accordion--content"><?= $this->introLayout['answer-4 text']['value'] ? $this->introLayout['answer-4 text']['value'] : ''?></div>
+                                    </div>
+                                <?php endif;?>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+<?php endif;?>

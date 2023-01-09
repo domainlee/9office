@@ -1,0 +1,142 @@
+<?php
+    $this->translate('Trang chủ');
+    $this->headMeta()->appendName('description', ('Thiet ke website gia re, Thiết kế website giá rẻ, thiết kế website 300k, thiết kế website chuyên nghiệp, thiết kế website bán hàng, thiết kế website độc quyền, thiết kế website thương hiệu độc quyền, DWEB công cụ tạo website, bán hàng, giới thiệu công ty, thời trang, mỹ phẩm, kiến trúc ... Chúng tôi luôn quan tâm tới từng sản phẩm & lắng nghe khách hàng'));
+    $this->headMeta()->appendName('keywords', ('DWEB, công cụ tạo website, Thiet ke website gia re, Thiết kế website giá rẻ, thiết kế website 300k, thiết kế website chuyên nghiệp, thiết kế website bán hàng, thiết kế website độc quyền, thiết kế website thương hiệu độc quyền,'));
+
+    $this->headMeta()->appendProperty('fb:app_id', '1697190970583102');
+    $this->headMeta()->appendProperty('article:author', 'https://www.facebook.com/dwebvietnam');
+    $this->headMeta()->appendProperty('og:locale', 'vi_VN');
+    $this->headMeta()->appendProperty('og:image', 'http://dweb.vn/tp/dweb/image/dweb-thumbnail.png');
+    $this->headMeta()->appendProperty('og:url', 'http://dweb.vn');
+    $this->headMeta()->appendProperty('og:title', 'DWEB, công cụ tạo website, Thiet ke website gia re, Thiết kế website giá rẻ, thiết kế website 300k, thiết kế website chuyên nghiệp, thiết kế website bán hàng, thiết kế website độc quyền, thiết kế website thương hiệu độc quyền,');
+    $this->headMeta()->appendProperty('og:description', ('Thiet ke website gia re, Thiết kế website giá rẻ, thiết kế website 300k, thiết kế website chuyên nghiệp, thiết kế website bán hàng, thiết kế website độc quyền, thiết kế website thương hiệu độc quyền, DWEB là công cụ tạo website, bán hàng, giới thiệu công ty, thời trang, mỹ phẩm, kiến trúc ... Chúng tôi luôn quan tâm tới từng sản phẩm & lắng nghe khách hàng'));
+
+    $this->headMeta()->appendProperty('twitter:card', 'DWEB.VN');
+    $this->headMeta()->appendProperty('twitter:title', 'DWEB, công cụ tạo website, Thiet ke website gia re, Thiết kế website giá rẻ, thiết kế website 300k, thiết kế website chuyên nghiệp, thiết kế website bán hàng, thiết kế website độc quyền, thiết kế website thương hiệu độc quyền,');
+    $this->headMeta()->appendProperty('twitter:image', 'http://dweb.vn/tp/dweb/image/dweb-thumbnail.png');
+    $this->headMeta()->appendProperty('twitter:description', 'Thiet ke website gia re, Thiết kế website giá rẻ, thiết kế website 300k, thiết kế website chuyên nghiệp, thiết kế website bán hàng, thiết kế website độc quyền, thiết kế website thương hiệu độc quyền, DWEB là công cụ tạo website, bán hàng, giới thiệu công ty, thời trang, mỹ phẩm, kiến trúc ... Chúng tôi luôn quan tâm tới từng sản phẩm & lắng nghe khách hàng');
+    $optionPage = $this->home()->optionPage();
+    use Home\Model\DateBase;
+//    $storeId = $this->home()->storeId();
+?>
+
+<section class="price">
+    <div class="container">
+        <h2 class="project-title title-h2 align-center">Bảng giá</h2>
+        <div class="blog-description">
+            Bảng giá các gói sản phẩm DWEB cung cấp
+        </div>
+        <div class="price__inner">
+            <div class="price__list">
+                <div class="price__item price__item--advance">
+                    <div class="price__item-title">
+                        <h2>Nền tảng DWEB</h2>
+                        <p>Có tính phụ phí chỉnh sửa</p>
+                    </div>
+                    <div class="price__item-price">
+                        <h3>2.4 tr <span>/ năm</span></h3>
+                    </div>
+                    <div>Phí duy trì 1 năm</div>
+                    <div>Đã có hosting</div>
+                    <div>Giao diện có sẵn</div>
+                    <div>Hỗ trợ tối ưu seo onpage</div>
+                    <div>Thời gian làm việc 1 - 3 ngày</div>
+                    <div><a class="btn-d" href="http://dweb.vn" target="_blank">Đăng ký</a></div>
+                </div>
+                <div class="price__item">
+                    <div class="price__item-title">
+                        <h2>Landing page</h2>
+                        <p>Nền tảng DWEB/ Wordpress</p>
+                    </div>
+                    <div class="price__item-price">
+                        <h3>2 - 6<span>tr</span></h3>
+                    </div>
+                    <div>Thiết kế/ Clone</div>
+                    <div>Chuẩn seo onpage</div>
+                    <div>Chưa có hosting</div>
+                    <div>Chưa có tên miền</div>
+                    <div>Thời gian làm việc 3 - 7 ngày</div>
+                    <div><a class="btn-d" href="mailto:domainlee.niit@gmail.com">Gửi yêu cầu</a></div>
+                </div>
+                <div class="price__item price__item--advance">
+                    <div class="price__item-title">
+                        <h2>Clone giao diện</h2>
+                        <p>Nền tảng DWEB/ Wordpress</p>
+                    </div>
+                    <div class="price__item-price">
+                        <h3>5 - 10<span>tr</span></h3>
+                        <p></p>
+                    </div>
+                    <div>Clone site có sẵn</div>
+                    <div>Chuẩn seo onpage</div>
+                    <div>Chưa có hosting</div>
+                    <div>Chưa có tên miền</div>
+                    <div>Thời gian làm việc 7 - 15 ngày</div>
+                    <div><a class="btn-d" href="mailto:domainlee.niit@gmail.com">Gửi yêu cầu</a></div>
+                </div>
+                <div class="price__item">
+                    <div class="price__item-title">
+                        <h2>Giao diện thiết kế</h2>
+                        <p>Nền tảng DWEB/ Wordpress</p>
+                    </div>
+                    <div class="price__item-price">
+                        <h3>6 - 20<span>tr</span></h3>
+                    </div>
+                    <div>Order phòng thiết kế</div>
+                    <div>Chuẩn seo onpage</div>
+                    <div>Chưa có hosting</div>
+                    <div>Chưa có tên miền</div>
+                    <div>Thời gian làm việc 15 - 30 ngày</div>
+                    <div><a class="btn-d" href="mailto:domainlee.niit@gmail.com">Gửi yêu cầu</a></div>
+                </div>
+
+            </div>
+            <p class="price__note">
+                * Lưu ý mail <br/>
+                [Tiêu đề]: Tên gói - Seongon <br/>
+                [Nội dung]: Yêu cầu dự án
+
+            </p>
+
+        </div>
+
+    </div>
+</section>
+
+<?php if(!empty($optionPage['du-an-tieu-bieu'])): ?>
+<section class="project">
+    <div class="container">
+        <h2 class="project-title title-h2 align-center">Giao diện</h2>
+        <div class="project-description">
+            Hãy bắt đầu với một website chuẩn seo <br/>tối ưu, thân thiện với Google chỉ với 597.000 k
+        </div>
+        <div class="project-list">
+
+            <?php $i = 0; foreach ($optionPage['du-an-tieu-bieu'] as $p):
+                $i++;
+                $image = json_decode($p['image'], true);
+                if(!empty($image)){
+                    $imageFirst = array_shift($image);
+                }
+                $extraContent = json_decode($p['extraContent'], true);
+            ?>
+            <div class="project-item">
+                <div class="project-inner">
+                    <figure class="lazy project-image" data-src="http://dweb.vn<?= $imageFirst ?>"></figure>
+                    <div class="project-control">
+                        <a class="btn-d project__button-reviewer" target="_blank" href="<?= $p['intro'] ?>">Xem thử</a>
+                        <a class="btn-d project__button-detail" href="/register-<?= vnString($p['title']) ?>.html">Dùng thử</a>
+                        <h3 class="project__title"><?= $p['title'] ?></h3>
+                        <p class="project__description"><?= !empty($extraContent['mo-ta']) ? $extraContent['mo-ta']:null ?></p>
+                    </div>
+                </div>
+            </div>
+            <?php endforeach; ?>
+        </div>
+        <div class="project__button-load-more">
+            <a class="project__button-link" href="/kho-giao-dien.html">Xem tất cả</a>
+        </div>
+    </div>
+</section>
+<?php endif; ?>
+

@@ -1,0 +1,31 @@
+<?php if(!empty($this->newsLayout['news-list article']['news-list'])):?>
+<section class="five-up">
+    <div class="five-up__inner">
+        <?php if(!empty($this->newsLayout['news-image file']['value'])):?>
+            <div class="five-up__left">
+                <a href="">
+                    <figure class="five-up__image" style="background-image: url('<?= $this->newsLayout['news-image file']['value'] ?>')"></figure>
+                </a>
+
+            </div>
+        <?php endif;?>
+        <div class="five-up__right">
+            <?php
+                $icon = ['<i class="fa fa-snowflake-o" aria-hidden="true"></i>', '<i class="fa fa-gift" aria-hidden="true"></i>', '<i class="fa fa-tree" aria-hidden="true"></i>', '<i class="fa fa-heart" aria-hidden="true"></i>']
+                ?>
+                <div class="five-up__four-inner">
+                    <?php
+                    $i = 0;
+                    foreach($this->newsLayout['news-list article']['news-list'] as $k => $b):
+                        ?>
+                        <div class="five-up__item">
+                            <?= $icon[$i++]; ?>
+                            <h3><a href="<?= !empty($b['url']) ? $b['url']:null ?>"><?= !empty($b['title']) ? $b['title']:null ?></a></h3>
+                            <p><?= !empty($b['intro']) ? $b['intro']:null ?></p>
+                        </div>
+                    <?php endforeach; ?>
+                </div>
+        </div>
+    </div>
+</section>
+<?php endif;?>

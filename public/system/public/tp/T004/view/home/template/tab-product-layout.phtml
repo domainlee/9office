@@ -1,0 +1,96 @@
+<?php if(!empty($this->tabProductLayout['tab-product1 product']['tab-product1']) || !empty($this->tabProductLayout['tab-product2 product']['tab-product2']) || !empty($this->tabProductLayout['tab-product3 product']['tab-product3'])):?>
+    <div class="ProductOptionHome">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="ProductOptionHomeContent">
+                        <ul class="NavProductOption">
+                            <?php if(!empty($this->tabProductLayout['tab1-title text']['value'])): ?>
+                                <li><a class="active" data-tab="#tab1"><?= $this->tabProductLayout['tab1-title text']['value'] ?></a></li>
+                            <?php endif; ?>
+                            <?php if(!empty($this->tabProductLayout['tab2-title text']['value'])): ?>
+                                <li><a  data-tab="#tab2"><?= $this->tabProductLayout['tab2-title text']['value'] ?></a></li>
+                            <?php endif; ?>
+                            <?php if(!empty($this->tabProductLayout['tab3-title text']['value'])): ?>
+                                <li><a data-tab="#tab3"><?= $this->tabProductLayout['tab3-title text']['value'] ?></a></li>
+                            <?php endif; ?>
+                        </ul>
+                        <div id="tab1" class="tab newHome active">
+                            <?php if(!empty($this->tabProductLayout['tab-product1 product']) && !empty($this->tabProductLayout['tab1-title text']['value'])): ?>
+                                <ul class="product-list">
+                                    <?php foreach($this->tabProductLayout['tab-product1 product']['tab-product1'] as $p):
+                                        $imgs = !empty(json_decode($p['image'], true)) ? array_slice(json_decode($p['image'], true), 0, 2):null; ?>
+                                        <li class="product-item">
+                                            <div class="product-item__inner">
+                                                <div class="product_image-wrapper">
+                                                    <a href="<?= $p['url'] ?>">
+                                                        <figure class="lazy product_image" data-src="<?= !empty($imgs) ? $imgs['0']:null ?>"></figure>
+                                                    </a>
+                                                </div>
+                                                <h3 class="product-title"><a href="<?= $p['url'] ?>"><?= $p['title'] ?></a></h3>
+                                                <p class="product-price">
+                                                    <?= $p['priceOld']
+                                                        ? '<i>'.number_format($p['price']).' đ</i><span>'.number_format($p['priceOld']).' đ</span>'
+                                                        : '<i></i><span>'.number_format($p['price']).' đ</span>' ?>
+                                                </p>
+                                            </div>
+                                        </li>
+                                    <?php endforeach; ?>
+                                </ul>
+                            <?php endif; ?>
+                        </div>
+                        <div id="tab2" class="tab">
+                            <?php if(!empty($this->tabProductLayout['tab-product2 product']) && !empty($this->tabProductLayout['tab2-title text']['value'])): ?>
+                                <ul class="product-list">
+                                    <?php foreach($this->tabProductLayout['tab-product2 product']['tab-product2'] as $p):
+                                        $imgs = !empty(json_decode($p['image'], true)) ? array_slice(json_decode($p['image'], true), 0, 2):null; ?>
+                                        <li class="product-item">
+                                            <div class="product-item__inner">
+                                                <div class="product_image-wrapper">
+                                                    <a href="<?= $p['url'] ?>">
+                                                        <figure class="lazy product_image" data-src="<?= !empty($imgs) ? $imgs['0']:null ?>"></figure>
+                                                    </a>
+                                                </div>
+                                                <h3 class="product-title"><a href="<?= $p['url'] ?>"><?= $p['title'] ?></a></h3>
+                                                <p class="product-price">
+                                                    <?= $p['priceOld']
+                                                        ? '<i>'.number_format($p['price']).' đ</i><span>'.number_format($p['priceOld']).' đ</span>'
+                                                        : '<i></i><span>'.number_format($p['price']).' đ</span>' ?>
+                                                </p>
+                                            </div>
+                                        </li>
+                                    <?php endforeach; ?>
+                                </ul>
+                            <?php endif; ?>
+                        </div>
+                        <div id="tab3" class="tab">
+                            <?php if(!empty($this->tabProductLayout['tab-product3 product']) && !empty($this->tabProductLayout['tab3-title text']['value'])): ?>
+                                <ul class="product-list">
+                                    <?php foreach($this->tabProductLayout['tab-product3 product']['tab-product3'] as $p):
+                                        $imgs = !empty(json_decode($p['image'], true)) ? array_slice(json_decode($p['image'], true), 0, 2):null; ?>
+                                        <li class="product-item">
+                                            <div class="product-item__inner">
+                                                <div class="product_image-wrapper">
+                                                    <a href="<?= $p['url'] ?>">
+                                                        <figure class="lazy product_image" data-src="<?= !empty($imgs) ? $imgs['0']:null ?>"></figure>
+                                                    </a>
+                                                </div>
+                                                <h3 class="product-title"><a href="<?= $p['url'] ?>"><?= $p['title'] ?></a></h3>
+                                                <p class="product-price">
+                                                    <?= $p['priceOld']
+                                                        ? '<i>'.number_format($p['price']).' đ</i><span>'.number_format($p['priceOld']).' đ</span>'
+                                                        : '<i></i><span>'.number_format($p['price']).' đ</span>' ?>
+                                                </p>
+                                            </div>
+                                        </li>
+                                    <?php endforeach; ?>
+                                </ul>
+                            <?php endif; ?>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+<?php endif;?>

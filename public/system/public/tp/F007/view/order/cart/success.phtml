@@ -1,0 +1,35 @@
+<?php
+    $this->headTitle($this->escapeHtml($this->translate('Đặt hàng thành công')));
+    $this->headMeta()->appendName('description', ('Đặt hàng thành công'));
+    $this->headMeta()->appendName('keywords', ('Đặt hàng thành công'));
+    $this->headMeta()->appendProperty('og:title', 'Đặt hàng thành công');
+    $cs = [
+        '/tp/F007/css/p.css'
+    ];
+    echo '<link href="'.srcLink($cs,1).'" media="screen" rel="stylesheet" type="text/css">';
+?>
+<meta http-equiv="refresh" content="18;URL='/'" />
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <h1 class="titleHome1"><span>Đặt hàng thành công</span></h1>
+            <p class="success">
+                Cảm ơn bạn đã tin và sử dụng dịch vụ của chúng tôi, chúng tôi hi vọng bạn sẽ còn quay lại để sử dụng dịch vụ của chúng tôi, nếu còn bất cứ thắc mắc hoặc cần sự giúp đỡ bạn hãy gọi điện cho chúng tôi, chúng tôi trân trọng được phục vụ bạn. Một lần nữa cảm ơn bạn đã sử dụng dịch vụ của chúng tôi
+            </p>
+        </div>
+    </div>
+</div>
+<style>
+    p.success{
+        font-size: 15px;
+        width: 70%;
+        margin: 15px auto;
+        text-align: center;
+        color: #111;
+        font-weight: 300;
+    }
+    .titleHome1{
+        text-align: center;
+        margin: 50px 0 0 0;
+    }
+</style>

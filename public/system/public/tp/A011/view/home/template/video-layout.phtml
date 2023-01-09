@@ -1,0 +1,18 @@
+
+<?php if(!empty($this->videoLayout['video-url text']['value'])): ?>
+    <section class="video">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="video__inner">
+                        <h2 class="headline-default"><?= $this->videoLayout['video-title text']['value'] ? $this->videoLayout['video-title text']['value'] : ''?></h2>
+                        <?= $this->videoLayout['video-title text']['value'] ? '<div class="four-post__intro"><span>'.$this->videoLayout['video-title text']['value'].'</span></div>':'' ?>
+                        <div class="video__item">
+                            <iframe width="900" height="507" src="https://www.youtube.com/embed/<?= $this->videoLayout['video-url text']['value'] ? $this->videoLayout['video-url text']['value'] : '' ?>" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+<?php endif; ?>

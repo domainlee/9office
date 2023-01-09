@@ -1,0 +1,79 @@
+<?php
+$optionBasic = $this->home()->optionBasic();
+$optionPage = $this->home()->optionPage();
+$menuOption = $this->home()->getMenu();
+use Home\Model\DateBase;
+
+echo '<link href="'.srcLink($cs,4).'" media="screen" rel="stylesheet" type="text/css">';
+?>
+
+<footer class="footer">
+    <?php if(!empty($optionPage['view_gioi-thieu']) || !empty($optionPage['bai-viet-footer']) || !empty($menuOption['footer_menu']) || !empty($optionPage['view_thong-tin-dia-chi'])): ?>
+        <div class="footer__one">
+            <div class="container">
+                <div class="row">
+                    <ul class="footer__list">
+                        <?php if(!empty($optionPage['view_gioi-thieu'])): ?>
+                            <li>
+                                <a class="logo" href="/">
+                                    <?php if(!empty($optionBasic['logo'])): ?>
+                                        <img src="<?= $optionBasic['logo'] ?>" alt="<?= !empty($optionBasic['sologan']) ? $optionBasic['sologan']:null ?>" />
+                                    <?php endif; ?>
+                                </a>
+                                <div class="footer__content" style="margin: 10px 0 0">
+                                    <?php if(!empty($optionPage['noi-dung-gioi-thieu'])): ?>
+                                        <?= $optionPage['noi-dung-gioi-thieu'] ?>
+                                    <?php endif; ?>
+                                </div>
+                            </li>
+                        <?php endif; ?>
+                        <?php if(!empty($optionPage['view_danh-sach-lien-ket'])): ?>
+                            <li>
+                                <h3 class="footer__title"><?= $optionPage['tieu-de-danh-sach-lien-ket'] ? $optionPage['tieu-de-danh-sach-lien-ket'] : ''?></h3>
+
+                                <ul>
+                                    <?php foreach($menuOption['footer_menu'] as $m): ?>
+                                        <li <?= $url == $m['url'] ? 'class="active"':null ?>><a href="<?= $m['url'] ?>"><?= $m['name'] ?></a>
+                                        </li>
+                                    <?php endforeach; ?>
+                                </ul>
+                            </li>
+                        <?php endif; ?>
+                        <?php if(!empty($optionPage['view_thong-tin-dia-chi'])): ?>
+                            <li>
+                                <h3 class="footer__title"><?= $optionPage['tieu-de-thong-tin'] ? $optionPage['tieu-de-thong-tin'] : ''?></h3>
+
+                                <div class="footer__content">
+                                    <?= $optionPage['dia-chi'] ? $optionPage['dia-chi'] : ''?>
+                                </div>
+                                <div class="footer--design">
+                                    <ul class="footer__social">
+                                        <li><a href=""><i class="icon-social-facebook icons"></i></a></li>
+                                        <li><a href=""><i class="icon-social-twitter icons"></i></a></li>
+                                        <li><a href=""><i class="icon-social-google icons"></i></a></li>
+                                    </ul>
+                                </div>
+                            </li>
+                        <?php endif; ?>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    <?php endif;?>
+    <?php if(!empty($optionPage['view_copyright'])):?>
+        <div class="footer__two">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="footer--wrapper-copyright">
+                            <div class="footer--copyright">
+                                <?= $optionPage['copyright'] ? $optionPage['copyright'] : ''?>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    <?php endif;?>
+</footer>
+

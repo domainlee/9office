@@ -1,0 +1,43 @@
+<?php $url = $this->UriParams()->getRequest()->getRequestUri(); ?>
+<?php
+    $optionBasic = $this->home()->optionBasic();
+?>
+<header class="header">
+    <div class="container header-container">
+        <div class="header-inner">
+            <div class="header-logo">
+                <div class="logo">
+                    <a href="/">
+                        <img src="<?= $optionBasic['logo'] ?>" alt="<?= !empty($optionBasic['sologan']) ? $optionBasic['sologan']:null ?>" />
+                    </a>
+                </div>
+            </div>
+            <div class="header-nav">
+                <?php
+                $menuOption = $this->home()->getMenu();
+                ?>
+                <ul>
+                    <?php foreach($menuOption['head_menu'] as $m): ?>
+                        <li <?= $m['children'] ? 'class="navIsset"':null ?>><a href="<?= $m['url'] ?>"><?= $m['name'] ?><?= $m['children'] ? '<i class="fa fa-caret-down"></i>' : null ?></a>
+                            <?php if(!empty($m['children'])): ?>
+                                <ul class="navHome__list">
+                                    <?php foreach($m['children'] as $mm): ?>
+                                        <li <?= $mm['children'] ? 'class="navIsset"':null ?>><a href="<?= $mm['url'] ?>"><?= $mm['name'] ?></a>
+                                            <?php if(!empty($mm['children'])): ?>
+                                                <ul class="ul-level-3">
+                                                    <?php foreach ($mm['children'] as $mcc):?>
+                                                        <li><a href="<?= $mcc['url'] ?>"><?= $mcc['name'] ?></a></li>
+                                                    <?php endforeach;?>
+                                                </ul>
+                                            <?php endif;?>
+                                        </li>
+                                    <?php endforeach; ?>
+                                </ul>
+                            <?php endif; ?>
+                        </li>
+                    <?php endforeach; ?>
+                </ul>
+            </div>
+        </div>
+    </div>
+</header>

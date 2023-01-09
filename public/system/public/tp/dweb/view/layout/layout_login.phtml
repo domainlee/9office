@@ -1,0 +1,100 @@
+<?php
+echo $this->doctype();
+$optionBasic = $this->home()->optionBasic();
+$optionPage = $this->home()->optionPage();
+?>
+<html lang="en">
+    <head>
+        <?php
+            $this->translate('Trang chủ');
+
+            echo $this->headTitle('DWEB | Nền tảng website chuẩn seo của SEONGON')->setSeparator(' - ')->setAutoEscape(false);
+            $this->headMeta()->appendName('DC.language', 'scheme=utf-8 content=vi');
+            $this->headMeta()->appendName('author', 'DWEB.VN');
+            $this->headMeta()->appendName('format-detection', 'telephone=no');
+            $this->headMeta()->appendName('viewport', 'width=device-width, initial-scale=1, maximum-scale=1');
+            echo $this->headMeta();
+            echo $this->headLink(['rel' => 'shortcut icon', 'type' => 'image/vnd.microsoft.icon', 'href' => $optionBasic['favicon'] ? $optionBasic['favicon']:null ]);
+        ?>
+
+        <link href='https://fonts.googleapis.com/css?family=Roboto:300,500,700' rel='stylesheet' type='text/css'>
+        <?php
+            $cs = [
+                '/tp/dweb/css/bootstrap.css',
+                '/tp/dweb/css/font-awesome.min.css',
+                '/tp/dweb/css/animate.min.css',
+                '/tp/dweb/css/a_login.css',
+                '/tp/dweb/css/modal-video.min.css',
+                '/assets/css/icons.css',
+                '/tp/dweb/css/r.css',
+                '/assets/css/web/owl.carousel.css',
+                '/assets/css/web/owl.theme.css',
+                '/assets/css/web/owl.transitions.css',
+                '/assets/css/components.css',
+            ];
+            echo '<link href="'.srcLink($cs,5).'" media="screen" rel="stylesheet" type="text/css">';
+            $js = [
+                '/assets/js/web/jquery-1.11.2.min.js',
+            ];
+            echo '<script type="text/javascript" src="'.srcLink($js,3).'"></script>';
+        ?>
+        <!-- Facebook Pixel Code -->
+        <script>
+            !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+                n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+                n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+                t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
+                document,'script','https://connect.facebook.net/en_US/fbevents.js');
+            fbq('init', '1971198599778175'); // Insert your pixel ID here.
+            fbq('track', 'PageView');
+        </script>
+        <noscript><img height="1" width="1" style="display:none"
+                       src="https://www.facebook.com/tr?id=1971198599778175&ev=PageView&noscript=1"
+            /></noscript>
+        <!-- DO NOT MODIFY -->
+        <!-- End Facebook Pixel Code -->
+
+    </head>
+    <?php
+        $url = $this->UriParams()->getRequest()->getRequestUri();
+        $url2 = $this->home()->getMcaName('action');
+        $classPage = substr($url, 1, -5);
+    ?>
+    <body <?= $url == '/' | $url2 == 'view' | $url2 == 'viewall' ? 'class="home-page single-news"':'class="'.$classPage.'"' ?>>
+
+        <?php
+            echo $this->render('layout/header_login');
+            echo $this->content;
+            echo $this->render('layout/footer');
+        ?>
+
+    </body>
+    <?php
+        $cs = [
+            '/tp/dweb/css/r.css',
+        ];
+        echo '<link href="'.srcLink($cs,3).'" media="screen" rel="stylesheet" type="text/css">';
+        $js = [
+//            '/tp/dweb/js/jquery-1.10.1.min.js',
+            '/tp/dweb/js/bootstrap.min.js',
+            '/assets/js/web/jquery.lazy.min.js',
+            '/assets/js/web/owl.carousel.js',
+            '/tp/dweb/js/waypoint/jquery.waypoints.min.js',
+            '/tp/dweb/js/a.js',
+            '/tp/dweb/js/hero-slider/TweenLite.min.js',
+            '/tp/dweb/js/hero-slider/rAF.js',
+            '/tp/dweb/js/hero-slider/EasePack.min.js',
+            '/tp/dweb/js/hero-slider/demo-1.js',
+            '/tp/dweb/js/jquery-modal-video.min.js',
+            '/assets/plugins/parsleyjs/parsley.min.js',
+            '/tp/dweb/js/form.js',
+
+        ];
+        echo '<script type="text/javascript" src="'.srcLink($js,4).'"></script>';
+    ?>
+
+
+    <?= $this->render('layout/modal'); ?>
+
+
+</html>

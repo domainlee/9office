@@ -1,0 +1,52 @@
+<?php if(!empty($this->infoLayout['info-title-1 text']['value']) || !empty($this->infoLayout['info-title-2 text']['value']) || !empty($this->infoLayout['info-title-3 text']['value'])
+|| !empty($this->infoLayout['info-content-1 text']['value']) || !empty($this->infoLayout['info-content-2 text']['value']) || !empty($this->infoLayout['info-content-3 text']['value'])):?>
+    <section class="service">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="service__inner">
+                        <?php if(!empty($this->infoLayout['info-title-1 text']['value']) || !empty($this->infoLayout['info-content-1 text']['value'])):?>
+                        <div class="service__row">
+                            <div class="service__left">
+                                <a href="<?= $this->infoLayout['info-link-1 text']['value']?>" target="_parent">
+                                    <img src="<?= $this->infoLayout['info-image-1 file']['value']?>" alt="">
+                                </a>
+                            </div>
+                            <div class="service__right">
+                                <?= $this->infoLayout['info-title-1 text']['value'] ? '<h3><a href="'.$this->infoLayout['info-link-1 text']['value'].'">'.$this->infoLayout['info-title-1 text']['value'].'</a></h3>' : '' ?>
+                                <?= $this->infoLayout['info-content-1 text']['value'] ? '<p>'.$this->infoLayout['info-content-1 text']['value'].'</p>' : '' ?>
+                            </div>
+                        </div>
+                        <?php endif;?>
+                        <?php if(!empty($this->infoLayout['info-title-2 text']['value']) || !empty($this->infoLayout['info-content-2 text']['value'])):?>
+                        <div class="service__row">
+                            <div class="service__left">
+                                <a href="<?= $this->infoLayout['info-link-2 text']['value']?>" target="_parent">
+                                    <img src="<?= $this->infoLayout['info-image-2 file']['value']?>" alt="">
+                                </a>
+                            </div>
+                            <div class="service__right">
+                                <?= $this->infoLayout['info-title-2 text']['value'] ? '<h3><a href="'.$this->infoLayout['info-link-2 text']['value'].'">'.$this->infoLayout['info-title-2 text']['value'].'</a></h3>' : '' ?>
+                                <?= $this->infoLayout['info-content-2 text']['value'] ? '<p>'.$this->infoLayout['info-content-2 text']['value'].'</p>' : '' ?>
+                            </div>
+                        </div>
+                        <?php endif;?>
+                        <?php if(!empty($this->infoLayout['info-title-3 text']['value']) || !empty($this->infoLayout['info-content-3 text']['value'])):?>
+                        <div class="service__row">
+                            <div class="service__left">
+                                <a href="<?= $this->infoLayout['info-link-3 text']['value']?>" target="_parent">
+                                    <img src="<?= $this->infoLayout['info-image-3 file']['value']?>" alt="">
+                                </a>
+                            </div>
+                            <div class="service__right">
+                                <?= $this->infoLayout['info-title-3 text']['value'] ? '<h3><a href="'.$this->infoLayout['info-link-3 text']['value'].'">'.$this->infoLayout['info-title-3 text']['value'].'</a></h3>' : '' ?>
+                                <?= $this->infoLayout['info-content-3 text']['value'] ? '<p>'.$this->infoLayout['info-content-3 text']['value'].'</p>' : '' ?>
+                            </div>
+                        </div>
+                        <?php endif;?>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+<?php endif;?>

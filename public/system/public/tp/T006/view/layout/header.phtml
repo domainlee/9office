@@ -1,0 +1,114 @@
+<?php
+    $optionBasic = $this->home()->optionBasic();
+    $optionPage = $this->home()->optionPage();
+    $url = $this->UriParams()->getRequest()->getRequestUri();
+    $cartService = $this->cart()->getServiceCart();
+    $products = $cartService->getProducts();
+    $menuOption = $this->home()->getMenu();
+?>
+<div class="head">
+    <?php if(!empty($optionPage['view_header-1'])):?>
+        <div class="head1">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="head1__inner">
+                            <div class="head1__inner--left">
+                                <div class="head1__logo">
+                                    <a class="logo" href="/">
+                                        <?php if(!empty($optionBasic['logo'])): ?>
+                                            <img src="<?= $optionBasic['logo'] ?>" alt="<?= !empty($optionBasic['sologan']) ? $optionBasic['sologan']:null ?>" />
+                                        <?php endif; ?>
+                                    </a>
+                                </div>
+                                <div class="head1__formsearch">
+                                    <form id="search" action="/search" method="get">
+                                        <input type="text" name="q" placeholder="Tìm kiếm sản phẩm"/>
+                                        <a href="javascript:{}" onclick="document.getElementById('search').submit();"><i class="fa fa-search"></i></a>
+                                        <div id="searchFolding"></div>
+                                    </form>
+                                </div>
+                            </div>
+                            <div class="head1__inner--right">
+                                <div class="head1__menu">
+                                    <ul class="nav">
+                                        <?php
+                                        if(!empty($menuOption['header_menu'])):
+                                            foreach($menuOption['header_menu'] as $m):?>
+                                                <li <?= (!empty($m['image']) && $m['image']!= "undefined")?"":"class='text-center'" ?>>
+                                                    <a href="<?= $m['url'] ?>">
+                                                        <?php if(!empty($m['image']) && $m['image']!= "undefined"): ?>
+                                                            <figure class="lazy" data-src="<?= $m['image'] ?>"></figure>
+                                                        <?php endif; ?>
+                                                        <span><?= $m['name'] ?></span>
+                                                    </a>
+                                                    <?php if($m['children']): ?>
+                                                        <div>
+                                                            <ul class="nav2"><h2>Danh mục</h2>
+                                                                <?php foreach($m['children'] as $mc):?>
+                                                                    <li><a href="<?= $mc['url'] ?>"><?= $mc['name'] ?></a></li>
+                                                                <?php endforeach; ?>
+                                                            </ul>
+                                                        </div>
+                                                    <?php endif; ?>
+                                                </li>
+                                            <?php endforeach;endif;?>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    <?php endif;?>
+</div>
+
+<div class="slide-right">
+    <div class="slide-right__inner">
+        <a class="slide-right__close"></a>
+        <a class="slide-right__cart"><i class="fa fa-shopping-bag" aria-hidden="true"></i><p>Giỏ hàng</p><span><?= $cartService->getTotalProducts() ?></span></a>
+    </div>
+    <div class="slider-right__content">
+        <div class="slider-right__content--inner">
+            <?php
+                if(!empty($products)):
+            ?>
+                <h2>Giỏ hàng của tôi (<?= $cartService->getTotalProducts() ?>)</h2>
+                <div class="slider-right__money">
+                    <p><a href="/cart">Xem giỏ hàng</a></p>
+                    <span>Tổng tiền: </span>
+                    <strong><?= number_format($cartService->getTotalMoney()).'đ'; ?></strong>
+                </div>
+                <ul class="slider-right__product">
+                    <?php
+                        foreach ($products as $p):
+                        $imageFirst = '';
+                        if(!empty(json_decode($p->getImage(), true))){
+                            $imageFirst = array_shift(json_decode($p->getImage(), true));
+                        }
+                    ?>
+                        <li>
+                            <a href="<?= $p->getViewLink() ?>">
+                                <div class="slider-right__product--left">
+                                    <figure class="lazy slider-right__product--image" data-src="<?= $imageFirst ?>"></figure>
+                                </div>
+                                <h3><?=$p->getTitle() ?>
+                                    <p><strong><?= number_format($p->getPriceOld() ? $p->getPriceOld():$p->getPrice()).' đ' ?></strong> x <?= $p->getQuantity() ?></p>
+                                </h3>
+                            </a>
+                            <?= '<span class="deleteCart fa fa-trash-o" data-id="'.$p->getId().'" data-color="'.(isset($p->getOptions()['dataColor']) ? $p->getOptions()['dataColor']->getId():'').'" data-size="'.(isset($p->getOptions()['dataSize']) ? $p->getOptions()['dataSize']->getId():'').'"></span>' ?>
+                        </li>
+                    <?php endforeach; ?>
+                </ul>
+                <div class="slider-right__money">
+                    <span>Tổng tiền: </span>
+                    <strong><?= number_format($cartService->getTotalMoney()).'đ'; ?></strong>
+                </div>
+                <a class="slider-right__order" href="/cart/checkout">Đặt hàng</a>
+            <?php
+                endif;
+            ?>
+        </div>
+    </div>
+</div>

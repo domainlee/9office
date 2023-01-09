@@ -1,0 +1,71 @@
+<?php
+    $optionBasic = $this->home()->optionBasic();
+    $optionPage = $this->home()->optionPage();
+    $menuOption = $this->home()->getMenu();
+?>
+<?php if(!empty($optionPage['view_cot-thong-tin-footer-1']) || !empty($optionPage['view_cot-thong-tin-footer-2']) || !empty($optionPage['view_cot-thong-tin-footer-3']) || !empty($optionPage['view_cot-thong-tin-footer-4']) || !empty($optionPage['view_copyright'])): ?>
+<div class="footer w1230">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <ul class="f1">
+                    <?php if(!empty($optionPage['view_cot-thong-tin-footer-1'])):?>
+                        <li>
+                            <h3 class="title2"><?=$optionPage['tieu-de-cot-thong-tin-1'] ? $optionPage['tieu-de-cot-thong-tin-1'] : ''?></h3>
+                            <?=$optionPage['noi-dung-cot-thong-tin-1'] ? $optionPage['noi-dung-cot-thong-tin-1'] : ''?>
+                        </li>
+                    <?php endif;?>
+                    <?php if(!empty($optionPage['view_cot-thong-tin-footer-2'])):?>
+                        <li>
+                            <h3 class="title2"><?=$optionPage['tieu-de-cot-thong-tin-2'] ? $optionPage['tieu-de-cot-thong-tin-2'] : ''?></h3>
+                            <?php if(!empty($menuOption['footer_menu_2'])):?>
+                                <ul>
+                                    <?php foreach ($menuOption['footer_menu_2'] as $m):?>
+                                        <li><a href="<?= $m['url'] ?>"><?= $m['name'] ?></a></li>
+                                    <?php endforeach;?>
+                                </ul>
+                            <?php endif;?>
+                        </li>
+                    <?php endif;?>
+                    <?php if(!empty($optionPage['view_cot-thong-tin-footer-3'])):?>
+                        <li>
+                            <h3 class="title2"><?=$optionPage['tieu-de-cot-thong-tin-3'] ? $optionPage['tieu-de-cot-thong-tin-3'] : ''?></h3>
+                            <?php if(!empty($menuOption['footer_menu_3'])):?>
+                                <ul>
+                                    <?php foreach ($menuOption['footer_menu_3'] as $m):?>
+                                        <li><a href="<?= $m['url'] ?>"><?= $m['name'] ?></a></li>
+                                    <?php endforeach;?>
+                                </ul>
+                            <?php endif;?>
+                        </li>
+                    <?php endif;?>
+                    <?php if(!empty($optionPage['view_cot-thong-tin-footer-4'])):?>
+                        <li>
+                            <h3 class="title2"><?=$optionPage['tieu-de-cot-thong-tin-4'] ? $optionPage['tieu-de-cot-thong-tin-4'] : ''?></h3>
+                            <?=$optionPage['noi-dung-cot-thong-tin-footer-4'] ? $optionPage['noi-dung-cot-thong-tin-footer-4'] : ''?>
+                        </li>
+                    <?php endif;?>
+                </ul>
+            </div>
+        </div>
+        <?php if(!empty($optionPage['view_copyright'])):?>
+        <div class="row"  style="margin-top: 30px;">
+            <div class="col-md-6">
+                <p>
+                    <?=$optionPage['copyright'] ? $optionPage['copyright']: '' ?>
+                </p>
+            </div>
+            <div class="col-md-6">
+                <div class="social">
+                    <a class="fb" href="<?= !empty($optionPage['facebook']) ? $optionPage['facebook']:null ?>"></a>
+                    <a class="tw" href="<?= !empty($optionPage['twitter']) ? $optionPage['twitter']:null ?>"></a>
+                    <a class="it" href="<?= !empty($optionPage['instagram']) ? $optionPage['instagram']:null ?>"></a>
+                    <a class="pt" href="<?= !empty($optionPage['linkedin']) ? $optionPage['linkedin']:null ?>"></a>
+                    <a class="mail" href="<?= !empty($optionPage['mail']) ? $optionPage['mail']:null ?>"></a>
+                </div>
+            </div>
+        </div>
+        <?php endif;?>
+    </div>
+</div>
+<?php endif;?>

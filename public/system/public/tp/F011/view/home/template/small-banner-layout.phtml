@@ -1,0 +1,30 @@
+<section class="three-banner">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <?php
+                    echo '<ul class="feature">';
+                        $count = 0;
+                        foreach ($this->smallBannerList['small-banner-list banner']['small-banner-list'] as $k => $b) {
+                            $count++;
+                        }
+                        foreach ($this->smallBannerList['small-banner-list banner']['small-banner-list'] as $k => $b) {
+                            $image = json_decode($b['image'], true);
+                            if (!empty($image)) {
+                                $imageFirst = array_shift($image);
+                            }
+                            if($count == 1){
+                                $class = "image-feature--22";
+                            }
+                            else{
+
+                                $class = "image-feature";
+                            }
+                            echo '<li><a' . ($b['url'] ? ' href="' . $b['url'] . '"' : '') . '><figure class="lazy '.$class.'" data-src="' . (!empty($imageFirst) ? $imageFirst : null) . '"><h3 class="feature-title"><span>' . $b['title'] . '</span></h3></figure></a></li>';
+                        }
+                    echo '</ul>';
+                ?>
+            </div>
+        </div>
+    </div>
+</section>

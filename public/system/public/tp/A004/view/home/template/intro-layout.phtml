@@ -1,0 +1,34 @@
+<?php if(!empty($this->introLayout['intro-content textarea']['value']) || !empty($this->introLayout['intro-image-1 file']['value']) || !empty( $this->introLayout['intro-image-3 file']['value']) || !empty($this->introLayout['intro-image-3 file']['value'])):?>
+    <section class="feature">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="feature__list">
+                        <?php if(!empty($this->introLayout['intro-image-1 file']['value']) ):?>
+                            <div class="feature__list--item">
+                                <a href="<?= $this->introLayout['intro-image-link-1 text']['value'] ? $this->introLayout['intro-image-link-1 text']['value'] : '#'?>">
+                                    <figure class="feature__img lazy" data-src="<?= $this->introLayout['intro-image-1 file']['value']?>"></figure>
+                                </a>
+                            </div>
+                        <?php endif;?>
+                        <?php if(!empty($this->introLayout['intro-image-2 file']['value']) ):?>
+                            <div class="feature__list--item">
+                                <a href="<?= $this->introLayout['intro-image-link-2 text']['value'] ? $this->introLayout['intro-image-link-2 text']['value'] : '#'?>">
+                                    <figure class="feature__img lazy" data-src="<?= $this->introLayout['intro-image-2 file']['value']?>"></figure>
+                                </a>
+                            </div>
+                        <?php endif;?>
+                        <?php if(!empty($this->introLayout['intro-image-3 file']['value']) ):?>
+                            <div class="feature__list--item">
+                                <a href="<?= $this->introLayout['intro-image-link-3 text']['value'] ? $this->introLayout['intro-image-link-3 text']['value'] : '#'?>">
+                                    <figure class="feature__img lazy" data-src="<?= $this->introLayout['intro-image-3 file']['value']?>"></figure>
+                                </a>
+                            </div>
+                        <?php endif;?>
+                    </div>
+                    <?= $this->introLayout['intro-content textarea']['value'] ? '<div class="feature--description">'.$this->introLayout['intro-content textarea']['value'].'</div>' : ''?>
+                </div>
+            </div>
+        </div>
+    </section>
+<?php endif;?>

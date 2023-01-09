@@ -1,0 +1,339 @@
+<?php
+    echo $this->headtitle($this->escapehtml($this->translate('Danh sách sản phẩm')));
+    $domainUrl = $this->home()->getDomain();
+    $domainUrl ? $_SERVER['HTTP_HOST'] = $domainUrl:$_SERVER['HTTP_HOST'];
+    $option = $this->option;
+?>
+<input type="hidden" class="updateHomepage" />
+<div class="row">
+    <div class="col-sm-12">
+        <div class="card-box">
+            <div class="portlet-body">
+                <div id="sample_editable_1_wrapper" class="dataTables_wrapper form-inline" role="grid">
+                    <div class="btn-toolbar">
+                        <div class="btn-group focus-btn-group">
+                            <a href="/admin/product/add" class="btn btn-default waves-effect waves-light">Thêm sản phẩm</a>
+                            <a class="btn btn-white waves-effect waves-light" data-toggle="modal" data-target="#modal-import"><i class="ion-ios7-upload-outline" style="font-size: 16px;margin: 0 3px 0 0"></i> Thêm File Excel</a>
+                        </div>
+                        <div class="btn-group dropdown-btn-group pull-right">
+                            <div class="dataTables_filter mb-15">
+                                <form action="" method="get" name="ProductSearch" class="form-inline" id="ProductSearch">
+                                    <?php
+                                        $form = $this->fFilter;
+                                    ?>
+                                    <div class="form-group">
+                                        <?=$this->formelement($form->get('id')->setAttributes(['class' => 'form-control','placeholder'=>'Id']))?>
+                                    </div>
+                                    <div class="form-group">
+                                        <?=$this->formelement($form->get('title')->setAttributes(['class' => 'form-control','placeholder'=>'Tiêu đề']))?>
+                                    </div>
+                                    <div class="form-group">
+                                        <?=$this->formelement($form->get('categoryId')->setAttributes(['class' => 'form-control']))?>
+                                    </div>
+                                    <div class="form-group"><input name="submit" type="submit" class="btn btn-default " value="Tìm Kiếm"></div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <?php
+                        echo $dg = new \Admin\Dg\DgProduct ( array (
+                            'data' => $this->results->getData (),
+                            'paging' => $this->results->getPaging (),
+                            'rowCount' => $this->results->getRowCount (),
+                            'rowInPage' => $this->results->getRowInPage (),
+                            'uri' => $this->url,
+                            'url' => $this->url,
+                            'setup' => true
+                        ));
+                    ?>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div id="modal-import" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="full-width-modalLabel" aria-hidden="true" style="display: none;">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <ul class="nav nav-tabs navtab-bg nav-justified">
+                <li class="active">
+                    <a href="#file-image" data-toggle="tab" aria-expanded="false">
+                        <span class="">File Ảnh</span>
+                    </a>
+                </li>
+                <li class="">
+                    <a href="#file-excel" data-toggle="tab" aria-expanded="false">
+                        <span class="">File Excel</span>
+                    </a>
+                </li>
+            </ul>
+            <div class="tab-content">
+                <div class="tab-pane active" id="file-image">
+                    <label id="percentComplete">Lưu ý</label>
+                    <p class="text-dark m-b-30 font-13">
+                        Ảnh phải được upload trước khi import file excel.
+                    </p>
+                    <label id="percentComplete">Lưu ý ảnh nhỏ hơn 3Mb</label>
+                    <input type="file" name="imagemulti[]" class="filestyle" id="imageUpload" data-buttonText="Chọn File Ảnh" multiple="multiple">
+                </div>
+                <div class="tab-pane " id="file-excel">
+                    <label id="percentComplete">Lưu ý</label>
+                    <p class="text-dark m-b-30 font-13">
+                        Các bạn có thể import theo mẫu đính kèm sau, tất cả các trường (Tên sản phẩm, mô tả ...) không được thay đổi. Tên ảnh giống như tên ảnh bạn upload trước đó, tên ảnh cách nhau bởi đấu ",".
+                        <a target="_blank" href="https://docs.google.com/spreadsheets/d/1fPfzEKJTAO4jV7l3NBfPuV02eVy0DlV21PexzN-F4N0/edit#gid=0">Mẫu</a>
+                    </p>
+                    <label id="percentComplete">File excel</label>
+                    <div class="form-group">
+                        <input type="file" name="fileExcel" data-buttonText="Chọn File Excel" class="filestyle" id="fileName">
+                        <input type="hidden" id="data" />
+                    </div>
+                    <div class="form-group">
+                        <button type="button" id="submitImport" class="btn btn-insert btn-default waves-effect waves-light">Import</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <input type="hidden" data-value="1" id="pageImage">
+                <button type="button" class="btn" data-dismiss="modal">Đóng</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+
+<div id="modal-bell" class="modal-bell modal fade" tabindex="-1" role="dialog" aria-labelledby="full-width-modalLabel" aria-hidden="true" style="display: none;">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="tab-content">
+                <label id="percentComplete">Tiêu đề</label>
+                <div class="form-group">
+                    <input type="text" class="bell-title form-control" />
+                </div>
+                <label id="percentComplete">Nội dung</label>
+                <div class="form-group">
+                    <textarea class="bell-content form-control"></textarea>
+                </div>
+                <div class="form-group">
+                    <input type="hidden" class="bell-image" />
+                    <input type="hidden" class="bell-url" />
+                </div>
+                <div class="form-group">
+                    <button type="button" id="submitBell" class="btn btn-insert btn-default waves-effect waves-light">Gửi thông báo</button>
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn" data-dismiss="modal">Đóng</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<div id="global-admin-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="full-width-modalLabel" aria-hidden="true" style="display: none;">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <ul class="nav nav-tabs navtab-bg nav-justified">
+                <li class="active">
+                    <a href="#tab1" data-toggle="tab" aria-expanded="false">
+                        <span class="">Danh sách sản phẩm</span>
+                    </a>
+                </li>
+                <li class="">
+                    <a href="#tab2" data-toggle="tab" aria-expanded="false">
+                        <span class="">Chi tiết sản phẩm</span>
+                    </a>
+                </li>
+            </ul>
+            <div class="tab-content">
+                <div class="tab-pane active" id="tab1">
+                    <form class="formArticle">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="form-group">
+                                    <input type="hidden" name="pageProduct" value="1" />
+                                    <label class="control-label" for="metaNameProduct">Tên trang</label>
+                                    <input type="text" name="metaNameProduct" class="form-control" placeholder="Tên trang" value="<?= $option['metaNameProduct'] ?>">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="form-group">
+                                    <label class="control-label" for="metaTitleProduct">Tiêu đề</label>
+                                    <input type="text" name="metaTitleProduct" class="form-control" placeholder="Tiêu đề" value="<?= $option['metaTitleProduct'] ?>">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="form-group">
+                                    <label class="control-label" for="sologan">Từ khoá chính</label>
+                                    <input type="text" name="metaKeywordProduct" placeholder="Từ khoá chính" data-role="tagsinput" value="<?= $option['metaKeywordProduct'] ?>" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="form-group">
+                                    <label class="control-label" for="sologan">Mô tả</label>
+                                    <textarea name="metaDescriptionProduct" class="form-control" placeholder="Mô tả"><?= $option['metaDescriptionProduct'] ?></textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <hr/>
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="form-group">
+                                    <label class="control-label" for="metaNameArticle">Số sản phẩm trên trang</label>
+                                    <input type="text" name="postPerPageProduct" data-parsley-type="digits" data-parsley-length="[1,30]" data-parsley-error-message="Định dạng số" class="form-control" placeholder="Số bài viết trên trang" value="<?= $option['postPerPageProduct'] ?>">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-actions m-t-10 m-b-20">
+                            <input name="submit" type="submit" id="btnSubmit" class="btn btn-default" value="Lưu">
+                        </div>
+                    </form>
+                </div>
+                <div class="tab-pane" id="tab2">
+                    <form class="formArticle">
+                        <div class="row">
+                            <div class="col-sm-10">
+                                <p class="text-muted m-b-20">Hiển thị danh sách tags trong chi tiết sản phẩm</p>
+                            </div>
+                            <div class="col-sm-2">
+                                <div class="form-group m-b-20">
+                                    <input type="hidden" name="singleProduct" value="1" />
+                                    <input type="checkbox" <?= $option['displayTagProduct'] ? 'checked':'' ?> name="displayTagProduct" data-plugin="switchery" data-color="#5fbeaa" data-size="small">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-10">
+                                <p class="text-muted m-b-20">Hiển thị icon social chia sẻ (Facebook, Google)</p>
+                            </div>
+                            <div class="col-sm-2">
+                                <div class="form-group m-b-20">
+                                    <input type="hidden" name="singleArticle" value="1" />
+                                    <input type="checkbox" <?= $option['shareProduct'] ? 'checked':'' ?> name="shareProduct" data-plugin="switchery" data-color="#5fbeaa" data-size="small">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-10">
+                                <p class="text-muted m-b-20">Hiển thị bình luận Facebook.</p>
+                            </div>
+                            <div class="col-sm-2">
+                                <div class="form-group m-b-20">
+                                    <input type="checkbox" <?= $option['commentFacebookProduct'] ? 'checked':'' ?> name="commentFacebookProduct" data-plugin="switchery" data-color="#5fbeaa" data-size="small">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-sm-10">
+                                <p class="text-muted m-b-20">Bình luận tài khoản</p>
+                            </div>
+                            <div class="col-sm-2">
+                                <div class="form-group m-b-20">
+                                    <input type="checkbox" <?= $option['commentProduct'] ? 'checked':'' ?> name="commentProduct" data-plugin="switchery" data-color="#5fbeaa" data-size="small">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-10">
+                                <p class="text-muted m-b-20">Duyệt comment <br/>ON: Cho hiển thị comment khi người dùng comment. <br/>OFF: Người dùng comment chờ duyệt từ quản lý Website.</p>
+                            </div>
+                            <div class="col-sm-2">
+                                <div class="form-group m-b-20">
+                                    <input type="checkbox" <?= $option['statusCommentProduct'] ? 'checked':'' ?> name="statusCommentProduct" data-plugin="switchery" data-color="#5fbeaa" data-size="small">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-10">
+                                <p class="text-muted m-b-20">Hiển thị đánh giá trong sản phẩm.</p>
+                            </div>
+                            <div class="col-sm-2">
+                                <div class="form-group m-b-20">
+                                    <input type="checkbox" <?= $option['ratingProduct'] ? 'checked':'' ?> name="ratingProduct" data-plugin="switchery" data-color="#5fbeaa" data-size="small">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-10">
+                                <p class="text-muted m-b-20">Hiển thị danh sách sản phẩm liên quan. </p>
+                            </div>
+                            <div class="col-sm-2">
+                                <div class="form-group m-b-20">
+                                    <input type="checkbox" <?= $option['displayRelationProduct'] ? 'checked':'' ?> name="displayRelationProduct" data-plugin="switchery" data-color="#5fbeaa" data-size="small">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-actions m-t-10 m-b-20">
+                            <input name="submit" type="submit" id="btnSubmit" class="btn btn-default" value="Lưu">
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <input type="hidden" data-value="1" id="pageImage">
+                <button type="button" class="btn" data-dismiss="modal">Đóng</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
+<script src="https://www.gstatic.com/firebasejs/3.6.10/firebase.js"></script>
+<script type="text/javascript">
+    $(function(){
+
+    });
+</script>
+<script>
+
+    $('#submitBell').click(function(){
+        var title_ = $('.bell-title').val();
+        var content_ = $('.bell-content').val();
+        var bellImage_ = $('.bell-image').val();
+        var bellUrl_ = $('.bell-url').val();
+        console.log(title_);
+        console.log(content_);
+        console.log(bellImage_);
+        console.log(bellUrl_);
+        writeUserData(title_ , content_, bellImage_, bellUrl_);
+
+        $('.bell-title').val('');
+        $('.bell-content').val('');
+        $('.bell-image').val('');
+        $('.bell-url').val('');
+    });
+
+    var config = {
+        apiKey: "AIzaSyCgXvYT_lrPnds6w6wZjNAPdikbdNXJEQU",
+        authDomain: "agiay-e5b9e.firebaseapp.com",
+        databaseURL: "agiay-e5b9e.firebaseio.com",
+        storageBucket: "agiay-e5b9e.appspot.com",
+        messagingSenderId: "",
+    };
+    firebase.initializeApp(config);
+
+    var database = firebase.database().ref().child("bells");
+
+    function writeUserData(name, message, image, url) {
+        database.push().set({
+            title: name,
+            content: message,
+            image: image,
+            url: url
+        });
+    }
+
+
+
+</script>

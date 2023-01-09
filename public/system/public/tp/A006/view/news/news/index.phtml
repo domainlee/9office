@@ -1,0 +1,95 @@
+<?php
+    $theme = $this->NewsCategory()->featchTreeCategory(20);
+    $data = $this->paginator;
+    $data->setItemCountPerPage($this->uriParams()->getRequest()->getQuery('icpp') ? : 8);
+    $category = $this->category;
+
+    $cs = [
+        '/tp/A006/css/n.css'
+    ];
+    echo '<link href="'.srcLink($cs,1).'" media="screen" rel="stylesheet" type="text/css">';
+    $optionPage = $this->home()->optionPage();
+    $optionBasic = $this->home()->optionBasic();
+    $menuOption = $this->home()->getMenu();
+    use Home\Model\DateBase;
+?>
+<?php
+    /**** Start SEO DWEB *****/
+    $this->headTitle($this->escapeHtml($this->translate('Danh sách tin tức')));
+    $this->headMeta()->appendName('description', '');
+    $this->headMeta()->appendName('keywords', '');
+
+    $this->headMeta()->appendProperty('og:title', 'Danh sách tin tức');
+    $this->headMeta()->appendProperty('og:description', 'Danh sách tin tức');
+    $this->headMeta()->appendProperty('og:image', '');
+    $this->headMeta()->appendProperty('og:image:secure_url', '');
+    $this->headMeta()->appendProperty('og:image:width', '');
+    $this->headMeta()->appendProperty('og:image:height', '');
+    $this->headMeta()->appendProperty('og:type', 'Page');
+    $this->headMeta()->appendProperty('og:url', 'http://'.$_SERVER['HTTP_HOST'].'/bai-viet.html');
+    $this->headMeta()->appendProperty('og:site_name', $optionBasic['sologan']);
+
+    $this->headMeta()->appendName('twitter:card', '');
+    $this->headMeta()->appendName('twitter:title', 'Danh sách tin tức');
+    $this->headMeta()->appendName('twitter:description', 'Danh sách tin tức');
+    $this->headMeta()->appendName('twitter:image', '');
+    /**** End SEO DWEB *****/
+?>
+<?php
+if(!empty($data)):
+    $category2 = $this->NewsCategory()->getCategories();
+    ?>
+    <section class="category-news">
+        <div class="container">
+            <div class="row">
+                <?php
+                if(!empty($menuOption['news_sidebar']) || !empty($optionPage['view_danh-muc-sidebar-1']) || !empty($optionPage['view_danh-muc-sidebar-2']) || !empty($optionPage['view_banner-sidebar'])):
+                    echo '<div class="col-md-8">';
+                else:
+                    echo '<div class="col-md-12">';
+                endif;
+                ?>
+                    <div class="category-news__inner">
+                        <h2 class="category-news__title">Bài viết</h2>
+                        <div class="news__list">
+                            <?php
+                                $i = 0;
+                                foreach($data as $n):
+                                $i++;
+                                $image = json_decode($n->getImage(), true);
+                                $imageFirst = '';
+                                if(!empty($image)) {
+                                    $imageFirst = array_shift($image);
+                                }
+                            ?>
+                                <div class="news__item">
+                                    <div class="news__item--inner">
+                                        <div class="category-news__wrapper--image">
+                                            <a href="<?= $n->getViewLink() ?>" title="<?= $n->getTitle() ?>"><figure class="lazy news__image" title="<?= $n->getTitle() ?>" data-src="<?= $imageFirst ?>"></figure></a>
+                                        </div>
+                                        <div class="news__intro">
+                                            <h3 class="news__title"><a href="<?= $n->getViewLink() ?>"><?= $n->getTitle() ?></a></h3>
+                                            <p class="category-news__date"><?= DateBase::toFormat($n->getCreatedDateTime(), 'M d, Y') ?></p>
+                                            <div class="news__intro--sub">
+                                                <?= $n->getDescription() ?>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            <?php endforeach; ?>
+                        </div>
+                        <div class="news__paginator">
+                            <?php
+                            echo $this->paginationControl($data, 'Elastic', 'partial/listPage');
+                            ?>
+                        </div>
+                    </div>
+                </div>
+                <?php if(!empty($menuOption['news_sidebar']) || !empty($optionPage['view_danh-muc-sidebar-1']) || !empty($optionPage['view_danh-muc-sidebar-2']) || !empty($optionPage['view_banner-sidebar'])){
+                    echo $this->render('layout/sidebar');
+                } ?>
+
+            </div>
+        </div>
+    </section>
+<?php endif; ?>

@@ -1,0 +1,87 @@
+<?php
+    $product = $this->results;
+    $this->headTitle($this->escapeHtml($this->translate(html_entity_decode($product->getTitle()))));
+    $this->headMeta()->appendName('description', (html_entity_decode($product->getTitle())));
+    $this->headMeta()->appendName('keywords', (html_entity_decode($product->getTitle())));
+    $this->headMeta()->appendProperty('og:title', html_entity_decode($product->getTitle()));
+    $category = $this->category;
+    $images  = $this->images;
+
+    $prodCategory = $this->category();
+
+    $cs = [
+        '/js/cloudzoom/cloudzoom.css',
+        '/tp/food/css/p.css'
+    ];
+    echo '<link href="'.srcLink($cs,1).'" media="screen" rel="stylesheet" type="text/css">';
+    $js = [
+//        '/js/cloudzoom/cloudzoom.js',
+//        '/js/jquery.carouFredSel-6.2.1-packed.js',
+        '/tp/food/js/p.js',
+    ];
+    echo '<script type="text/javascript" src="'.srcLink($js,1).'"></script>';
+?>
+<div class="viewProduct">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <ul class="breadcrumdChild">
+                    <?php
+                        if($category->getParentId()){
+                            $cc = $prodCategory->getId($category);
+                            if($cc->getParentId()){
+                                $ccc = $prodCategory->getId($cc);
+                                if($ccc->getParentId()){
+                                    $cccc = $prodCategory->getId($ccc);
+                                }
+                            }
+                        }
+                    ?>
+                    <?= (isset($ccc) ? '<li><a href="'.$ccc->getViewLink().'">'.$ccc->getName().'</a></li>':null) ?>
+                    <li><a href="<?= $category->getViewLink(); ?>"><?= $category->getName(); ?></a></li>
+                </ul>
+                <div class="detailProduct">
+                    <div>
+                        <div class="imageViewProduct">
+                            <?php
+                                if(count($images)){
+                                    echo '<ul id="product" class="owl-carousel owl-theme">';
+                                    foreach($images as $i){
+                                        echo '<li><img src="'.$i->getOption('media')->getPictureUri().'" alt="'.$results->getTitle().'" /></li>';
+                                    }
+                                    echo '</ul>';
+                                }
+                            ?>
+                        </div>
+                        <!---- End imgZoom ---->
+                        <div class="descriptionProduct">
+                            <h1><?= $product->getTitle() ?></h1>
+                            <div class="PriceQuantityAddcart">
+                                <?php
+                                    echo '<p class="priceView"><label>Giá: </label>'.($product->getPriceOld() != 0 ? '<span>'.number_format($product->getPriceOld()).' VNĐ</span>':null).'<span class="'.($product->getPriceOld() != 0 ? 'PriceOld':null).'">'.number_format($product->getPrice()).' VNĐ</span></p>';
+//                                    echo '<p class="priceView"><label>Giá: </label><span class="price">'.number_format($product->getPrice()).' VNĐ</span>'.($product->getPriceOld() != 0 ? '<span class="priceOld">'.number_format($product->getPriceOld()).' VNĐ</span>':null).'</p>';
+                                ?>
+                                <p class="productQuantity">
+                                    <i id="QttDown">-</i>
+                                    <i id="Quantity" data-max="<?= $product->getQuantity(); ?>" data-value="1">1</i>
+                                    <i id="QttUp">+</i>
+                                </p>
+                                <p class="lAddCard">
+                                    <a class="btnAddCart" data-id="<?= $product->getId() ?>" data-color="" data-size="" data-quantity="1">Giỏ hàng</a>
+                                </p>
+                            </div>
+                            <div class="descriptionView">
+                                <h2>Mô tả</h2>
+                                <div>
+                                    <?= html_entity_decode($product->getIntro()) ?>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!---- End descriptionProduct ---->
+                </div>
+                <!---- End detailProduct ---->
+            </div>
+        </div>
+    </div>
+</div>

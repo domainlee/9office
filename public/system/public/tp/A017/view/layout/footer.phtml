@@ -1,0 +1,28 @@
+<?php
+    $optionBasic = $this->home()->optionBasic();
+    $optionPage = $this->home()->optionPage();
+?>
+<div class="footer">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="footer__inner">
+                    <div class="footer__bottom">
+                        <div class="footer__social">
+                            <a class="icon-social-youtube icons" href="<?= !empty($optionPage['youtube']) ? $optionPage['youtube']:null ?>"></a>
+                            <a class="icon-social-facebook icons" href="<?= !empty($optionPage['facebook']) ? $optionPage['facebook']:null ?>"></a>
+                            <a class="icon-social-twitter icons" href="<?= !empty($optionPage['twitter']) ? $optionPage['twitter']:null ?>"></a>
+                            <a class="icon-social-instagram icons" href="<?= !empty($optionPage['instagram']) ? $optionPage['instagram']:null ?>"></a>
+                            <a class="icon-social-pinterest icons" href="<?= !empty($optionPage['pinterest']) ? $optionPage['pinterest']:null ?>"></a>
+                        </div>
+                        <div class="footer__copyright">
+                            <?= !empty($optionPage['copyright']) ? $optionPage['copyright']:null ?>
+                            <!--<br/>
+                            Design by <a href="http://dweb.vn">DWEB.VN</a>-->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

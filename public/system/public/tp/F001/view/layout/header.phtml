@@ -1,0 +1,147 @@
+<?php
+    $optionBasic = $this->home()->optionBasic();
+?>
+<div class="head">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-3">
+                <form id="search" action="/search" method="get">
+                    <input type="text" name="q" placeholder="Tìm kiếm ..."/>
+                    <a href="javascript:{}" onclick="document.getElementById('search').submit();"><i class="fa fa-search" aria-hidden="true"></i></a>
+                    <div id="searchFolding"></div>
+                </form>
+            </div>
+            <div class="col-md-6">
+                <a id="menuMobile">
+                    <i class="icon-menu icons" aria-hidden="true"></i>
+                </a>
+                <?php if(!empty($optionBasic['logo'])): ?>
+                <div class="logo">
+                    <a href="/">
+                        <img src="<?= $optionBasic['logo'] ?>" alt="<?= !empty($optionBasic['sologan']) ? $optionBasic['sologan']:null ?>" />
+                    </a>
+                </div>
+                <?php else: ?>
+                <div class="logo">
+                    <a class="logo-text" href="/">FASHION<p>Make of style</p></a>
+                </div>
+                <?php endif; ?>
+            </div>
+            <div class="col-md-3">
+                <ul class="RegisterLogin">
+                    <?php
+                        if ($this->user()->hasIdentity()) {
+                    ?>
+                        <li><a>Xin chào: <?= $this->user()->getUser()->getFullName() ? $this->user()->getUser()->getFullName():ucfirst($this->user()->getUser()->getUserName()) ?></a></li>
+                        <li><a href="/user/signout">Thoát</a></li>
+                    <?php
+                        }else{
+                    ?>
+                        <li><a href="/user/signup">Đăng ký</a></li>
+                        <li><a href="/user/signin">Đăng nhập</a></li>
+                    <?php
+                        }
+                    ?>
+                    <?php
+                        $cartService = $this->cart()->getServiceCart();
+                        $products = $cartService->getProducts();
+                    ?>
+                    <li><a class="totalCart" href="/cart"><i class="fa fa-shopping-cart" aria-hidden="true"></i><span><?= $cartService->getTotalProducts() ?></span></a></li>
+                </ul>
+            </div>
+            <div class="col-md-12">
+                    <div class="navHome">
+                    <?php
+                        $menuOption = $this->home()->getMenu();
+                    ?>
+                    <ul>
+                        <?php
+                            if(!empty($menuOption['head_menu'])) {
+                            foreach($menuOption['head_menu'] as $m) {
+                        ?>
+                                <li>
+                                    <a href="<?= $m['url'] ?>"><?= $m['name'] ?></a>
+                                    <?php
+                                    if($m['children']){
+                                        echo '<div>';
+//                                        echo '<ul class="nav1">
+//                                            <h2>Có gì mới</h2>
+//                                            <li><a href="">Hàng mới</a></li>
+//                                            <li><a href="">OFF 30% for more than 2 items</a></li>
+//                                        </ul>';
+                                        echo '<ul class="nav3"><h2>Danh mục</h2>';
+                                        foreach($m['children'] as $mc){
+                                            ?>
+                                            <li><a href="<?= $mc['url'] ?>"><?= $mc['name'] ?></a>
+                                            <?php
+                                            if($mc['children']){
+                                                echo '<ul>';
+                                                foreach($mc['children'] as $mcc){
+                                                    ?>
+                                                    <li><a href="<?= $mcc['url'] ?>"><?= $mcc['name'] ?></a>
+                                                    <?php
+                                                }
+                                                echo '</ul>';
+                                            }
+                                            ?>
+                                            </li>
+                                            <?php
+                                        }
+                                        echo '</div>';
+                                    }
+                                ?>
+                                </li>
+                        <?php
+                            }
+                            }
+                        ?>
+                    </ul>
+                </div>
+                    <div class="navMobile">
+                    <?php
+                    $menuOption = $this->home()->getMenu();
+                    if(!empty($menuOption['head_menu'])) {
+                        ?>
+                        <ul>
+                            <?php
+                            if(!empty($menuOption['head_menu'])){
+                                foreach($menuOption['head_menu'] as $m){
+                                    ?>
+                                    <li>
+                                    <?= $m['children'] ? '<button></button>' : null ?><a href="<?= $m['url'] ?>"><?= $m['name'] ?></a>
+                                    <?php
+                                    if($m['children']){
+
+                                        echo '<ul class="nav2">';
+                                        foreach($m['children'] as $mc){
+                                            ?>
+                                            <li><?= $mc['children'] ? '<button></button>' : null ?><a href="<?= $mc['url'] ?>"><?= $mc['name'] ?></a>
+                                            <?php
+                                            if($mc['children']){
+                                                echo '<ul>';
+                                                foreach($mc['children'] as $mcc){
+                                                    ?>
+                                                    <li><a href="<?= $mcc['url'] ?>"><?= $mcc['name'] ?></a></li>
+                                                    <?php
+                                                }
+                                                echo '</ul>';
+                                            }
+                                            ?>
+                                            </li>
+                                            <?php
+                                        }
+                                        echo '</ul>';
+                                    }
+                                    ?>
+                                    </li>
+                                    <?php
+                                }
+                            }
+                            ?>
+                        </ul>
+                    <?php } ?>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

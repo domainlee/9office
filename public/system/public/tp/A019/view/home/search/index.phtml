@@ -1,0 +1,61 @@
+<?php
+$q = $this->request->getQuery('q');
+
+$this->headTitle($this->escapeHtml($this->translate('Tìm kiếm tin tức "'.$q.'"')));
+$this->headMeta()->appendName('description', ('Tìm kiếm tin tức "'.$q.'"'));
+$this->headMeta()->appendName('keywords', ('Tìm kiếm tin tức "'.$q.'"'));
+$this->headMeta()->appendProperty('og:title', 'Tìm kiếm tin tức "'.$q.'"');
+$cs = [
+    '/tp/A019/css/n.css'
+];
+echo '<link href="'.srcLink($cs,1).'" media="screen" rel="stylesheet" type="text/css">';
+
+$product = $this->paginator;
+$optionPage = $this->home()->optionPage();
+$menuOption = $this->home()->getMenu();
+?>
+<section class="lazy hero-news" data-src="https://ir.vinhomes.vn/dizi/themes/vinhome/assets/images/banner-quan-he-co-dong.jpg">
+    <h1 class="title-page">Từ khóa: "<?=$q ? $q : null?>"</h1>
+</section>
+<div class="page-news">
+    <div class="container">
+        <div class="row">
+            <?php
+            if(!empty($menuOption['sidebar_menu']) || !empty($optionPage['view_danh-muc-sidebar-1']) || !empty($optionPage['view_danh-muc-sidebar-2']) || !empty($optionPage['view_banner-sidebar'])):
+                echo '<div class="col-md-8">';
+            else:
+                echo '<div class="col-md-12">';
+            endif;
+            ?>
+                <div class="post-last__list post-last__list--category">
+                    <?php
+                    $show = $this->request->getQuery('show');
+                    if(count($product)){
+                        echo '<div class="titlePaginator"><h1 class="title">Tìm kiếm với từ khoá "'.(!empty($q) ? $q : null ).'"</h1>'.$this->paginationControl($this->paginator, 'Elastic', 'partial/listPageRemmy').'</div>';
+                        echo '<ul class="lPC">';
+                        foreach($product as $p){
+                            $image = json_decode($p->getImage(), true);
+                            if(!empty($image)){
+                                $imageFirst = array_shift($image);
+                            }
+                            echo '<li>
+                            <a class="pI" href="'.$p->getViewLink().'"><figure class="lazy image-product" data-src="'.(!empty($imageFirst) ? $imageFirst:null).'"></figure></a>
+                            <div>
+                                <h2><a href="'.$p->getViewLink().'">'. $p->getTitle().'</a></h2>
+                                <p '.($p->getPriceOld() ? 'class="oldPrice"':'').'>'.($p->getPriceOld() ? '<span>'.number_format($p->getPriceOld()).'₫</span><i>'.number_format($p->getPrice()).'₫</i>':number_format($p->getPrice()).'₫').'</p>
+                            </div>
+                        </li>';
+                        }
+                        echo '</ul>';
+                        echo $this->paginationControl($this->paginator, 'Elastic', 'partial/listPageRemmy');
+                    }
+                    else{
+                        echo '<div><h1>Không tìm thấy kết quả</h1></div>';
+                    }
+                    ?>
+                </div>
+            </div>
+        <?php echo $this->render('layout/sidebar');?>
+        </div>
+    </div>
+</div>

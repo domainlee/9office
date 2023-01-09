@@ -1,0 +1,35 @@
+<?php if(!empty($this->fourOptionLayout['option-1-title text']['value']) || !empty($this->fourOptionLayout['option-2-title text']['value']) || !empty($this->fourOptionLayout['option-3-title text']['value']) || !empty($this->fourOptionLayout['option-4-title text']['value'])):?>
+    <section class="four-option" style="background-image: url('<?= $this->fourOptionLayout['four-option-background file']['value']?>')">
+        <div class="four-option__inner">
+            <?php if(!empty($this->fourOptionLayout['option-1-title text']['value'])):?>
+                <div class="four-option__item">
+                    <?=$this->fourOptionLayout['option-1-image file']['value'] ? '<img src="'.$this->fourOptionLayout['option-1-image file']['value'].'">' : ''?>
+                    <h3><?= $this->fourOptionLayout['option-1-title text']['value'] ? $this->fourOptionLayout['option-1-title text']['value'] : ''?></h3>
+                    <span><?= $this->fourOptionLayout['option-1-content text']['value'] ? $this->fourOptionLayout['option-1-content text']['value']  : ''?></span>
+                </div>
+            <?php endif;?>
+            <?php if(!empty($this->fourOptionLayout['option-2-title text']['value'])):?>
+                <div class="four-option__item">
+                    <?=$this->fourOptionLayout['option-2-image file']['value'] ? '<img src="'.$this->fourOptionLayout['option-2-image file']['value'].'">' : ''?>
+                    <h3><?= $this->fourOptionLayout['option-2-title text']['value'] ? $this->fourOptionLayout['option-2-title text']['value'] : ''?></h3>
+                    <span><?= $this->fourOptionLayout['option-2-content text']['value'] ? $this->fourOptionLayout['option-2-content text']['value']  : ''?></span>
+                </div>
+            <?php endif;?>
+            <?php if(!empty($this->fourOptionLayout['option-3-title text']['value'])):?>
+                <div class="four-option__item">
+                    <?=$this->fourOptionLayout['option-3-image file']['value'] ? '<img src="'.$this->fourOptionLayout['option-3-image file']['value'].'">' : ''?>
+                    <h3><?= $this->fourOptionLayout['option-3-title text']['value'] ? $this->fourOptionLayout['option-3-title text']['value'] : ''?></h3>
+                    <span><?= $this->fourOptionLayout['option-3-content text']['value'] ? $this->fourOptionLayout['option-3-content text']['value']  : ''?></span>
+                </div>
+            <?php endif;?>
+            <?php if(!empty($this->fourOptionLayout['option-4-title text']['value'])):?>
+                <div class="four-option__item">
+                    <?=$this->fourOptionLayout['option-4-image file']['value'] ? '<img src="'.$this->fourOptionLayout['option-4-image file']['value'].'">' : ''?>
+                    <h3><?= $this->fourOptionLayout['option-4-title text']['value'] ? $this->fourOptionLayout['option-4-title text']['value'] : ''?></h3>
+                    <span><?= $this->fourOptionLayout['option-1-content text']['value'] ? $this->fourOptionLayout['option-1-content text']['value']  : ''?></span>
+                </div>
+            <?php endif;?>
+        </div>
+    </section>
+<?php endif;?>
+

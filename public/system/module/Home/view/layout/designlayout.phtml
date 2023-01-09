@@ -1,0 +1,59 @@
+<?php echo $this->doctype(); ?>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Hệ thống quản lý nội dung, tạo website DWEB.VN">
+    <meta name="author" content="DWEB">
+    <link rel="shortcut icon" href="/assets/images/favicon_1.ico">
+    <?= $this->headtitle(); ?>
+    <?php
+
+    $cs = [
+//        '/assets/css/bootstrap.min.css',
+        '/assets/js/design/style.css',
+        '/assets/js/design/content.css',
+        '/assets/js/design/contentbuilder.css',
+    ];
+    echo '<link href="'.srcLink($cs,5).'" media="screen" rel="stylesheet" type="text/css">';
+    echo '<script type="text/javascript" src="/assets/js/design/load-image.all.min.js"></script>';
+    ?>
+</head>
+
+<body>
+
+<div id="wrapper">
+<!--    --><?//= $this->content; ?>
+    <div class="container">
+        <div class="col-md-12">
+            <div id="contentarea" class="row">
+
+            </div>
+        </div>
+    </div>
+
+</div>
+<?php
+
+$js1 = [
+    '/assets/js/design/jquery.min.js',
+    '/assets/js/design/jquery-ui.js',
+    '/assets/js/design/plugins.js',
+//    '/assets/js/design/load-image.all.min.js',
+//    '/assets/js/design/contentbuilder.js',
+//    '/assets/js/design/builder.js',
+//    '/assets/js/design/core.js',
+];
+echo '<script type="text/javascript" src="'.srcLink($js1,7).'"></script>';
+//echo '<script type="text/javascript" src="/assets/js/design/jquery-ui.js"></script>';
+//echo '<script type="text/javascript" src="/assets/js/design/plugins.js"></script>';
+echo '<script type="text/javascript" src="/assets/js/design/load-image.all.min.js"></script>';
+echo '<script type="text/javascript" src="/assets/js/design/contentbuilder.js"></script>';
+echo '<script type="text/javascript" src="/assets/js/design/builder.js"></script>';
+echo '<script type="text/javascript" src="/assets/js/design/core.js"></script>';
+
+?>
+
+</body>
+</html>

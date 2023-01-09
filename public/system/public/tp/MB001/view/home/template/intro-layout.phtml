@@ -1,0 +1,29 @@
+<?php if(!empty($this->introLayout['intro-title text']['value']) || !empty($this->introLayout['intro-content textarea']['value'])
+|| !empty($this->introLayout['intro-image file']['value'])):?>
+    <section class="banner-one">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="banner-one__inner">
+                        <div class="banner-one__left">
+                            <div class="banner-one__content">
+                                <?= $this->introLayout['intro-title text']['value'] ? '<h2>'.$this->introLayout['intro-title text']['value'].'</h2>' : ''?>
+                                <?php if(!empty($this->introLayout['intro-content textarea']['value'])): ?>
+                                    <?= $this->introLayout['intro-content textarea']['value'] ?>
+                                    <span class="row-right"></span>
+                                <?php endif; ?>
+                            </div>
+                        </div>
+                        <?php if(!empty($this->introLayout['intro-image file']['value'])): ?>
+                            <div class="banner-one__right">
+                                <a href="<?= $this->introLayout['intro-link text']['value']?>">
+                                    <figure class="lazy banner-one__image" data-src="<?= $this->introLayout['intro-image file']['value'] ?>"></figure>
+                                </a>
+                            </div>
+                        <?php endif; ?>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+<?php endif;?>

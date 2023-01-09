@@ -1,0 +1,22 @@
+<?php if(!empty($this->productLayout['product-list product']['product-list'])):?>
+<section class="product">
+    <?= $this->productLayout['product-title text']['value'] ? '<h2 class="titleHome"><span>'.$this->productLayout['product-title text']['value'].'</span></h2>' : '' ?>
+    <?php $slider = $this->productLayout['product-slider-checkbox checkbox']['value']?>
+    <ul class="<?= $slider ? 'product-slider owl-carousel owl-theme' : 'lP' ?> product__list">
+        <?php foreach($this->productLayout['product-list product']['product-list'] as $k => $p):
+            $image = json_decode($p['image'], true);
+            if(!empty($image)){
+                $imageFirst = array_shift($image);
+            }
+            ?>
+            <li>
+                <a class="pI" href="<?= $p['url'] ?>">
+                    <figure class="lazy image-product" data-src="<?= !empty($imageFirst) ? $imageFirst:'' ?>"></figure>
+                </a>
+                <h4><a href="<?= $p['url'] ?>">Mua ngay</a></h4>
+            </li>
+        <?php endforeach; ?>
+    </ul>
+</section>
+
+<?php endif;?>

@@ -1,0 +1,71 @@
+<?php
+    $optionBasic = $this->home()->optionBasic();
+    $optionPage = $this->home()->optionPage();
+    $menuOption = $this->home()->getMenu();
+?>
+<div class="footer">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="footer__inner">
+                    <ul class="footer__top">
+                            <?php
+                                if(!empty($optionPage['view_cot-gioi-thieu-1'])):?>
+                            <li>
+                                <?php if(!empty($optionBasic['logo'])): ?>
+                                    <img src="<?= $optionBasic['logo'] ?>" alt="Fashion" />
+                                <?php endif; ?>
+                                <div class="footer__content">
+                                    <?php if(!empty($optionPage['noi-dung-gioi-thieu-1'])): ?>
+                                        <?= $optionPage['noi-dung-gioi-thieu-1'] ?>
+                                    <?php endif; ?>
+                                </div>
+                            </li>
+                            <?php endif;?>
+                            <?php if(!empty($optionPage['view_cot-gioi-thieu-2'])):?>
+                                <li>
+                                    <h3 class="footer__title"><?= $optionPage['tieu-de-gioi-thieu-2']?></h3>
+                                    <div class="footer__content">
+                                        <?php if(!empty($optionPage['noi-dung-gioi-thieu-2'])): ?>
+                                            <?= $optionPage['noi-dung-gioi-thieu-2'] ?>
+                                        <?php endif; ?>
+                                    </div>
+                                </li>
+                            <?php endif;?>
+                            <?php if(!empty($optionPage['view_danh-muc-footer']) && !empty($menuOption['footer_menu'])):?>
+                                <li>
+                                    <h3 class="footer__title"><?= $optionPage['tieu-de-danh-muc-footer']?></h3>
+                                    <div class="footer__content">
+                                        <?php foreach($menuOption['footer_menu'] as $m): ?>
+                                            <p <?= $url == $m['url'] ? 'class="active"':null ?>><a href="<?= $m['url'] ?>"><?= $m['name'] ?></a></p>
+                                        <?php endforeach; ?>
+                                    </div>
+                                </li>
+                            <?php endif;?>
+
+                        </ul>
+                    <?php if(!empty($optionPage['view_mang-xa-hoi']) || !empty($optionPage['view_copyright'])):?>
+                        <div class="footer__bottom">
+                            <?php if(!empty($optionPage['view_mang-xa-hoi'])):?>
+                                <div class="footer__social">
+                                    <a class="icon-social-youtube icons" href="<?= !empty($optionPage['youtube']) ? $optionPage['youtube']:null ?>"></a>
+                                    <a class="icon-social-facebook icons" href="<?= !empty($optionPage['facebook']) ? $optionPage['facebook']:null ?>"></a>
+                                    <a class="icon-social-twitter icons" href="<?= !empty($optionPage['twitter']) ? $optionPage['twitter']:null ?>"></a>
+                                    <a class="icon-social-instagram icons" href="<?= !empty($optionPage['instagram']) ? $optionPage['instagram']:null ?>"></a>
+                                    <a class="icon-social-pinterest icons" href="<?= !empty($optionPage['pinterest']) ? $optionPage['pinterest']:null ?>"></a>
+                                </div>
+                            <?php endif;?>
+                            <?php if(!empty($optionPage['view_copyright'])):?>
+                                <div class="footer__copyright">
+                                    <?= !empty($optionPage['copyright']) ? $optionPage['copyright']:null ?>
+                                    <!--<br/>
+                                    Design by <a href="http://dweb.vn">DWEB.VN</a>-->
+                                </div>
+                            <?php endif;?>
+                        </div>
+                    <?php endif;?>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

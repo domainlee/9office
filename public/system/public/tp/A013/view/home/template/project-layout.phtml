@@ -1,0 +1,34 @@
+<?php if(!empty($this->projectLayout['project-list banner']['project-list'])):?>
+<section class="feature-project">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <?= $this->projectLayout['project-title text']['value'] ? '<h2 class="headline-default feature-project__headline">'.$this->projectLayout['project-title text']['value'].'</h2>' : ''?>
+                <?= $this->projectLayout['project-sub-title text']['value'] ? '<div class="four-post__intro"><span>'.$this->projectLayout['project-sub-title text']['value'].'</span></div>':'' ?>
+                <?php $slider = $this->projectLayout['product-slider-checkbox checkbox']['value']?>
+                <div class="feature-project__inner">
+                    <ul class="<?= $slider ? 'feature-project__slider owl-carousel owl-theme' : 'feature-project__list' ?>">
+                        <?php
+                            foreach($this->projectLayout['project-list banner']['project-list'] as $k => $b):
+                                $imageFirst = '';
+                                $i = json_decode($b['image'], true);
+                                if(is_array($i) && !empty($i)) {
+                                    $imageFirst = array_shift($i);
+                                }
+                                ?>
+                                <li class="feature-project__item">
+                                    <a href="<?= $b['url'] ?>">
+                                        <figure class="feature-project__image" style="background-image: url(<?= $imageFirst ?>)" data-src="<?= $imageFirst ?>"></figure>
+                                        <h3 class="feature-product__title"><?= $b['title'] ?></h3>
+                                    </a>
+                                </li>
+                            <?php
+                            endforeach;
+                        ?>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<?php endif;?>

@@ -1,0 +1,41 @@
+<?php if(!empty($this->productLayout['product-list product']['product-list'])):
+    $slider = $this->productLayout['product-slider-checkbox checkbox']['value']; ?>
+    <section class="product">
+        <div class="tab-product__inner">
+            <div class="tab-product__title">
+                <?php
+                ?>
+                <h2>
+                    <a href="">
+                        <?= ($this->productLayout['product-title text']['value']?:'') ?>
+                    </a>
+                </h2>
+            </div>
+            <ul class="<?= $slider ? ' product-slider owl-carousel owl-theme' : 'tab-product__list' ?>">
+                <?php
+                    foreach($this->productLayout['product-list product']['product-list'] as $p):
+                        $imageFirst = '';
+                        if(!empty(json_decode($p['image'], true))){
+                            $imageFirst = array_shift(json_decode($p['image'], true));
+                        } ?>
+                        <li class="tab-product__item">
+                            <div class="tab-product__item--inner">
+                                <a class="pI" href="<?= $p['url'] ?>">
+                                    <figure class="lazy product__image" data-src="<?= $imageFirst ?>"></figure>
+                                </a>
+                                <h3 class="tab-product__item--title"><?= $p['title'] ?></h3>
+                                <div class="product__price-cart">
+                                    <p class="product-horizontal__price">
+                                        <?= $p['priceOld']
+                                            ? '<i>'.number_format($p['price']).' đ</i><span>'.number_format($p['priceOld']).' đ</span>'
+                                            : '<i></i><span>'.number_format($p['price']).' đ</span>' ?>
+                                    </p>
+                                    <a class="btnAddCart" data-quantity="1" data-id="<?= $p['id'] ?>"><i class="fa fa-shopping-cart"></i></a>
+                                </div>
+                            </div>
+                        </li>
+                    <?php endforeach;?>
+            </ul>
+        </div>
+    </section>
+<?php endif;?>

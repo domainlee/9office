@@ -1,0 +1,47 @@
+<?php
+use Home\Model\DateBase;
+if(!empty($this->newsLayout['news-list article']['news-list']) || !empty($this->newsLayout['news-title text']['value'])):?>
+<section class="news">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <?= $this->newsLayout['news-title text']['value'] ? '<h2 class="titleHome">'.$this->newsLayout['news-title text']['value'].'</h2>' : '' ?>
+                <?php $slider = $this->newsLayout['news-slider-checkbox checkbox']['value']?>
+                <ul class="<?= $slider ? 'news-slider owl-carousel owl-theme' : 'lN' ?> news__list">
+                    <?php
+                    foreach($this->newsLayout['news-list article']['news-list'] as $k => $n):
+                        $image = json_decode($n['image'], true);
+                        if(!empty($image)){
+                            $imageFirst = array_shift($image);
+                        }
+                        ?>
+                        <li>
+                            <a href="<?= $n['url'] ?>"><figure class="lazy image-article" data-src="<?= !empty($imageFirst) ? $imageFirst:'' ?>"></figure></a>
+                            <h3><a href="<?= $n['url'] ?>"><?= $n['title'] ?></a></h3>
+                            <p class="news__date"><i class="fa fa-clock-o"></i><?= DateBase::toFormat($n['date'], 'M d, Y') ?></p>
+                            <p class="news__intro">
+                                <?php
+                                $s = substr($n['intro'],0,100);
+                                $rs = substr($s,0,strrpos($s, ' '));
+                                if(strlen($n['intro']) > 100):
+                                    echo $rs;
+                                    echo '...';
+                                else:
+                                    echo $n['intro'];
+                                endif;
+
+                                ?>
+                            </p>
+                            <div class="news__button">
+                                <a href="<?= $n['url'] ?>">Đọc tiếp</a>
+                            </div>
+                        </li>
+                        <?php
+                    endforeach;
+                    ?>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
+<?php endif;?>

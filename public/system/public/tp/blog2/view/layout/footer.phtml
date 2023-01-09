@@ -1,0 +1,57 @@
+<?php
+    $optionPage = $this->home()->optionPage();
+?>
+<footer class="footer">
+    <div class="footer__one">
+        <div class="container">
+            <div class="footer__inner">
+                <div class="footer__row">
+                    <h2 class="footer__logo header-sologan"><span class="logo-first-key">D</span>WEB.</h2>
+                    <div class="footer__caption">DWEB được viết tắt trong từ Difference Web, chúng tôi áp dụng những kỹ năng, sự khéo léo và tỉ mỉ đến từng dự án và phấn đấu để cung cấp giải pháp thiết kế sáng tạo, luôn muốn mang đến sự trải nghiệm khách hàng trong những sản phẩm mà chúng tôi tạo nên</div>
+                </div>
+                <div class="footer__row">
+                    <h2 class="footer__title">Chia sẻ</h2>
+                    <ul class="footer__nav">
+                        <?php if(!empty($optionPage['chia-se'])): ?>
+                            <?php echo $optionPage['chia-se']; else: ?>
+                            <li><a href="/thiet-ke-web-gia-re-n356.html">Thiết kế web giá rẻ</a></li>
+                            <li><a href="#">Ý kiến khách hàng</a></li>
+                            <li><a href="#">Tuyển dụng DWEB</a></li>
+                            <li><a href="#">Quy định sử dụng</a></li>
+                            <li><a href="#">Chính sách bảo mật</a></li>
+                            <li><a href="#">Liên hệ</a></li>
+                        <?php endif; ?>
+                    </ul>
+                </div>
+                <div class="footer__row">
+                    <h2 class="footer__title">Giao diện</h2>
+                    <?php $theme = $this->NewsCategory()->getStoreDWEB(20); ?>
+                    <ul class="footer__nav">
+                        <?php $url = $this->UriParams()->getRequest()->getRequestUri(); ?>
+                        <?php if(!empty($theme)): ?>
+                            <?php foreach($theme as $t): ?>
+                                <li><a target="_blank" <?= $url == $t->getViewLink() ? 'class="active"':null ?> href="http://dweb.vn<?= $t->getViewLink() ?>"><?= $t->getName() ?></a></li>
+                            <?php endforeach; ?>
+                        <?php endif; ?>
+                    </ul>
+                </div>
+                <div class="footer__row">
+                    <h2 class="footer__title">Dịch vụ</h2>
+                    <ul class="footer__nav">
+                        <li><a href="#">Đăng ký tên miền</a></li>
+                        <li><a href="#">Dịch vụ email</a></li>
+                        <li><a href="#">Quảng cáo Google Adwords</a></li>
+                        <li><a href="#">Quảng cáo facebook</a></li>
+                        <li><a href="#">Thiết kế web đa ngành</a></li>
+                    </ul>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div class="footer__two">
+        <div class="container">
+            <div class="footer__copyright">© Copyright 2017. All rights reserved. <a href="">DWEB.VN</a></div>
+        </div>
+    </div>
+</footer>

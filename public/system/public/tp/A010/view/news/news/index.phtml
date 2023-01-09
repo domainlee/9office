@@ -1,0 +1,148 @@
+<?php
+    $theme = $this->NewsCategory()->featchTreeCategory(20);
+    $data = $this->paginator;
+    $data->setItemCountPerPage($this->uriParams()->getRequest()->getQuery('icpp') ? : 8);
+    $category = $this->category;
+
+    $cs = [
+        '/tp/A008/css/n.css'
+    ];
+    echo '<link href="'.srcLink($cs,1).'" media="screen" rel="stylesheet" type="text/css">';
+
+    $this->headTitle($this->escapeHtml($this->translate('Bài viết')));
+    $this->headMeta()->appendName('description', ('Bài viết'));
+    $this->headMeta()->appendName('keywords', ('Bài viết'));
+    $this->headMeta()->appendProperty('og:title', 'Bài viết');
+    $optionPage = $this->home()->optionPage();
+    use Home\Model\DateBase;
+?>
+
+<?php
+if(!empty($data)):
+    $category2 = $this->NewsCategory()->getCategories();
+    ?>
+    <section class="category-news">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-8">
+                    <div class="category-news__inner">
+                        <h2 class="category-news__title">Bài viết</h2>
+                        <div class="news__list">
+                            <?php
+                                $i = 0;
+                                foreach($data as $n):
+                                $i++;
+                                $image = json_decode($n->getImage(), true);
+                                $imageFirst = '';
+                                if(!empty($image)) {
+                                    $imageFirst = array_shift($image);
+                                }
+                            ?>
+                                <div class="news__item">
+                                    <div class="news__item--inner">
+                                        <div class="category-news__wrapper--image">
+                                            <a href="<?= $n->getViewLink() ?>" title="<?= $n->getTitle() ?>"><figure class="lazy news__image" title="<?= $n->getTitle() ?>" data-src="<?= $imageFirst ?>"></figure></a>
+                                        </div>
+                                        <div class="news__intro">
+                                            <h2 class="news__title"><a href="<?= $n->getViewLink() ?>"><?= $n->getTitle() ?></a></h2>
+                                            <p class="category-news__date"><?= DateBase::toFormat($n->getCreatedDateTime(), 'M d, Y') ?></p>
+                                            <div class="news__intro--sub">
+                                                <?= $n->getDescription() ?>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            <?php endforeach; ?>
+                        </div>
+                        <div class="news__paginator">
+                            <?php
+                            echo $this->paginationControl($data, 'Elastic', 'partial/listPage');
+                            ?>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="sidebar">
+                        <div class="sidebar__box">
+                            <h2 class="sidebar__title">Tìm kiếm</h2>
+                            <form>
+                                <input type="text" placeholder="Tìm kiếm ..." />
+                            </form>
+                        </div>
+                        <div class="sidebar__box">
+                            <h2 class="sidebar__title">Danh mục</h2>
+                            <ul class="news__list-category">
+                                <?php if(!empty($category2)): ?>
+                                    <?php foreach($category2 as $t): ?>
+                                        <li><a href="<?= $t->getViewLink() ?>"><i class="fa fa-angle-right"></i><?= $t->getName() ?></a></li>
+                                    <?php endforeach; ?>
+                                <?php endif; ?>
+                            </ul>
+                        </div>
+                        <?php if(!empty($optionPage['bai-viet-gan-day-sidebar'])): ?>
+                            <div class="sidebar__box">
+                                <h2 class="sidebar__title">Bài viết gần đây</h2>
+                                <ul class="sidebar__news">
+                                    <?php foreach($optionPage['bai-viet-gan-day-sidebar'] as $n):
+                                        $image = json_decode($n['image'], true);
+                                        if(!empty($image)) {
+                                            $imageFirst = array_shift($image);
+                                        }
+                                        ?>
+                                        <li>
+                                            <div class="sidebar__wrapper--image"><a href="<?= $n['url'] ?>"><figure class="lazy sidebar__image" data-src="<?= $imageFirst ?>"></figure></a></div>
+                                            <div class="sidebar__content">
+                                                <a href="<?= $n['url'] ?>"><?= $n['title'] ?></a>
+                                                <p><?= DateBase::toFormat($n['date'], 'M d, Y') ?></p>
+                                            </div>
+                                        </li>
+                                    <?php endforeach; ?>
+                                </ul>
+                            </div>
+                        <?php endif; ?>
+
+                        <?php if(!empty($optionPage['nhieu-nguoi-quan-tam'])): ?>
+                            <div class="sidebar__box">
+                                <h2 class="sidebar__title">Nhiều người xem</h2>
+                                <ul class="sidebar__news">
+                                    <?php foreach($optionPage['nhieu-nguoi-quan-tam'] as $n):
+                                        $image = json_decode($n['image'], true);
+                                        if(!empty($image)) {
+                                            $imageFirst = array_shift($image);
+                                        }
+                                        ?>
+                                        <li>
+                                            <div class="sidebar__wrapper--image"><a href="<?= $n['url'] ?>"><figure class="lazy sidebar__image" data-src="<?= $imageFirst ?>"></figure></a></div>
+                                            <div class="sidebar__content">
+                                                <a href="<?= $n['url'] ?>"><?= $n['title'] ?></a>
+                                                <p><?= DateBase::toFormat($n['date'], 'M d, Y') ?></p>
+                                            </div>
+                                        </li>
+                                    <?php endforeach; ?>
+                                </ul>
+                            </div>
+                        <?php endif; ?>
+
+                        <?php if(!empty($optionPage['quang-cao-sidebar'])): ?>
+                            <div class="sidebar__box">
+                                <?php foreach($optionPage['quang-cao-sidebar'] as $n):
+                                    $image = json_decode($n['image'], true);
+                                    if(!empty($image)) {
+                                        $imageFirst = array_shift($image);
+                                    }
+                                    ?>
+                                    <a href="<?= $n['url'] ?>">
+                                        <img src="<?= $imageFirst ?>" title="<?= $n['title'] ?>" />
+                                    </a>
+                                <?php endforeach; ?>
+                            </div>
+                        <?php endif; ?>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+<?php endif; ?>

@@ -1,0 +1,32 @@
+<?php
+    $optionBasic = $this->home()->optionBasic();
+    if($optionBasic['displayTagArticle'] || $optionBasic['displayTagProduct']):
+    $this->tag;
+    $style = $this->style;
+    $type = $this->type;
+    if(!empty($this->tag)) {
+        $this->tag = explode(',', $this->tag);
+    }
+    if($type == 1) {
+        $host = 'http://'.$_SERVER['HTTP_HOST'].'/san-pham.html?tag=';
+    } elseif ($type == 2) {
+        $host = 'http://'.$_SERVER['HTTP_HOST'].'/bai-viet.html?tag=';
+    }
+?>
+<style>
+    <?= $style ?>
+</style>
+<?php
+    $cs = [
+        '/assets/css/web/tagArticle.css',
+    ];
+    echo '<link href="'.srcLink($cs,4).'" media="screen" rel="stylesheet" type="text/css">';
+?>
+<?php if(!empty($this->tag)): ?>
+    <div class="tag-list">
+        <?php foreach ($this->tag as $t): ?>
+            <a href="<?= $host.$t?>" target="_blank"><?= '#'.$t ?></a>
+        <?php endforeach; ?>
+    </div>
+<?php endif; ?>
+<?php endif; ?>

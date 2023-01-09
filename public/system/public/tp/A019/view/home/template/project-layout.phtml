@@ -1,0 +1,77 @@
+<?php if(!empty($this->projectLayout)):?>
+<section class="feature-project">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="headline">
+                    <h2 class="headline-default feature-project__headline wp1"><span><?= $this->projectLayout['project-title text']['value'] ? $this->projectLayout['project-title text']['value'] : ''?></span></h2>
+                    <?= $this->projectLayout['project-sub-title text']['value'] ? '<div class="headline-intro">'.$this->projectLayout['project-sub-title text']['value'].'</div>':null ?>
+                </div>
+                <div class="feature-project__inner">
+
+                    <?php
+                    if(!empty($this->projectLayout['project-list banner'])):
+                        $c = 0;
+                        foreach($this->projectLayout['project-list banner']['project-list'] as $k => $b):
+                            $c++;
+                            $imageFirst = '';
+                            $i = json_decode($b['image'], true);
+                            if(is_array($i) && !empty($i)) {
+                                $imageFirst = array_shift($i);
+                            }
+                            if($c == 1):
+                                ?>
+                                <div class="feature-project__item wp2">
+                                    <a href="<?= $b['url'] ?>">
+                                        <figure class="feature-project__image lazy" data-src="<?= $imageFirst ?>">
+                                            <div class="feature-project__item--info">
+                                                <h3 class="feature-product__title"><?= $b['title'] ?></h3>
+                                                <div class="news__button">
+                                                    <button class="btn-default1">Chi tiết</button>
+                                                </div>
+                                            </div>
+                                        </figure>
+                                    </a>
+                                </div>
+
+                                <div class="feature-project__item--middle">
+                            <?php elseif ($c == 2 || $c == 3): ?>
+                                <div class="feature-project__item wp<?=$c+1?>">
+
+                                    <a href="<?= $b['url']?>">
+                                        <figure class="feature-project__image feature-project__image--50 lazy" data-src="<?= $imageFirst ?>">
+                                            <div class="feature-project__item--info">
+                                                <h3 class="feature-product__title"><?= $b['title'] ?></h3>
+                                                <div class="news__button">
+                                                    <button class="btn-default1">Chi tiết</button>
+                                                </div>
+                                            </div>
+                                        </figure>
+                                    </a>
+                                </div>
+                            <?php elseif ($c == 4): ?>
+                                </div>
+
+                                <div class="feature-project__item wp5">
+                                    <a href="<?= $b['url'] ?>">
+                                        <figure class="feature-project__image lazy" data-src="<?= $imageFirst ?>">
+                                            <div class="feature-project__item--info">
+                                                <h3 class="feature-product__title"><?= $b['title'] ?></h3>
+                                                <div class="news__button">
+                                                    <button class="btn-default1">Chi tiết</button>
+                                                </div>
+                                            </div>
+                                        </figure>
+                                    </a>
+                                </div>
+                            <?php
+                            endif;
+                        endforeach;
+                    endif;
+                    ?>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<?php endif;?>

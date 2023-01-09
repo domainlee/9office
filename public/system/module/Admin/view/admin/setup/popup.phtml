@@ -1,0 +1,77 @@
+<?php
+    echo $this->headtitle($this->escapehtml($this->translate('Cài đặt popup')));
+    $form = $this->form;
+    $value = $this->value;
+?>
+
+<form method="post" enctype="multipart/form-data" data-parsley-validate novalidate>
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="card-box ">
+                <ol class="breadcrumb p-t-0 m-b-0">
+                    <li>
+                        <a class="header-title" href="/admin/setup"><i class="ion-reply"></i> Cấu hình</a>
+                    </li>
+                </ol>
+                <p class="text-muted m-b-15 font-13">
+                    Quản lý popup và nội dung popup.
+                </p>
+                <hr/>
+                <div class="row">
+                    <div class="col-sm-6">
+
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="form-group m-b-30 form-group__popup">
+                                    <label class="control-label">Ảnh</label>
+                                    <div class="imgLogo">
+                                        <?php if(!empty($value['popup_image'])): ?>
+                                            <img class="img-responsive img-thumbnail" src="<?= $value['popup_image'] ?>" />
+                                        <?php endif; ?>
+                                    </div>
+                                    <input type="file" id="popup_image" class="filestyle" data-buttonText="Chọn ảnh" data-buttonname="btn-white" data-iconname="fa fa-cloud-upload">
+                                    <input type="hidden" name="popup_image" class="popup_image" value="<?= !empty($value['popup_image']) ? $value['popup_image']:'' ?>" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="form-group">
+                                    <label class="control-label" for="sologan">URL Popup</label>
+                                    <?= $this->formelement($form->get('popup_url')->setAttributes(['class' => 'form-control', 'placeholder'=>'Đường dẫn'])) ?>
+                                </div>
+                            </div>
+                        </div>
+                        <hr/>
+                        <div class="row">
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label class="control-label">Mở nhiều lần</label>
+                                    <?= $this->formelement($form->get('popup_display')->setAttributes(['class' => 'popup_display form-control', 'data-plugin' => 'switchery', 'data-color' => '#5fbeaa', 'data-size' => 'small'])) ?>
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label class="control-label">Size Vừa/Lớn</label>
+                                    <?= $this->formelement($form->get('popup_size')->setAttributes(['class' => 'popup_size form-control', 'data-plugin' => 'switchery', 'data-color' => '#5fbeaa', 'data-size' => 'small'])) ?>
+                                </div>
+                            </div>
+
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label class="control-label">Tắt/ Bật</label>
+                                    <?= $this->formelement($form->get('popup_setup')->setAttributes(['class' => 'popup_setup form-control', 'data-plugin' => 'switchery', 'data-color' => '#5fbeaa', 'data-size' => 'small'])) ?>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-actions m-t-10">
+                            <?=$this->formelement($form->get('submit')->setAttributes(['class' => 'btn btn-default']))?>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

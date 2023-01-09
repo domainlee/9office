@@ -1,0 +1,17 @@
+
+<?php if(!empty($this->videoLayout)): ?>
+    <section class="video lazy" <!--data-src="/tp/dweb/image/back.jpg"-->
+        <div class="container">
+            <div class="headline">
+                <h2 class="headline-default video__headline"><span><?= $this->videoLayout['video-title text']['value'] ? $this->videoLayout['video-title text']['value'] : ''?></span></h2>
+                <?= $this->videoLayout['video-title text']['value'] ? '<div class="headline-intro"><span>'.$this->videoLayout['video-title text']['value'].'</span></div>':'' ?>
+            </div>
+            <div class="video__inner">
+                <div class="pulsation wp1">
+                    <a class="video__button" data-video-id="<?= $this->videoLayout['video-url text']['value'] ? $this->videoLayout['video-url text']['value'] :'8Ux3NCnE3Lk' ?>"></a>
+                </div>
+            </div>
+
+        </div>
+    </section>
+<?php endif; ?>

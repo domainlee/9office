@@ -1,0 +1,47 @@
+<?php if(!empty($this->sliderProductLayout['slider-product-list product']['slider-product-list'])):?>
+    <section class="hot-product">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="hot-product__inner">
+                    <?= $this->sliderProductLayout['slider-product-title text']['value'] ? '<h2 class="title">'.$this->sliderProductLayout['slider-product-title text']['value'].'</h2>' : '' ?>
+                    <ul class="hot-product__list owl-carousel owl-theme">
+                        <?php
+                            foreach($this->sliderProductLayout['slider-product-list product']['slider-product-list'] as $k => $p):
+                                $imgs = array_slice(json_decode($p['image'], true), 0, 2);
+                                ?>
+                                <li class="hot-product__item">
+                                    <div class="hot-product__item--inner">
+                                        <div class="hot-product__left">
+                                            <div class="hot-product__image--wrapper">
+                                                <a href="<?= $p['url'] ?>">
+                                                    <figure class="lazy two-up__product-image" data-src="<?= !empty($imgs) ? $imgs['0']:null ?>"></figure>
+                                                    <figure class="lazy two-up__product-image two-up__product-image__two" data-src="<?= !empty($imgs) ? $imgs['1']:null ?>"></figure>
+                                                </a>
+                                            </div>
+                                        </div>
+                                        <div class="hot-product__right">
+                                            <h3 class="hot-product__title"><?= $p['title'] ?></h3>
+                                            <p class="hot-product__price"><?= $p['priceOld'] ? number_format($p['priceOld']).' đ<i>'.number_format($p['price']).' đ</i>':number_format($p['price']).' đ' ?></p>
+                                            <div class="hot-product__rate">
+                                                <i class="fa fa-star" aria-hidden="true"></i>
+                                                <i class="fa fa-star" aria-hidden="true"></i>
+                                                <i class="fa fa-star" aria-hidden="true"></i>
+                                                <i class="fa fa-star" aria-hidden="true"></i>
+                                                <i class="fa fa-star-half-full" aria-hidden="true"></i>
+                                            </div>
+                                            <div class="hot-product__intro">
+                                                <?= $p['intro'] ?>
+                                            </div>
+                                            <a class="btnAddCart" data-quantity="1" data-id="<?= $p['id'] ?>">Giỏ hàng</a>
+                                        </div>
+                                    </div>
+                                </li>
+                            <?php endforeach;?>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<?php endif;?>

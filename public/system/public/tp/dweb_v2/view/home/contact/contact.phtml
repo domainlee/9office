@@ -1,0 +1,100 @@
+<?php
+    $this->headTitle($this->escapeHtml($this->translate('Liên hệ')));
+    $this->headMeta()->appendName('content', ('DWEB - là một cơ quan thiết kế website sáng tạo có trụ sở tại 295A Hoàng Mai, Hà Nội. Chúng tôi cung cấp dịch vụ thiết kế UI/UX layout Website/Mobile xây dựng thương hiệu'));
+    $this->headMeta()->appendName('keywords', ('Thiết kế website theo yêu cầu, UI/UX, Nhận dạng thương hiệu'));
+    $this->headMeta()->appendProperty('og:title', 'Difference Web');
+
+    $cs = [
+        '/tp/dweb_v2/css/page.css',
+        '/tp/dweb_v2/css/contact.css',
+    ];
+    echo '<link href="'.srcLink($cs, 2).'" media="screen" rel="stylesheet" type="text/css">';
+
+    $form = $this->form;
+    $error = $this->error;
+?>
+
+<section class="contact m-t-100">
+    <div class="price__hero contact__hero">
+        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3724.322307735153!2d105.82101601478442!3d21.01978589346089!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3135ab799a8255d7%3A0x4b063e5690efc8c5!2zVMOyYSBuaMOgIFZp4buFbiDEkMO0bmcsIEPDtG5nIHR5IFROSEggZOG7i2NoIHbhu6UgdHLhu7FjIHR1eeG6v24gUG9seW5ldCBUb8OgbiBD4bqndSwgMzYgSG_DoG5nIEPhuqd1LCBDaOG7oyBE4burYSwgxJDhu5FuZyDEkGEsIEjDoCBO4buZaSwgVmnhu4d0IE5hbQ!5e0!3m2!1svi!2s!4v1551667128011" width="150%" height="100%" frameborder="0" style="border:0" allowfullscreen></iframe>
+        <div class="price__hero-inner">
+            <h2 class="price__hero-title">Liên hệ</h2>
+        </div>
+    </div>
+    <div class="container">
+        <div class="contact__inner">
+            <form class="contactForm" method="post" enctype="multipart/form-data" data-parsley-validate novalidate>
+                <div class="row">
+                    <div class="col-md-6">
+                        <h2 class="logoContact header-sologan"><span class="logo-first-key">D</span>WEB.</h2>
+
+                        <p class="contact__description">Chúng tôi luôn luôn lắng nghe những phản hồi của bạn để trở nên hoàn thiện hơn, tất cả những đóng góp và những câu hỏi liên quan về thiết kế & kỹ thuật, Chúng tôi cố gắng để trả lời chi tiết giúp khách hàng có được câu trả lời dõ dàng nhất</p>
+                        <div class="contact__address">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <h2 class="contact_col-title">Chi tiết liên hệ</h2>
+                                    <p><strong>contact@dweb.vn</strong></p>
+                                    <p>Tiếp nhận thông tin khách hàng, yêu cầu dịch vụ.</p>
+                                    <p><strong>cskh@dweb.vn</strong></p>
+                                    <p>Tiếp nhận thông tin hỗ trợ (sử dụng, chỉnh sửa, yêu cầu chỉnh sửa).</p>
+                                    <p><strong>303 Tầng 3, Toà nhà viễn đông, 36 Hoàng Cầu, Hà Nội</strong></p>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <h2 class="contact_col-title">Mạng xã hội</h2>
+                                    <p><a href="">Facebook</a></p>
+                                    <p><a href="">Twitter</a></p>
+                                    <p><a href="">Youtube</a></p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="contact__detail">
+                            <div class="contact__pay">
+                                <h2 class="contact_col-title">Thanh toán</h2>
+                                <ul class="contact__pay--list">
+                                    <li>
+                                        <p>Chủ tài khoản: Công ty cổ phần công nghệ DTT Việt Nam</p>
+                                        <p>Số tài khoản: 0021000443281</p>
+                                        <p>Ngân hang TMCP ngoại thương Việt Nam - CN : Hà Nội / Phòng giao dịch Hoàng Cầu</p>
+                                    </li>
+                                    <li>
+                                        <p>Nội dung: Thanh toán tên miền doanh nghiệp (http://doanhnghiep.dweb.vn)</p>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 contact__form-right">
+
+                        <?php if(!$error): ?>
+                        <div class="form-group">
+                            <label>Họ và tên: *</label>
+                            <?= $this->formelement($form->get('name')->setAttributes(['class' => '', 'data-parsley-minlength' => '3', 'placeholder'=>'Họ tên', 'required' => 'required', 'data-parsley-error-message' => 'Họ tên không được để trống'])) ?>
+                            <?= $this->formelementerrors($form->get('name'),['class' => 'parsley-errors-list filled']) ?>
+                        </div>
+                        <div class="form-group">
+                            <label>Số điện thoại: *</label>
+                            <?= $this->formelement($form->get('phone')->setAttributes(['class' => '', 'data-parsley-type' =>'digits', 'data-parsley-length' => '[10,11]', 'placeholder'=>'Số điện thoại', 'required' => 'required', 'data-parsley-error-message' => 'Số điện thoại không được để trống'])) ?>
+                            <?= $this->formelementerrors($form->get('phone'),['class' => 'parsley-errors-list filled']) ?>
+                        </div>
+                        <div class="form-group">
+                            <label>Email: *</label>
+                            <?= $this->formelement($form->get('email')->setAttributes(['class' => '', 'data-parsley-type' =>'email', 'placeholder'=>'Email', 'required' => 'required', 'data-parsley-error-message' => 'Email không được để trống'])) ?>
+                            <?= $this->formelementerrors($form->get('email'),['class' => 'parsley-errors-list filled']) ?>
+                        </div>
+                        <div class="form-group">
+                            <label>Địa chỉ:</label>
+                            <?= $this->formelement($form->get('content')->setAttributes(['class' => '', 'placeholder'=>'Nội dung', 'required' => 'required', 'data-parsley-error-message' => 'Nội dung không được để trống'])) ?>
+                        </div>
+                        <div class="form-group">
+                            <button type="submit">Gửi</button>
+                        </div>
+                        <?php else: ?>
+                            <p>Cảm ơn bạn đã gửi phản hồi với chúng tôi, chúng tôi sẽ trả lời bạn trong thời gian sớm nhất.</p>
+                        <?php endif; ?>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</section>

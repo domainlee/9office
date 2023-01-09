@@ -1,0 +1,49 @@
+<?php
+    $optionBasic = $this->home()->optionBasic();
+    if($optionBasic['commentArticle'] || $optionBasic['commentProduct']):
+    $item = $this->itemId;
+    $type = $this->type;
+    $style = $this->style;
+    $listComment = $this->home()->listcomment($item, $type);
+?>
+<?php
+    $user_rating = $_COOKIE['user_rating'];
+    $user_rating = json_decode($user_rating, true);
+?>
+<style>
+    <?= $style ?>
+</style>
+<div class="box-comment">
+    <?php
+        $cs = [
+            '/assets/css/web/comment.css',
+        ];
+        echo '<link href="'.srcLink($cs,4).'" media="screen" rel="stylesheet" type="text/css">';
+        $js = [
+            '/assets/plugins/parsleyjs/parsley.min.js',
+            '/assets/js/web/comment.js',
+        ];
+        echo '<script type="text/javascript" src="'.srcLink($js,2).'"></script>';
+    ?>
+    <h3 class="box-comment__headline">Bình luận</h3>
+    <form class="form__comment">
+        <input type="hidden" name="itemId" value="<?= $item ?>">
+        <input type="hidden" name="type" value="<?= $type ?>">
+        <div class="box-comment__row">
+            <textarea name="content" class="box-comment__content--js" required="required" data-parsley-minlength="30" placeholder="Mời bạn thảo luận, vui lòng nhập tiếng Việt có dấu."></textarea>
+        </div>
+        <div class="box-comment__row <?= empty($user_rating['name']) || empty($user_rating['email']) ? ' box-comment__item--two':'' ?>" style="display: none">
+            <input name="name" type="<?= $user_rating['name'] ? 'hidden':'text' ?>" placeholder="Họ tên" required="required" value="<?= $user_rating['name'] ?>" />
+            <input name="email" type="<?= $user_rating['email'] ? 'hidden':'text' ?>" placeholder="Email" data-parsley-type="email" required="required" value="<?= $user_rating['email'] ?>" />
+        </div>
+        <div class="box-comment__button" style="display: none">
+            <button type="submit">Gửi</button>
+        </div>
+    </form>
+
+    <div class="box-comment__list">
+        <?= $this->partial('layout/commentlist', ['list' => $listComment]); ?>
+    </div>
+
+</div>
+<?php endif; ?>

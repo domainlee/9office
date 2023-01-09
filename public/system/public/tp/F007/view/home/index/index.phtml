@@ -1,0 +1,303 @@
+<?php
+    use Home\Model\DateBase;
+    $optionBasic = $this->home()->optionBasic();
+    $optionPage = $this->home()->optionPage();
+    $homePage = $this->home()->homePage();
+    $fileLogo = getimagesize('http://'.$_SERVER['HTTP_HOST'].$optionBasic['logo']);
+?>
+<?php
+    /**** Start SEO DWEB *****/
+    echo $this->headLink(['rel' => 'canonical', 'href' => 'http://'.$_SERVER['HTTP_HOST'] ]);
+    $this->headTitle($this->escapeHtml($this->translate(!empty($optionBasic['metaTitle']) ? $optionBasic['metaTitle']:$optionBasic['sologan'])));
+    $this->headMeta()->appendName('description', (!empty($optionBasic['metaDescription']) ? $optionBasic['metaDescription']:null));
+    $this->headMeta()->appendName('keywords', (!empty($optionBasic['metaKeyword']) ? $optionBasic['metaKeyword']:null));
+    $this->headMeta()->appendProperty('og:title', !empty($optionBasic['metaTitle']) ? $optionBasic['metaTitle']:$optionBasic['sologan']);
+    $this->headMeta()->appendProperty('og:description', !empty($optionBasic['metaDescription']) ? $optionBasic['metaDescription']:null);
+    $this->headMeta()->appendProperty('og:image', !empty($optionBasic['logo']) ? 'http://'.$_SERVER['HTTP_HOST'].$optionBasic['logo']:null);
+    $this->headMeta()->appendProperty('og:image:secure_url', !empty($optionBasic['logo']) ? 'http://'.$_SERVER['HTTP_HOST'].$optionBasic['logo']:null);
+    $this->headMeta()->appendProperty('og:image:width', $fileLogo['0']);
+    $this->headMeta()->appendProperty('og:image:height', $fileLogo['1']);
+    $this->headMeta()->appendProperty('og:type', 'Website');
+    $this->headMeta()->appendProperty('og:url', 'http://'.$_SERVER['HTTP_HOST']);
+    $this->headMeta()->appendProperty('og:site_name', $optionBasic['sologan']);
+
+    $this->headMeta()->appendName('twitter:card', !empty($optionBasic['logo']) ? 'http://'.$_SERVER['HTTP_HOST'].$optionBasic['logo']:'summary_large_image');
+    $this->headMeta()->appendName('twitter:title', !empty($optionBasic['metaTitle']) ? $optionBasic['metaTitle']:null);
+    $this->headMeta()->appendName('twitter:description', (!empty($optionBasic['metaDescription']) ? $optionBasic['metaDescription']:null));
+    $this->headMeta()->appendName('twitter:image', !empty($optionBasic['logo']) ? 'http://'.$_SERVER['HTTP_HOST'].$optionBasic['logo']:null);
+    /**** End SEO DWEB *****/
+?>
+<?php
+if(!empty($homePage)):
+    foreach($homePage as $k => $v ):
+        $layout = explode(' ',$k);
+        switch ($layout[0]) {
+            case "slider-layout":
+                echo $this->partial('home/template/slider', ['bannerList' => $v]);
+                break;
+            case "product-layout":
+                echo $this->partial('home/template/product-layout', ['productLayout' => $v]);
+                break;
+            case "option-layout":
+                echo $this->partial('home/template/option-layout', ['optionLayout' => $v]);
+                break;
+            case "news-layout":
+                echo $this->partial('home/template/news-layout', ['newsLayout' => $v]);
+                break;
+            case "small-banner-layout":
+                echo $this->partial('home/template/small-banner-layout', ['smallBannerList' => $v]);
+                break;
+            case "tab-product-layout":
+                $count++;
+                echo $this->partial('home/template/tab-product-layout', ['tabProductLayout' => $v, 'id' => $count]);
+                break;
+            case "html-layout":
+                echo $this->partial('home/template/html-layout', ['htmlLayout' => $v]);
+                break;
+            case "image-layout":
+                echo $this->partial('home/template/image-layout', ['imageLayout' => $v]);
+                break;
+            default:
+                break;
+        }
+    endforeach;
+else:
+
+?>
+<?php if(!empty($optionPage['view_banner'])): ?>
+<section class="hero-slider">
+    <ul id="banner" class="owl-carousel owl-theme">
+        <?php
+        if(!empty($optionPage['banner'])):
+        foreach($optionPage['banner'] as $b):
+            $image = json_decode($b['image'], true);
+            $imageFirst = '';
+            if(!empty($image)){
+                $imageFirst = array_shift($image);
+            }
+            ?>
+            <li>
+                <figure class="lazy banner-image" style="background-image: url(<?= !empty($imageFirst) ? $imageFirst:null ?>)">
+                    <div>
+                        <h2><?= $b['title'] ?></h2>
+                        <p><?= $b['description'] ?></p>
+                        <a href="<?= $b['url'] ?>">Mua ngay</a>
+                    </div>
+                </figure>
+            </li>
+        <?php endforeach; endif; ?>
+    </ul>
+</section>
+<?php endif; ?>
+<?php if(!empty($optionPage['view_3-cot-thong-tin-duoi-banner'])):?>
+<section class="three-feature">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="three-feature__inner">
+                    <div class="three-feature__item">
+                        <span><?=$optionPage['tieu-de-cot-1'] ? $optionPage['tieu-de-cot-1'] : ''?></span>
+                        <h2><?=$optionPage['noi-dung-cot-1'] ? $optionPage['noi-dung-cot-1'] : ''?><i class="fa fa-caret-right "></i></h2>
+                    </div>
+                    <div class="three-feature__item">
+                        <span><?=$optionPage['tieu-de-cot-2'] ? $optionPage['tieu-de-cot-2'] : ''?></span>
+                        <h2><?=$optionPage['noi-dung-cot-2'] ? $optionPage['noi-dung-cot-2'] : ''?><i class="fa fa-caret-right "></i></h2>
+                    </div>
+                    <div class="three-feature__item">
+                        <span><?=$optionPage['tieu-de-cot-3'] ? $optionPage['tieu-de-cot-3'] : ''?></span>
+                        <h2><?=$optionPage['noi-dung-cot-3'] ? $optionPage['noi-dung-cot-3'] : ''?><i class="fa fa-caret-right "></i></h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<?php endif;?>
+<?php if(!empty($optionPage['4-banner-nho'])): ?>
+<section class="three-up">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="three-up__headline">
+                    <h2><?= $optionPage['tieu-de-4-banner-nho'] ? $optionPage['tieu-de-4-banner-nho'] : ''?></h2>
+                    <p><?= $optionPage['mo-ta-4-banner-nho'] ? $optionPage['mo-ta-4-banner-nho'] : '' ?></p>
+                </div>
+                <ul class="three-up__list">
+                    <?php
+                    if(!empty($optionPage['4-banner-nho'])):
+                    foreach($optionPage['4-banner-nho'] as $b):
+                        $image = json_decode($b['image'], true);
+                        $imageFirst = '';
+                        if(!empty($image)){
+                            $imageFirst = array_shift($image);
+                        }
+                        ?>
+                        <li class="three-up__item">
+                            <a href="<?= $b['url'] ?>">
+                                <figure class="lazy three-up__image" data-src="<?= !empty($imageFirst) ? $imageFirst:null ?>">
+                                </figure>
+                                <h3 class="three-up__title"><?= $b['title'] ?><i class="fa fa-caret-right "></i></h3>
+                            </a>
+                        </li>
+                    <?php endforeach; endif;?>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
+<?php endif; ?>
+
+
+<?php if(!empty($optionPage['view_1-banner-lon'])): ?>
+<section class="one-image">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <?php
+                if(!empty($optionPage['1-banner-lon'])):
+                foreach($optionPage['1-banner-lon'] as $b):
+                    $image = json_decode($b['image'], true);
+                    $imageFirst = '';
+                    if(!empty($image)){
+                        $imageFirst = array_shift($image);
+                    }
+                    ?>
+                    <a href="<?= $b['url'] ?>">
+                        <img class="lazy" data-src="<?= !empty($imageFirst) ? $imageFirst:null ?>" />
+                    </a>
+                <?php endforeach; endif; ?>
+            </div>
+        </div>
+    </div>
+</section>
+<?php endif; ?>
+<?php if(!empty($optionPage['view_san-pham-moi'])): ?>
+<section class="product-new">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="three-up__headline">
+                    <h2><?= $optionPage['tieu-de-san-pham-moi'] ? $optionPage['tieu-de-san-pham-moi'] : ''?></h2>
+                    <p><?= $optionPage['mo-ta-san-pham-moi'] ? $optionPage['mo-ta-san-pham-moi'] : '' ?></p>
+                </div>
+
+                    <div class="product-new__list">
+                        <?php
+                        if(!empty($optionPage['san-pham-moi'])):
+                        foreach($optionPage['san-pham-moi'] as $p):
+                            $imgs = array_slice(json_decode($p['image'], true), 0, 2);
+                            ?>
+                            <div class="product-new__item">
+                                <div class="product-new__item--inner">
+                                    <a href="<?= $p['url'] ?>">
+                                        <figure class="product-new__image lazy" data-src="<?= !empty($imgs) ? $imgs['0']:null ?>"></figure>
+                                    </a>
+                                    <div class="product-new__info">
+                                        <h3 class="product-new__title"><a href="<?= $p['url'] ?>"><?= $p['title'] ?></a></h3>
+                                        <p class="price-main"><?= $p['priceOld'] ? number_format($p['priceOld']).' đ<i>'.number_format($p['price']).' đ</i>':number_format($p['price']).' đ' ?></p>
+                                    </div>
+                                    <a class="product-new__btn-view" href="<?= $p['url'] ?>">Xem nhanh</a>
+                                </div>
+                            </div>
+                        <?php endforeach; endif;?>
+                    </div>
+
+                <a class="button__view-all" href="/san-pham.html">Xem tất cả</a>
+            </div>
+        </div>
+    </div>
+</section>
+<?php endif; ?>
+
+<?php if(!empty($optionPage['view_2-banner-lon'])): ?>
+    <section class="two-image">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="two-image__list">
+                        <?php
+                        if(!empty($optionPage['2-banner-lon'])):
+                        foreach($optionPage['2-banner-lon'] as $b):
+                        $image = json_decode($b['image'], true);
+                        $imageFirst = '';
+                        if(!empty($image)){
+                            $imageFirst = array_shift($image);
+                        }
+                        ?>
+                        <div class="two-image__item">
+                            <a href="<?= $b['url'] ?>">
+                                <figure class="two-image__image lazy" data-src="<?= !empty($imageFirst) ? $imageFirst:null ?>"></figure>
+                            </a>
+                        </div>
+                        <?php endforeach; endif;?>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+<?php endif; ?>
+
+<?php if(!empty($optionPage['view_1-banner-lon-duoi'])): ?>
+    <section class="one-image">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <?php
+                    if(!empty($optionPage['1-banner-lon-duoi'])):
+                    foreach($optionPage['1-banner-lon-duoi'] as $b):
+                        $image = json_decode($b['image'], true);
+                        $imageFirst = '';
+                        if(!empty($image)){
+                            $imageFirst = array_shift($image);
+                        }
+                        ?>
+                        <a href="<?= $b['url'] ?>">
+                            <img class="lazy" data-src="<?= !empty($imageFirst) ? $imageFirst:null ?>" />
+                        </a>
+                    <?php endforeach; endif;?>
+                </div>
+            </div>
+        </div>
+    </section>
+<?php endif; ?>
+
+
+
+<?php if(!empty($optionPage['view_tin-tuc-moi'])): ?>
+    <section class="news">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="three-up__headline">
+                        <h2><?= $optionPage['tieu-de-tin-tuc'] ? $optionPage['tieu-de-tin-tuc'] : ''?></h2>
+                        <p><?= $optionPage['mo-ta-tin-tuc'] ? $optionPage['mo-ta-tin-tuc'] : '' ?></p>
+                    </div>
+
+                    <?php
+                    $new = $optionPage['tin-tuc-moi'];
+                    if(!empty($new)){
+                        echo '<div class="news__list">';
+                        foreach($new as $n){
+                            $image = json_decode($n['image'], true);
+                            if(!empty($image)){
+                                $imageFirst = array_shift($image);
+                            }
+                            ?>
+                            <div class="news__item">
+                                <a href="<?= $n['url'] ?>"><figure class="lazy news__image" data-src="<?= !empty($imageFirst) ? $imageFirst:'' ?>"></figure></a>
+                                <h3 class="news__title"><a href="<?= $n['url'] ?>"><?= $n['title'] ?></a></h3>
+                                <p class="news__date"><i class="fa fa-clock-o"></i><?= DateBase::toFormat($n['date'], 'd/m/Y') ?></p>
+                                <p class="news__intro"><?= $n['intro'] ?></p>
+                                <a class="news__button" href="<?= $n['url'] ?>">Xem thêm</a>
+                            </div>
+                            <?php
+                        }
+                        echo '</div>';
+                    }
+                    ?>
+                </div>
+            </div>
+        </div>
+    </section>
+<?php endif; ?>
+<?php endif;?>

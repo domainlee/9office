@@ -1,0 +1,56 @@
+<?php
+use Home\Model\DateBase;
+if(!empty($this->highlightNewsLayout)):?>
+    <div class="main__last-post">
+        <div class="last-post__left">
+            <div class="last-post__left--inner">
+                <?php
+                    foreach($this->highlightNewsLayout['highlight-news article']['highlight-news'] as $k => $n):
+                        $image = json_decode($n['image'], true);
+                        if(!empty($image)) {
+                            $imageFirst = array_shift($image);
+                        }
+                        ?>
+                        <div class="last-post__left--item last-post__left--first">
+                            <a href="<?= $n['url'] ?>"><figure class="last-post__left--image lazy" data-src="<?= $imageFirst ?>"></figure></a>
+                            <div>
+                                <h3 class="last-post__left--title"><a href="<?= $n['url'] ?>"><?= $n['title'] ?></a></h3>
+                                <div class="date-time"><span><?= $n['category'] ?></span><span><?= DateBase::toFormat($n['date'], 'd M y') ?></span></div>
+                            </div>
+                        </div>
+                    <?php endforeach;?>
+                <?php
+                    foreach($this->highlightNewsLayout['four-news-below article']['four-news-below'] as $n):
+                        $image = json_decode($n['image'], true);
+                        if(!empty($image)) {
+                            $imageFirst = array_shift($image);
+                        }
+                        ?>
+                        <div class="last-post__left--item">
+                            <a href="<?= $n['url'] ?>"><figure class="last-post__left--image lazy" data-src="<?= $imageFirst ?>"></figure></a>
+                            <div>
+                                <h3 class="last-post__left--title"><a href="<?= $n['url'] ?>"><?= $n['title'] ?></a></h3>
+                                <div class="date-time"><span><?= $n['category'] ?></span><span><?= DateBase::toFormat($n['date'], 'd M y') ?></span></div>
+                            </div>
+                        </div>
+                    <?php endforeach;?>
+            </div>
+        </div>
+        <div class="last-post__right">
+            <?php
+                foreach($this->highlightNewsLayout['eight-news-right article']['eight-news-right'] as $n):
+                    $image = json_decode($n['image'], true);
+                    if(!empty($image)) {
+                        $imageFirst = array_shift($image);
+                    }
+                    ?>
+                    <div class="last-post__right--item">
+                        <div class="last-post__right--inner">
+                            <h3 class="last-post__right--title"><a href="<?= $n['url'] ?>"><?= $n['title'] ?></a></h3>
+                            <div class="date-time"><span><?= $n['category'] ?></span><span><?= DateBase::toFormat($n['date'], 'd M y') ?></span></div>
+                        </div>
+                    </div>
+                <?php endforeach;?>
+        </div>
+    </div>
+<?php endif;?>

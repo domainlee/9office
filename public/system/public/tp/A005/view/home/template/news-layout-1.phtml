@@ -1,0 +1,45 @@
+<?php
+use Home\Model\DateBase;
+if(!empty($this->newsLayout1['news-list-1 article']['news-list-1'])):?>
+    <section class="news-type-1">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="news-type-1__inner">
+                        <?php $item = count($this->newsLayout1['news-list-1 article']['news-list-1']);
+                        ?>
+                        <div class=" <?= $item > 4 ? 'last-post__carousel owl-carousel owl-theme' : 'news-type-1__list'?>">
+                            <?php
+                            foreach($this->newsLayout1['news-list-1 article']['news-list-1'] as $k => $n):
+                                $image = json_decode($n['image'], true);
+                                if(!empty($image)) {
+                                    $imageFirst = array_shift($image);
+                                }
+                                ?>
+                                <div class="news-type-1__item">
+                                    <div class="news-type-1__item--inner">
+                                        <h3 class="news-type-1__title"><a href="<?= $n['url'] ?>"><?= $n['title'] ?></a></h3>
+                                        <a href="<?= $n['url'] ?>"><figure class="news-type-1__image lazy" data-src="<?= $imageFirst ?>"></figure></a>
+                                        <div class="news-type-1__intro">
+                                            <?php
+                                            $s = substr($n['intro'],0,100);
+                                            $rs = substr($s,0,strrpos($s, ' '));
+                                            if(strlen($n['intro']) > 100):
+                                                echo $rs;
+                                                echo '...';
+                                            else:
+                                                echo $n['intro'];
+                                            endif;
+
+                                            ?>
+                                        </div>
+                                    </div>
+                                </div>
+                            <?php endforeach; ?>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+<?php endif;?>

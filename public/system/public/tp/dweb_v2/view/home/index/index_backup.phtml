@@ -1,0 +1,215 @@
+<?php
+    $this->translate('Trang chủ');
+    $this->headMeta()->appendName('description', ('Thiet ke website gia re, Thiết kế website giá rẻ, thiết kế website 300k, thiết kế website chuyên nghiệp, thiết kế website bán hàng, thiết kế website độc quyền, thiết kế website thương hiệu độc quyền, DWEB công cụ tạo website, bán hàng, giới thiệu công ty, thời trang, mỹ phẩm, kiến trúc ... Chúng tôi luôn quan tâm tới từng sản phẩm & lắng nghe khách hàng'));
+    $this->headMeta()->appendName('keywords', ('DWEB, công cụ tạo website, Thiet ke website gia re, Thiết kế website giá rẻ, thiết kế website 300k, thiết kế website chuyên nghiệp, thiết kế website bán hàng, thiết kế website độc quyền, thiết kế website thương hiệu độc quyền,'));
+
+    $this->headMeta()->appendProperty('fb:app_id', '1697190970583102');
+    $this->headMeta()->appendProperty('article:author', 'https://www.facebook.com/dwebvietnam');
+    $this->headMeta()->appendProperty('og:locale', 'vi_VN');
+    $this->headMeta()->appendProperty('og:image', 'http://dweb.vn/tp/dweb/image/dweb-thumbnail.png');
+    $this->headMeta()->appendProperty('og:url', 'http://dweb.vn');
+    $this->headMeta()->appendProperty('og:title', 'DWEB, công cụ tạo website, Thiet ke website gia re, Thiết kế website giá rẻ, thiết kế website 300k, thiết kế website chuyên nghiệp, thiết kế website bán hàng, thiết kế website độc quyền, thiết kế website thương hiệu độc quyền,');
+    $this->headMeta()->appendProperty('og:description', ('Thiet ke website gia re, Thiết kế website giá rẻ, thiết kế website 300k, thiết kế website chuyên nghiệp, thiết kế website bán hàng, thiết kế website độc quyền, thiết kế website thương hiệu độc quyền, DWEB là công cụ tạo website, bán hàng, giới thiệu công ty, thời trang, mỹ phẩm, kiến trúc ... Chúng tôi luôn quan tâm tới từng sản phẩm & lắng nghe khách hàng'));
+
+    $this->headMeta()->appendProperty('twitter:card', 'DWEB.VN');
+    $this->headMeta()->appendProperty('twitter:title', 'DWEB, công cụ tạo website, Thiet ke website gia re, Thiết kế website giá rẻ, thiết kế website 300k, thiết kế website chuyên nghiệp, thiết kế website bán hàng, thiết kế website độc quyền, thiết kế website thương hiệu độc quyền,');
+    $this->headMeta()->appendProperty('twitter:image', 'http://dweb.vn/tp/dweb/image/dweb-thumbnail.png');
+    $this->headMeta()->appendProperty('twitter:description', 'Thiet ke website gia re, Thiết kế website giá rẻ, thiết kế website 300k, thiết kế website chuyên nghiệp, thiết kế website bán hàng, thiết kế website độc quyền, thiết kế website thương hiệu độc quyền, DWEB là công cụ tạo website, bán hàng, giới thiệu công ty, thời trang, mỹ phẩm, kiến trúc ... Chúng tôi luôn quan tâm tới từng sản phẩm & lắng nghe khách hàng');
+    $optionPage = $this->home()->optionPage();
+    use Home\Model\DateBase;
+?>
+
+<section class="hero">
+    <div id="" class="hero-inner">
+        <div class="main-title">
+            <div style="padding: 0 100px 0 0" class="hero-content">
+                <h2 class="hero-title">Bạn đang cần một <br/><b>Website</b> để ?</h2>
+                <ul class="hero-list">
+                    <li title="">Bán hàng online</li>
+                    <li>Giới thiệu công ty</li>
+                    <li>Bất động sản</li>
+                    <li>Thương mại điện tử</li>
+                    <li>...</li>
+                </ul>
+                <div>
+                    <p class="hero-description">Hãy đăng ký dùng thử miễn phí <b>15</b> ngày.</p>
+                </div>
+                <div>
+                    <a class="hero-button_link" data-toggle="modal" data-target="#modalRegisterDWEB">Dùng thử miễn phí</a>
+                </div>
+            </div>
+            <img style="margin: 100px 0 0;" width="540px" src="/tp/dweb_v2/image/main-banner.png" title="website-chuan-seo" />
+        </div>
+    </div>
+</section>
+<section class="about">
+    <div class="container">
+        <p class="about__sub">Về chúng tôi</p>
+        <h2 class="about__headline">Chúng tôi hỗ trợ những gì cho bạn<br/>trong việc kinh doanh</h2>
+        <p class="about__intro">
+            Trong việc xây dựng một doanh nghiệp việc để có thể duy trì một doanh nghiệp là doanh thu, kinh doanh tốt.
+        </p>
+    </div>
+    <div class="container">
+        <div class="about__service">
+            <div class="about__service--left">
+                <img src="/tp/dweb_v2/image/1.png" alt="Quảng cáo google ads, adwords, facebook ads" />
+            </div>
+            <div class="about__service--right">
+                <span class="about__service--number">.01</span>
+                <h3 class="about__service--title">Quảng cáo</h3>
+                <p class="about__service--description">
+                    Để có những khách hàng và tệp khách hàng lớn chúng ta đều biết những kênh như Google Ads(Adwords, SEO, Youtube, Remarketing), Facebook Ads.
+                </p>
+                <p class="about__service--description">
+                    Chúng tôi <a target="_blank" href="http://seongon.com">SEONGON.COM</a>. Với kinh nghiệm 7 năm làm việc và là một partner Google tại Việt Nam, chúng tôi cam kết những tối ưu trong ngân sách chiến dịch quảng cáo của bạn.
+                </p>
+                <p class="about__service--description">
+                    Ngay từ bây giờ, bạn có thể bắt đầu 1 chiến dịch quảng cáo <br/>chỉ với <b>100.000</b>/ Ngày.
+                </p>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="about__service about__service--odd">
+            <div class="about__service--left">
+                <img src="/tp/dweb_v2/image/2.png" alt="Thiết kế website chuẩn seo" />
+            </div>
+            <div class="about__service--right">
+                <span class="about__service--number">.02</span>
+                <h3 class="about__service--title">Thiết kế website chuẩn seo</h3>
+                <p class="about__service--description">
+                    Là một trong những đơn vị hàng đầu tại Việt Nam làm dịch vụ về SEO, chúng tôi nghiên cứu và phát triển hệ thống website chuẩn seo thân thiện với Google, giúp bạn tối ưu chi phí phát triển website.
+                </p>
+                <p class="about__service--description">
+                    Chúng tôi có những gói thiết kế website theo yêu cầu<br/> từ 10-30tr/ Website với 30 ngày làm việc.
+                </p>
+                <p class="about__service--description">
+                    Bạn có thể dùng thử gói website 3 tháng <br/>chỉ với <b>597.000</b> trước khi kí hợp đồng chính thức. <a class="" data-toggle="modal" data-target="#modalRegisterDWEB">Dùng thử</a>
+                </p>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="about__service">
+            <div class="about__service--left">
+                <img src="/tp/dweb_v2/image/3.png" alt="" />
+            </div>
+            <div class="about__service--right">
+                <span class="about__service--number">.03</span>
+                <h3 class="about__service--title">SEO tổng thể</h3>
+                <p class="about__service--description">
+                    Nói về SEONGON điểm mạnh trong dịch vụ của chúng tôi là SEO,
+                </p>
+                <p class="about__service--description">
+                    Cách để có hàng trục nghìn traffic mỗi tháng miễn phí<br/>
+                    Với phương pháp SEO TOPIC độc quyền từ SEONGON giúp website lên TOP hàng nghìn từ khóa<br/>
+                </p>
+                <p class="about__service--description">
+                    <b>Ưu điểm vượt trội:</b><br/>
+                    Phương pháp SEO an toàn – bền vững<br/>
+                    Tăng trưởng traffic chất lượng<br/>
+                    Khả năng chuyển đổi cao<br/>
+                </p>
+                <p class="about__service--description">
+                    Bạn có thể xem chi tiết về dịch vụ seo của chúng tôi <a href="https://seongon.com/dich-vu-seo" target="_blank">tại đây</a>
+                </p>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <h2 class="about__headline">Lời kết</h2>
+        <p class="about__intro">
+            Ngay từ bây giờ bạn có thể bắt đầu kinh doanh dùng thử <br/>gói website 3 tháng chỉ <b>597.000</b> và những chiến dịch quảng cáo Google Ads, Facebook Ads chỉ với <b>100.000</b>.
+        </p>
+        <form class="support-module__form support-module__form--label" data-parsley-validate="" novalidate="">
+            <div class="support-module__col">
+                <label>Trung tâm hỗ trợ</label><input type="text" data-parsley-type="digits" data-parsley-length="[10,11]" required="required" placeholder="Số điện thoại *">
+            </div>
+            <div>
+                <button type="submit">Gửi</button>
+            </div>
+        </form>
+    </div>
+</section>
+
+<?php if(!empty($optionPage['du-an-tieu-bieu'])): ?>
+<section class="project">
+    <div class="container">
+        <h2 class="project-title title-h2 align-center">Kho giao diện</h2>
+        <div class="project-description">
+            Ngay từ bây giờ bạn có thể bắt đầu kinh doanh với một<br/>website chuẩn seo chỉ với <b>597.000k</b> Với kho giao diện website phong phú.
+        </div>
+        <div class="project-list">
+
+            <?php $i = 0; foreach ($optionPage['du-an-tieu-bieu'] as $p):
+                $i++;
+                $image = json_decode($p['image'], true);
+                if(!empty($image)){
+                    $imageFirst = array_shift($image);
+                }
+                $extraContent = json_decode($p['extraContent'], true);
+            ?>
+            <div class="project-item">
+                <div class="project-inner">
+                    <figure class="lazy project-image" data-src="http://dweb.vn<?= $imageFirst ?>"></figure>
+                    <div class="project-control">
+                        <a class="btn-d project__button-reviewer" target="_blank" href="<?= $p['intro'] ?>">Xem thử</a>
+                        <a class="btn-d project__button-detail" href="/register-<?= vnString($p['title']) ?>.html">Dùng thử</a>
+                        <h3 class="project__title"><?= $p['title'] ?></h3>
+                        <p class="project__description"><?= !empty($extraContent['mo-ta']) ? $extraContent['mo-ta']:null ?></p>
+                    </div>
+                </div>
+            </div>
+            <?php endforeach; ?>
+        </div>
+        <div class="project__button-load-more">
+            <a class="project__button-link" href="/kho-giao-dien.html">Xem tất cả</a>
+        </div>
+    </div>
+</section>
+<?php endif; ?>
+
+<section class="blog">
+    <div class="container">
+        <h2 class="project-title title-h2 align-center">Blog</h2>
+        <div class="blog-description">
+            Những chia sẻ hữu ích về seo, bán hàng, nguồn hàng,<br/> khởi nghiệp. Được chúng tôi cập nhật <a href="http://blog.dweb.vn" target="_blank">tại đây</a>.
+        </div>
+        <?php
+            $optionPage = $this->home()->optionPage(23);
+            $newsDashboard = $optionPage['bai-viet-trang-chu'];
+        ?>
+        <div class="blog__list">
+            <?php
+            foreach($newsDashboard as $n):
+                $image = json_decode($n['image'], true);
+                $imageFirst = '';
+                if(!empty($image)){
+                    $imageFirst = array_shift($image);
+                }
+                ?>
+                <div class="blog__item">
+                    <div class="blog__item--inner">
+                        <a href="http://blog.dweb.vn<?= $n['url'] ?>" target="_blank">
+                            <figure class="lazy blog__image" data-src="http://blog.dweb.vn<?= $imageFirst ?>">
+                                <img src="http://blog.dweb.vn<?= $imageFirst ?>" alt="<?= $n['title'] ?>" />
+                            </figure>
+                        </a>
+                        <div class="blog__content">
+                            <span class="blog__date"><?= DateBase::toFormat( $n['date'], 'd/m/Y') ?></span>
+                            <h3 class="blog__title"><a href="http://blog.dweb.vn<?= $n['url'] ?>" target="_blank"><?= $n['title'] ?></a></h3>
+                            <a class="blog__link" href="http://blog.dweb.vn<?= $n['url'] ?>">Đọc tiếp →</a>
+                        </div>
+                    </div>
+                </div>
+
+                <?php
+            endforeach;
+            ?>
+        </div>
+        <div class="project__button-load-more blog__button">
+            <a class="project__button-link" href="http://blog.dweb.vn" target="_blank">Xem tất cả</a>
+        </div>
+    </div>
+</section>

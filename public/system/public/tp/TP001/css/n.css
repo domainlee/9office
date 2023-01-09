@@ -1,0 +1,220 @@
+.product-single-hero {
+    padding: 100px 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+    background: rgb(234, 200, 209);
+}
+.bg-hero {
+    -webkit-filter: blur(20px);
+    -moz-filter: blur(20px);
+    -o-filter: blur(20px);
+    -ms-filter: blur(20px);
+    filter: blur(20px);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0.3;
+}
+
+/****** Category News ********/
+.navNews{
+    display: inline-block;
+    width: 100%;
+    text-align: center;
+    margin: 15px 0;
+}
+.navNews li{
+    display: inline-block;
+    margin: 0 15px;
+}
+.navNews li a{
+    color: #999;
+    font-size: 15px;
+}
+.navNews li a:hover, .navNews li a.active{
+    color: #333;
+    text-decoration: underline;
+}
+.lNCategory li{
+    padding: 30px 0;
+    border-bottom: 1px dashed #e6e6e6;
+}
+.lNCategory li:first-child{
+    padding-top: 0;
+}
+.lNCategory li h3 {
+    font-size: 20px;
+    line-height: 26px;
+    margin: 0;
+}
+.news__date{
+    color: #888;
+    font-size: 12px;
+    margin: 5px 0;
+}
+
+/****** DetailNews ******/
+.detailNews{
+    overflow: hidden;
+    width: 100%;
+    margin: 30px auto 0;
+}
+.detailNews p{
+    line-height: 26px !important;
+}
+.detailNews>div.social{
+    padding: 0 0 30px 0;
+    border-bottom: 1px dashed #CCC;
+    margin: 0 0 15px 0;
+}
+.detailNews>div>h1{
+    padding: 0 0 30px 0;
+    margin: 0 0 0 0;
+    text-align: center;
+    font-family: time-news-romans;
+    font-size: 40px;
+    color: #333;
+}
+.detailNews img{
+    max-width: 100%;
+    height: inherit !important;
+}
+.detailNews *{
+    max-width: 100%;
+}
+.lNCategory {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 45px 0 60px 15px;
+}
+.lNCategory li{
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+}
+.lNCategory li .article__content{
+    width: 70%;
+    padding: 0 30px;
+}
+.lNCategory li a{
+    width: 30%;
+    font-size: 20px;
+    -webkit-transition: all 0.2s ease;
+    -moz-transition: all 0.2s ease;
+    -o-transition: all 0.2s ease;
+    transition: all 0.2s ease;
+
+}
+.lNCategory li a:hover{
+    color: #6c3;
+    -webkit-transition: all 0.2s ease;
+    -moz-transition: all 0.2s ease;
+    -o-transition: all 0.2s ease;
+    transition: all 0.2s ease;
+
+}
+.image-article {
+    position: relative;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center top;
+}
+.image-article:before {
+    content: '';
+    padding-top: 75%;
+    display: block;
+}
+.lNCategory li h2{
+    margin: 0 0 15px;
+}
+
+/*********contact*******/
+.contact__inner{
+    padding-top: 30px !important;
+}
+.contactForm{
+    background: #fff;
+}
+.contactForm .title{
+    text-align: left;
+    margin: 0;
+    font-size: 13px;
+    text-transform: unset;
+    letter-spacing: 0;
+}
+.contactForm input,
+.contactForm textarea{
+    text-align: left;
+    margin: 0;
+    font-size: 13px;
+}
+.contactForm .form-group input, .contactForm .form-group textarea {
+    border: 1px solid #CCC;
+}
+.contact__logo{
+    margin-top: 0;
+}
+.contact__description::after {
+    background-color: #EAE8E8;
+}
+.contact__description{
+    color: #666;
+    font-size: 14px;
+    line-height: 26px;
+}
+.contactForm .form-group button[type="submit"] {
+    background-color: #6c3;
+    font-size: 18px;
+    color: #fff;
+}
+.detail-news__title{
+    font-size: 46px !important;
+    color: #666;
+}
+.page-news__inner{
+    margin:  0 0 50px;
+}
+/*Relation news*/
+
+.single__relation--headline{
+    font-size: 18px;
+    color: #333;
+    font-weight: 500;
+    text-transform: uppercase;
+    margin: 30px 0;
+}
+.single__relation{
+    margin-bottom: 30px;
+}
+.single__relation__item{
+    padding: 0 0 15px;
+}
+.single__relation__title{
+    font-size: 15px;
+    margin: 0;
+    line-height: 26px;
+}
+.single__relation__title a{
+    -webkit-transition: all 0.2s ease;
+    -moz-transition: all 0.2s ease;
+    -o-transition: all 0.2s ease;
+    transition: all 0.2s ease;
+}
+.single__relation__title a:hover{
+    color: #6c3;
+    -webkit-transition: all 0.2s ease;
+    -moz-transition: all 0.2s ease;
+    -o-transition: all 0.2s ease;
+    transition: all 0.2s ease;
+}
+.single__relation__title i{
+    margin-right: 5px;
+}

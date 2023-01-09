@@ -1,0 +1,19 @@
+<?php if(!empty($this->videoLayout['video-title text']['value']) || !empty($this->videoLayout['video-url text']['value'])):?>
+<section class="video" style="background-image: url('<?= $this->videoLayout['video-background file']['value']?>')">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h2 class="titleHome"><i class="fa fa-tree" aria-hidden="true"></i><i class="fa fa-tree" aria-hidden="true"></i><i class="fa fa-tree" aria-hidden="true"></i>
+                    <span><?= $this->videoLayout['video-title text']['value'] ? $this->videoLayout['video-title text']['value'] : ''?></span></h2>
+                <div class="video__inner">
+                    <div class="pulsation wp1">
+                        <a class="video__button" data-video-id="<?= $this->videoLayout['video-url text']['value'] ? $this->videoLayout['video-url text']['value'] :'8Ux3NCnE3Lk' ?>"></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<?php endif;?>
+
+

@@ -1,0 +1,131 @@
+<?php if(!empty($this->tabProductLayout)):
+    ?>
+    <section class="ProductOptionHome">
+        <div class="row">
+                <div class="col-md-12">
+                    <div class="ProductOptionHomeContent">
+                        <ul class="NavProductOption">
+                            <?php if(!empty($this->tabProductLayout['tab1-title text']['value'])): ?>
+                                <li><a class="active" data-tab="#tab1"><?= $this->tabProductLayout['tab1-title text']['value'] ?></a></li>
+                            <?php endif; ?>
+                            <?php if(!empty($this->tabProductLayout['tab2-title text']['value'])): ?>
+                                <li><a  data-tab="#tab2"><?= $this->tabProductLayout['tab2-title text']['value'] ?></a></li>
+                            <?php endif; ?>
+                            <?php if(!empty($this->tabProductLayout['tab3-title text']['value'])): ?>
+                                <li><a data-tab="#tab3"><?= $this->tabProductLayout['tab3-title text']['value'] ?></a></li>
+                            <?php endif; ?>
+                            <?php if(!empty($this->tabProductLayout['tab4-title text']['value'])): ?>
+                                <li><a  data-tab="#tab4"><?= $this->tabProductLayout['tab4-title text']['value'] ?></a></li>
+                            <?php endif; ?>
+                        </ul>
+                        <div id="tab1" class="tab newHome active">
+                            <?php if(!empty($this->tabProductLayout['tab-product1 product']) && !empty($this->tabProductLayout['tab1-title text']['value'])): ?>
+                                <ul class="tab-product__list">
+                                    <?php
+                                    foreach($this->tabProductLayout['tab-product1 product']['tab-product1'] as $p):
+                                        $imgs = !empty(json_decode($p['image'], true)) ? array_slice(json_decode($p['image'], true), 0, 2):null; ?>
+                                        <li class="tab-product__item">
+                                            <div class="tab-product__item--inner">
+                                                <a class="pI" href="<?= $p['url'] ?>">
+                                                    <figure class="lazy product__image product__image--two" data-src="<?= !empty($imgs) ? $imgs['0']:null ?>"></figure>
+                                                </a>
+                                                <h2 class="tab-product__item--title"><a href="<?= $p['url'] ?>"><?= $p['title'] ?></a></h2>
+                                                <div class="product__price-cart">
+                                                    <p class="product-horizontal__price">
+                                                        <?= $p['priceOld']
+                                                            ? '<i>'.number_format($p['priceOld']).' ₫</i><span>'.number_format($p['price']).' ₫</span>'
+                                                            : '<i></i><span>'.number_format($p['price']).' ₫</span>' ?>
+                                                    </p>
+                                                    <a class="btnAddCart" data-quantity="1" data-id="<?= $p['id'] ?>">
+                                                        <i class="fa fa-shopping-cart"></i>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    <?php endforeach; ?>
+                                </ul>
+                            <?php endif; ?>
+                        </div>
+                        <div id="tab2" class="tab">
+                            <?php if(!empty($this->tabProductLayout['tab-product2 product']) && !empty($this->tabProductLayout['tab2-title text']['value'])): ?>
+                                <ul class="tab-product__list">
+                                    <?php foreach($this->tabProductLayout['tab-product2 product']['tab-product2'] as $p):
+                                        $imgs = !empty(json_decode($p['image'], true)) ? array_slice(json_decode($p['image'], true), 0, 2):null; ?>
+                                        <li class="tab-product__item">
+                                            <div class="tab-product__item--inner">
+                                                <a class="pI" href="<?= $p['url'] ?>">
+                                                    <figure class="lazy product__image product__image--two" data-src="<?= !empty($imgs) ? $imgs['0']:null ?>"></figure>
+                                                </a>
+                                                <h2 class="tab-product__item--title">
+                                                    <a href="<?= $p['url'] ?>"><?= $p['title'] ?></a>
+                                                </h2>
+                                                <div class="product__price-cart">
+                                                    <p class="product-horizontal__price">
+                                                        <?= $p['priceOld']
+                                                            ? '<i>'.number_format($p['priceOld']).' ₫</i><span>'.number_format($p['price']).' ₫</span>'
+                                                            : '<i></i><span>'.number_format($p['price']).' ₫</span>' ?>
+                                                    </p>
+                                                    <a class="btnAddCart" data-quantity="1" data-id="<?= $p['id'] ?>"><i class="fa fa-shopping-cart"></i></a>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    <?php endforeach; ?>
+                                </ul>
+                            <?php endif; ?>
+                        </div>
+                        <div id="tab3" class="tab">
+                            <?php if(!empty($this->tabProductLayout['tab-product3 product']) && !empty($this->tabProductLayout['tab3-title text']['value'])): ?>
+                                <ul class="tab-product__list">
+                                    <?php foreach($this->tabProductLayout['tab-product3 product']['tab-product3'] as $p):
+                                        $imgs = !empty(json_decode($p['image'], true)) ? array_slice(json_decode($p['image'], true), 0, 2):null; ?>
+                                        <li class="tab-product__item">
+                                            <div class="tab-product__item--inner">
+                                                <a class="pI" href="<?= $p['url'] ?>">
+                                                    <figure class="lazy product__image product__image--two" data-src="<?= !empty($imgs) ? $imgs['0']:null ?>"></figure>
+                                                </a>
+                                                <h2 class="tab-product__item--title"><?= $p['title'] ?></h2>
+                                                <div class="product__price-cart">
+                                                    <p class="product-horizontal__price">
+                                                        <?= $p['priceOld']
+                                                            ? '<i>'.number_format($p['priceOld']).' ₫</i><span>'.number_format($p['price']).' ₫</span>'
+                                                            : '<i></i><span>'.number_format($p['price']).' ₫</span>' ?>
+                                                    </p>
+                                                    <a class="btnAddCart" data-quantity="1" data-id="<?= $p['id'] ?>"><i class="fa fa-shopping-cart"></i></a>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    <?php endforeach; ?>
+                                </ul>
+                            <?php endif; ?>
+                        </div>
+                        <div id="tab4" class="tab">
+                            <?php if(!empty($this->tabProductLayout['tab-product4 product']) && !empty($this->tabProductLayout['tab4-title text']['value'])): ?>
+                                <ul class="tab-product__list">
+                                    <?php foreach($this->tabProductLayout['tab-product4 product']['tab-product4'] as $p):
+                                        $imgs = !empty(json_decode($p['image'], true)) ? array_slice(json_decode($p['image'], true), 0, 2):null; ?>
+                                        <li class="tab-product__item">
+                                            <div class="tab-product__item--inner">
+                                                <a class="pI" href="<?= $p['url'] ?>">
+                                                    <figure class="lazy product__image product__image--two" data-src="<?= !empty($imgs) ? $imgs['0']:null ?>"></figure>
+                                                </a>
+                                                <h2 class="tab-product__item--title"><?= $p['title'] ?></h2>
+                                                <div class="product__price-cart">
+                                                    <p class="product-horizontal__price">
+                                                        <?= $p['priceOld']
+                                                            ? '<i>'.number_format($p['priceOld']).' ₫</i><span>'.number_format($p['price']).' ₫</span>'
+                                                            : '<i></i><span>'.number_format($p['price']).' ₫</span>' ?>
+                                                    </p>
+                                                    <a class="btnAddCart" data-quantity="1" data-id="<?= $p['id'] ?>"><i class="fa fa-shopping-cart"></i></a>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    <?php endforeach; ?>
+                                </ul>
+                            <?php endif; ?>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+    </section>
+<?php endif;?>

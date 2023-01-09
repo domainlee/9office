@@ -1,0 +1,116 @@
+<section class="gallery">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="gallery__inner">
+                    <div class="gallery__left">
+                        <?= $this->galleryLayout['gallery-title text']['value'] ? '<div class="gallery__title">'.$this->galleryLayout['gallery-title text']['value'].'</div>' : ''?>
+                    </div>
+                    <div class="gallery__right">
+                        <ul class="gallery-slider owl-carousel owl-theme">
+                            <?php if(!empty($this->galleryLayout['gallery-img-1 file']['value'])):?>
+                                <li class="gallery__item" img="<?=$this->galleryLayout['gallery-img-1 file']['value']?>">
+                                    <figure class="lazy gallery__image" data-src="<?= $this->galleryLayout['gallery-img-1 file']['value']?>">
+                                        <div class="overlay">
+                                            <i class="fa fa-picture-o"></i>
+                                        </div>
+                                    </figure>
+                                </li>
+                            <?php endif;?>
+                            <?php if(!empty($this->galleryLayout['gallery-img-2 file']['value'])):?>
+                                <li class="gallery__item" img="<?=$this->galleryLayout['gallery-img-2 file']['value']?>">
+                                    <figure class="lazy gallery__image" data-src="<?= $this->galleryLayout['gallery-img-2 file']['value']?>">
+                                        <div class="overlay">
+                                            <i class="fa fa-picture-o"></i>
+                                        </div>
+                                    </figure>
+                                </li>
+                            <?php endif;?>
+                            <?php if(!empty($this->galleryLayout['gallery-img-3 file']['value'])):?>
+                                <li class="gallery__item" img="<?=$this->galleryLayout['gallery-img-3 file']['value']?>">
+                                    <figure class="lazy gallery__image" data-src="<?= $this->galleryLayout['gallery-img-3 file']['value']?>">
+                                        <div class="overlay">
+                                            <i class="fa fa-picture-o"></i>
+                                        </div>
+                                    </figure>
+                                </li>
+                            <?php endif;?>
+                            <?php if(!empty($this->galleryLayout['gallery-img-4 file']['value'])):?>
+                                <li class="gallery__item" img="<?=$this->galleryLayout['gallery-img-4 file']['value']?>">
+                                    <figure class="lazy gallery__image" data-src="<?= $this->galleryLayout['gallery-img-4 file']['value']?>">
+                                        <div class="overlay">
+                                            <i class="fa fa-picture-o"></i>
+                                        </div>
+                                    </figure>
+                                </li>
+                            <?php endif;?>
+                            <?php if(!empty($this->galleryLayout['gallery-img-5 file']['value'])):?>
+                                <li class="gallery__item" img="<?=$this->galleryLayout['gallery-img-5 file']['value']?>" >
+                                    <figure class="lazy gallery__image" data-src="<?= $this->galleryLayout['gallery-img-5 file']['value']?>">
+                                        <div class="overlay">
+                                            <i class="fa fa-picture-o"></i>
+                                        </div>
+                                    </figure>
+                                </li>
+                            <?php endif;?>
+                            <?php if(!empty($this->galleryLayout['gallery-img-6 file']['value'])):?>
+                                <li class="gallery__item" img="<?=$this->galleryLayout['gallery-img-6 file']['value']?>">
+                                    <figure class="lazy gallery__image" data-src="<?= $this->galleryLayout['gallery-img-6 file']['value']?>">
+                                        <div class="overlay">
+                                            <i class="fa fa-picture-o"></i>
+                                        </div>
+                                    </figure>
+                                </li>
+                            <?php endif;?>
+                            <?php if(!empty($this->galleryLayout['gallery-img-7 file']['value'])):?>
+                                <li class="gallery__item" img="<?=$this->galleryLayout['gallery-img-7 file']['value']?>">
+                                    <figure class="lazy gallery__image" data-src="<?= $this->galleryLayout['gallery-img-7 file']['value']?>">
+                                        <div class="overlay">
+                                            <i class="fa fa-picture-o"></i>
+                                        </div>
+                                    </figure>
+                                </li>
+                            <?php endif;?>
+                            <?php if(!empty($this->galleryLayout['gallery-img-8 file']['value'])):?>
+                                <li class="gallery__item" img="<?=$this->galleryLayout['gallery-img-8 file']['value']?>">
+                                    <figure class="lazy gallery__image" data-src="<?= $this->galleryLayout['gallery-img-8 file']['value']?>">
+                                        <div class="overlay">
+                                            <i class="fa fa-picture-o"></i>
+                                        </div>
+                                    </figure>
+                                </li>
+                            <?php endif;?>
+                            <?php if(!empty($this->galleryLayout['gallery-img-9 file']['value'])):?>
+                                <li class="gallery__item" img="<?=$this->galleryLayout['gallery-img-9 file']['value']?>">
+                                    <figure class="lazy gallery__image" data-src="<?= $this->galleryLayout['gallery-img-9 file']['value']?>">
+                                        <div class="overlay">
+                                            <i class="fa fa-picture-o"></i>
+                                        </div>
+                                    </figure>
+                                </li>
+                            <?php endif;?>
+                            <?php if(!empty($this->galleryLayout['gallery-img-10 file']['value'])):?>
+                                <li class="gallery__item" img="<?=$this->galleryLayout['gallery-img-10 file']['value']?>">
+                                    <figure class="lazy gallery__image" data-src="<?= $this->galleryLayout['gallery-img-10 file']['value']?>">
+                                        <div class="overlay">
+                                            <i class="fa fa-picture-o"></i>
+                                        </div>
+                                    </figure>
+                                </li>
+                            <?php endif;?>
+
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<div class="modal fade" id="galleryModal" role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-body"></div>
+        </div>
+    </div>
+</div>

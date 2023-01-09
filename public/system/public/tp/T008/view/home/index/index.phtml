@@ -1,0 +1,454 @@
+<?php
+    use Home\Model\DateBase;
+    $optionBasic = $this->home()->optionBasic();
+    $optionPage = $this->home()->optionPage();
+    $homePage = $this->home()->homePage();
+    $fileLogo = getimagesize('http://'.$_SERVER['HTTP_HOST'].$optionBasic['logo']);
+?>
+<?php
+    /**** Start SEO DWEB *****/
+    echo $this->headLink(['rel' => 'canonical', 'href' => 'http://'.$_SERVER['HTTP_HOST'] ]);
+    $this->headTitle($this->escapeHtml($this->translate(!empty($optionBasic['metaTitle']) ? $optionBasic['metaTitle']:'Trang chủ')));
+    $this->headMeta()->appendName('description', (!empty($optionBasic['metaDescription']) ? $optionBasic['metaDescription']:null));
+    $this->headMeta()->appendName('keywords', (!empty($optionBasic['metaKeyword']) ? $optionBasic['metaKeyword']:null));
+    $this->headMeta()->appendProperty('og:title', !empty($optionBasic['metaTitle']) ? $optionBasic['metaTitle']:'Trang chủ');
+    $this->headMeta()->appendProperty('og:description', !empty($optionBasic['metaDescription']) ? $optionBasic['metaDescription']:null);
+    $this->headMeta()->appendProperty('og:image', !empty($optionBasic['logo']) ? 'http://'.$_SERVER['HTTP_HOST'].$optionBasic['logo']:null);
+    $this->headMeta()->appendProperty('og:image:secure_url', !empty($optionBasic['logo']) ? 'http://'.$_SERVER['HTTP_HOST'].$optionBasic['logo']:null);
+    $this->headMeta()->appendProperty('og:image:width', $fileLogo['0']);
+    $this->headMeta()->appendProperty('og:image:height', $fileLogo['1']);
+    $this->headMeta()->appendProperty('og:type', 'Website');
+    $this->headMeta()->appendProperty('og:url', 'http://'.$_SERVER['HTTP_HOST']);
+    $this->headMeta()->appendProperty('og:site_name', $optionBasic['sologan']);
+
+    $this->headMeta()->appendName('twitter:card', !empty($optionBasic['logo']) ? 'http://'.$_SERVER['HTTP_HOST'].$optionBasic['logo']:'summary_large_image');
+    $this->headMeta()->appendName('twitter:title', !empty($optionBasic['metaTitle']) ? $optionBasic['metaTitle']:'Trang chủ');
+    $this->headMeta()->appendName('twitter:description', (!empty($optionBasic['metaDescription']) ? $optionBasic['metaDescription']:null));
+    $this->headMeta()->appendName('twitter:image', !empty($optionBasic['logo']) ? 'http://'.$_SERVER['HTTP_HOST'].$optionBasic['logo']:null);
+    /**** End SEO DWEB *****/
+?>
+
+<?php
+if(!empty($homePage)):
+    $count = 0;
+    if(empty($optionPage['view_san-pham-sidebar'])) $sidebar = false;
+    else $sidebar = true;
+    echo '<div class=" container"><div class="row">';
+    foreach($homePage as $k => $v ) :
+        $layout = explode(' ', $k);
+        switch ($layout[0]) {
+            case "banner-with-field":
+                echo $this->partial('home/template/slider', ['bannerList' => $v]);
+                break;
+            case "small-banner-list":
+                echo $this->partial('home/template/small-banner-layout', ['smallBannerList' => $v['small-banner-list']]);
+                break;
+            default:
+                break;
+        }
+    endforeach;
+    echo ($sidebar ? '<div class="col-md-8">' : '<div class="col-md-12">');
+    foreach($homePage as $k => $v ):
+        $layout = explode(' ',$k);
+        switch ($layout[0]) {
+            case "product-layout":
+                echo $this->partial('home/template/product-layout', ['productLayout' => $v]);
+                break;
+            case "option-layout":
+                echo $this->partial('home/template/option-layout', ['optionLayout' => $v]);
+                break;
+            case "news-layout":
+                echo $this->partial('home/template/news-layout', ['newsLayout' => $v]);
+                break;
+            case "html-layout":
+                echo $this->partial('home/template/html-layout', ['htmlLayout' => $v]);
+                break;
+            case "tab-product-layout":
+                $count++;
+                echo $this->partial('home/template/tab-product-layout', ['tabProductLayout' => $v, 'id' => $count]);
+                break;
+            case "image-layout":
+                echo $this->partial('home/template/image-layout', ['imageLayout' => $v]);
+                break;
+            default:
+                break;
+        }
+    endforeach;
+        echo "</div>";
+        if(!empty($optionPage['view_danh-muc-sidebar-1'])): ?>
+            <div class="col-md-4">
+                <div class="sidebar-home">
+                    <div class="sidebar-home__widget">
+                        <h2 class="sidebar-home__headline"><span><?= $optionPage['tieu-de-tab-sidebar'] ? $optionPage['tieu-de-tab-sidebar'] : ''?></span></h2>
+                        <ul class="sidebar-home__tab-product-title">
+                        <?php $count = 1;
+                            foreach($optionPage as $k => $tab):
+                            $pattern = "/tab-san-pham-[0-9]+/";
+                            $tabOrder = abs((int) filter_var(str_replace('-','',$k), FILTER_SANITIZE_NUMBER_INT));
+                            if(preg_match($pattern, $k) && !empty($tab) && !empty($optionPage['tieu-de-tab-so-'.$tabOrder])): ?>
+                                <li class="tab-product-title-<?= $count ?>">
+                                    <a <?= $count == 1 ? 'class="active"' : '' ?> data-tab="#sidebar-tab<?= $count++ ?>">
+                                        <?= $optionPage['tieu-de-tab-so-'.$tabOrder]; ?>
+                                    </a>
+                                </li>
+                            <?php endif;
+                                endforeach;?>
+                        </ul>
+
+                        <?php
+                            $count = 1;
+                            foreach($optionPage as $k => $tab ):
+                            $pattern = "/tab-san-pham-[0-9]+/";
+                            $tabOrder = abs((int) filter_var(str_replace('-','',$k), FILTER_SANITIZE_NUMBER_INT));
+                            if(preg_match($pattern, $k) && !empty($tab) && !empty($optionPage['tieu-de-tab-so-'.$tabOrder])): ?>
+                            <div id="sidebar-tab<?= $count ?>"
+                                class="tabProductSidebar<?= $count++ == 1 ? ' active' : '' ?>">
+                            <ul class="sidebar-home__tab-product-list">
+                            <?php $index = 1;
+                                foreach($tab as $p): 
+                                $imgs = !empty($p['image']) ? array_slice(json_decode($p['image'], true), 0, 2):null; ?>
+                                <div class="sidebar-home__item">
+                                    <div class="sidebar-home__item--inner">
+                                        <a class="pI" href="<?= $p['url'] ?>">
+                                            <figure class="lazy product_image sidebar-home__image" data-src="<?= $imgs['0'] ?>">
+                                                <span class="sidebar-home__product-order">
+                                                    <?= $index++; ?>
+                                                </span>
+                                            </figure>
+                                        </a>
+                                        <div class="sidebar-home__price-cart">
+                                            <h2 class="sidebar-home__title"><a href="<?= $p['url'] ?>"><?= $p['title'] ?></a></h2>
+                                            <p class="product-horizontal__price">
+                                                <?= ($p['priceOld']
+                                                    ? '<span>'.number_format($p['priceOld']).' ₫</span><i>'.number_format($p['price']).' ₫</i>'
+                                                : '<span>'.number_format($p['price']).' ₫</span><i></i>') ?></p>
+                                        </div>
+                                    </div>
+                                </div>
+                            <?php endforeach; ?>
+                            </ul>
+                            </div>
+                            <?php endif;
+                                endforeach; ?>
+                            <div class="sidebar-home__banner">
+                                <?php
+                                if(!empty($optionPage['anh-tab-banner'])):
+                                foreach($optionPage['anh-tab-banner'] as $i):
+                                    $imgs = !empty($i['image']) ? array_slice(json_decode($i['image'], true), 0, 2):null; ?>
+                                        <a href="<?= $i['url'] ?>">
+                                            <figure class="lazy sidebar-home__image el-shaking" data-src="<?= $imgs['0'] ?>"></figure>
+                                        </a>
+                                <?php endforeach;
+                                    endif;?>
+                            </div>
+                    </div>
+                </div>
+            </div>
+        <?php endif;
+        if(!empty($optionPage['view_san-pham-sidebar'])): ?>
+            <div class="col-md-4">
+                <div class="sidebar-home">
+                    <div class="sidebar-home__widget">
+                        <h2 class="sidebar-home__headline"><span><?= $optionPage['tieu-de-sidebar'] ? $optionPage['tieu-de-sidebar'] : ''?></span></h2>
+                        <ul class="sidebar-home__list-item">
+                        <?php
+                        if(!empty($optionPage['san-pham-sidebar'])):
+                            foreach($optionPage['san-pham-sidebar'] as $p):
+                                $imgs = !empty($p['image']) ? array_slice(json_decode($p['image'], true), 0, 2):null; ?>
+                                <div class="sidebar-home__item">
+                                    <div class="sidebar-home__item--inner">
+                                        <a class="pI" href="<?= $p['url'] ?>">
+                                            <figure class="lazy product_image sidebar-home__image" data-src="<?= $imgs['0'] ?>"></figure>
+                                        </a>
+                                        <div class="sidebar-home__price-cart">
+                                            <h2 class="sidebar-home__title"><a href="<?= $p['url'] ?>"><?= $p['title'] ?></a></h2>
+                                            <p class="product-horizontal__price">
+                                                <?= ($p['priceOld']
+                                                    ? '<span>'.number_format($p['priceOld']).' ₫</span><i>'.number_format($p['price']).' ₫</i>'
+                                                : '<span>'.number_format($p['price']).' ₫</span><i></i>') ?></p>
+                                        </div>
+                                    </div>
+                                </div>
+                            <?php endforeach;
+                                endif;?>
+                        </ul>
+                        <div class="sidebar-home__banner">
+                            <?php
+                            if(!empty($optionPage['anh-banner'])):
+                            foreach($optionPage['anh-banner'] as $i):
+                                $imgs = !empty($i['image']) ? array_slice(json_decode($i['image'], true), 0, 2):null; ?>
+                                    <a href="<?= $i['url'] ?>">
+                                        <figure class="lazy sidebar-home__image el-shaking" data-src="<?= $imgs['0'] ?>"></figure>
+                                    </a>
+                            <?php endforeach;
+                                endif;?>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        <?php endif;
+    echo "</div></div>";
+else: ?>
+
+<div class="NavBannerAds">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <?php if(!empty($optionPage['view_banner'])): ?>
+                <div class="NavBannerAds__inner">
+                    <div class="width200 NavBannerAds__nav"></div>
+                    <?php
+                        echo '<div class="banner">';
+                            echo '<ul id="banner" class="owl-carousel owl-theme">';
+                            if(!empty($optionPage['banner'])) {
+                                foreach ($optionPage['banner'] as $b) {
+                                    $imageFirst = '';
+                                    if (!empty(json_decode($b['image'], true))) {
+                                        $imageFirst = array_shift(json_decode($b['image'], true));
+                                    }
+                                    ?>
+                                    <li>
+                                        <a href="<?= $b['url'] ?>">
+                                            <figure class="lazy banner-image" data-src="<?= $imageFirst ?>"></figure>
+                                        </a>
+                                    </li>
+                                    <?php
+                                }
+                            }
+                            echo '</ul></div>';
+                    ?>
+                    <div class="width200 ADsRight">
+                        <h3><?= $optionPage['tieu-de-noi-dung-ben-phai-banner'] ? $optionPage['tieu-de-noi-dung-ben-phai-banner'] : ''?></h3>
+                        <ul class="custom">
+                                <?= $optionPage['dong-1'] ? '<li><i class="fa fa-legal"></i><div><h3>' .$optionPage['dong-1'].'</h3></div></li>': null?>
+                                <?= $optionPage['dong-2'] ? '<li><i class="fa fa-rocket"></i><div><h3>' .$optionPage['dong-2'].'</h3></div></li>': null?>
+                                <?= $optionPage['dong-3'] ? '<li><i class="fa fa-money"></i><div><h3>' .$optionPage['dong-3'].'</h3></div></li>': null?>
+                                <?= $optionPage['dong-4'] ? '<li><i class="fa fa-shopping-cart"></i><div><h3>' .$optionPage['dong-4'].'</h3></div></li>': null?>
+                         </ul>
+                    </div>
+                </div>
+                <?php endif;?>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="ProductOptionHome">
+    <div class="container">
+        <div class="row">
+            <?php if(empty($optionPage['view_san-pham-sidebar'])):
+            echo '<div class="col-md-12">';
+            else:
+            echo '<div class="col-md-9">';
+            endif;
+            ?>
+                <?php if(!empty($optionPage['view_4-tab-san-pham'])): ?>
+                <div class="ProductOptionHomeContent">
+                    <ul class="NavProductOption">
+                        <?php if(!empty($optionPage['tieu-de-tab-1'])): ?>
+                            <li><a class="active" data-tab="#tab1"><?= $optionPage['tieu-de-tab-1'] ?></a></li>
+                        <?php endif; ?>
+                        <?php if(!empty($optionPage['tieu-de-tab-2'])): ?>
+                            <li><a  data-tab="#tab2"><?= $optionPage['tieu-de-tab-2'] ?></a></li>
+                        <?php endif; ?>
+                        <?php if(!empty($optionPage['tieu-de-tab-3'])): ?>
+                            <li><a data-tab="#tab3"><?= $optionPage['tieu-de-tab-3'] ?></a></li>
+                        <?php endif; ?>
+                        <?php if(!empty($optionPage['tieu-de-tab-4'])): ?>
+                            <li><a  data-tab="#tab4"><?= $optionPage['tieu-de-tab-4'] ?></a></li>
+                        <?php endif; ?>
+                    </ul>
+                    <div id="tab1" class="tab newHome active">
+                        <?php if(!empty($optionPage['san-pham-tab-1']) && !empty($optionPage['tieu-de-tab-1'])): ?>
+                            <div class="product-horizontal">
+                                <?php foreach($optionPage['san-pham-tab-1'] as $p):
+                                    $imgs = !empty($p['image']) ? array_slice(json_decode($p['image'], true), 0, 2):null; ?>
+                                    <?php
+                                    echo '<div class="tab-product__item">
+                                            <div class="tab-product__item--inner">
+                                            <a class="pI" href="'.$p['url'].'">
+                                                <figure class="lazy product_image product_image--two" data-src="'.$imgs['0'].'"></figure>
+                                            </a>
+                                            <h2 class="tab-product__item--title"><a href="'.$p['url'].'">'. $p['title'].'</a></h2>
+                                            <div class="product__price-cart">
+                                            <p class="product-horizontal__price">'.($p['priceOld'] ? number_format($p['priceOld']).' ₫<i>'.number_format($p['price']).' ₫</i>':number_format($p['price']).' ₫').'</p>
+                                            <a class="btnAddCart" data-quantity="1" data-id="'.$p['id'].'"><i class="fa fa-shopping-cart"></i></a>
+                                        </div></div></div>';
+                                    ?>
+                                <?php endforeach; ?>
+                            </div>
+                        <?php endif; ?>
+                    </div>
+                    <div id="tab2" class="tab">
+                        <?php if(!empty($optionPage['san-pham-tab-2']) && !empty($optionPage['tieu-de-tab-2'])): ?>
+                            <div class="product-horizontal">
+                            <?php foreach($optionPage['san-pham-tab-2'] as $p):
+                                $imgs = array_slice(json_decode($p['image'], true), 0, 2); ?>
+                                <?php
+                                    echo '<div class="tab-product__item">
+                                                <div class="tab-product__item--inner">
+                                                <a class="pI" href="'.$p['url'].'">
+                                                    <figure class="lazy product_image product_image--two" data-src="'.$imgs['0'].'"></figure>
+                                                </a>
+                                                <h2 class="tab-product__item--title"><a href="'.$p['url'].'">'. $p['title'].'</a></h2>
+                                                <div class="product__price-cart">
+                                                <p class="product-horizontal__price">'.($p['priceOld'] ? number_format($p['priceOld']).' ₫<i>'.number_format($p['price']).' ₫</i>':number_format($p['price']).' ₫').'</p>
+                                                <a class="btnAddCart" data-quantity="1" data-id="'.$p['id'].'"><i class="fa fa-shopping-cart"></i></a>
+                                            </div></div></div>';
+                                ?>
+                            <?php endforeach; ?>
+                            </div>
+                        <?php endif; ?>
+                    </div>
+                    <div id="tab3" class="tab">
+                        <?php if(!empty($optionPage['san-pham-tab-3']) && !empty($optionPage['tieu-de-tab-3'])): ?>
+                            <div class="product-horizontal">
+                                <?php foreach($optionPage['san-pham-tab-3'] as $p):
+                                    $imgs = array_slice(json_decode($p['image'], true), 0, 2); ?>
+                                    <?php
+                                    echo '<div class="tab-product__item">
+                                            <div class="tab-product__item--inner">
+                                            <a class="pI" href="'.$p['url'].'">
+                                                <figure class="lazy product_image product_image--two" data-src="'.$imgs['0'].'"></figure>
+                                            </a>
+                                            <h2 class="tab-product__item--title"><a href="'.$p['url'].'">'. $p['title'].'</a></h2>
+                                            <div class="product__price-cart">
+                                            <p class="product-horizontal__price">'.($p['priceOld'] ? number_format($p['priceOld']).' ₫<i>'.number_format($p['price']).' ₫</i>':number_format($p['price']).' ₫').'</p>
+                                            <a class="btnAddCart" data-quantity="1" data-id="'.$p['id'].'"><i class="fa fa-shopping-cart"></i></a>
+                                        </div></div></div>';
+                                    ?>
+                                <?php endforeach; ?>
+                            </div>
+                        <?php endif; ?>
+                    </div>
+                    <div id="tab4" class="tab">
+                        <?php if(!empty($optionPage['san-pham-tab-4']) && !empty($optionPage['tieu-de-tab-4'])): ?>
+                            <div class="product-horizontal">
+                                <?php foreach($optionPage['san-pham-tab-4'] as $p):
+                                    $imgs = array_slice(json_decode($p['image'], true), 0, 2); ?>
+                                    <?php
+                                    echo '<div class="tab-product__item">
+                                            <div class="tab-product__item--inner">
+                                            <a class="pI" href="'.$p['url'].'">
+                                                <figure class="lazy product_image product_image--two" data-src="'.$imgs['0'].'"></figure>
+                                            </a>
+                                            <h2 class="tab-product__item--title"><a href="'.$p['url'].'">'. $p['title'].'</a></h2>
+                                            <div class="product__price-cart">
+                                            <p class="product-horizontal__price">'.($p['priceOld'] ? number_format($p['priceOld']).' ₫<i>'.number_format($p['price']).' ₫</i>':number_format($p['price']).' ₫').'</p>
+                                            <a class="btnAddCart" data-quantity="1" data-id="'.$p['id'].'"><i class="fa fa-shopping-cart"></i></a>
+                                        </div></div></div>';
+                                    ?>
+                                <?php endforeach; ?>
+                            </div>
+                        <?php endif; ?>
+                    </div>
+
+                </div>
+                <?php endif;?>
+
+                <?php if(!empty($optionPage['view_banner-giua'])): ?>
+                    <div class="ADsHome2">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <?php
+                                if(!empty($optionPage['banner-giua'])):
+                                foreach($optionPage['banner-giua'] as $b):
+                                    $imageFirst = '';
+                                    if(!empty(json_decode($b['image'], true))){
+                                        $imageFirst = array_shift(json_decode($b['image'], true));
+                                    }
+                                    ?>
+                                    <a  href="<?= $b['url'] ?>"><figure class="lazy one-banner-center" data-src="<?= $imageFirst ?>"></figure> </a>
+                                <?php endforeach; endif; ?>
+                            </div>
+                        </div>
+                    </div>
+                <?php endif; ?>
+
+                <?php if(!empty($optionPage['view_danh-muc-san-pham'])):?>
+                <div class="tab-product">
+                    <div class="row">
+                        <div class="col-md-12">
+
+                            <?php
+                            if(!empty($optionPage['danh-muc-san-pham'])) {
+                                foreach ($optionPage['danh-muc-san-pham'] as $c) {
+                                    $imageFirst = '';
+                                    if (!empty(json_decode($c['image'], true))) {
+                                        $imageFirst = array_shift(json_decode($c['image'], true));
+                                    }
+                                    ?>
+                                    <div class="tab-product__inner">
+                                        <div class="tab-product__title">
+                                            <h2><a href="<?= $c['url'] ?>"><?= $c['title'] ?></a></h2>
+                                        </div>
+                                        <div class="tab-product__list">
+                                            <?php
+                                            $product = $this->product()->search(['categoryId' => $c['id'], 'limit' => 4]);
+                                            if (count($product)) {
+                                                foreach ($product as $p) {
+                                                    $imageFirst = '';
+                                                    if (!empty(json_decode($p->getImage(), true))) {
+                                                        $imageFirst = array_shift(json_decode($p->getImage(), true));
+                                                    }
+                                                    echo '<div class="tab-product__item">
+                                                <div class="tab-product__item--inner">
+                                                <a class="pI" href="' . $p->getViewLink() . '">
+                                                    <figure class="lazy product_image product_image--two" data-src="' . $imageFirst . '"></figure>
+                                                </a>
+                                                <h2 class="tab-product__item--title"><a href="' . $p->getViewLink() . '">' . $p->getTitle() . '</a></h2>
+                                                <div class="product__price-cart">
+                                                <p class="product-horizontal__price">' . ($p->getPriceOld() ? number_format($p->getPriceOld()) . ' ₫<i>' . number_format($p->getPrice()) . ' ₫</i>' : number_format($p->getPrice()) . ' ₫') . '</p>
+                                                <a class="btnAddCart" data-quantity="1" data-id="' . $p->getId() . '"><i class="fa fa-shopping-cart"></i></a>
+                                            </div></div></div>';
+                                                }
+                                            }
+                                            ?>
+                                        </div>
+                                    </div>
+                                    <?php
+                                }
+                            }
+                            ?>
+                        </div>
+                    </div>
+                </div>
+                <?php endif;?>
+            </div>
+            <?php if(!empty($optionPage['view_san-pham-sidebar'])): ?>
+            <div class="col-md-3">
+                <div class="sidebar-home">
+
+                <div class="sidebar-home__widget">
+                    <h2 class="sidebar-home__headline"><span><?= $optionPage['tieu-de-sidebar'] ? $optionPage['tieu-de-sidebar'] : ''?></span></h2>
+                    <?php
+                    if(!empty($optionPage['san-pham-sidebar'])):
+                    foreach($optionPage['san-pham-sidebar'] as $p):
+                        $imgs = !empty($p['image']) ? array_slice(json_decode($p['image'], true), 0, 2):null; ?>
+                        <div class="sidebar-home__item">
+                            <div class="sidebar-home__item--inner">
+                                <a class="pI" href="<?= $p['url'] ?>">
+                                    <figure class="lazy product_image sidebar-home__image" data-src="<?= $imgs['0'] ?>"></figure>
+                                </a>
+                                <div class="sidebar-home__price-cart">
+                                    <h2 class="sidebar-home__title"><a href="<?= $p['url'] ?>"><?= $p['title'] ?></a></h2>
+                                    <p class="product-horizontal__price"><?= ($p['priceOld'] ? number_format($p['priceOld']).' ₫<i>'.number_format($p['price']).' ₫</i>':number_format($p['price']).' ₫') ?></p>
+                                </div>
+                            </div>
+                        </div>
+                    <?php endforeach; endif;?>
+                </div>
+                </div>
+            </div>
+            <?php endif;?>
+
+        </div>
+    </div>
+
+<?php endif; ?>
+</div>
+
+
+
+
+
+

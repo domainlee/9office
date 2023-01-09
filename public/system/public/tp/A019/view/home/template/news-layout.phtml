@@ -1,0 +1,94 @@
+<?php
+use Home\Model\DateBase;
+if(!empty($this->newsLayout)):?>
+<section class="news">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="headline">
+                        <h2 class="headline-default news__headline wp1"><span><?= $this->newsLayout['news-title text']['value'] ?></span></h2>
+                        <?= $this->newsLayout['news-sub-title text']['value'] ? '<div class="headline-intro"><span>'.$this->newsLayout['news-sub-title text']['value'].'</span></div>':'' ?>
+                    </div>
+                    <div class="news__inner">
+
+                        <?php
+
+                        if(!empty($this->newsLayout['news-list article']['news-list'])):
+                            $c = 0;
+                            foreach($this->newsLayout['news-list article']['news-list'] as $k => $n):
+                                $c++;
+                                $imageFirst = '';
+                                $i = json_decode($n['image'], true);
+                                if(is_array($i) && !empty($i)) {
+                                    $imageFirst = array_shift($i);
+                                }
+                                if($c == 1):
+                                    ?>
+                                    <div class="news__item news__item--first wp2">
+                                        <div class="news__item--right">
+                                            <a href="<?= $n['url'] ?>"><figure class="news__image lazy" data-src="<?= $imageFirst ?>"></figure></a>
+                                        </div>
+                                        <div class="news__item--left">
+                                            <div style="display: none" class="news__date">
+                                                <span>Ngày <?= DateBase::toFormat($n['date'], 'd/m/Y') ?></span>
+                                            </div>
+                                            <h3 class="news__title"><a href="<?= $n['url'] ?>"><?= $n['title'] ?></a></h3>
+                                            <p><?=$n['intro']?></p>
+                                            <a class="news__button--more" href="<?= $n['url'] ?>">Xem thêm <i class="fa fa-angle-right"></i></a>
+                                        </div>
+                                    </div>
+                                <?php endif; endforeach; endif;?>
+                        <div class="news__slider owl-carousel owl-theme">
+                            <?php
+
+                            if(!empty($this->newsLayout['news-list article']['news-list'])):
+                                $c = 0;
+                                foreach($this->newsLayout['news-list article']['news-list'] as $k => $n):
+                                    $c++;
+                                    $imageFirst = '';
+                                    $i = json_decode($n['image'], true);
+                                    if(is_array($i) && !empty($i)) {
+                                        $imageFirst = array_shift($i);
+                                    }
+                                    if($c != 1):
+                                        ?>
+
+                                        <div class="news__item">
+                                            <div class="news__item--right">
+                                                <a href="<?= $n['url'] ?>"><figure class="news__image lazy" data-src="<?= $imageFirst ?>">
+                                                        <div class="news__item--info">
+                                                            <div class="news__button">
+                                                                <a class="btn-default1" href="<?= $n['url'] ?>">Xem thêm</i></a>
+                                                            </div>
+                                                        </div>
+
+                                                    </figure>
+                                                </a>
+                                            </div>
+                                            <div class="news__item--left">
+                                                <div style="display: none" class="news__date">
+                                                    <span>Ngày <?= DateBase::toFormat($n['date'], 'd/m/Y') ?></span>
+                                                </div>
+                                                <h3 class="news__title"><a href="<?= $n['url'] ?>"><?= $n['title'] ?></a></h3>
+
+                                            </div>
+                                        </div>
+
+                                    <?php
+                                    endif;
+                                endforeach;
+                            endif;
+                            ?>
+                        </div>
+                    </div>
+
+                    <!-- <div class="news__button">
+                         <a class="btn-default1" href="/bai-viet.html">Xem tất cả</a>
+                     </div>-->
+
+                </div>
+            </div>
+        </div>
+        </div>
+    </section>
+<?php endif;?>

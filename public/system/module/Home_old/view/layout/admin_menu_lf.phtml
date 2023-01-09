@@ -1,0 +1,32 @@
+<ul>
+    <?php
+    $a = explode('/', $this->UriParams()->getRequest()->getRequestUri());
+    echo renderMenu($this->container, $a);
+    ?>
+</ul>
+
+<?php
+
+function renderMenu($container, $a) {
+    $helper = new \Zend\View\Helper\Navigation\Menu();
+    foreach ($container as $menu) {
+        if ($helper->accept($menu)){
+            $class = 'has-submenu';
+            if($a){
+                $attr = null;
+                if(in_array($menu->module, $a)){
+//                    $class = 'open';
+//                    $attr = 'display: block';
+                }
+            }
+            echo '<li class="'.$class.'" >';
+            echo '<a href="'.(!empty($menu->pages) ? 'javascript:void(0);':$menu->getHref()).'">'.$menu->icon.'<span>'.$menu->label.'</span>'.(!empty($menu->pages) ? '<span class="menu-arrow"></span>':'').'</a>';
+            if (!empty($menu->pages)) {
+                echo '<ul class="list-unstyled">';
+                echo renderMenu($menu->pages, null);
+                echo '</ul>';
+            }
+            echo '</li>';
+        }
+    }
+}

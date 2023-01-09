@@ -1,0 +1,46 @@
+<section class="countdown-section">
+    <?php use Home\Model\DateBase;
+        $timeExpired = $this->countDownLayout['countdown-years text']['value'].'-'
+            .$this->countDownLayout['countdown-months text']['value'].'-'
+            .$this->countDownLayout['countdown-days text']['value'].' '
+            .($this->countDownLayout['countdown-hours text']['value']?:'00').':'
+            .($this->countDownLayout['countdown-minutes text']['value']?:'00').':'
+            .($this->countDownLayout['countdown-seconds text']['value']?:'00')
+    ?>
+    <div class="countdown">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <h2 class="titleHome">
+                        <span><?= $this->countDownLayout['countdown-title text']['value'] ?></span>
+                    </h2>
+                    <div class="countdown__inner">
+                        <ul class="countdown-list">
+                            <?php
+                                if(strtotime(date("Y-m-d H:i:s")) > strtotime($timeExpired)): ?>
+                                    <h3>
+                                        <i class="fa fa-calendar-times-o" aria-hidden="true"></i>
+                                        <span>ĐÃ KẾT THÚC</span>
+                                    </h3>
+                                <?php else : ?>
+                                    <li class="countdown-days">
+                                        0d
+                                    </li>
+                                    <li class="countdown-hours">
+                                        00
+                                    </li>
+                                    <li class="countdown-minutes">
+                                        00
+                                    </li>
+                                    <li class="countdown-seconds">
+                                        00
+                                    </li>
+                            <?php endif; ?>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <input id="date-hidden" type="hidden" value="<?= $timeExpired ?>" />
+</section>

@@ -1,0 +1,49 @@
+<?php if(!empty($this->productLayout)):
+//    echo "<pre>";
+//    print_r($this->productLayout);
+//    die;
+    ?>
+    <section class="product">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="tab-product__inner">
+                        <div class="tab-product__title">
+                            <h2>
+                                <a href="">
+                                    <?= ($this->productLayout['product-title text']['value']?:'') ?>
+                                </a>
+                            </h2>
+                            <?php if(!empty($this->productLayout['product-category productcategory'])):
+                                echo '<div class="tab-product__category-list">';
+                                foreach ($this->productLayout['product-category productcategory']['product-category'] as $c): ?>
+                                    <a class="btn btn-default btn-sm" href="<?= $c['url'] ?>"><?= $c['title'] ?></a>
+                                <?php endforeach; echo '</div>'; endif; ?>
+                        </div>
+                        <ul class="tab-product__list">
+                            <?php if(!empty($this->productLayout['product-list product']['product-list'])):
+                                foreach($this->productLayout['product-list product']['product-list'] as $p):
+                                    $imageFirst = '';
+                                    if(!empty(json_decode($p['image'], true))){
+                                        $imageFirst = array_shift(json_decode($p['image'], true));
+                                    } ?>
+                                    <li class="tab-product__item">
+                                        <div class="tab-product__item--inner">
+                                            <a class="pI" href="<?= $p['url'] ?>">
+                                                <figure class="lazy product__image" data-src="<?= $imageFirst ?>"></figure>
+                                            </a>
+                                            <h2 class="tab-product__item--title"><?= $p['title'] ?></h2>
+                                            <div class="product__price-cart">
+                                                <p class="product-horizontal__price"><?= $p['priceOld'] ? '<i>'.number_format($p['price']).' đ</i>'.number_format($p['priceOld']).' đ':number_format($p['price']).' đ' ?></p>
+                                                <a class="btnAddCart" data-quantity="1" data-id="<?= $p['id'] ?>"><i class="fa fa-shopping-cart"></i></a>
+                                            </div>
+                                        </div>
+                                    </li>
+                                <?php endforeach;endif;?>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+<?php endif;?>

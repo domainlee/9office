@@ -1,0 +1,83 @@
+<?php
+    $paginator = $this->paginator;
+    use Home\Model\DateBase;
+    $cs = [
+        '/tp/TP001/css/n.css',
+        '/tp/TP001/css/p.css'
+    ];
+    echo '<link href="'.srcLink($cs,1).'" media="screen" rel="stylesheet" type="text/css">';
+    $optionPage = $this->home()->optionPage();
+    $optionBasic = $this->home()->optionBasic();
+    $menuOption = $this->home()->getMenu();
+?>
+<?php
+    /**** Start SEO DWEB *****/
+    $this->headTitle($this->escapeHtml($this->translate('Danh sách tin tức')));
+    $this->headMeta()->appendName('description', '');
+    $this->headMeta()->appendName('keywords', '');
+
+    $this->headMeta()->appendProperty('og:title', 'Danh sách tin tức');
+    $this->headMeta()->appendProperty('og:description', 'Danh sách tin tức');
+    $this->headMeta()->appendProperty('og:image', '');
+    $this->headMeta()->appendProperty('og:image:secure_url', '');
+    $this->headMeta()->appendProperty('og:image:width', '');
+    $this->headMeta()->appendProperty('og:image:height', '');
+    $this->headMeta()->appendProperty('og:type', 'Page');
+    $this->headMeta()->appendProperty('og:url', 'http://'.$_SERVER['HTTP_HOST'].'/bai-viet.html');
+    $this->headMeta()->appendProperty('og:site_name', $optionBasic['sologan']);
+
+    $this->headMeta()->appendName('twitter:card', '');
+    $this->headMeta()->appendName('twitter:title', 'Danh sách tin tức');
+    $this->headMeta()->appendName('twitter:description', 'Danh sách tin tức');
+    $this->headMeta()->appendName('twitter:image', '');
+    /**** End SEO DWEB *****/
+?>
+<div class="product-single-hero">
+    <div class="bg-hero" style="background-image: url('/tp/MP001/images/m-11-slide-1.jpg')"></div>
+    <h2>Bài Viết</h2>
+</div>
+
+<div class="container">
+    <div class="row">
+        <?php
+            if(!empty($optionPage['view_danh-muc-sidebar-1']) || !empty($optionPage['view_danh-muc-sidebar-2']) || !empty($optionPage['view_banner-sidebar'])):
+                echo '<div class="col-md-8">';
+            else:
+                echo '<div class="col-md-12">';
+            endif;
+        ?>
+            <?php
+            if(count($paginator)){
+                $n = $this->newsCategory()->getCategories();
+                echo '<ul class="lNCategory">';
+                foreach($paginator as $n){
+                    $image = json_decode($n->getImage(), true);
+                    $imageFirst = '';
+                    if(!empty($image)){
+                        $imageFirst = array_shift($image);
+                    }
+                    echo '<li>
+                        <a href="'.$n->getViewLink().'">
+                        <figure class="lazy image-article" data-src="'.(!empty($imageFirst) ? $imageFirst : null).'"></figure>
+                        </a>
+                        <div class="article__content">
+                            <h3><a href="'.$n->getViewLink().'">'.$n->getTitle().'</a></h3>
+                            <p class="news__date">'.DateBase::toFormat($n->getCreatedDateTime(), 'M d, Y').'</p>
+                            <p class="intro">'.$n->getDescription().'</p>
+                        </div>
+                    </li>';
+                }
+                echo '</ul>';
+                echo '<div class="paginatorProduct">';
+                echo $this->paginationControl($this->paginator, 'Elastic', 'partial/listPage');
+                echo '</div>';
+            }
+            ?>
+        </div>
+    <?php
+        if(!empty($optionPage['view_danh-muc-sidebar-1']) || !empty($optionPage['view_danh-muc-sidebar-2']) || !empty($optionPage['view_banner-sidebar'])){
+            echo $this->render('news/news/sidebar');
+        }
+    ?>
+    </div>
+</div>

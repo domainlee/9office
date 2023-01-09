@@ -1,0 +1,132 @@
+<?php if(!empty($this->productLayout['product-category productcategory']['product-category'])): ?>
+    <div class="category">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <ul class="categoryProductHome">
+                        <?php
+                            $i = 1;
+                            foreach ($this->productLayout['product-category productcategory']['product-category'] as $c) {
+                                $imageFirst = '';
+                                if (!empty(json_decode($c['image'], true))) {
+                                    $imageFirst = array_shift(json_decode($c['image'], true));
+                                }
+                                ?>
+                                <li>
+                                    <h2 class="title-mobile"><?= $c['title'] ?></h2>
+                                    <div class="c-h-1">
+                                        <h2><span><?= $i++ ?></span><a
+                                                    href="<?= $c['url'] ?>"><?= $c['title'] ?></a></h2>
+                                        <p>
+                                            <a href="<?= $c['url'] ?>?show=bestseller">Mua nhiều</a>
+                                            <a href="<?= $c['url'] ?>?show=mostview">Xem nhiều</a>
+                                        </p>
+                                        <?php
+                                        if (!empty($c['child'])) {
+                                            ?>
+                                            <ul>
+                                                <?php
+                                                foreach ($c['child'] as $cc) {
+                                                    echo '<li><a href="' . $cc['url'] . '"><i class="fa fa-angle-right"></i>' . $cc['title'] . '</a></li>';
+                                                }
+                                                ?>
+                                            </ul>
+                                            <?php
+                                        }
+                                        ?>
+                                    </div>
+                                    <div class="c-h-2" style="background-image: url(<?= $imageFirst ? $imageFirst : '/tp/T001/img/no-image.png'?>)">
+                                        <a href="<?= $c['url'] ?>">
+                                        </a>
+                                    </div>
+                                    <?php if(!empty($c['child']) ){
+                                        foreach ($c['child'] as $cc){
+                                            $c_product = $this->product()->search(['categoryId' => $cc['id']]);
+                                        }
+                                    }
+                                    if(empty($c['child']) || empty($c_product)):
+                                    ?>
+                                    <div class="c-h-3">
+                                        <?php
+                                        $product = $this->product()->search(['categoryId' => $c['id']]);
+                                        $slider = $this->productLayout['product-slider-checkbox checkbox']['value'];
+                                        if (!empty($product)) {
+                                            echo '<ul class="'.($slider ? 'product-slider product-slider owl-carousel owl-theme' : 'lP2').'">';
+                                            $count = 0;
+                                            foreach ($product as $p):
+                                                $count++;
+                                                if ($count == 7) {
+                                                    break;
+                                                }
+                                                $imageFirst = '';
+                                                if (!empty(json_decode($p->getImage(), true))) {
+                                                    $imageFirst = array_shift(json_decode($p->getImage(), true));
+                                                }
+                                                ?>
+                                                    <li class="product-item">
+                                                        <div class="product-item__inner">
+                                                            <div class="product_image-wrapper">
+                                                                <a href="<?= $p->getViewLink() ?>">
+                                                                    <figure class="lazy product_image" data-src="<?= !empty($imageFirst) ? $imageFirst:'' ?>"></figure>
+                                                                </a>
+                                                            </div>
+                                                            <p class="product-price"><?= $p->getPriceOld() ? number_format($p->getPriceOld()).' đ<i>'.number_format($p->getPrice()).' đ</i>':number_format($p->getPrice()).' đ' ?></p>
+                                                            <h3 class="product-title"><?= $p->getTitle() ?></h3>
+                                                        </div>
+                                                    </li>
+                                            <?php endforeach; ?>
+                                            <?php
+                                            echo '</ul>';
+                                        }
+                                        ?>
+                                    </div>
+                                    <?php else:
+                                        ?>
+                                        <div class="c-h-3">
+                                            <ul class="lP2">
+                                                <?php
+                                                foreach ($c['child'] as $cc) {
+                                                    $product = $this->product()->search(['categoryId' => $cc['id']]);
+                                                    if (!empty($product)) {
+                                                        $count = 0;
+                                                        foreach ($product as $p):
+                                                            $count++;
+                                                            if ($count == 3) {
+                                                                break;
+                                                            }
+                                                            $imageFirst = '';
+                                                            if (!empty(json_decode($p->getImage(), true))) {
+                                                                $imageFirst = array_shift(json_decode($p->getImage(), true));
+                                                            }
+                                                            ?>
+                                                            <li class="product-item">
+                                                                <div class="product-item__inner">
+                                                                    <div class="product_image-wrapper">
+                                                                        <a href="<?= $p->getViewLink() ?>">
+                                                                            <figure class="lazy product_image" data-src="<?= !empty($imageFirst) ? $imageFirst:'' ?>"></figure>
+                                                                        </a>
+                                                                    </div>
+                                                                    <p class="product-price"><?= $p->getPriceOld() ? number_format($p->getPriceOld()).' đ<i>'.number_format($p->getPrice()).' đ</i>':number_format($p->getPrice()).' đ' ?></p>
+                                                                    <h3 class="product-title"><?= $p->getTitle() ?></h3>
+                                                                </div>
+                                                            </li>
+                                                        <?php endforeach; ?>
+                                                        <?php
+                                                    }}
+                                                ?>
+                                            </ul>
+
+                                        </div>
+
+                                    <?php endif;?>
+                                </li>
+                                <?php
+                            }
+                        ?>
+                    </ul>
+
+                </div>
+            </div>
+        </div>
+    </div>
+<?php endif; ?>

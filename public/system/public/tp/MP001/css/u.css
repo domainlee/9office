@@ -1,0 +1,134 @@
+.signup{
+    margin: 30px 0 0 0;
+}
+.signup>h1{
+    text-align: center;
+    text-transform: uppercase;
+    font-weight: 300;
+    font-size: 26px;
+    margin: 20px 0 15px 0;
+}
+.signup>form>ul{
+    width: 430px;
+    margin: 0 auto;
+    background: #f8f8f8;
+    padding: 15px 25px 10px 25px;
+    border-top: 2px solid #333;
+}
+.signup>form>ul .errors{
+    font-size: 12px;
+    font-style: italic;
+    padding: 0 0 0 130px;
+    color: #999;
+}
+.signup ul li{
+    margin: 10px 0;
+}
+.signup ul li label{
+    float: left;
+    width: 130px;
+    margin: 5px 0 0 0;
+    font-weight: 400;
+}
+.signup ul li input{
+    border: 1px solid #CCC;
+    padding: 5px 10px;
+    width: 250px;
+}
+.signup ul li input:focus{
+    outline: none;
+}
+.signup ul li input[type=submit]{
+    background: #333;
+    border-radius: 0;
+    color: #FFF;
+    border: none;
+    text-transform: uppercase;
+    padding: 6px 0;
+    width: 130px;
+}
+.signup ul li input[type=submit]:focus{
+    outline: none;
+    background: #111;
+}
+
+/****contact****/
+.contactForm .form-group label{
+    display: none;
+}
+.contactForm .form-group input, .contactForm .form-group textarea {
+    padding: 10px 15px;
+    width: 100%;
+    border: 1px solid #CCC;
+}
+.contact__inner{
+    width: 80%;
+    margin:0  auto;
+    padding:85px 0 100px;
+    display: flex;
+}
+.contact__logo{
+    margin: 0 0 15px;
+}
+.contact__logo img{
+    max-width: 200px;
+}
+.contact__from-right{
+    padding: 0 0 0 60px;
+}
+.contact__description {
+    font-weight: 300;
+    font-size: 16px;
+}
+.contact__description::after {
+    margin: 30px 0;
+    content: '';
+    display: block;
+    width: 100px;
+    height: 2px;
+    background-color: #EAE8E8;
+}
+.contactForm .form-group button[type="submit"] {
+    width: 100%;
+    border: none;
+    font-weight: 700;
+    font-size: 20px;
+    text-transform: uppercase;
+    padding: 6px 0;
+    background: #EAE8E8;
+    color:#8E4248 ;
+}
+.contactForm .title{
+    font-size: 14px;
+    text-transform: unset;
+    margin: 0;
+    text-align: left;
+}
+.contact_col-title {
+    margin: 0 0 15px;
+    text-transform: uppercase;
+    font-size: 18px;
+}
+@media only screen and (min-width:300px) and (max-width:640px){
+    /****contact****/
+    .contact__inner{
+        flex-direction: column;
+        width: 90%;
+    }
+    .contact__from-right{
+        padding: 0;
+    }
+    .title-page{
+        width: 90%;
+    }
+}
+@media only screen and (min-width:640px) and (max-width:990px){
+    /****contact****/
+    .contact__inner{
+        flex-direction: column;
+        width: 80%;
+    }
+    .contact__from-right{
+        padding: 0;
+    }
+}

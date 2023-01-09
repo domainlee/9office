@@ -1,0 +1,8 @@
+User-agent: *
+Disallow: /admin/
+Disallow: /*?*
+Disallow: /*?*price=
+Disallow: /*?*color=
+Disallow: /*?
+Allow: /*?tag=*
+Allow: /*?page=*

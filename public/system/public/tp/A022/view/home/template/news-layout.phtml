@@ -1,0 +1,40 @@
+<?php
+use Home\Model\DateBase;
+if(!empty($this->newsLayout)):?>
+<section class="news">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h2 class="headline-default news__headline"><?= $this->newsLayout['news-title text']['value'] ?></h2>
+                <?php $slider = $this->newsLayout['news-slider-checkbox checkbox']['value']?>
+                <?= $this->newsLayout['news-sub-title text']['value'] ? '<div class="headline-intro"><span>'.$this->newsLayout['news-sub-title text']['value'].'</span></div>':'' ?>
+                <div class="news__inner">
+                    <ul class="<?= $slider ? 'news__slider owl-carousel owl-theme' : 'news__list' ?>">
+                        <?php
+                            foreach($this->newsLayout['news-list article']['news-list'] as $k => $n):
+                                $imageFirst = '';
+                                $i = json_decode($n['image'], true);
+                                if(is_array($i) && !empty($i)) {
+                                    $imageFirst = array_shift($i);
+                                }
+                                ?>
+                                <li class="news__item">
+                                    <div class="news__item--right">
+                                        <a href="<?= $n['url'] ?>"><figure class="news__image lazy" data-src="<?= $imageFirst ?>"></figure></a>
+                                    </div>
+                                    <div class="news__item--left" style="">
+                                        <div style="display: none" class="news__date">
+                                            <span>Ngày <?= DateBase::toFormat($n['date'], 'd/m/Y') ?></span>
+                                        </div>
+                                        <h3 class="news__title"><a href="<?= $n['url'] ?>"><?= $n['title'] ?></a></h3>
+                                        <a class="news__button--more" href="<?= $n['url'] ?>">Xem thêm <i class="fa fa-angle-right"></i></a>
+                                    </div>
+                                </li>
+                            <?php endforeach;?>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<?php endif;?>

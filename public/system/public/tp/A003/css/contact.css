@@ -1,0 +1,175 @@
+.contact__inner {
+    margin: 0 auto;
+    padding: 100px 0;
+    width: 80%;
+}
+
+.contactForm .form-group label {
+    display: none;
+}
+
+.contactForm .form-group input, .contactForm .form-group textarea {
+    padding: 10px 15px;
+    width: 100%;
+    border: 1px solid #CCC;
+}
+
+.contactForm .form-group textarea {
+    height: 120px;
+}
+
+.contactForm .form-group input:focus, .contactForm .form-group textarea:focus, .contactForm .form-group button[type=submit]:focus {
+    outline: none;
+}
+
+.contactForm .form-group button[type=submit] {
+    width: 100%;
+    border: none;
+    font-weight: 700;
+    font-size: 20px;
+    text-transform: uppercase;
+    padding: 6px 0;
+    background: #07aabe;
+    color: #FFF;
+}
+
+.header-fix .logoContact, .logoContact {
+    margin: 0 0 30px;
+    font-size: 54px;
+}
+
+.logoContact .logo-first-key {
+    width: 55px;
+    height: 55px;
+    font-size: 36px;
+}
+
+.contact__title {
+    margin: 0 0 15px;
+    font-weight: 300;
+    text-transform: uppercase;
+}
+
+.contact__description {
+    font-weight: 300;
+    font-size: 16px;
+}
+
+.contact__description:after {
+    margin: 30px 0;
+    content: '';
+    display: block;
+    width: 100px;
+    height: 2px;
+    background-color: #CCC;
+}
+
+.contact_col-title {
+    margin: 0 0 15px;
+    text-transform: uppercase;
+    font-size: 18px;
+}
+
+.contact__detail a {
+    color: #333;
+}
+
+.contact__form-right {
+    padding: 0 0 0 80px;
+}
+
+.contact__hero {
+    background-image: none;
+    overflow: hidden;
+}
+
+.contact__hero:before {
+    background: rgba(0, 0, 0, 0.6);
+}
+
+.contact__hero iframe{
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: -1;
+}
+.price__hero-inner {
+    z-index: 3;
+}
+
+.register {
+    background-image: url(http://v2.webbnc.net/includes/create/themes/resources/css/imgs/bg1.jpg);
+    background-size: cover;
+    background-repeat: no-repeat;
+    min-height: 100vh;
+}
+
+.register__inner {
+    margin: 0 auto;
+    padding: 80px 0;
+    max-width: 1100px;
+}
+
+.registerForm {
+    padding: 50px;
+    background: #FFF;
+    box-shadow: 0 0 5px rgba(51, 51, 51, 0.19);
+    border-radius: 2px;
+}
+
+.registerForm .form-group input, .registerForm .form-group textarea {
+    padding: 10px 0;
+    border: none;
+    border-bottom: 1px solid #e2e2e2;
+}
+.registerForm .form-group {
+    position: relative;
+}
+.registerForm .form-group input[name=store] {
+    width: 80%;
+}
+
+.labelDWEB {
+    width: auto;
+    position: absolute;
+    right: 0;
+    top: 1px;
+    background: #e2e2e2;
+    padding: 10px;
+    text-align: center;
+    color: #888;
+}
+
+.register .header-sologan {
+    margin: 15px 0;
+}
+
+.register__title {
+    margin: 0 0 15px;
+    padding: 0px 0 10px;
+    color: #333;
+    font-size: 24px;
+    text-transform: uppercase;
+    font-weight: 300;
+    text-align: center;
+    border-bottom: 1px solid #e2e2e2;
+}
+
+.register__dk {
+    padding: 0 0 0 35%;
+}
+
+.register__dk h2 {
+    margin: 30px 0 15px;
+    font-weight: 300;
+    color: #FFF;
+    text-shadow: 0 0 3px rgba(0, 0, 0, 0.34);
+    font-size: 36px;
+}
+
+.register__dk p{
+    font-weight: 300;
+    font-size: 18px;
+    color: #FFF;
+    text-shadow: 0 0 3px rgba(0, 0, 0, 0.20);
+}

@@ -1,0 +1,53 @@
+<?php use Home\Model\DateBase;if(!empty($this->newsLayout)): ?>
+    <section class="two-post">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="two-post__inner">
+                        <div class="two-post__headline">
+                            <h2><?= $this->newsLayout['news-title text']['value'] ?></h2>
+                        </div>
+                        <div class="two-post__list">
+                            <?php
+                            if(!empty($this->newsLayout['news-list article'])):
+                                foreach($this->newsLayout['news-list article']['news-list'] as $n):
+                                    $imageFirst = '';
+                                    if(!empty(json_decode($n['image'], true))){
+                                        $imageFirst = array_shift(json_decode($n['image'], true));
+                                    }
+                                    ?>
+                                    <div class="two-post__item">
+                                        <div class="two-post__image-wrapper">
+                                            <a href="<?= $n['url'] ?>">
+                                                <figure class="lazy two-post__image" data-src="<?= !empty($imageFirst) ? $imageFirst:null ?>"></figure>
+                                            </a>
+                                        </div>
+                                        <div class="two-post__description">
+                                            <h3 class="two-post__title">
+                                                <a href="<?= $n['url'] ?>"><?= $n['title'] ?></a>
+                                            </h3>
+                                            <p class="two-post__date">
+                                                <i class="fa fa-clock-o"></i>
+                                                <?= DateBase::toFormat($n['date'], 'd/m/Y') ?>
+                                            </p>
+                                            <div class="two-post__intro">
+                                                <p>
+                                                    <?php echo substr($n['intro'],0,100)?>
+                                                    <?php
+                                                    if(strlen($n['intro']) > 100) {
+                                                        echo '...';
+                                                    }
+                                                    ?>
+                                                </p>
+                                            </div>
+                                            <a class="two-post__link" href="<?= $n['url'] ?>">Đọc tiếp</a>
+                                        </div>
+                                    </div>
+                                <?php endforeach; endif;?>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+<?php endif; ?>

@@ -1,0 +1,118 @@
+<?php
+echo $this->doctype();
+$optionBasic = $this->home()->optionBasic();
+?>
+<html lang="en">
+    <head>
+        <?php
+            echo !empty($optionBasic['scriptHead']) ? '<script>'.$optionBasic['scriptHead'].'</script>' : null;
+
+            echo $this->headTitle('Blog')->setSeparator(' | ')->setAutoEscape(false);
+            $this->headMeta()->appendName('DC.language', 'scheme=utf-8 content=vi');
+            $this->headMeta()->appendName('author', 'blog.dweb.vn');
+            $this->headMeta()->appendName('format-detection', 'telephone=no');
+            $this->headMeta()->appendName('viewport', 'width=device-width, initial-scale=1, maximum-scale=1');
+            echo $this->headMeta();
+            echo $this->headLink(['rel' => 'shortcut icon', 'type' => 'image/vnd.microsoft.icon', 'href' => $optionBasic['favicon'] ? $optionBasic['favicon']:null ]);
+
+        ?>
+        <link href="https://fonts.googleapis.com/css?family=Noto+Serif" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,600" rel="stylesheet">
+        <?php
+            $cs = [
+                '/tp/blog_h/css/bootstrap.css',
+                '/tp/blog_h/css/font-awesome.min.css',
+                '/tp/blog_h/css/animate.min.css',
+                '/assets/css/web/owl.carousel.css',
+                '/tp/blog_h/css/page.css',
+                '/tp/blog_h/css/a.css',
+                '/tp/blog_h/css/r.css',
+            ];
+            echo '<link href="'.srcLink($cs,4).'" media="screen" rel="stylesheet" type="text/css">';
+            $js = [
+                '/assets/js/web/jquery-1.11.2.min.js',
+            ];
+            echo '<script type="text/javascript" src="'.srcLink($js,22).'"></script>';
+        ?>
+        <?php
+        $url2 = $this->home()->getMcaName('action');
+        $url = $this->UriParams()->getRequest()->getRequestUri();
+        ?>
+        <?php if( $url == '/'): ?>
+        <script type="application/ld+json">[
+{
+      "@context": "https://schema.org",
+      "@type": "Person",
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Cau Giay",
+        "addressRegion": "Hanoi",
+        "postalCode": "100000",
+        "streetAddress": "The Manor, Mễ Trì"
+      },
+      "colleague": [
+        "https://www.jamviet.com/",
+        "https://ceo.dweb.vn/"
+      ],
+      "email": "hieunh.6868@gmail.com",
+      "image": "http://nguyenhuuhieu.com/uploads/media/222/2019/11/103334055033654964767431985034018199824716o1573187404.jpg",
+      "jobTitle": "Chuyên gia Marketing online",
+      "name": "Nguyễn Hữu Hiệu",
+      "alumniOf": "National Economics University",
+      "birthPlace": "Phu Tho, Vietnam",
+      "birthDate": "1992-06-24",
+      "height": "69 inches",
+      "gender": "male",
+      "memberOf": "Vietmax Group",
+      "nationality": "Vietnamese",
+      "telephone": "+84949090202",
+      "url": "http://nguyenhuuhieu.com/",
+	    "sameAs" : [ "https://www.facebook.com/nguyenhuuhieu.1td",
+      "https://www.linkedin.com/in/winston-nguyen-4837aab1/",
+      "https://www.instagram.com/winston_nguyen_88/",
+      "https://www.jamviet.com/author/hieunh_sales"]
+},{
+	"@context": "https://schema.org",
+	"@type": "WebSite",
+	"@id": "http://nguyenhuuhieu.com/#website",
+	"url": "http://nguyenhuuhieu.com/",
+	"name": "Blog cá nhân về marketing của Nguyễn Hữu Hiệu (Winston Nguyen)",
+    "description": "Trang web blog cá nhân của tác giả Nguyễn Hữu Hiệu. Blog sẽ viết về marketing nói chung và các mảng nằm trong nó như: digital marketing, marketing online, làm SEO"
+    }
+    ]
+</script>
+<?php endif; ?>
+    </head>
+    <?php
+        $url = $this->UriParams()->getRequest()->getRequestUri();
+        $classPage = substr($url, 1, -5);
+    ?>
+    <body>
+        <?php
+            echo !empty($optionBasic['scriptBody']) ? '<script>'.$optionBasic['scriptBody'].'</script>' : null;
+
+            echo $this->render('layout/header');
+            echo $this->content;
+            echo $this->render('layout/footer');
+        ?>
+    </body>
+    <?php
+        $cs = [
+            '/tp/blog_h/css/r.css',
+        ];
+        echo '<link href="'.srcLink($cs,1).'" media="screen" rel="stylesheet" type="text/css">';
+        $js = [
+//            '/tp/dweb/js/jquery-1.10.1.min.js',
+            '/tp/blog_h/js/bootstrap.min.js',
+            '/assets/js/web/owl.carousel.js',
+            '/tp/blog_h/js/a.js',
+            '/assets/js/web/jquery.lazy.min.js',
+        ];
+        echo '<script type="text/javascript" src="'.srcLink($js,22).'"></script>';
+        echo !empty($optionBasic['scriptFooter']) ? '<script>'.$optionBasic['scriptFooter'].'</script>' : null;
+
+    ?>
+
+
+
+</html>

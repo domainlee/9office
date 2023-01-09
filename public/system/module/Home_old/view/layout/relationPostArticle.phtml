@@ -1,0 +1,33 @@
+<?php
+    $optionBasic = $this->home()->optionBasic();
+    if($optionBasic['displayRelationArticle']):
+    $relation = json_decode($this->post, true);
+    $limit = $this->limit ? $this->limit : 5;
+
+    if(!empty($relation)):
+        echo '<h2 class="related-post__headline">Bài viết liên quan</h2>';
+        echo '<div class="related-post__list">';
+        $i = 0;
+        foreach($relation as $n) {
+            $i++;
+            $image = json_decode($n['image'], true);
+            $imageFirst = '';
+            if(!empty($image)) {
+                $imageFirst = array_shift($image);
+            }
+            if($i <= $limit):
+                ?>
+                <div class="related-post__item">
+                    <div class="related-post__item--inner">
+                        <div class="related-post__item--content">
+                            <h3 class="related-post__item--title"><a href="<?= $n['url']  ?>"><i class="fa fa-angle-right"></i><?= $n['title'] ?></a></h3>
+                        </div>
+                    </div>
+                </div>
+                <?php
+            endif;
+        }
+        echo '</div>';
+    endif;
+    endif;
+?>

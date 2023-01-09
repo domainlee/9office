@@ -1,0 +1,237 @@
+<?php
+    $optionBasic = $this->home()->optionBasic();
+    $optionPage = $this->home()->optionPage();
+    $url = $this->UriParams()->getRequest()->getRequestUri();
+    $cartService = $this->cart()->getServiceCart();
+    $products = $cartService->getProducts();
+    $menuOption = $this->home()->getMenu();
+?>
+<div class="head">
+    <div class="head1">
+        <div class="col-md-12">
+            <ul class="RegisterLogin">
+                <?php if(!empty($menuOption['header_menu'])):
+                foreach($menuOption['header_menu'] as $m):
+                ?>
+                <li <?= $url == $m['url'] ? 'class="active"':null ?>><a href="<?= $m['url'] ?>"><?= $m['name'] ?></a>
+                    <?php endforeach;
+                    endif;
+                    ?>
+                    <?php
+                    if ($this->user()->hasIdentity()) {
+                    ?>
+                <li><a>Xin chào: <?= $this->user()->getUser()->getFullName() ? $this->user()->getUser()->getFullName():ucfirst($this->user()->getUser()->getUserName()) ?></a></li>
+                <li><a href="/user/signout">Thoát</a></li>
+            <?php
+            }else{
+                ?>
+                <li><a href="/user/signup">Đăng ký</a></li>
+                <li><a href="/user/signin">Đăng nhập</a></li>
+                <?php
+            }
+            ?>
+            </ul>
+        </div>
+    </div>
+    <div class="head2">
+        <div class="col-md-3">
+            <a class="logo" href="/">
+                <?php if(!empty($optionBasic['logo'])): ?>
+                    <img src="<?= $optionBasic['logo'] ?>" alt="<?= !empty($optionBasic['sologan']) ? $optionBasic['sologan']:null ?>" />
+                <?php endif; ?>
+            </a>
+        </div>
+        <div class="col-md-5">
+            <form id="search" action="/search" method="get">
+                <input type="text" name="q" placeholder="Tìm kiếm sản phẩm bạn muốn mua tại đây"/>
+                <a href="javascript:{}" onclick="document.getElementById('search').submit();"><i class="fa fa-search" aria-hidden="true"></i></a>
+                <div id="searchFolding"></div>
+            </form>
+        </div>
+        <div class="col-md-4">
+            <div class="head2__right">
+                <div class="head2__hotline">
+                    <i class="fa fa-phone"></i>
+                    <div>
+                        <?= !empty($optionPage['tu-van-ho-tro']) ? '<span>'.$optionPage['tu-van-ho-tro'].'</span>':'' ?>
+                        <?= !empty($optionPage['so-dien-thoai']) ? '<strong>'.$optionPage['so-dien-thoai'].'</strong>':'' ?>
+                    </div>
+                </div>
+                <a class="totalCart" href="/cart"><i class="fa fa-shopping-basket"></i><span><?= $cartService->getTotalProducts() ?></span>
+                    <p>Giỏ hàng</p>
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="head3">
+        <div class="col-md-12">
+            <div class="CategoryShip">
+                <div class="categoryHome">
+                    <h2><i class="fa fa-bars"></i>Danh mục sản phẩm</h2>
+                    <div class="navHome" >
+                        <?php
+                            $menuOption = $this->home()->getMenu();
+                            if(!empty($menuOption['danh_muc_trai'])):
+                        ?>
+                        <ul>
+                            <?php
+                                foreach($menuOption['danh_muc_trai'] as $c){
+                                    ?>
+                                    <li>
+                                    <?= ($c['children'] ? "<i class='fa fa-angle-right'></i>" : '') ?>
+                                    <a href="<?= $c['url'] ?>"><?= $c['image'] != 'undefined' ? '<img src="'.$c['image'].'" />':null ?><?= $c['name'] ?></a>
+                                    <?php
+                                    if($c['children']){
+                                        echo '<ul class="nav2">';
+                                        foreach($c['children'] as $cc){
+                                            ?>
+                                            <li>
+                                                <?= ($cc['children'] ? "<i class='fa fa-angle-right'></i>" : '') ?>
+                                                <a href="<?= $cc['url'] ?>"><?= $cc['name'] ?></a>
+                                            <?php
+                                                if($cc['children']){
+                                                    echo '<ul class="nav3">';
+                                                    foreach($cc['children'] as $ccc){
+                                                        ?>
+                                                        <li><a href="<?= $ccc['url'] ?>"><?= $ccc['name'] ?></a></li>
+                                                    <?php
+                                                    }
+                                                    echo '</ul>';
+                                                }
+                                            ?>
+                                            </li>
+                                        <?php
+                                        }
+                                        echo '</ul>';
+                                    }
+                                    ?>
+                                    </li>
+                                <?php
+                                }
+                            ?>
+                        </ul>
+                        <?php endif; ?>
+                    </div>
+                    <div class="navMobile">
+                        <ul class="navMobile__list">
+                            <?php foreach($menuOption['danh_muc_trai'] as $m): ?>
+                                <li <?= $url == $m['url'] ? 'class="active"':null ?>><?= $m['children'] ? '<button><i class="fa fa-caret-down"></i></button>' : null ?><a href="<?= $m['url'] ?>"><?= $m['name'] ?></a>
+                                    <?php if(!empty($m['children'])): ?>
+                                        <ul class="nav2">
+                                            <?php foreach($m['children'] as $mm): ?>
+                                                <li><?= $mm['children'] ? '<button><i class="fa fa-caret-down"></i></button>' : null ?><a href="<?= $mm['url'] ?>"><?= $mm['name'] ?></a>
+                                                    <?php if(!empty($mm['children'])): ?>
+                                                        <ul>
+                                                            <?php foreach ($mm['children'] as $mcc):?>
+                                                                <li><a href="<?= $mcc['url'] ?>"><?= $mcc['name'] ?></a></li>
+                                                            <?php endforeach;?>
+                                                        </ul>
+                                                    <?php endif;?>
+                                                </li>
+                                            <?php endforeach; ?>
+                                        </ul>
+                                    <?php endif; ?>
+                                </li>
+                            <?php endforeach; ?>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="head__horizontal">
+                    <?php
+                    $menuOption = $this->home()->getMenu();
+
+                    if(!empty($menuOption['danh_muc_giua'])):
+                        ?>
+                        <ul>
+                            <?php
+                            foreach($menuOption['danh_muc_giua'] as $c){
+                                ?>
+                                <li>
+                                <a href="<?= $c['url'] ?>">
+                                    <?= $c['name'] ?>
+                                    <?= !empty($c['children']) ? '<i class="fa fa-angle-down"></i>':null ?>
+                                </a>
+                                <?php
+                                if($c['children']){
+                                    echo '<ul class="">';
+                                    foreach($c['children'] as $cc){
+                                        ?>
+                                        <li><a href="<?= $cc['url'] ?>"><?= $cc['name'] ?></a>
+                                        <?php
+                                        if($cc['children']){
+                                            echo '<ul class="nav3">';
+                                            foreach($cc['children'] as $ccc){
+                                                ?>
+                                                <li><a href="<?= $ccc['url'] ?>"><?= $ccc['name'] ?></a></li>
+                                                <?php
+                                            }
+                                            echo '</ul>';
+                                        }
+                                        ?>
+                                        </li>
+                                        <?php
+                                    }
+                                    echo '</ul>';
+                                }
+                                ?>
+                                </li>
+                                <?php
+                            }
+                            ?>
+                        </ul>
+                    <?php endif; ?>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="slide-right">
+    <div class="slide-right__inner">
+        <a class="slide-right__close"></a>
+        <a class="slide-right__cart"><i class="fa fa-shopping-bag" aria-hidden="true"></i><p>Giỏ hàng</p><span><?= $cartService->getTotalProducts() ?></span></a>
+    </div>
+    <div class="slider-right__content">
+        <div class="slider-right__content--inner">
+            <?php
+                if(!empty($products)):
+            ?>
+                <h2>Giỏ hàng của tôi (<?= $cartService->getTotalProducts() ?>)</h2>
+                <div class="slider-right__money">
+                    <p><a href="/cart">Xem giỏ hàng</a></p>
+                    <span>Tổng tiền: </span>
+                    <strong><?= number_format($cartService->getTotalMoney()).'đ'; ?></strong>
+                </div>
+                <ul class="slider-right__product">
+                    <?php
+                        foreach ($products as $p):
+                        $imageFirst = '';
+                        if(!empty(json_decode($p->getImage(), true))){
+                            $imageFirst = array_shift(json_decode($p->getImage(), true));
+                        }
+                    ?>
+                        <li>
+                            <a href="<?= $p->getViewLink() ?>">
+                                <div class="slider-right__product--left">
+                                    <figure class="lazy slider-right__product--image" data-src="<?= $imageFirst ?>"></figure>
+                                </div>
+                                <h3><?=$p->getTitle() ?>
+                                    <p><strong><?= number_format($p->getPriceOld() ? $p->getPriceOld():$p->getPrice()).' đ' ?></strong> x <?= $p->getQuantity() ?></p>
+                                </h3>
+                            </a>
+                            <?= '<span class="deleteCart fa fa-trash-o" data-id="'.$p->getId().'" data-color="'.(isset($p->getOptions()['dataColor']) ? $p->getOptions()['dataColor']->getId():'').'" data-size="'.(isset($p->getOptions()['dataSize']) ? $p->getOptions()['dataSize']->getId():'').'"></span>' ?>
+                        </li>
+                    <?php endforeach; ?>
+                </ul>
+                <div class="slider-right__money">
+                    <span>Tổng tiền: </span>
+                    <strong><?= number_format($cartService->getTotalMoney()).'đ'; ?></strong>
+                </div>
+                <a class="slider-right__order" href="/cart/checkout">Đặt hàng</a>
+            <?php
+                endif;
+            ?>
+        </div>
+    </div>
+</div>

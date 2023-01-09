@@ -1,0 +1,175 @@
+<?php
+    $optionBasic = $this->home()->optionBasic();
+    $optionPage = $this->home()->optionPage();
+    $this->headTitle($this->escapeHtml($this->translate(!empty($optionBasic['metaTitle']) ? $optionBasic['metaTitle']:'Trang chủ')));
+    $this->headMeta()->appendName('description', (!empty($optionBasic['metaDescription']) ? $optionBasic['metaDescription']:'Trang chủ'));
+    $this->headMeta()->appendName('keywords', (!empty($optionBasic['metaKeyword']) ? $optionBasic['metaKeyword']:'Trang chủ'));
+    $this->headMeta()->appendProperty('og:title', !empty($optionBasic['metaTitle']) ? $optionBasic['metaTitle']:'Trang chủ');
+    $this->headMeta()->appendProperty('og:image', !empty($optionBasic['logo']) ? $optionBasic['logo']:null);
+?>
+<div class="banner">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <?php
+                    if(!empty($optionPage['banner'])){
+                        echo '<ul id="banner" class="owl-carousel owl-theme">';
+                        foreach($optionPage['banner'] as $k => $b){
+                            $image = json_decode($b['image'], true);
+                            if(!empty($image)){
+                                $imageFirst = array_shift($image);
+                            }
+                            $img = '<img class="owl-lazy" data-src="'.$imageFirst.'" alt="'.$b['name'].'" />';
+                            echo '<li><a'.($b['url'] ? ' href="'.$b['url'].'"':'').'><figure class="banner-image lazy" data-src="'.$imageFirst.'"></figure></a></li>';
+                        }
+                        echo '</ul>';
+                    }
+                ?>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="six-banner">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <?php
+                if(!empty($optionPage['6-banner-nho'])){
+                    echo '<ul id="six-banner">';
+                    foreach($optionPage['6-banner-nho'] as $b){
+                        $image = json_decode($b['image'], true);
+                        if(!empty($image)){
+                            $imageFirst = array_shift($image);
+                        }
+                        echo '<li><a'.($b['url'] ? ' href="'.$b['url'].'"':'').'><figure class="lazy image-feature" data-src="'. (!empty($imageFirst) ? $imageFirst:null ).'"></figure></a></li>';
+                    }
+                    echo '</ul>';
+                }
+                ?>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="two-banner">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="two-banner">
+                    <?php
+                        if(!empty($optionPage['1-banner-lon'])) {
+                            foreach ($optionPage['1-banner-lon'] as $b) {
+                                $image = json_decode($b['image'], true);
+                                if (!empty($image)) {
+                                    $imageFirst = array_shift($image);
+                                }
+                                ?>
+                                <figure class="lazy two-banner__image" data-src="<?= (!empty($imageFirst) ? $imageFirst:null ) ?>">
+                                    <div class="two-banner__content">
+                                        <h2><?= $b['title'] ?></h2>
+                                        <a href="<?= $b['url'] ?>">Xem tiếp <i class="fa fa-long-arrow-right"></i></a>
+                                    </div>
+                                </figure>
+                                <?php
+                            }
+                        }
+                    ?>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="product-hot">
+    <div class="container">
+        <?php if(!empty($optionPage['category1'])): ?>
+            <div class="row">
+                <div class="col-md-12">
+                    <ul class="lP">
+                        <?php foreach($optionPage['category1'] as $k => $p):
+                            $image = json_decode($p['image'], true);
+                            if(!empty($image)){
+                                $imageFirst = array_shift($image);
+                            }
+                            ?>
+                            <li>
+                                <a class="pI" href="<?= $p['url'] ?>"><figure class="lazy image-product" data-src="<?= !empty($imageFirst) ? $imageFirst:'' ?>"></figure></a>
+                                <div>
+                                    <h2><a href="<?= $p['url'] ?>"><?= $p['title'] ?></a></h2>
+                                    <p class="price <?= ($p['priceOld'] ? 'priceOld':null) ?>">
+                                        <?=  (!empty($p['priceOld']) ? '<span>'.number_format($p['priceOld']).'</span><i>'.number_format($p['price']).'</i>':number_format($p['price']) ) ?>
+                                    </p>
+
+                                </div>
+                            </li>
+                        <?php endforeach; ?>
+                    </ul>
+                </div>
+            </div>
+        <?php endif; ?>
+    </div>
+</div>
+
+<?php if(!empty($optionPage['phan-hoi-khach-hang'])): ?>
+<div class="client">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h2 class="client__headline">Khách hàng nói về chúng tôi</h2>
+                <div class="client__inner">
+                    <?php
+                        if(!empty($optionPage['phan-hoi-khach-hang'])){
+                        echo '<ul id="client" class="owl-carousel owl-theme">';
+                        foreach($optionPage['phan-hoi-khach-hang'] as $k => $b){
+                    ?>
+                            <li>
+                                <div class="client__intro">
+                                    <?= $b['intro'] ?>
+                                </div>
+                                <h3 class="client__name">
+                                    <?= $b['title'] ?>
+                                </h3>
+                            </li>
+                    <?php
+                        }
+                        echo '</ul>';
+                        }
+                    ?>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<?php endif; ?>
+
+<div class="news-home">
+    <div class="container">
+        <?php if(!empty($optionPage['news'])): ?>
+            <div class="row nHome">
+                <div class="col-md-12">
+                    <?php
+                    $new = $optionPage['news'];
+                    if(!empty($new)){
+                        echo '<ul class="lN">';
+                        foreach($new as $n){
+                            $image = json_decode($n['image'], true);
+                            if(!empty($image)){
+                                $imageFirst = array_shift($image);
+                            }
+                            ?>
+                            <li>
+                                <a href="<?= $n['url'] ?>"><figure class="lazy image-article" data-src="<?= !empty($imageFirst) ? $imageFirst:'' ?>"></figure></a>
+                                <h2><a href="<?= $n['url'] ?>"><?= $n['title'] ?></a></h2>
+                                <p><?= $n['category'] ?></p>
+                            </li>
+                            <?php
+                        }
+                        echo '</ul>';
+                    }
+                    ?>
+                </div>
+            </div>
+        <?php endif; ?>
+    </div>
+</div>

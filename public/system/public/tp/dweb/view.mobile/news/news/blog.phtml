@@ -1,0 +1,22 @@
+<?php
+    $c = $this->category;
+    $this->headTitle($this->escapeHtml($this->translate($c->getName())));
+    $this->headMeta()->appendName('description', ($c->getDescription() ? : $c->getDescription()));
+    $this->headMeta()->appendName('keywords', ($c->getName() ? : $c->getName()));
+    $this->headMeta()->appendProperty('og:title', $c->getName());
+    $a =  $this->paginator;
+    $cs = [
+        '/tp/dweb/css/page.css'
+    ];
+    echo '<link href="'.srcLink($cs,1).'" media="screen" rel="stylesheet" type="text/css">';
+?>
+    <section class="m-t-100 blog">
+        <div class="price__hero">
+            <div class="price__hero-inner">
+                <h2 class="price__hero-title">Đang cập nhật...</span></h2>
+            </div>
+        </div>
+    </section>
+<?php
+echo $this->paginationControl($this->paginator, 'Elastic', 'partial/listPage');
+?>

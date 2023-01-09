@@ -1,0 +1,194 @@
+<?php
+    use Home\Model\DateBase;
+    $view = $this->news;
+    $breadcrumb = $this->breadcrumb;
+    $category_ = $this->category;
+    $url = $this->UriParams()->getRequest()->getRequestUri();
+    $image = json_decode($view->getImage(), true);
+    $imageFirst = '';
+    if(!empty($image)){
+        $imageFirst = array_shift($image);
+    }
+    $category = $this->NewsCategory()->getCategories();
+
+    $this->headTitle($this->escapeHtml($this->translate(html_entity_decode($view->getTitle()))));
+
+    $this->headMeta()->appendName('keywords', ($view->getMetaKeyword()));
+    $this->headMeta()->appendName('description', ($view->getMetaDescription()));
+
+    $this->headMeta()->appendProperty('fb:app_id', '1697190970583102');
+    $this->headMeta()->appendProperty('article:author', 'https://www.facebook.com/dwebvietnam');
+    $this->headMeta()->appendProperty('og:locale', 'vi_VN');
+    $this->headMeta()->appendProperty('og:image',  'http://'.$_SERVER["SERVER_NAME"].$imageFirst );
+    $this->headMeta()->appendProperty('og:url', 'http://'.$_SERVER["SERVER_NAME"].$url);
+    $this->headMeta()->appendProperty('og:title', $view->getTitle() );
+    $this->headMeta()->appendProperty('og:description', ($view->getMetaDescription()));
+
+    $this->headMeta()->appendProperty('twitter:card', $_SERVER["SERVER_NAME"]);
+    $this->headMeta()->appendProperty('twitter:title', $view->getTitle());
+    $this->headMeta()->appendProperty('twitter:image', 'http://'.$_SERVER["SERVER_NAME"].$imageFirst);
+    $this->headMeta()->appendProperty('twitter:description', $view->getMetaDescription());
+
+    $optionPage = $this->home()->optionPage();
+
+    $cs = [
+        '/tp/A010/css/n.css'
+    ];
+    echo '<link href="'.srcLink($cs,2).'" media="screen" rel="stylesheet" type="text/css">';
+?>
+
+<section class="category__breadcrumb">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <ul>
+                    <li><a href="/">Trang chủ</a></li>
+                    <?php
+                    if(!empty($breadcrumb)) {
+                        foreach(array_reverse($breadcrumb) as $b) {
+                            echo '<li><a href="'.$b['url'].'">'.$b['name'].'</a></li>';
+                        }
+                    }
+                    ?>
+                </ul>
+                <h1 class="category-news__title"><?= $category_->getName() ?></h1>
+            </div>
+        </div>
+    </div>
+</section>
+
+<?php
+    if($view->getType() == 2):
+        echo $this->render('news/news/gallery');
+    else:
+ ?>
+    <section class="single-news">
+        <div class="container">
+            <div class="row">
+
+                <div class="col-md-8">
+                    <div class="single-news__detail">
+                        <figure class="lazy single-news__image" data-src="<?= $imageFirst ?>"></figure>
+                        <h1 class="single-news__title"><?= $view->getTitle() ?></h1>
+                        <div class="single-news__profile">
+                            <span><i class="fa fa-clock-o"></i><?= DateBase::toFormat($view->getCreatedDateTime(), 'd/m/Y') ?></span><span><i class="fa fa-folder-o"></i><?= $view->getCateName() ?></span><span><i class="fa fa-eye"></i><?= $view->getView() ?></span>
+                        </div>
+                        <div class="single-news__content">
+                            <?php
+                                echo html_entity_decode($view->getContent());
+                            ?>
+                        </div>
+                        <div class="single-news__relation">
+                            <?php
+                                $relation = json_decode($view->getArticleRelated(), true);
+                                if(!empty($relation)) {
+                                    echo '<h2 class="single-news__relation--title">Bài viết liên quan</h2>';
+                                    echo '<ul>';
+                                    foreach($relation as $r) {
+                                        $image = json_decode($r['image'], true);
+                                        $imageFirst = '';
+                                        if(!empty($image)){
+                                            $imageFirst = array_shift($image);
+                                        }
+                                ?>
+                                <li>
+                                    <div>
+                                        <figure class="lazy item-relation__image" data-src="<?= $imageFirst ?>"></figure>
+                                    </div>
+                                    <div>
+                                        <h3 class="item-relation__title"><a href="<?= $r['url'] ?>"><?= $r['title'] ?></a></h3>
+                                    </div>
+                                </li>
+                            <?php
+                                    }
+                                echo '</ul>';
+                                }
+                            ?>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="sidebar">
+                        <div class="sidebar__box">
+                            <h2 class="sidebar__title">Tìm kiếm</h2>
+                            <form>
+                                <input type="text" placeholder="Tìm kiếm ..." />
+                            </form>
+                        </div>
+                        <div class="sidebar__box">
+                            <h2 class="sidebar__title">Danh mục</h2>
+                            <ul class="news__list-category">
+                                <?php if(!empty($category)): ?>
+                                    <?php foreach($category as $t): ?>
+                                        <li><a <?= $view->getCategoryId() == $t->getId() ? 'class="active"':null ?> href="<?= $t->getViewLink() ?>"><i class="fa fa-angle-right"></i><?= $t->getName() ?></a></li>
+                                    <?php endforeach; ?>
+                                <?php endif; ?>
+                            </ul>
+                        </div>
+                        <?php if(!empty($optionPage['bai-viet-gan-day-sidebar'])): ?>
+                        <div class="sidebar__box">
+                            <h2 class="sidebar__title">Bài viết gần đây</h2>
+                            <ul class="sidebar__news">
+                                <?php foreach($optionPage['bai-viet-gan-day-sidebar'] as $n):
+                                    $image = json_decode($n['image'], true);
+                                    if(!empty($image)) {
+                                        $imageFirst = array_shift($image);
+                                    }
+                                ?>
+                                    <li>
+                                        <div class="sidebar__wrapper--image"><a href="<?= $n['url'] ?>"><figure class="lazy sidebar__image" data-src="<?= $imageFirst ?>"></figure></a></div>
+                                        <div class="sidebar__content">
+                                            <a href="<?= $n['url'] ?>"><?= $n['title'] ?></a>
+                                            <p><?= DateBase::toFormat($n['date'], 'M d, Y') ?></p>
+                                        </div>
+                                    </li>
+                                <?php endforeach; ?>
+                            </ul>
+                        </div>
+                        <?php endif; ?>
+
+                        <?php if(!empty($optionPage['nhieu-nguoi-quan-tam'])): ?>
+                            <div class="sidebar__box">
+                                <h2 class="sidebar__title">Nhiều người xem</h2>
+                                <ul class="sidebar__news">
+                                    <?php foreach($optionPage['nhieu-nguoi-quan-tam'] as $n):
+                                        $image = json_decode($n['image'], true);
+                                        if(!empty($image)) {
+                                            $imageFirst = array_shift($image);
+                                        }
+                                        ?>
+                                        <li>
+                                            <div class="sidebar__wrapper--image"><a href="<?= $n['url'] ?>"><figure class="lazy sidebar__image" data-src="<?= $imageFirst ?>"></figure></a></div>
+                                            <div class="sidebar__content">
+                                                <a href="<?= $n['url'] ?>"><?= $n['title'] ?></a>
+                                                <p><?= DateBase::toFormat($n['date'], 'M d, Y') ?></p>
+                                            </div>
+                                        </li>
+                                    <?php endforeach; ?>
+                                </ul>
+                            </div>
+                        <?php endif; ?>
+
+                        <?php if(!empty($optionPage['quang-cao-sidebar'])): ?>
+                            <div class="sidebar__box">
+                                    <?php foreach($optionPage['quang-cao-sidebar'] as $n):
+                                        $image = json_decode($n['image'], true);
+                                        if(!empty($image)) {
+                                            $imageFirst = array_shift($image);
+                                        }
+                                        ?>
+                                        <a href="<?= $n['url'] ?>">
+                                            <img src="<?= $imageFirst ?>" title="<?= $n['title'] ?>" />
+                                        </a>
+                                    <?php endforeach; ?>
+                            </div>
+                        <?php endif; ?>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+<?php endif; ?>
+

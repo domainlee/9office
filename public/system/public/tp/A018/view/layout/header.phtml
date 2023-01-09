@@ -1,0 +1,63 @@
+<?php
+$optionBasic = $this->home()->optionBasic();
+$optionPage = $this->home()->optionPage();
+$url = $this->UriParams()->getRequest()->getRequestUri();
+$urlModule = $this->home()->getMcaName('module');
+?>
+<div class="head">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="head__inner">
+                    <div class="logo">
+                        <a href="/">
+                            <?= $urlModule == 'home' ? '<h1 class="title-home">':null ?>
+                            <?php if(!empty($optionBasic['logo'])): ?>
+                                <img src="<?= $optionBasic['logo'] ?>" alt="<?= $optionBasic['metaTitle'] ?>" />
+                            <?php endif; ?>
+                            <?= $urlModule == 'home' ? '</h1>':null ?>
+                        </a>
+                    </div>
+                    <?php
+                    $menuOption = $this->home()->getMenu();
+                    if(!empty($menuOption['head_menu'])):
+                        ?>
+                        <div class="navHome">
+                            <ul>
+                                <?php foreach($menuOption['head_menu'] as $m): ?>
+                                    <li <?= $url == $m['url'] ? 'class="active"':null ?>><a href="<?= $m['url'] ?>"><?= $m['name'] ?></a>
+                                        <?php if(!empty($m['children'])): ?>
+                                            <ul>
+                                                <?php foreach($m['children'] as $mm): ?>
+                                                    <li><a href="<?= $mm['url'] ?>"><?= $mm['name'] ?></a></li>
+                                                <?php endforeach; ?>
+                                            </ul>
+                                        <?php endif; ?>
+                                    </li>
+                                <?php endforeach; ?>
+                            </ul>
+                        </div>
+                        <a class="navigation-button">Menu</a>
+                        <div class="navigation-mobile">
+                            <ul class="navigation-mobile__list">
+                                <?php foreach($menuOption['head_menu'] as $m): ?>
+                                    <li <?= $url == $m['url'] ? 'class="active"':null ?>><a href="<?= $m['url'] ?>"><?= $m['name'] ?></a>
+                                        <?php if(!empty($m['children'])): ?>
+                                            <ul>
+                                                <?php foreach($m['children'] as $mm): ?>
+                                                    <li><a href="<?= $mm['url'] ?>"><?= $mm['name'] ?></a></li>
+                                                <?php endforeach; ?>
+                                            </ul>
+                                        <?php endif; ?>
+                                    </li>
+                                <?php endforeach; ?>
+                            </ul>
+                        </div>
+                    <?php
+                    endif;
+                    ?>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

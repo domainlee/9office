@@ -1,0 +1,31 @@
+<?php
+    $title = $this->productLayout['product-title text']['value'];
+    $productCategory = ($this->productLayout['product-category productcategory']['product-category']);
+?>
+<?php if(!empty($productCategory)):?>
+<section class="category-product">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h2 class="category-product__headline"><?= $title ?></h2>
+                <div class="category-product__inner">
+                    <?php foreach ($productCategory as $p):
+                        $imageFirst = '';
+                        if(!empty(json_decode($p['image'], true))){
+                            $imageFirst = array_shift(json_decode($p['image'], true));
+                        }
+                        $title = $p['title'];
+                    ?>
+                        <div class="category-product__item">
+                            <a href="<?= $p['url'] ?>">
+                                <figure class="lazy category-product__image" data-src="<?= $imageFirst ?>"></figure>
+                                <h3><?= $title ?></h3>
+                            </a>
+                        </div>
+                    <?php endforeach; ?>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<?php endif;?>

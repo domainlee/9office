@@ -1,0 +1,41 @@
+<?php
+$js = [
+    '/tp/F010/js/countdown.js',
+];
+echo '<script type="text/javascript" src="'.srcLink($js,2).'"></script>';
+?>
+<div class="countdown" <?= $this->countDownLayout['countdown-background file']['value'] ? 'style="background-image:url('.$this->countDownLayout['countdown-background file']['value'].')"' : ''?>>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h2 class="titleHome">
+                    <i class="fa fa-tree" aria-hidden="true"></i><i class="fa fa-tree" aria-hidden="true"></i><i class="fa fa-tree" aria-hidden="true"></i>
+                    <span><?= $this->countDownLayout['countdown-title text']['value'] ?></span>
+                </h2>
+                <div class="countdown__inner">
+                    <ul class="countdown-list">
+                        <li id="countdown-days">
+                        </li>
+                        <li id="countdown-hours">
+
+                        </li>
+                        <li id="countdown-minutes">
+
+                        </li>
+                        <li id="countdown-seconds">
+
+                        </li>
+                    </ul>
+
+                    <div id="countdown-expired"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="years" class="hidden" yy = "<?= $this->countDownLayout['countdown-years text']['value'] ? $this->countDownLayout['countdown-years text']['value'] : date("Y");?>"></div>
+    <div id="months" class="hidden" mm = "<?= $this->countDownLayout['countdown-months text']['value'] ? $this->countDownLayout['countdown-months text']['value'] : date("m"); ?>"></div>
+    <div id="days" class="hidden" dd = "<?= $this->countDownLayout['countdown-days text']['value'] ? $this->countDownLayout['countdown-days text']['value'] : date("d"); ?>"></div>
+    <div id="hours" class="hidden" h = "<?= $this->countDownLayout['countdown-hours text']['value'] ? $this->countDownLayout['countdown-hours text']['value']: '0'?>"></div>
+    <div id="minutes" class="hidden" m = "<?= $this->countDownLayout['countdown-minutes text']['value'] ? $this->countDownLayout['countdown-minutes text']['value'] : '0'?>"></div>
+    <div id="seconds" class="hidden" s = "<?= $this->countDownLayout['countdown-seconds text']['value'] ? $this->countDownLayout['countdown-seconds text']['value'] : '0'?>"></div>
+</div>

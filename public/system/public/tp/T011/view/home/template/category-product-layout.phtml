@@ -1,0 +1,32 @@
+<?php if(!empty($this->cateProductLayout['product-category productcategory']['product-category'])): ?>
+    <div class="cate-product">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="cate-product__inner">
+                        <ul class="cate-product__list">
+                            <?php
+                            foreach($this->cateProductLayout['product-category productcategory']['product-category'] as $pc):
+                                $imageFirst = '';
+                                if(!empty(json_decode($pc['image'], true))){
+                                    $imageFirst = array_shift(json_decode($pc['image'], true));
+                                } ?>
+                                <li class="cate-product__item">
+                                    <div class="cate-product__item--inner">
+                                        <a class="pcI" href="<?= $pc['url'] ?>">
+                                            <figure class="lazy cate-product__image cate-product__image--two" data-src="<?= $imageFirst ?>">
+                                                <h3 class="cate-product__item--title">
+                                                    <?= $pc['title'] ?>
+                                                </h3>
+                                            </figure>
+                                        </a>
+                                    </div>
+                                </li>
+                            <?php endforeach; ?>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+<?php endif;?>

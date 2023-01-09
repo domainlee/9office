@@ -1,0 +1,120 @@
+<?php if(!empty($this->tabProductLayout['tab-product1 product']['tab-product1']) || !empty($this->tabProductLayout['tab-product2 product']['tab-product3']) || !empty($this->tabProductLayout['tab-product3 product']['tab-product3'])):?>
+<section class="tab-product product">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="headlineHome">
+                    <?= $this->tabProductLayout['tab-product-title text']['value'] ? '<h2 class="titleHome"><span>'.$this->tabProductLayout['tab-product-title text']['value'].'</span></h2>' :'' ?>
+                    <?= $this->tabProductLayout['tab-product-sub-title text']['value'] ? '<span class="titleHome-sub">'.$this->tabProductLayout['tab-product-sub-title text']['value'].'</span>' : '' ?>
+                </div>
+                <div class="tab-product__wrapper">
+                    <ul class="tab-product__title nav nav-products nav-tabs " role="tablist">
+                        <?php if(!empty($this->tabProductLayout['tab-product1 product']['tab-product1'])):?>
+                            <li role="presentation" class="active">
+                                <a  href="#tab1-<?=$this->id?>" aria-controls="tab1-<?=$this->id?>" role="tab" data-toggle="tab"><?= $this->tabProductLayout['tab1-title text']['value']?></a>
+                            </li>
+                        <?php endif;?>
+                        <?php if(!empty($this->tabProductLayout['tab-product2 product']['tab-product2'])):?>
+                            <li role="presentation">
+                                <a href="#tab2-<?=$this->id?>" aria-controls="tab2-<?=$this->id?>" role="tab" data-toggle="tab"><?= $this->tabProductLayout['tab2-title text']['value']?></a>
+                            </li>
+                        <?php endif;?>
+                        <?php if(!empty($this->tabProductLayout['tab-product3 product']['tab-product3'])):?>
+                            <li role="presentation">
+                                <a href="#tab3-<?=$this->id?>" aria-controls="tab3-<?=$this->id?>" role="tab" data-toggle="tab"><?= $this->tabProductLayout['tab3-title text']['value']?></a>
+                            </li>
+                        <?php endif;?>
+                    </ul>
+                    <div class="tab-product__content tab-content">
+                        <div id="tab1-<?=$this->id?>" role="tabpanel" class="tab-pane fade in active">
+                            <ul class="lP">
+                                <?php foreach($this->tabProductLayout['tab-product1 product']['tab-product1'] as $k => $p):
+                                    $image = json_decode($p['image'], true);
+                                    if(!empty($image)){
+                                        $imageFirst = array_shift($image);
+                                    }
+                                    $imgs = array_slice(json_decode($p['image'], true), 0, 2);
+                                    ?>
+                                    <li class="product__item">
+                                        <div class="product__item--inner">
+                                            <div class="product__image--wrapper">
+                                                <a class="pI" href="<?= $p['url'] ?>">
+                                                    <figure class="lazy product-image" data-src="<?= !empty($imageFirst) ? $imageFirst:'' ?>"></figure>
+                                                </a>
+                                            </div>
+                                            <div>
+                                                <h3 class="product__item--title"><a href="<?= $p['url'] ?>"><?= $p['title'] ?></a></h3>
+                                                <p class="price <?= ($p['priceOld'] ? 'priceOld':null) ?>">
+                                                    <?=  (!empty($p['priceOld']) ? '<span>'.number_format($p['priceOld']).'</span><i>'.number_format($p['price']).'</i>':number_format($p['price']) ) ?>
+                                                </p>
+                                            </div>
+                                            <a class="product__btn-view" href="<?=$p['url']?>">Chi tiết</a>
+                                        </div>
+                                    </li>
+                                <?php endforeach; ?>
+                            </ul>
+                        </div>
+                        <div id="tab2-<?=$this->id?>" role="tabpanel" class="tab-pane fade">
+                            <ul class="lP">
+                                <?php foreach($this->tabProductLayout['tab-product2 product']['tab-product2'] as $k => $p):
+                                    $image = json_decode($p['image'], true);
+                                    if(!empty($image)){
+                                        $imageFirst = array_shift($image);
+                                    }
+                                    $imgs = array_slice(json_decode($p['image'], true), 0, 2);
+                                    ?>
+                                    <li class="product__item">
+                                        <div class="product__item--inner">
+                                            <div class="product__image--wrapper">
+                                                <a class="pI" href="<?= $p['url'] ?>">
+                                                    <figure class="lazy product-image" data-src="<?= !empty($imageFirst) ? $imageFirst:'' ?>"></figure>
+                                                </a>
+                                            </div>
+                                            <div>
+                                                <h3 class="product__item--title"><a href="<?= $p['url'] ?>"><?= $p['title'] ?></a></h3>
+                                                <p class="price <?= ($p['priceOld'] ? 'priceOld':null) ?>">
+                                                    <?=  (!empty($p['priceOld']) ? '<span>'.number_format($p['priceOld']).'</span><i>'.number_format($p['price']).'</i>':number_format($p['price']) ) ?>
+                                                </p>
+                                            </div>
+                                            <a class="product__btn-view" href="<?=$p['url']?>">Chi tiết</a>
+                                        </div>
+                                    </li>
+                                <?php endforeach; ?>
+                            </ul>
+                        </div>
+                        <div id="tab3-<?=$this->id?>" role="tabpanel" class="tab-pane fade">
+                            <ul class="lP">
+                                <?php foreach($this->tabProductLayout['tab-product3 product']['tab-product3'] as $k => $p):
+                                    $image = json_decode($p['image'], true);
+                                    if(!empty($image)){
+                                        $imageFirst = array_shift($image);
+                                    }
+                                    $imgs = array_slice(json_decode($p['image'], true), 0, 2);
+                                    ?>
+                                    <li class="product__item">
+                                        <div class="product__item--inner">
+                                            <div class="product__image--wrapper">
+                                                <a class="pI" href="<?= $p['url'] ?>">
+                                                    <figure class="lazy product-image" data-src="<?= !empty($imageFirst) ? $imageFirst:'' ?>"></figure>
+                                                </a>
+                                            </div>
+                                            <div>
+                                                <h3 class="product__item--title"><a href="<?= $p['url'] ?>"><?= $p['title'] ?></a></h3>
+                                                <p class="price <?= ($p['priceOld'] ? 'priceOld':null) ?>">
+                                                    <?=  (!empty($p['priceOld']) ? '<span>'.number_format($p['priceOld']).'</span><i>'.number_format($p['price']).'</i>':number_format($p['price']) ) ?>
+                                                </p>
+                                            </div>
+                                            <a class="product__btn-view" href="<?=$p['url']?>">Chi tiết</a>
+                                        </div>
+                                    </li>
+                                <?php endforeach; ?>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<?php endif;?>
+

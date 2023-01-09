@@ -1,0 +1,85 @@
+<?php
+echo $this->headtitle($this->escapehtml($this->translate('Thêm')));
+$form = $this->form;
+$error = $this->error;
+?>
+
+<form method="post" enctype="multipart/form-data" data-parsley-validate novalidate>
+    <div class="row">
+        <div class="col-sm-8">
+            <div class="card-box">
+                <div class="portlet-title">
+                    <h4 class="m-t-0 header-title m-b-20"><b>Thêm đơn hàng</b></h4>
+                </div>
+                <?php if(!empty($error)): ?>
+                    <p style="border: 1px solid #ff7070;padding: 10px;color: #ff7070;border-radius: 10px;">Một số sản phẩm không còn hàng. Cập nhật sản phẩm <a href="/admin/product">tại đây</a></p>
+                <?php endif; ?>
+                <div class="portlet-body form">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <label class="control-label" for="firstName">Tên khách hàng</label>
+                                <?= $this->formelement($form->get('customerName')->setAttributes(['class' => 'form-control', 'placeholder'=>'Tên khách hàng', 'required' => 'required', 'data-parsley-error-message' => 'Tên khách hàng'])) ?>
+                                <?= $this->formelementerrors($form->get('customerName'),['class' => 'parsley-errors-list filled']) ?>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <label class="control-label" for="firstName">Số điện thoại</label>
+                                <?= $this->formelement($form->get('customerMobile')->setAttributes(['class' => 'form-control', 'placeholder'=>'Số điện thoại', 'required' => 'required', 'data-parsley-error-message' => 'Số điện thoại'])) ?>
+                                <?= $this->formelementerrors($form->get('customerMobile'),['class' => 'parsley-errors-list filled']) ?>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <label class="control-label" for="firstName">Địa chỉ</label>
+                                <?= $this->formelement($form->get('customerAddress')->setAttributes(['class' => 'form-control', 'placeholder'=>'Địa chỉ', 'required' => 'required', 'data-parsley-error-message' => 'Địa chỉ'])) ?>
+                                <?= $this->formelementerrors($form->get('customerAddress'),['class' => 'parsley-errors-list filled']) ?>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="control-group">
+                                <div class="form-group">
+                                    <label class="control-label" for="firstName">Sản phẩm</label>
+
+                                    <div class="form-group order-add-product">
+                                        <div class="row">
+                                            <div class="col-sm-8">
+                                                <?= $this->formelement($form->get('product')->setAttributes(['class' => 'form-control select-ajax-product', 'multiple'=>'multiple', 'required' => 'required', 'data-length' => '3', 'data-placeholder' => 'Sản phẩm'])) ?>
+                                            </div>
+                                            <div class="col-sm-4">
+                                                <?= $this->formelement($form->get('quantity')->setAttributes(['class' => 'form-control', 'placeholder'=>'Số lượng cách nhau dấu ,', 'required' => 'required', 'data-parsley-error-message' => 'Số lượng'])) ?>
+                                                <?= $this->formelementerrors($form->get('quantity'),['class' => 'parsley-errors-list filled']) ?>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-actions">
+                        <?=$this->formelement($form->get('submit')->setAttributes(['class' => 'btn btn-default']))?>
+                        <?=$this->formelement($form->get('reset')->setAttributes(['class' => 'btn']))?>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-4">
+
+        </div>
+    </div>
+</form>
+
+
+
+<?php
+//    echo $this->headScript()->prependFile($this->basePath() . '/assets/js/upload.js', 'text/javascript');
+?>

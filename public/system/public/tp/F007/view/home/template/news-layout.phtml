@@ -1,0 +1,35 @@
+<?php use Home\Model\DateBase;?>
+<?php if(!empty($this->newsLayout['news-list article']['news-list'])):?>
+    <section class="news">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="headlineHome">
+                        <?= $this->newsLayout['news-title text']['value'] ? '<h1 class="titleHome"><span>'.$this->newsLayout['news-title text']['value'].'</span></h1>': ''?>
+                        <?= $this->newsLayout['news-sub-title text']['value'] ? '<span class="titleHome-sub">'.$this->newsLayout['news-sub-title text']['value'].'</span>' : ''?>
+                    </div>
+                    <?php $slider = $this->newsLayout['news-slider-checkbox checkbox']['value']?>
+                    <ul class="<?= $slider ? 'news-slider owl-carousel owl-theme' : 'lN' ?> news__list">
+                        <?php
+                        foreach($this->newsLayout['news-list article']['news-list'] as $k => $n):
+                            $image = json_decode($n['image'], true);
+                            if(!empty($image)){
+                                $imageFirst = array_shift($image);
+                            }
+                            ?>
+                            <li>
+                                <a href="<?= $n['url'] ?>"><figure class="lazy image-article" data-src="<?= !empty($imageFirst) ? $imageFirst:'' ?>"></figure>
+                                </a>
+                                <a href="<?= $n['url'] ?>"><h3 class="news__title"><?= $n['title'] ?></h3></a>
+                                <p class="news__date"><i class="fa fa-clock-o"></i><?= DateBase::toFormat($n['date'], 'M d, Y') ?></p>
+                                <a href="<?= $n['url'] ?>" class="news__button">Xem thêm <i class="fa fa-angle-right"></i></a>
+                            </li>
+                        <?php
+                        endforeach;
+                        ?>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+<?php endif;?>

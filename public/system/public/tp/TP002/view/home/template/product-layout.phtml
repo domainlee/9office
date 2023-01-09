@@ -1,0 +1,33 @@
+<?php if(!empty($this->productLayout['product-list product']['product-list'])):?>
+    <section class="products">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="products__inner">
+                        <?= $this->productLayout['product-title text']['value'] ? '<h2 class="title-home">'.$this->productLayout['product-title text']['value'].'</h2>' : '' ?>
+                        <?php $slider = $this->productLayout['product-slider-checkbox checkbox']['value'];?>
+                        <ul class="<?= $slider ? 'tab-product owl-carousel owl-theme' : 'product__list '?>">
+                            <?php
+                            foreach($this->productLayout['product-list product']['product-list'] as $k => $p):
+                                $imgs = array_slice(json_decode($p['image'], true), 0, 2);
+                                ?>
+                                <li class="product-item">
+                                    <div class="product-image__wrapper">
+                                        <a href="<?= $p['url'] ?>">
+                                            <figure class="lazy product-image" data-src="<?= !empty($imgs) ? $imgs['0']:null ?>"></figure>
+                                        </a>
+                                    </div>
+                                    <div class="product-item__info">
+                                        <h3 class="product-title"><?= $p['title'] ?></h3>
+                                        <p class="price"><?= $p['priceOld'] ? number_format($p['priceOld']).' đ<i>'.number_format($p['price']).' đ</i>':number_format($p['price']).' đ' ?></p>
+                                        <a href="<?= $p['url'] ?>" class="btnHome">Xem</a>
+                                    </div>
+                                </li>
+                            <?php endforeach; ?>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+<?php endif;?>

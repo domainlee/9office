@@ -1,0 +1,33 @@
+<?php
+    use Home\Model\DateBase;
+    if(!empty($this->newsLayout2['news-list-2 article']['news-list-2'])):?>
+
+<section class="news-type-2">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="news-type-2__inner">
+                    <?php $slider = $this->newsLayout2['news-slider-checkbox-2 checkbox']['value'];?>
+                    <div class="<?= $slider ? 'three-post__carousel owl-carousel owl-theme' : 'news-type-2__list'?>">
+                        <?php
+                        foreach($this->newsLayout2['news-list-2 article']['news-list-2'] as $k => $n):
+                            $image = json_decode($n['image'], true);
+                            if(!empty($image)) {
+                                $imageFirst = array_shift($image);
+                            }
+                            ?>
+                            <div class="<?= $slider ? 'slider__news-item' : 'news-type-2__item'?>">
+                                <div class="news-type-2__item--inner">
+                                    <a href="<?= $n['url'] ?>"><figure class="news-type-2__image lazy" data-src="<?= $imageFirst ?>"></figure></a>
+                                    <h3 class="news-type-2__title"><a href="<?= $n['url'] ?>"><?= $n['title'] ?></a></h3>
+                                    <div class="three-post-3__datetime"><?= DateBase::toFormat($n['date'], 'd M Y') ?></div>
+                                </div>
+                            </div>
+                        <?php endforeach; ?>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<?php endif;?>

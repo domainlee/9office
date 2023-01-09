@@ -1,0 +1,20 @@
+<?php $url = $this->UriParams()->getRequest()->getRequestUri(); ?>
+
+<header class="header">
+    <div class="container header-container">
+        <div class="header-inner">
+            <div class="header-logo">
+                <a href="/"><<?= $url == '/' ? 'h1':'h2' ?> class="header-sologan" title="">9office</<?= $url == '/' ? 'h1':'h2' ?>></a>
+            </div>
+            <div class="header-nav">
+                <ul>
+                    <?php if ($this->user()->hasIdentity()): ?>
+                        <li><a class="button-login" href="/admin">Quản lý</a></li>
+                    <?php else: ?>
+                        <li><a class="button-login" href="/admin">Đăng nhập</a></li>
+                    <?php endif; ?>
+                </ul>
+            </div>
+        </div>
+    </div>
+</header>

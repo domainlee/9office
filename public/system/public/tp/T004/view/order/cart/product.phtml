@@ -1,0 +1,44 @@
+<?php
+//    $product = $this->products;
+    $cartService = $this->cart()->getServiceCart();
+    $products = $cartService->getProducts();
+?>
+
+<?php
+if(!empty($products)):
+    ?>
+    <h2>Giỏ hàng của tôi (<?= $cartService->getTotalProducts() ?>)</h2>
+    <div class="slider-right__money">
+        <p><a href="/cart">Xem giỏ hàng</a></p>
+        <span>Tổng tiền: </span>
+        <strong><?= number_format($cartService->getTotalMoney()).'đ'; ?></strong>
+    </div>
+    <ul class="slider-right__product">
+        <?php
+        foreach ($products as $p):
+            $imageFirst = '';
+            if(!empty(json_decode($p->getImage(), true))){
+                $imageFirst = array_shift(json_decode($p->getImage(), true));
+            }
+            ?>
+            <li>
+                <a href="<?= $p->getViewLink() ?>">
+                    <div class="slider-right__product--left">
+                        <figure class="lazy slider-right__product--image" data-src="<?= $imageFirst ?>"></figure>
+                    </div>
+                    <h3><?=$p->getTitle() ?>
+                        <p><strong><?= number_format($p->getPriceOld() ? $p->getPriceOld():$p->getPrice()).' đ' ?></strong> x <?= $p->getQuantity() ?></p>
+                    </h3>
+                </a>
+                <?= '<span class="deleteCart fa fa-trash-o" data-id="'.$p->getId().'" data-color="'.(isset($p->getOptions()['dataColor']) ? $p->getOptions()['dataColor']->getId():'').'" data-size="'.(isset($p->getOptions()['dataSize']) ? $p->getOptions()['dataSize']->getId():'').'"></span>' ?>
+            </li>
+        <?php endforeach; ?>
+    </ul>
+    <div class="slider-right__money">
+        <span>Tổng tiền: </span>
+        <strong><?= number_format($cartService->getTotalMoney()).'đ'; ?></strong>
+    </div>
+    <a class="slider-right__order" href="/cart/checkout">Đặt hàng</a>
+    <?php
+endif;
+?>

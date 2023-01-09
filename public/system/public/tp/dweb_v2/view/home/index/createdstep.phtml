@@ -1,0 +1,102 @@
+<?php
+$data = $this->data;
+$themeId = $this->themeId;
+$step2 = false;
+$step3 = false;
+?>
+<section class="created-website">
+    <div class="created-website__inner">
+        <div class="created-website__left">
+            <figure class="created-website__image lazy" data-src="https://colorlib.com/etc/lf/Login_v18/images/bg-01.jpg"></figure>
+        </div>
+        <div class="created-website__right">
+            <div class="created-website__form">
+                <div class="header-logo">
+                    <a href="/"><<?= $url == '/' ? 'h1':'h2' ?> class="header-sologan" title="DWEB nền tảng website chuẩn seo của SEONGON"><span class="logo-first-key">D</span>WEB.</<?= $url == '/' ? 'h1':'h2' ?>></a>
+                </div>
+                <form class="contactForm registerForm created-website__form-js" method="post" enctype="multipart/form-data" data-parsley-validate="" novalidate="">
+                    <input type="hidden" class="themeId" value="<?= $themeId ?>" />
+                    <?php
+//                    $_SESSION["user_created_website"] = '';
+//                    print_r($data);
+                    ?>
+                    <h2 class="register__title">Tạo website chuẩn seo miễn phí.</h2>
+                    <?php if(empty($data['email'])): ?>
+                        <div class="form-group">
+                            <div>
+                                <input type="text" name="email" class="" data-parsley-type="email" placeholder="Email" required="required" data-parsley-error-message="Email không được để trống" value="">
+                            </div>
+                        </div>
+                    <?php endif; ?>
+                    <?php if($data['email'] && !$data['phone']): ?>
+
+                        <?php if(!$this->email): ?>
+                            <div class="form-group">
+                                <div>
+                                    <input type="text" name="phone" class="" data-parsley-type="digits" data-parsley-length="[10,11]" placeholder="Số điện thoại" required="required" data-parsley-error-message="Số điện thoại không được để trống" value="">
+                                </div>
+                            </div>
+                        <?php endif; ?>
+                        <div class="form-group">
+                            <div>
+                                <input type="password" name="password" class="" data-parsley-minlength="6" placeholder="Mật khẩu" required="required" data-parsley-error-message="Password không được để trống" value="">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div>
+                                <input type="text" class="created-website__store-input" data-parsley-minlength="3"  placeholder="Tên doanh nghiệp" required="required" data-parsley-error-message="Tên doanh nghiệp không hợp lệ" value="">
+                                <input type="hidden" name="store" class="created-website__store-input-hidden" data-parsley-minlength="3" data-parsley-pattern="^[a-z0-9_-]{4,32}$" placeholder="Tên doanh nghiệp" required="required" data-parsley-error-message="Tên doanh nghiệp không hợp lệ" value="">
+                            </div>
+                            <div class="created-website__store">
+                                <span class="labelDWEB"><?= 'http://' ?></span>
+                                <span class="label__store">tendoanhnghiep</span>
+                                <span class="labelDWEB"><?= '.'.$_SERVER['HTTP_HOST'] ?></span>
+                            </div>
+                        </div>
+                    <?php endif; ?>
+
+                    <div class="form-group">
+                        <div>
+                            <button type="submit">Tiếp theo</button>
+                        </div>
+                    </div>
+                    <?php if(empty($data['email'])): ?>
+                        <div class="form-group">
+                            <div class="created-website__line">
+                               <span>Đăng ký nhanh với</span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <a href="/user/fb" class="created-website__facebook"><i class="fa fa-facebook"></i> Facebook</a>
+                        </div>
+                    <?php endif; ?>
+                </form>
+                <?php if($data['email'] && !$data['phone']): ?>
+                        <div class="created-website__label">
+                        <i class="fa fa-question"></i>
+                        <p>Sau khi tạo website bạn có thể thêm tên miền riêng <span>http://yourdomain.com</span> thay thế tên miền <span>http://<span class="label__store">tendoanhnghiep</span>.<?= $_SERVER['HTTP_HOST'] ?></span> trong hệ thống quản lý.</p>
+                    </div>
+                <?php endif; ?>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div id="modalGlobal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <input type="hidden" value="" />
+            <p></p>
+        </div>
+    </div>
+</div>
+
+<div id="chooseTheme" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <input type="hidden" class="themeId" value="" />
+            <p>Hoàn tất đăng ký website.</p>
+            <a class="button-choose-template">Đồng ý</a>
+        </div>
+    </div>
+</div>

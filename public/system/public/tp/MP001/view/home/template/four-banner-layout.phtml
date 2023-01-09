@@ -1,0 +1,27 @@
+<?php if(!empty($this->fourBannerList['four-banner-list banner']['four-banner-list'])):?>
+    <section class="four-up">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-12">
+                    <ul class="four-up__list">
+                        <?php
+                        foreach($this->fourBannerList['four-banner-list banner']['four-banner-list'] as $k => $b):
+                                $image = json_decode($b['image'], true);
+                                $imageFirst = '';
+                                if(!empty($image)){
+                                    $imageFirst = array_shift($image);
+                                }
+                                ?>
+                                <li class="four-up__item">
+                                    <a href="<?= $b['url'] ?>">
+                                        <figure class="lazy four-up__image" data-src="<?= !empty($imageFirst) ? $imageFirst:null ?>"></figure>
+                                        <h3><?= $b['title'] ?></h3>
+                                    </a>
+                                </li>
+                            <?php endforeach; ?>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+<?php endif;?>

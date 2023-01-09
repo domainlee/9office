@@ -1,0 +1,103 @@
+<?php if(!empty($this->productCateList['product-category productcategory']['product-category'])): ?>
+    <section class="product-cate">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <?php if(!empty($productCateList)): ?>
+                        <div class="product-cate__inner">
+                            <div class="product-cate-title">
+                                <?php if(!empty($productCateList['product-title text']['value'])): ?>
+                                    <h2><?= $productCateList['product-title text']['value'] ?></h2>
+                                <?php endif;
+                                $menu = $this->menu['header_menu'];
+                                if(!empty($menu)){
+                                    ?>
+                                    <ul class="sub-menu">
+                                        <?php
+                                        foreach($menu as $c){
+                                            echo '<li><a href="'.$c['url'].'">'.$c['name'].'</a></li>';
+                                        }
+                                        ?>
+                                        <li>
+                                        <?php $pCategory =
+                                            $productCateList['product-category productcategory']['product-category']; 
+                                            $pUrl = '';
+                                            if(!empty($pCategory)) $pUrl = array_values($pCategory)[0]['url'];
+                                            ?>
+                                            <a href="<?= $pUrl; ?>">Xem tất cả</a>
+                                        </li>
+                                    </ul>
+                                    <?php
+                                }
+                                ?>
+                            </div>
+                            <div class="product-cate__content"
+                                <?= $count%2==0 ? 'style="flex-direction: row-reverse;"' : '' ?>>
+                                <div class="product-cate__banner">
+                                    <ul class="product-cate__list-banner">
+                                        <?php
+                                            $banner_list = $this->productCateList['small-banner-list banner']['small-banner-list'];
+                                            foreach ($banner_list as $b):
+                                            $imageFirst = '';
+                                            if(!empty(json_decode($b['image'], true))){
+                                                $imageFirst = array_shift(json_decode($b['image'], true));
+                                            } ?>
+                                            <li class="banner-two__item">
+                                                <a href="<?= $b['url'] ?>">
+                                                    <figure class="lazy banner-two__image" data-src="<?= $imageFirst ?>"></figure>
+                                                </a>
+                                            </li>
+                                        <?php endforeach; ?>
+                                    </ul>
+                                </div>
+                                <div class="product-cate__product">
+                                    <ul class="product-cate__list-product owl-carousel owl-theme">
+                                        <?php
+                                        foreach($pCategory as $pC):
+                                            $products = $this->products->search(['categoryId' => $pC['id'], 'limit' => 12]);
+                                            $count = 0;
+                                            foreach ($products as $p):
+                                                $imageFirst = '';
+                                                if(!empty(json_decode($p->getImage(), true))){
+                                                    $imageFirst = array_shift(json_decode($p->getImage(), true));
+                                                }
+                                                if($count%2==0) echo "<div class='product-column'>";
+                                            ?>
+
+                                            <li class="product-cate__item">
+                                                <div class="product-cate__item--inner">
+                                                    <a class="pI" href="<?= $p->getViewLink() ?>">
+                                                        <figure class="owl-lazy product_image product_image--two" data-src="<?= $imageFirst ?>"></figure>
+                                                    </a>
+                                                    <h3 class="product-cate__item--title">
+                                                        <a href="<?= $p->getViewLink() ?>">
+                                                            <?= $p->getTitle() ?>
+                                                        </a>
+                                                    </h3>
+                                                    <p class="product-horizontal__price">
+                                                        <?= $p->getPriceOld()
+                                                            ? '<span>'.number_format($p->getPriceOld()).' ₫</span><i>'.number_format($p->getPrice()).'₫</i>'
+                                                            : '<span>'.number_format($p->getPrice()).'₫</span><i></i>'
+                                                        ?>
+                                                    </p>
+                                                    <a class="btnAddCart" data-quantity="1" data-id="<?= $p->getId() ?>">Mua ngay</a>
+                                                </div>
+                                            </li>                                    
+                                        <?php
+                                            if($count%2!=0)
+                                                echo "</div>";
+                                            $count++;
+                                            endforeach;
+                                            if(count($products)%2!=0)
+                                                echo "<li class='product-cate__item'></li></div>";
+                                            endforeach; ?>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    <?php endif; ?>
+                </div>
+            </div>
+        </div>
+    </section>
+<?php endif;?>

@@ -1,0 +1,83 @@
+<?php
+    $view = $this->page;
+/***** Page Template: Trang mặc định
+/******* Vi du lay key "iframe" *********/
+    $imageFirst = '';
+    if(!empty(json_decode($view->getImage(), true))){
+        $imageFirst = array_shift(json_decode($view->getImage(), true));
+    }
+    $optionBasic = $this->home()->optionBasic();
+    $image = 'http://'.$_SERVER['HTTP_HOST'].$imageFirst;
+
+    /*$this->headTitle($this->escapeHtml(html_entity_decode($this->translate($view->getName()))));
+
+    $this->headMeta()->appendName('description', ($view->getMetaDescription() ? $view->getMetaDescription():$view->getName()));
+    $this->headMeta()->appendName('keywords', ($view->getMetaKeyword() ? $view->getMetaKeyword():$view->getName()));
+
+    $this->headMeta()->appendProperty('og:locale', 'vi_VN');
+    $this->headMeta()->appendProperty('og:image', 'http://'.$_SERVER["SERVER_NAME"].$imageFirst);
+    $this->headMeta()->appendProperty('og:url', 'http://'.$current_page_URL);
+    $this->headMeta()->appendProperty('og:title', $view->getMetaTitle() ? $view->getMetaTitle():$view->getName());
+    $this->headMeta()->appendProperty('og:description', ($view->getMetaDescription() ? $view->getMetaDescription():$view->getName()));
+
+    $this->headMeta()->appendProperty('twitter:card', 'http://'.$_SERVER["SERVER_NAME"]);
+    $this->headMeta()->appendProperty('twitter:title', $view->getMetaTitle() ? $view->getMetaTitle():$view->getName());
+    $this->headMeta()->appendProperty('twitter:image', 'http://'.$_SERVER["SERVER_NAME"].$imageFirst);
+    $this->headMeta()->appendProperty('twitter:description', $view->getMetaDescription() ? $view->getMetaDescription():$view->getName());*/
+    $imageInfo = getimagesize($image);
+    /**** Start SEO DWEB *****/
+    echo $this->headLink(['rel' => 'canonical', 'href' => 'http://'.$_SERVER['HTTP_HOST'].$view->getViewLink() ]);
+    $this->headTitle($this->escapeHtml($this->translate(!empty($view->getMetaTitle()) ? $view->getMetaTitle():$view->getName())));
+    $this->headMeta()->appendName('description', (!empty($view->getMetaDescription()) ? $view->getMetaDescription():null));
+    $this->headMeta()->appendName('keywords', (!empty($view->getMetaKeyword()) ? $view->getMetaKeyword():null));
+
+    $this->headMeta()->appendProperty('og:title', !empty($view->getMetaTitle()) ? $view->getMetaTitle():$view->getName());
+    $this->headMeta()->appendProperty('og:description', !empty($view->getMetaDescription()) ? $view->getMetaDescription():null);
+    $this->headMeta()->appendProperty('og:image', !empty($imageFirst) ? 'http://'.$_SERVER['HTTP_HOST'].$imageFirst:null);
+    $this->headMeta()->appendProperty('og:image:secure_url', !empty($imageFirst) ? 'http://'.$_SERVER['HTTP_HOST'].$imageFirst:null);
+    $this->headMeta()->appendProperty('og:image:width', $imageInfo['0']);
+    $this->headMeta()->appendProperty('og:image:height', $imageInfo['1']);
+    $this->headMeta()->appendProperty('og:type', 'Page');
+    $this->headMeta()->appendProperty('og:url', 'http://'.$_SERVER['HTTP_HOST'].$view->getViewLink());
+    $this->headMeta()->appendProperty('og:site_name', $optionBasic['sologan']);
+
+    $this->headMeta()->appendName('twitter:card', !empty($image) ? $image:'summary_large_image');
+    $this->headMeta()->appendName('twitter:title', !empty($view->getMetaTitle()) ? $view->getMetaTitle():null);
+    $this->headMeta()->appendName('twitter:description', (!empty($view->getMetaDescription()) ? $view->getMetaDescription():null));
+    $this->headMeta()->appendName('twitter:image', !empty($image) ? $image:null);
+    /**** End SEO DWEB *****/
+?>
+
+<?php
+    $cs = [
+        '/tp/MP001/css/p.css'
+    ];
+    echo '<link href="'.srcLink($cs,1).'" media="screen" rel="stylesheet" type="text/css">';
+?>
+<section class="hero-product">
+    <figure class="hero-product__image" style="background-image: url('/tp/MP001/images/m-11-slide-1.jpg')">
+        <h3><?= $view->getName()?></h3>
+    </figure>
+</section>
+<section class="page-news">
+    <div class="main">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <ul class="breadcrumb breadcrumb-category">
+                        <li><a href="/">Trang chủ</a></li>
+                        <li><a href="<?= $view->getViewLink()?>"><?= $view->getName()?></a></li>
+                    </ul>
+                    <div class="page-news__inner">
+                        <div class="detailNews">
+                            <h1 class="detail-news__title"><?= html_entity_decode($view->getName()) ?></h1>
+                            <?php
+                                echo html_entity_decode($view->getDescription());
+                            ?>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

@@ -1,0 +1,208 @@
+<?php
+    echo $this->headtitle($this->escapehtml($this->translate('Giao diện')));
+    $field = $this->field;
+    $fieldJson = json_decode($this->fieldJson, true);
+    $value = $this->value;
+    if(!empty($field)):
+    $c = 0;
+    $i = 0;
+?>
+<style>
+    .card-box__option--background, .card-box__option--background .nav.nav-tabs+.tab-content{
+        background-color: #f9f9f9;
+    }
+    .portlet .collapsed .ion-minus-round:before {
+        content: "\f217" !important;
+    }
+    .portlet .portlet-heading {
+        cursor: pointer;
+    }
+</style>
+<div class="row">
+    <div class="col-sm-12">
+        <form class="formHomepage form-horizontal" method="post" enctype="multipart/form-data" data-parsley-validate novalidate>
+            <div class="card-box card-box__option--background">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="btn-group pull-right">
+                            <button type="submit" class="btn btn-default waves-effect waves-light">Lưu</button>
+                        </div>
+                        <div class="btn-group pull-left m-t-0 m-b-20">
+                            <button type="button" class="btn btn-primary dropdown-toggle waves-effect waves-light" data-toggle="dropdown" aria-expanded="false">Module giao diện <span class="m-l-5"><i class="fa fa-file-photo-o"></i></span></button>
+                            <?php $fieldString = []; if(!empty($fieldJson)): ?>
+                            <ul class="dropdown-menu drop-menu-right dropdown-element" role="menu">
+                                <?php foreach($fieldJson as $k => $f):
+                                    $fieldString[] = vnString($k);
+                                ?>
+                                <li><a data-label="<?= $k ?>" data-field='<?= json_encode($f) ?>' href="#"><?= $k ?></a></li>
+                                <?php endforeach; ?>
+                            </ul>
+                            <?php endif; ?>
+                            <a class="btn btn-link" href="/admin/page/homepage">Tuỳ chỉnh khác</a>
+                        </div>
+                    </div>
+                </div>
+                <div id="drapElement">
+                    <?php if(!empty($value)): ?>
+                        <?php
+                            $c = 0;
+                            $o = '';
+                            foreach($value as $k => $v):
+                                $type = explode(' ',$k);
+                                $ii = explode('--',$type[1]);
+                            ?>
+                              <?php if($type['2'] == 'banner'): $c++; ?>
+                                    <div class="portlet <?= vnString($v['label']); ?>">
+                                        <div class="portlet-heading portlet-default collapsed" data-toggle="collapse" data-parent="#accordion1" href="#<?= vnString($v['label']).$c ?>" aria-expanded="false">
+                                            <h3 class="portlet-title">  <?= $v['label'] ?> </h3>
+                                            <div class="portlet-widgets">
+                                                <a class="btn__delete--module" data-module="<?= vnString($v['label']); ?>"><i class="ion-trash-a"></i></a>
+                                                <span class="divider"></span>
+                                                <a class=""><i class="ion-minus-round"></i></a>
+                                            </div>
+                                            <div class="clearfix"></div>
+                                        </div>
+                                        <div id="<?= vnString($v['label']).$c ?>" class="panel-collapse collapse" aria-expanded="false">
+                                            <div class="portlet-body">
+                                                <div class="form-group">
+                                                    <label class="col-md-2 control-label"><a class="label-a" href="/admin/media/banner" target="_blank"><?= $v['label'] ?></a></label>
+                                                    <div class="col-md-10">
+                                                        <input type="hidden" name="<?= 'banner ' .$type['1'].'[]' ?>" value="<?= $v['label'] ?>, <?= $v['limit'] ?>" />
+                                                        <select name="<?= 'banner ' .$type['1'].'[]' ?>" class="form-control select-ajax-banner select2-hidden-accessible" data-placeholder="<?= $v['label'] ?>" data-length="<?= $v['limit'] ?>" multiple="multiple">
+                                                            <?php
+                                                            if(is_array($v)) {
+                                                                foreach($v as $b) {
+                                                                    foreach($b as $f) {
+                                                                        echo '<option value="'.$f['id'].'" selected="selected">'.$f['title'].'</option>';
+                                                                    }
+                                                                }
+                                                            }
+                                                            ?>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                <?php
+                                    $c = 0;
+                                    elseif($type['2'] == 'multifield'):
+                                    $c++;
+                                ?>
+                                <div class="portlet <?= vnString($v['label']); ?>">
+                                    <div class="portlet-heading portlet-default collapsed" data-toggle="collapse" data-parent="#accordion1" href="#<?= vnString($v['label']).$ii[1] ?>" aria-expanded="false">
+                                        <h3 class="portlet-title">  <?= $v['label'] ?> </h3>
+                                        <div class="portlet-widgets">
+                                            <a class="btn__delete--module" data-module="<?= vnString($v['label']); ?>"><i class="ion-trash-a"></i></a>
+                                            <span class="divider"></span>
+                                            <a class=""><i class="ion-minus-round"></i></a>
+                                        </div>
+                                        <div class="clearfix"></div>
+                                    </div>
+                                    <div id="<?= vnString($v['label']).$ii[1] ?>" class="panel-collapse collapse" aria-expanded="false">
+                                        <div class="portlet-body">
+                                            <input type="hidden" name="multifield labelModule labela label <?= $type['1'] ?>[]" value="<?= $v['label'] ?>">
+                                            <?php
+                                                foreach ($v as $kk => $vv):
+                                                $type1 = explode(' ',$kk);
+                                                if($type1[0] != 'label'):
+                                            ?>
+                                            <div class="form-group">
+                                                <label class="col-md-2 control-label"><?= isset($vv['label']) ? $vv['label']:'' ?></label>
+                                                <div class="<?= $type1[1] == 'checkbox' || $type1[1] == 'text' || $type1[1] == 'textarea' || $type1[1] == 'texteditor' || $type1[1] == 'editorhtml' || $type1[1] == 'file' ? 'col-md-10':'col-md-9'?>">
+                                                    <?php if($type1[1] == 'checkbox'): ?>
+                                                        <input type="hidden" name="multifield <?= $type1[0] ?> checkbox field <?= $type['1'] ?>[]" class="form-control" value="<?= isset($vv['label']) ? $vv['label']:'' ?>">
+                                                        <div class="checkbox">
+                                                            <input name="multifield <?= $type1[0] ?> checkbox field <?= $type['1'] ?>[]" <?= $vv['value'] == 1 ? 'checked':'' ?> type="checkbox" class="form-control">
+                                                            <label><?= isset($vv['label']) ? $vv['label']:'' ?></label>
+                                                        </div>
+                                                    <?php elseif($type1[1] == 'text'): ?>
+                                                        <input name="multifield <?= $type1[0] ?> text field <?= $type['1'] ?>[]" type="hidden" value="<?= isset($vv['label']) ? $vv['label']:'' ?>">
+                                                        <input name="multifield <?= $type1[0] ?> text field <?= $type['1'] ?>[]" value="<?= $vv['value'] ?>" type="text" class="form-control">
+                                                    <?php elseif($type1[1] == 'textarea'): ?>
+                                                        <input name="multifield <?= $type1[0] ?> textarea field <?= $type['1'] ?>[]" type="hidden" value="<?= isset($vv['label']) ? $vv['label']:'' ?>">
+                                                        <textarea name="multifield <?= $type1[0] ?> textarea field <?= $type['1'] ?>[]" class="form-control"><?= $vv['value'] ?></textarea>
+                                                    <?php elseif($type1[1] == 'texteditor'): ?>
+                                                        <input name="multifield <?= $type1[0] ?> texteditor field <?= $type['1'] ?>[]" type="hidden" value="<?= isset($vv['label']) ? $vv['label']:'' ?>">
+                                                        <textarea name="multifield <?= $type1[0] ?> texteditor field <?= $type['1'] ?>[]" class="textEditor form-control"><?= $vv['value'] ?></textarea>
+                                                    <?php elseif($type1[1] == 'editorhtml'): ?>
+                                                    <div class="panel panel-default">
+                                                        <div class="panel-body p-0">
+                                                            <input name="multifield <?= $type1[0] ?> editorhtml field <?= $type['1'] ?>[]" type="hidden" value="<?= isset($vv['label']) ? $vv['label']:'' ?>">
+                                                            <textarea name="multifield <?= $type1[0] ?> editorhtml field <?= $type['1'] ?>[]" id="codeHtml<?= $type['1'] ?>" class="editorHtml form-control"><?= $vv['value'] ?></textarea>
+                                                        </div>
+                                                    </div>
+                                                    <?php elseif($type1[1] == 'file'): ?>
+                                                        <input type="hidden" name="multifield <?= $type1[0] ?> file field <?= $type['1'] ?>[]" class="<?= $type1[0] ?> form-control" value="<?= isset($vv['label']) ? $vv['label']:'' ?>, <?= $vv['value'] ?>">
+                                                        <div class="image-upload__field">
+                                                            <?php if(!empty($vv['value'])): ?>
+                                                                <a class="btn btn-white image-upload__remove"><i class="ion-trash-a"></i></a>
+                                                                <img class="img-responsive img-thumbnail" src="<?= $vv['value'] ?>" />
+                                                            <?php endif; ?>
+                                                        </div>
+                                                        <input type="file" class="filestyle filestyleMulti" value="<?= $vv['value'] ?>" id="<?= $type1[0].$c ?>" name="multifield <?= $type1[0] ?> file field <?= $type['1'] ?>[]">
+                                                    <?php elseif($type1[1] == 'product'): ?>
+                                                        <input name="multifield <?= $type1[0] ?> selectmulti <?= $type1[1] ?> <?= $type['1'] ?>[]" type="hidden" value="<?= $vv['label'].','.$vv['limit'] ?>">
+                                                        <select name="multifield <?= $type1[0] ?> selectmulti <?= $type1[1] ?> <?= $type['1'] ?>[]" class="form-control select-ajax-product select2-hidden-accessible" data-placeholder="<?= isset($vv['label']) ? $vv['label']:'' ?>" data-length="<?= $vv['limit'] ?>" multiple="multiple">
+                                                            <?php foreach ($vv[$type1[0]] as $kkk => $vvv):  ?>
+                                                                <option value="<?= $vvv['id']?>" selected="selected"><?= $vvv['title']?></option>
+                                                            <?php endforeach; ?>
+                                                        </select>
+                                                    <?php elseif($type1[1] == 'article'): ?>
+                                                        <input name="multifield <?= $type1[0] ?> selectmulti <?= $type1[1] ?> <?= $type['1'] ?>[]" type="hidden" value="<?= $vv['label'].','.$vv['limit'] ?>">
+                                                        <select name="multifield <?= $type1[0] ?> selectmulti <?= $type1[1] ?> <?= $type['1'] ?>[]" class="form-control select-ajax-article select2-hidden-accessible" data-placeholder="<?= isset($vv['label']) ? $vv['label']:'' ?>" data-length="<?= $vv['limit'] ?>" multiple="multiple">
+                                                            <?php foreach ($vv[$type1[0]] as $kkk => $vvv):  ?>
+                                                                <option value="<?= $vvv['id']?>" selected="selected"><?= $vvv['title']?></option>
+                                                            <?php endforeach; ?>
+                                                        </select>
+                                                    <?php elseif($type1[1] == 'productcategory'): ?>
+                                                        <input name="multifield <?= $type1[0] ?> selectmulti <?= $type1[1] ?> <?= $type['1'] ?>[]" type="hidden" value="<?= $vv['label'].','.$vv['limit'] ?>">
+                                                        <select name="multifield <?= $type1[0] ?> selectmulti <?= $type1[1] ?> <?= $type['1'] ?>[]" class="form-control select-ajax-productcategory select2-hidden-accessible" data-placeholder="<?= isset($vv['label']) ? $vv['label']:'' ?>" data-length="<?= $vv['limit'] ?>" multiple="multiple">
+                                                            <?php foreach ($vv[$type1[0]] as $kkk => $vvv):  ?>
+                                                                <option value="<?= $vvv['id']?>" selected="selected"><?= $vvv['title']?></option>
+                                                            <?php endforeach; ?>
+                                                        </select>
+                                                    <?php elseif($type1[1] == 'articlecategory'): ?>
+                                                        <input name="multifield <?= $type1[0] ?> selectmulti <?= $type1[1] ?> <?= $type['1'] ?>[]" type="hidden" value="<?= $vv['label'].','.$vv['limit'] ?>">
+                                                        <select name="multifield <?= $type1[0] ?> selectmulti <?= $type1[1] ?> <?= $type['1'] ?>[]" class="form-control select-ajax-articlecategory select2-hidden-accessible" data-placeholder="<?= isset($vv['label']) ? $vv['label']:'' ?>" data-length="<?= $vv['limit'] ?>" multiple="multiple">
+                                                            <?php foreach ($vv[$type1[0]] as $kkk => $vvv):  ?>
+                                                                <option value="<?= $vvv['id']?>" selected="selected"><?= $vvv['title']?></option>
+                                                            <?php endforeach; ?>
+                                                        </select>
+                                                    <?php elseif($type1[1] == 'page'): ?>
+                                                        <input name="multifield <?= $type1[0] ?> selectmulti <?= $type1[1] ?> <?= $type['1'] ?>[]" type="hidden" value="<?= $vv['label'].','.$vv['limit'] ?>">
+                                                        <select name="multifield <?= $type1[0] ?> selectmulti <?= $type1[1] ?> <?= $type['1'] ?>[]" class="form-control select-ajax-page select2-hidden-accessible" data-placeholder="<?= isset($vv['label']) ? $vv['label']:'' ?>" data-length="<?= $vv['limit'] ?>" multiple="multiple">
+                                                            <?php foreach ($vv[$type1[0]] as $kkk => $vvv):  ?>
+                                                                <option value="<?= $vvv['id']?>" selected="selected"><?= $vvv['title']?></option>
+                                                            <?php endforeach; ?>
+                                                        </select>
+                                                    <?php elseif($type1[1] == 'banner'): ?>
+                                                        <input name="multifield <?= $type1[0] ?> selectmulti <?= $type1[1] ?> <?= $type['1'] ?>[]" type="hidden" value="<?= $vv['label'].','.$vv['limit'] ?>">
+                                                        <select name="multifield <?= $type1[0] ?> selectmulti <?= $type1[1] ?> <?= $type['1'] ?>[]" class="form-control select-ajax-banner select2-hidden-accessible" data-placeholder="<?= isset($vv['label']) ? $vv['label']:'' ?>" data-length="<?= $vv['limit'] ?>" multiple="multiple">
+                                                            <?php foreach ($vv[$type1[0]] as $kkk => $vvv):  ?>
+                                                                <option value="<?= $vvv['id']?>" selected="selected"><?= $vvv['title']?></option>
+                                                            <?php endforeach; ?>
+                                                        </select>
+                                                    <?php endif; ?>
+                                                </div>
+
+                                                <?= $type1[1] == 'checkbox' || $type1[1] == 'text' || $type1[1] == 'textarea' || $type1[1] == 'texteditor' || $type1[1] == 'editorhtml' || $type1[1] == 'file' ? '':'<div class="col-md-1"><a class="btn btn-default waves-effect waves-light">Thêm</a></div>'?>
+
+                                            </div>
+                                            <?php endif; endforeach; ?>
+                                        </div>
+                                    </div>
+                                </div>
+                                <?php endif; ?>
+                        <?php endforeach; ?>
+                    <?php endif; ?>
+
+                </div>
+
+            </div>
+        </form>
+    </div>
+</div>
+
+<?php endif; ?>
+

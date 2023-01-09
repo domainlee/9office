@@ -1,0 +1,29 @@
+<?php $url = $this->UriParams()->getRequest()->getRequestUri(); ?>
+
+<header class="header">
+    <div class="container header-container">
+        <div class="header-inner">
+            <div class="header-logo">
+                <a href="/"><h2 class="header-sologan"><span class="logo-first-key">D</span>WEB.<small>Blog</small></h2></a>
+            </div>
+            <div class="header__button--mobile">
+                <a>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </a>
+            </div>
+            <div class="header-nav">
+                <ul>
+                    <li><a href="http://dweb.vn" <?= $url == '/' ? 'class="active"':null ?>>Trang chủ</a></li>
+
+
+                    <li><a <?= $url == '/bang-gia.html' ? 'class="active"':null ?> href="http://dweb.vn/bang-gia.html">Bảng giá</a></li>
+                    <li><a <?= $url == '/kho-giao-dien.html' ? 'class="active"':null ?> href="http://dweb.vn/kho-giao-dien.html">Kho giao diện</a></li>
+                    <li><a <?= $url == '/blog.html' ? 'class="active"':null ?> href="http://blog.dweb.vn">Blog</a></li>
+                    <li><a <?= $url == '/lien-he.html' ? 'class="active"':null ?> href="http://dweb.vn/lien-he.html">Liên hệ</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</header>

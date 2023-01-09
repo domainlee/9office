@@ -1,0 +1,63 @@
+<?php if(!empty($this->productLayout['product-list product']['product-list'])):
+    $slider = $this->productLayout['product-slider-checkbox checkbox']['value'];?>
+        <div class="category">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <?php foreach($this->productLayout['product-category productcategory']['product-category'] as $c):
+                            $imageFirst = '';
+                            if(!empty(json_decode($c['image'], true))){
+                                $imageFirst = array_shift(json_decode($c['image'], true));
+                            }
+                            ?>
+                            <div class="category__title">
+                                <h2>
+                                    <a href="<?= $c['url'] ?>">
+                                        <?= $c['title'] ? : 'Danh mục sản phẩm' ?>
+                                    </a>
+                                </h2>
+                                <?php
+                                if(!empty($c['child'])){
+                                    ?>
+                                    <ul>
+                                        <?php
+                                        foreach($c['child'] as $cc){
+                                            echo '<li><a href="'.$cc['url'].'">'.$cc['title'].'</a></li>';
+                                        }
+                                        ?>
+                                    </ul>
+                                    <?php
+                                }
+                                ?>
+                            </div>
+                        <?php endforeach; ?>
+                        <ul class="<?= $slider ? ' product-slider owl-carousel owl-theme' : 'product-list' ?>">
+                            <?php if(!empty($this->productLayout['product-list product'])):
+                                foreach($this->productLayout['product-list product']['product-list'] as $p):
+                                    $imageFirst = array_shift(json_decode($p['image'], true));
+                                    ?>
+                                    <li class="product-item">
+                                        <div class="product-item__inner">
+                                            <div class="product_image-wrapper">
+                                                <a href="<?= $p['url'] ?>">
+                                                    <figure class="lazy product_image" data-src="<?= !empty($imageFirst) ? $imageFirst:null ?>"></figure>
+                                                </a>
+                                            </div>
+                                            <h3 class="product-title"><a href="<?= $p['url'] ?>"><?= $p['title'] ?></a></h3>
+                                            <p class="product-price">
+                                                <?= $p['priceOld']
+                                                    ? '<i>'.number_format($p['price']).' đ</i><span>'.number_format($p['priceOld']).' đ</span>'
+                                                    : '<i></i><span>'.number_format($p['price']).' đ</span>' ?></p>
+                                        </div>
+                                    </li>
+                                <?php
+                                endforeach; endif;
+                            echo '</ul>';
+                                echo '<div class="category__viewall"><a href="'
+                                    .$c['url'].'">Xem tất cả sản phẩm '.'</a></div>';
+                            ?>
+                    </div>
+                </div>
+            </div>
+        </div>
+    <?php endif;?>
