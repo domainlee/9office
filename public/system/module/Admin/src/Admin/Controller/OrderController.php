@@ -10,7 +10,6 @@ class OrderController extends AbstractActionController{
     const appId = 73193;
     const businessId = 109797;
     const accessToken = 'pV0IWWhXrpiM9SWgeGT8kClOaAF7caGiBCyZ4c2iIc2M9dvJLDv9NUTVI2RB4QP29zoQncLxQ4IZdTbYglchdOeBlKF0ovVR5P5TyJ52RHL55IGVPRgMMc6Ll0WHzRjE0kmQILxj2x3dLAuLY6AU13';
-    const data = '{"page": "68"}';
 
     public function indexAction(){
 		$this->layout('layout/admin');
@@ -27,13 +26,15 @@ class OrderController extends AbstractActionController{
 //        $client = new Client();
 //        $response = $client->dispatch($request);
 //        $data = json_decode($response->getBody(), true);
+        $data = json_encode(array('page' => 70));
 
         $curl = curl_init();
         $data = array(
             'version' => self::version,
             'appId' => self::appId,
             'businessId' => self::businessId,
-            'accessToken' => self::accessToken
+            'accessToken' => self::accessToken,
+            'data' => $data
         );
 
         curl_setopt_array($curl, array(
