@@ -13,21 +13,7 @@ class OrderController extends AbstractActionController{
 
     public function indexAction(){
 		$this->layout('layout/admin');
-
-//        $request = new Request();
-//        $request->getHeaders()->addHeaders(array(
-//            'Content-Type' => 'application/x-www-form-urlencoded; charset=UTF-8'
-//        ));
-//        $someurl = '';
-//        $request->setUri($someurl);
-//        $request->setMethod('POST');
-//        $request->setPost(new Parameters(array('someparam' => $somevalue)));
-//
-//        $client = new Client();
-//        $response = $client->dispatch($request);
-//        $data = json_decode($response->getBody(), true);
         $data = json_encode(array('page' => 70));
-
         $curl = curl_init();
         $data = array(
             'version' => self::version,
@@ -52,26 +38,14 @@ class OrderController extends AbstractActionController{
         $response = curl_exec($curl);
 
         curl_close($curl);
-
-        print_r(json_decode($response, true));die;
-
-        echo $response;
-
-
-
-//		$model = new \Admin\Model\Order();
-//        $mapper = $this->getServiceLocator()->get('Admin\Model\OrderMapper');
-//        $model = $mapper->getId(166);
-//        $model->setStatus(date("s"));
-//        $mapper->save($model);
-//        die;
-//		$mapper = $this->getServiceLocator()->get('Admin\Model\OrderMapper');
-//		$model->exchangeArray((array)$this->getRequest()->getQuery());
-//		$page = (int)$this->getRequest()->getQuery()->page ?: 1;
-//		$results = $mapper->search($model, array($page, 30));
+        $response = json_decode($response, true);
+//        print_r($response);die;
+        $options['isAdmin'] = $this->user()->isSuperAdmin();
+        $fFilter = new \Admin\Form\OrderSearch($options);
 		return new ViewModel(array(
-			'pages'=>$page,
-			'results'=>$results,
+//			'pages'=> $page,
+			'results'=> $response['data'],
+			'fFilter'=> $fFilter,
 		));
 	}
 	public function addAction(){

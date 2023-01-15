@@ -13,6 +13,7 @@ return array(
             'Admin\Controller\Page' => 'Admin\Controller\PageController',
             'Admin\Controller\User' => 'Admin\Controller\UserController',
             'Admin\Controller\Question' => 'Admin\Controller\QuestionController',
+            'Admin\Controller\Invoice' => 'Admin\Controller\InvoiceController',
         ),
     ),
     'router' => array(

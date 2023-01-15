@@ -108,11 +108,11 @@
                                             <?php if($k == 'Bài viết'): ?>
                                                 <input id="remember-2" <?= $vDep['article'][$v] ? 'checked':'' ?> name="<?= vnString($k).' '.$v ?>" type="checkbox" >
                                             <?php endif; ?>
-                                            <?php if($k == 'Sản phẩm'): ?>
-                                                <input id="remember-2" <?= !empty($vDep['product'][$v]) ? 'checked':'' ?> name="<?= vnString($k).' '.$v ?>" type="checkbox" >
+                                            <?php if($k == 'Vật liệu'): ?>
+                                                <input id="remember-2" <?= !empty($vDep['material'][$v]) ? 'checked':'' ?> name="<?= vnString($k).' '.$v ?>" type="checkbox" >
                                             <?php endif; ?>
-                                            <?php if($k == 'Question'): ?>
-                                                <input id="remember-2" <?= !empty($vDep['question'][$v]) ? 'checked':'' ?> name="<?= vnString($k).' '.$v ?>" type="checkbox" >
+                                            <?php if($k == 'Hoá đơn'): ?>
+                                                <input id="remember-2" <?= !empty($vDep['invoice'][$v]) ? 'checked':'' ?> name="<?= vnString($k).' '.$v ?>" type="checkbox" >
                                             <?php endif; ?>
                                             <label for="remember-2"> <?= $text ?> </label>
                                         </div>

@@ -43,9 +43,12 @@ class Module {
 						'Admin\Form\Articlec' => 'Admin\Form\Articlec',
 						'Admin\Form\ArticlecFilter' => 'Admin\Form\ArticlecFilter',
 						'Admin\Form\ArticlecSearch' => 'Admin\Form\ArticlecSearch',
-						
-						
-						'Admin\Model\Product' => 'Admin\Model\Product',
+
+                        'Admin\Model\Invoice' => 'Admin\Model\Invoice',
+                        'Admin\Model\InvoiceMapper' => 'Admin\Model\InvoiceMapper',
+                        'Admin\Form\OrderSearch' => 'Admin\Form\OrderSearch',
+
+                        'Admin\Model\Product' => 'Admin\Model\Product',
 						'Admin\Model\ProductMapper' => 'Admin\Model\ProductMapper',
 						'Admin\Form\Product' => 'Admin\Form\Product',
 						'Admin\Form\ProductFilter' => 'Admin\Form\ProductFilter',
