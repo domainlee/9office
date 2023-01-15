@@ -50,33 +50,7 @@ class Admin extends Navigation
 //                    ),
 //                )
 //            ),
-//			array(
-//                'icon'  => '<i class="ti-pencil-alt"></i>',
-//				'label'	=> 'Bài viết',
-//				'uri'	=> '/admin/article',
-//				'resource' => 'admin:article',
-//				'privilege' => 'index',
-//				'class' => 'fa fa-dot-circle-o',
-//                'module' => 'article',
-//                'pages'	=> array(
-//					array(
-//						'label'	=> 'Bài viết',
-//						'label2'=> 'bai viet',
-//						'uri'	=> '/admin/article',
-//						'resource' => 'admin:article',
-//						'privilege' => 'index',
-//						'class'=>'fa fa-list-ul',
-//                    ),
-//					array(
-//						'label'	=> 'Danh mục',
-//						'label2'=> 'Danh muc',
-//						'uri'	=> '/admin/article/category',
-//						'resource' => 'admin:article',
-//						'privilege' => 'category',
-//						'class'=>'fa fa-list-ul'
-//					),
-//				)
-//			),
+
             array(
                 'icon'  => '<i class="ti-shopping-cart"></i>',
                 'label'	=> 'Đơn hàng',
@@ -85,6 +59,68 @@ class Admin extends Navigation
                 'resource' => 'admin:order',
                 'privilege' => 'order',
                 'class'=>'fa fa-plus-square',
+            ),
+            array(
+                'icon'  => '<i class="ti-pencil-alt"></i>',
+                'label'	=> 'Vật liệu',
+                'uri'	=> '/admin/article',
+                'resource' => 'admin:article',
+                'privilege' => 'index',
+                'class' => 'fa fa-dot-circle-o',
+                'module' => 'article',
+                'pages'	=> array(
+                    array(
+                        'label'	=> 'Thêm vật liệu',
+                        'label2'=> 'Danh muc',
+                        'uri'	=> '/admin/article/category',
+                        'resource' => 'admin:article',
+                        'privilege' => 'category',
+                        'class'=>'fa fa-list-ul'
+                    ),
+                    array(
+                        'label'	=> 'Thêm sản phẩm',
+                        'label2'=> 'bai viet',
+                        'uri'	=> '/admin/article',
+                        'resource' => 'admin:article',
+                        'privilege' => 'index',
+                        'class'=>'fa fa-list-ul',
+                    ),
+                )
+            ),
+            array(
+                'icon'  => '<i class="ti-pencil-alt"></i>',
+                'label'	=> 'Hoá đơn',
+                'uri'	=> '/admin/article',
+                'resource' => 'admin:article',
+                'privilege' => 'index',
+                'class' => 'fa fa-dot-circle-o',
+                'module' => 'article',
+                'pages'	=> array(
+                    array(
+                        'label'	=> 'Nhập vật liệu',
+                        'label2'=> 'bai viet',
+                        'uri'	=> '/admin/article',
+                        'resource' => 'admin:article',
+                        'privilege' => 'index',
+                        'class'=>'fa fa-list-ul',
+                    ),
+                    array(
+                        'label'	=> 'Tạo bởi đơn hàng',
+                        'label2'=> 'Danh muc',
+                        'uri'	=> '/admin/article/category',
+                        'resource' => 'admin:article',
+                        'privilege' => 'category',
+                        'class'=>'fa fa-list-ul'
+                    ),
+                    array(
+                        'label'	=> 'Tạo hoá đơn khác',
+                        'label2'=> 'Danh muc',
+                        'uri'	=> '/admin/article/category',
+                        'resource' => 'admin:article',
+                        'privilege' => 'category',
+                        'class'=>'fa fa-list-ul'
+                    ),
+                )
             ),
 
 //            array(
