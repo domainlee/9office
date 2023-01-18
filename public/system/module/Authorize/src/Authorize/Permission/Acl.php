@@ -159,19 +159,9 @@ class Acl extends ZendAcl
                             'Tạo invoice' => 'add',
                             'Tạo sản phẩm' => 'add_product',
                         ),
-//                        'Bài viết' => array(
-//                            'Xem danh sách bài viết' => 'index',
-//                            'Thêm bài viết' => 'add',
-//                            'Sửa bài viết' => 'edit',
-//                            'Đổi trạng thái bài viết' => 'change',
-//                            'Xoá bài viết' => 'delete',
-//                            'Xem danh sách danh mục' => 'category',
-//                            'Thêm danh mục' => 'addcategory',
-//                            'Đổi trạng thái danh mục' => 'changec',
-//                            'Sửa danh mục' => 'editcategory',
-//                            'Xoá danh mục' => 'deletec',
-////                            'Thêm trường' => 'field',
-//                        ),
+                        'Đơn hàng' => array(
+                            'Xem danh sách đơn hàng' => 'index',
+                        ),
 //                        'Question' => array (
 //                            'Công việc' => 'task',
 //                        ),
