@@ -14,6 +14,8 @@ return array(
             'Admin\Controller\User' => 'Admin\Controller\UserController',
             'Admin\Controller\Question' => 'Admin\Controller\QuestionController',
             'Admin\Controller\Invoice' => 'Admin\Controller\InvoiceController',
+            'Admin\Controller\Material' => 'Admin\Controller\MaterialController',
+            'Admin\Controller\Manufacture' => 'Admin\Controller\ManufactureController',
         ),
     ),
     'router' => array(
