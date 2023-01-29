@@ -1,6 +1,7 @@
 <?php
 echo $this->headtitle($this->escapehtml($this->translate('Danh sách hóa đơn')));
 echo $this->headscript()->prependFile($this->basepath().'/js/order/order.js');
+//print_r($this->results);die;
 $order = $this->results['orders'];
 ?>
 
@@ -61,6 +62,10 @@ $order = $this->results['orders'];
                                 <?php endif; ?>
                             </tbody>
                         </table>
+
+                        <div class="dataTables_paginate paging_bootstrap pagination pagination__option">
+                            <ul class="pagination"><li class="prev disabled"><a><span>Prev</span></a></li><li><a>1 / 6</a></li><li><a class="btn-default" href="?page=2" title="Trang trước"><span>Next</span></a></li></ul>
+                        </div>
                     </div>
                 </div>
             </div>

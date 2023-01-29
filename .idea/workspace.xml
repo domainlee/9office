@@ -2,11 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="363134c8-8b26-4c11-8dd9-a396a3e0a0dc" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/public/system/module/Admin/src/Admin/Controller/ManufactureController.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/system/module/Admin/src/Admin/Controller/MaterialController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/system/module/Admin/Module.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/system/module/Admin/Module.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/system/module/Admin/config/module.config.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/system/module/Admin/config/module.config.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/system/module/Admin/src/Admin/Controller/OrderController.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/system/module/Admin/src/Admin/Controller/OrderController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/system/module/Admin/view/admin/order/index.phtml" beforeDir="false" afterPath="$PROJECT_DIR$/public/system/module/Admin/view/admin/order/index.phtml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

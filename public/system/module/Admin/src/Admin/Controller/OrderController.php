@@ -13,7 +13,7 @@ class OrderController extends AbstractActionController{
 
     public function indexAction(){
 		$this->layout('layout/admin');
-        $data = json_encode(array('page' => 70));
+        $data = json_encode(array('page' => 1, 'statuses' => array('Confirmed')));
         $curl = curl_init();
         $data = array(
             'version' => self::version,
@@ -22,6 +22,7 @@ class OrderController extends AbstractActionController{
             'accessToken' => self::accessToken,
             'data' => $data
         );
+
 
         curl_setopt_array($curl, array(
             CURLOPT_URL => 'https://open.nhanh.vn/api/order/index',
