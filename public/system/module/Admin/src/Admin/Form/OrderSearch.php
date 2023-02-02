@@ -14,6 +14,15 @@ class OrderSearch extends ProvidesEventsForm{
             )
         ) );
         $this->add ( array (
+            'name' => 'page',
+            'attributes' => array (
+                'type' => 'hidden',
+                'class' => 'tb m-wrap medium',
+                'id' => 'id',
+                'placeholder' => 'Id'
+            ),
+        ) );
+        $this->add ( array (
             'name' => 'id',
             'attributes' => array (
                 'type' => 'text',
@@ -43,6 +52,26 @@ class OrderSearch extends ProvidesEventsForm{
                 )
             )
         ) );
+
+        $this->add ( array (
+            'name' => 'status',
+            'type' => 'select',
+            'attributes' => array (
+                'id' => 'status',
+                'style' => 'margin: 0 5px 0 0',
+                'class' => 'tb m-wrap medium',
+            ),
+            'options' => array (
+                'value_options' => array (
+                    '' => '- Trạng thái -'
+                ),
+                'decorator' => array (
+                    'type' => ''
+                )
+            )
+        ) );
+
+
         if (isset($name['isAdmin']) && $name['isAdmin']){
             $this->add ( array (
                 'name' => 'storeId',
@@ -60,7 +89,8 @@ class OrderSearch extends ProvidesEventsForm{
                     'decorator' => array (
                         'type' => ''
                     )
-                )
+                ),
+
             ) );
         }
         $this->add ( array (
@@ -90,4 +120,14 @@ class OrderSearch extends ProvidesEventsForm{
                 )+$arr);
         }
     }
+
+    public function setStatus($array, $value){
+        if(!!($element = $this->get('status'))){
+            $element->setValueOptions(array(
+                    ''=>'- Trang thái -'
+                )+ $array);
+            $element->setAttribute('value', $value);
+        }
+    }
+
 }

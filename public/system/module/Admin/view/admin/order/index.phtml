@@ -3,8 +3,20 @@ echo $this->headtitle($this->escapehtml($this->translate('Danh sách hóa đơn'
 echo $this->headscript()->prependFile($this->basepath().'/js/order/order.js');
 //print_r($this->results);die;
 $order = $this->results['orders'];
+$total = $this->results['totalPages'];
+$page = $this->results['page'] ? $this->results['page']:1;
+$query = $this->query;
+$page_prev = ($page == 1 ? 1:$page-1);
+$page_prev = preg_replace ( '/page=([0-9])/','page='.$page_prev, $query );
+$page_next = ($total == $page ? $page:$page + 1);
+$page_next = preg_replace ( '/page=([0-9])/','page='.$page_next, $query );
 ?>
 
+<style>
+    .list_product p:last-child {
+        margin: 0;
+    }
+</style>
 <div class="row">
     <div class="col-sm-12">
         <div class="card-box">
@@ -21,10 +33,14 @@ $order = $this->results['orders'];
                                     $form = $this->fFilter;
                                     ?>
                                     <div class="form-group">
+                                        <?=$this->formelement($form->get('page')->setAttributes(['value' => $page]))?>
                                         <?=$this->formelement($form->get('id')->setAttributes(['class' => 'form-control','placeholder'=>'Id']))?>
                                     </div>
                                     <div class="form-group">
                                         <?=$this->formelement($form->get('title')->setAttributes(['class' => 'form-control','placeholder'=>'Tên khách hàng']))?>
+                                    </div>
+                                    <div class="form-group">
+                                        <?=$this->formelement($form->get('status')->setAttributes(['class' => 'form-control']))?>
                                     </div>
                                     <div class="form-group"><input name="submit" type="submit" class="btn btn-default " value="Tìm Kiếm"></div>
                                 </form>
@@ -40,7 +56,7 @@ $order = $this->results['orders'];
                                     <th>Địa chỉ</th>
                                     <th style="width: 40%">Sản phẩm</th>
                                     <th style="text-align: center;width: 8%">Trạng thái</th>
-                                    <th style="text-align: center;width: 5%">Xóa</th>
+                                    <th style="text-align: center;width: 10%">Hành động</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -50,7 +66,7 @@ $order = $this->results['orders'];
                                         <td class="id" style="text-align: center;vertical-align: middle"><?php echo $k ?></td>
                                         <td style="vertical-align: middle"><?php echo $v['customerName'] ?></td>
                                         <td style="vertical-align: middle"><?php echo $v['customerAddress'] ?></td>
-                                        <td style="">
+                                        <td class="list_product">
                                             <?php foreach ($v['products'] as $p => $pv): ?>
                                                 <p><?php echo '<strong>'.$pv['productCode'].'</strong>' . ' - ' . $pv['productName']; ?></p>
                                             <?php endforeach; ?>
@@ -64,7 +80,11 @@ $order = $this->results['orders'];
                         </table>
 
                         <div class="dataTables_paginate paging_bootstrap pagination pagination__option">
-                            <ul class="pagination"><li class="prev disabled"><a><span>Prev</span></a></li><li><a>1 / 6</a></li><li><a class="btn-default" href="?page=2" title="Trang trước"><span>Next</span></a></li></ul>
+                            <ul class="pagination">
+                                <li class="prev"><a class="" href="<?php echo 'order?'. $page_prev; ?>"><span>Trang sau</span></a></li>
+                                <li><a class="btn-default"><?php echo $page .'/'.$total;  ?></a></li>
+                                <li><a class="" href="<?php echo 'order?'. $page_next ?>" title="Trang trước"><span>Trang trước</span></a></li>
+                            </ul>
                         </div>
                     </div>
                 </div>

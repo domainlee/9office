@@ -13,7 +13,11 @@ class OrderController extends AbstractActionController{
 
     public function indexAction(){
 		$this->layout('layout/admin');
-        $data = json_encode(array('page' => 1, 'statuses' => array('Confirmed')));
+
+		$query = $this->getRequest()->getUri()->getQuery();
+        $page = (int)$this->getRequest()->getQuery()->page ? : 1;
+        $status_filter = $this->getRequest()->getQuery()->status ? : 'Confirmed';
+        $data = json_encode(array('page' => $page, 'statuses' => array($status_filter)));
         $curl = curl_init();
         $data = array(
             'version' => self::version,
@@ -40,11 +44,19 @@ class OrderController extends AbstractActionController{
 
         curl_close($curl);
         $response = json_decode($response, true);
-//        print_r($response);die;
         $options['isAdmin'] = $this->user()->isSuperAdmin();
         $fFilter = new \Admin\Form\OrderSearch($options);
-		return new ViewModel(array(
-//			'pages'=> $page,
+
+        $status = array(
+            'New' => 'Đơn mới',
+            'Confirming' => 'Đang xác nhận',
+            'CustomerConfirming' => 'Chờ khách xác nhận',
+            'Confirmed' => 'Đã xác nhận',
+            'Packing' => 'Đang đóng gói',
+        );
+        $fFilter->setStatus($status, $status_filter);
+        return new ViewModel(array(
+			'query'=> $query,
 			'results'=> $response['data'],
 			'fFilter'=> $fFilter,
 		));

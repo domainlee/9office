@@ -13,8 +13,8 @@ class MaterialController extends AbstractActionController{
 	public function indexAction()
     {
         $this->layout('layout/admin');
-        echo 'index material';
-        die;
+//        echo 'index material';
+//        die;
 		$model = new \Admin\Model\Article();
         $sl = $this->getServiceLocator();
 		$mapper = $sl->get('Admin\Model\ArticleMapper');
@@ -28,11 +28,11 @@ class MaterialController extends AbstractActionController{
         $fFilter = new \Admin\Form\ArticleSearch($options);
         $model->setStoreId($storeId);
 
-        $optionMapper = $sl->get('Admin\Model\OptionMapper');
-        $option = new \Admin\Model\Option();
-        $option->setStoreId($storeId);
-        $dataOption = $optionMapper->get($option);
-        $dataOld = !empty($dataOption) ?  json_decode($dataOption->getData(), true):'';
+//        $optionMapper = $sl->get('Admin\Model\OptionMapper');
+//        $option = new \Admin\Model\Option();
+//        $option->setStoreId($storeId);
+//        $dataOption = $optionMapper->get($option);
+//        $dataOld = !empty($dataOption) ?  json_decode($dataOption->getData(), true):'';
 		$page = (int)$this->getRequest()->getQuery()->page ? : 1;
 		$results = $mapper->search($model, array($page,10));
 
@@ -41,7 +41,7 @@ class MaterialController extends AbstractActionController{
 			'results' => $results,
             'url' => $this->getRequest()->getUri()->getQuery(),
             'uri' => $this->getRequest()->getUri()->getQuery(),
-            'option' => $dataOld,
+//            'option' => $dataOld,
         ));
 	}
 
