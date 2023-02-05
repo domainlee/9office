@@ -48,6 +48,9 @@ class Module {
                         'Admin\Model\Invoice' => 'Admin\Model\Invoice',
                         'Admin\Model\InvoiceMapper' => 'Admin\Model\InvoiceMapper',
 
+                        'Admin\Model\Manufacture' => 'Admin\Model\Manufacture',
+                        'Admin\Model\ManufactureMapper' => 'Admin\Model\ManufactureMapper',
+
                         'Admin\Model\Product' => 'Admin\Model\Product',
 						'Admin\Model\ProductMapper' => 'Admin\Model\ProductMapper',
 						'Admin\Form\Product' => 'Admin\Form\Product',

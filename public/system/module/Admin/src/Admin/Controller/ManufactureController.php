@@ -13,11 +13,9 @@ class ManufactureController extends AbstractActionController{
 	public function indexAction()
     {
         $this->layout('layout/admin');
-        echo 'index Manufacture';
-        die;
-		$model = new \Admin\Model\Article();
+		$model = new \Admin\Model\Manufacture();
         $sl = $this->getServiceLocator();
-		$mapper = $sl->get('Admin\Model\ArticleMapper');
+		$mapper = $sl->get('Admin\Model\ManufactureMapper');
         $u = $sl->get('User\Service\User');
         $storeId = $u->getStoreId();
 //        $slug = $this->params()->fromQuery();
@@ -25,23 +23,22 @@ class ManufactureController extends AbstractActionController{
 
 		$model->exchangeArray((array)$this->getRequest()->getQuery());
         $options['isAdmin'] = $this->user()->isSuperAdmin();
-        $fFilter = new \Admin\Form\ArticleSearch($options);
-        $model->setStoreId($storeId);
+//        $fFilter = new \Admin\Form\ArticleSearch($options);
+//        $model->setStoreId($storeId);
 
-        $optionMapper = $sl->get('Admin\Model\OptionMapper');
-        $option = new \Admin\Model\Option();
-        $option->setStoreId($storeId);
-        $dataOption = $optionMapper->get($option);
-        $dataOld = !empty($dataOption) ?  json_decode($dataOption->getData(), true):'';
+//        $optionMapper = $sl->get('Admin\Model\OptionMapper');
+//        $option = new \Admin\Model\Option();
+//        $option->setStoreId($storeId);
+//        $dataOption = $optionMapper->get($option);
+//        $dataOld = !empty($dataOption) ?  json_decode($dataOption->getData(), true):'';
 		$page = (int)$this->getRequest()->getQuery()->page ? : 1;
 		$results = $mapper->search($model, array($page,10));
-
 		return new ViewModel(array(
-			'fFilter' => $fFilter,
+//			'fFilter' => $fFilter,
 			'results' => $results,
             'url' => $this->getRequest()->getUri()->getQuery(),
             'uri' => $this->getRequest()->getUri()->getQuery(),
-            'option' => $dataOld,
+//            'option' => $dataOld,
         ));
 	}
 

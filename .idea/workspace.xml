@@ -2,241 +2,15 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="363134c8-8b26-4c11-8dd9-a396a3e0a0dc" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/public/system/module/Admin/src/Admin/Dg/DgManufacture.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/system/module/Admin/src/Admin/Model/Manufacture.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/system/module/Admin/src/Admin/Model/ManufactureMapper.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/system/module/Admin/view/admin/manufacture/index.phtml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/system/module/Admin/src/Admin/Controller/MaterialController.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/system/module/Admin/src/Admin/Controller/MaterialController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/system/module/Admin/src/Admin/Controller/OrderController.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/system/module/Admin/src/Admin/Controller/OrderController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/system/module/Admin/src/Admin/Form/OrderSearch.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/system/module/Admin/src/Admin/Form/OrderSearch.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/system/module/Admin/view/admin/order/index.phtml" beforeDir="false" afterPath="$PROJECT_DIR$/public/system/module/Admin/view/admin/order/index.phtml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/system/module/Admin_old/Module.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/system/module/Admin_old/autoload_classmap.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/system/module/Admin_old/config/module.config.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/system/module/Admin_old/src/Admin/Controller/AdminController.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/system/module/Admin_old/src/Admin/Controller/ArticleController.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/system/module/Admin_old/src/Admin/Controller/BannerController.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/system/module/Admin_old/src/Admin/Controller/MediaController.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/system/module/Admin_old/src/Admin/Controller/OrderController.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/system/module/Admin_old/src/Admin/Controller/PageController.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/system/module/Admin_old/src/Admin/Controller/ProductController.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/system/module/Admin_old/src/Admin/Controller/QuestionController.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/system/module/Admin_old/src/Admin/Controller/SetupController.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/system/module/Admin_old/src/Admin/Controller/StoreController.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/system/module/Admin_old/src/Admin/Controller/UserController.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/system/module/Admin_old/src/Admin/Dg/DgArticle.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/system/module/Admin_old/src/Admin/Dg/DgArticlec.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/system/module/Admin_old/src/Admin/Dg/DgAttr.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/system/module/Admin_old/src/Admin/Dg/DgBanner.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/system/module/Admin_old/src/Admin/Dg/DgBrand.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/system/module/Admin_old/src/Admin/Dg/DgClient.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/system/module/Admin_old/src/Admin/Dg/DgColor.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/system/module/Admin_old/src/Admin/Dg/DgComment.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/system/module/Admin_old/src/Admin/Dg/DgContact.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/system/module/Admin_old/src/Admin/Dg/DgDomain.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/system/module/Admin_old/src/Admin/Dg/DgOrder.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/system/module/Admin_old/src/Admin/Dg/DgPage.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/system/module/Admin_old/src/Admin/Dg/DgPosition.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/system/module/Admin_old/src/Admin/Dg/DgProduct.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/system/module/Admin_old/src/Admin/Dg/DgProductc.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/system/module/Admin_old/src/Admin/Dg/DgReportSale.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/system/module/Admin_old/src/Admin/Dg/DgStore.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/system/module/Admin_old/src/Admin/Dg/DgTemplate.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/system/module/Admin_old/src/Admin/Dg/DgUser.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/system/module/Admin_old/src/Admin/Dg/DgWebsite.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/system/module/Admin_old/src/Admin/Form/Article.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/system/module/Admin_old/src/Admin/Form/ArticleFilter.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/system/module/Admin_old/src/Admin/Form/ArticleSearch.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/system/module/Admin_old/src/Admin/Form/Articlec.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/system/module/Admin_old/src/Admin/Form/ArticlecFilter.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/system/module/Admin_old/src/Admin/Form/ArticlecSearch.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/system/module/Admin_old/src/Admin/Form/Attr.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/system/module/Admin_old/src/Admin/Form/Banner.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/system/module/Admin_old/src/Admin/Form/BannerFilter.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/system/module/Admin_old/src/Admin/Form/BannerSearch.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/system/module/Admin_old/src/Admin/Form/Brand.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/system/module/Admin_old/src/Admin/Form/BrandSearch.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/system/module/Admin_old/src/Admin/Form/Color.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/system/module/Admin_old/src/Admin/Form/ColorFilter.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/system/module/Admin_old/src/Admin/Form/Comment.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/system/module/Admin_old/src/Admin/Form/Domain.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/system/module/Admin_old/src/Admin/Form/ForgotPassword.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/system/module/Admin_old/src/Admin/Form/Media.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/system/module/Admin_old/src/Admin/Form/MediaFilter.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/system/module/Admin_old/src/Admin/Form/Menu.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/system/module/Admin_old/src/Admin/Form/MenuSearch.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/system/module/Admin_old/src/Admin/Form/Option.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/system/module/Admin_old/src/Admin/Form/OptionOther.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/system/module/Admin_old/src/Admin/Form/OptionPopup.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/system/module/Admin_old/src/Admin/Form/OptionRobots.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/system/module/Admin_old/src/Admin/Form/OptionSource.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/system/module/Admin_old/src/Admin/Form/OrderProduct.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/system/module/Admin_old/src/Admin/Form/Page.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/system/module/Admin_old/src/Admin/Form/PageSearch.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/system/module/Admin_old/src/Admin/Form/Position.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/system/module/Admin_old/src/Admin/Form/PositionFilter.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/system/module/Admin_old/src/Admin/Form/PositionSearch.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/system/module/Admin_old/src/Admin/Form/Product.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/system/module/Admin_old/src/Admin/Form/ProductFilter.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/system/module/Admin_old/src/Admin/Form/ProductSearch.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/system/module/Admin_old/src/Admin/Form/Productc.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/system/module/Admin_old/src/Admin/Form/ProductcFilter.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/system/module/Admin_old/src/Admin/Form/ProductcSearch.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/system/module/Admin_old/src/Admin/Form/Question.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/system/module/Admin_old/src/Admin/Form/Rating.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/system/module/Admin_old/src/Admin/Form/Store.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/system/module/Admin_old/src/Admin/Form/StoreFilter.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/system/module/Admin_old/src/Admin/Form/StoreSearch.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/system/module/Admin_old/src/Admin/Form/Template.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/system/module/Admin_old/src/Admin/Form/Upload.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/system/module/Admin_old/src/Admin/Form/UploadFilter.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/system/module/Admin_old/src/Admin/Form/User.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/system/module/Admin_old/src/Admin/Form/Website.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/system/module/Admin_old/src/Admin/Model/Article.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/system/module/Admin/src/Admin/Model/Material.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/system/module/Admin_old/src/Admin/Model/ArticleMapper.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/system/module/Admin_old/src/Admin/Model/Articlec.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/system/module/Admin_old/src/Admin/Model/ArticlecMapper.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/system/module/Admin_old/src/Admin/Model/Attr.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/system/module/Admin_old/src/Admin/Model/AttrList.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/system/module/Admin_old/src/Admin/Model/AttrListMapper.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/system/module/Admin_old/src/Admin/Model/AttrMapper.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/system/module/Admin_old/src/Admin/Model/Banner.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/system/module/Admin_old/src/Admin/Model/BannerMapper.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/system/module/Admin_old/src/Admin/Model/Brand.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/system/module/Admin_old/src/Admin/Model/BrandMapper.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/system/module/Admin_old/src/Admin/Model/Client.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/system/module/Admin_old/src/Admin/Model/ClientMapper.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/system/module/Admin_old/src/Admin/Model/Color.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/system/module/Admin_old/src/Admin/Model/ColorMapper.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/system/module/Admin_old/src/Admin/Model/Comment.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/system/module/Admin_old/src/Admin/Model/CommentMapper.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/system/module/Admin_old/src/Admin/Model/Contact.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/system/module/Admin_old/src/Admin/Model/ContactMapper.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/system/module/Admin_old/src/Admin/Model/Domain.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/system/module/Admin_old/src/Admin/Model/DomainMapper.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/system/module/Admin_old/src/Admin/Model/Media.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/system/module/Admin_old/src/Admin/Model/MediaItem.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/system/module/Admin_old/src/Admin/Model/MediaItemMapper.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/system/module/Admin_old/src/Admin/Model/MediaMapper.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/system/module/Admin_old/src/Admin/Model/Menu.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/system/module/Admin_old/src/Admin/Model/MenuMapper.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/system/module/Admin_old/src/Admin/Model/Option.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/system/module/Admin_old/src/Admin/Model/OptionMapper.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/system/module/Admin_old/src/Admin/Model/Order.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/system/module/Admin_old/src/Admin/Model/OrderMapper.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/system/module/Admin_old/src/Admin/Model/OrderProduct.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/system/module/Admin_old/src/Admin/Model/OrderProductMapper.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/system/module/Admin_old/src/Admin/Model/Page.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/system/module/Admin_old/src/Admin/Model/PageMapper.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/system/module/Admin_old/src/Admin/Model/Product.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/system/module/Admin_old/src/Admin/Model/ProductMapper.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/system/module/Admin_old/src/Admin/Model/Productc.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/system/module/Admin_old/src/Admin/Model/ProductcMapper.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/system/module/Admin_old/src/Admin/Model/Question.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/system/module/Admin_old/src/Admin/Model/QuestionMapper.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/system/module/Admin_old/src/Admin/Model/Store.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/system/module/Admin_old/src/Admin/Model/StoreMapper.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/system/module/Admin_old/src/Admin/Model/Template.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/system/module/Admin_old/src/Admin/Model/TemplateMapper.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/system/module/Admin_old/src/Admin/Model/User.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/system/module/Admin_old/src/Admin/Model/UserMapper.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/system/module/Admin_old/src/Admin/View/Helper/Store.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/system/module/Admin_old/view/admin/admin/huongdan.phtml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/system/module/Admin_old/view/admin/admin/index.phtml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/system/module/Admin_old/view/admin/article/add.phtml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/system/module/Admin_old/view/admin/article/addcategory.phtml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/system/module/Admin_old/view/admin/article/category.phtml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/system/module/Admin_old/view/admin/article/edit.phtml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/system/module/Admin_old/view/admin/article/editcategory.phtml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/system/module/Admin_old/view/admin/article/index.phtml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/system/module/Admin_old/view/admin/article/scan.phtml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/system/module/Admin_old/view/admin/article/upload.phtml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/system/module/Admin_old/view/admin/articlec/add.phtml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/system/module/Admin_old/view/admin/articlec/edit.phtml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/system/module/Admin_old/view/admin/articlec/index.phtml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/system/module/Admin_old/view/admin/banner/add.phtml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/system/module/Admin_old/view/admin/banner/edit.phtml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/system/module/Admin_old/view/admin/banner/index.phtml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/system/module/Admin_old/view/admin/media/add.phtml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/system/module/Admin_old/view/admin/media/banner.phtml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/system/module/Admin_old/view/admin/media/editbanner.phtml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/system/module/Admin_old/view/admin/media/media.phtml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/system/module/Admin_old/view/admin/media/media1.phtml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/system/module/Admin_old/view/admin/media/media_list.phtml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/system/module/Admin_old/view/admin/order/add.phtml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/system/module/Admin_old/view/admin/order/edit.phtml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/system/module/Admin_old/view/admin/order/index.phtml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/system/module/Admin_old/view/admin/page/add.phtml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/system/module/Admin_old/view/admin/page/custom.phtml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/system/module/Admin_old/view/admin/page/edit.phtml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/system/module/Admin_old/view/admin/page/homepage.phtml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/system/module/Admin_old/view/admin/page/index.phtml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/system/module/Admin_old/view/admin/page/module.phtml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/system/module/Admin_old/view/admin/position/add.phtml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/system/module/Admin_old/view/admin/position/edit.phtml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/system/module/Admin_old/view/admin/position/index.phtml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/system/module/Admin_old/view/admin/product/add.phtml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/system/module/Admin_old/view/admin/product/addattr.phtml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/system/module/Admin_old/view/admin/product/addbrand.phtml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/system/module/Admin_old/view/admin/product/addcategory.phtml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/system/module/Admin_old/view/admin/product/addcolor.phtml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/system/module/Admin_old/view/admin/product/attr.phtml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/system/module/Admin_old/view/admin/product/brand.phtml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/system/module/Admin_old/view/admin/product/category.phtml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/system/module/Admin_old/view/admin/product/client.phtml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/system/module/Admin_old/view/admin/product/color.phtml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/system/module/Admin_old/view/admin/product/edit.phtml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/system/module/Admin_old/view/admin/product/editbrand.phtml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/system/module/Admin_old/view/admin/product/editcategory.phtml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/system/module/Admin_old/view/admin/product/editcolor.phtml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/system/module/Admin_old/view/admin/product/index.phtml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/system/module/Admin_old/view/admin/product/order.phtml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/system/module/Admin_old/view/admin/product/order_list.phtml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/system/module/Admin_old/view/admin/product/order_list_print.phtml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/system/module/Admin_old/view/admin/product/order_right.phtml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/system/module/Admin_old/view/admin/product/orderadd.phtml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/system/module/Admin_old/view/admin/product/orderview.phtml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/system/module/Admin_old/view/admin/product/productorder.phtml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/system/module/Admin_old/view/admin/product/reportsale.phtml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/system/module/Admin_old/view/admin/product/review.phtml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/system/module/Admin_old/view/admin/product/sale.phtml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/system/module/Admin_old/view/admin/product/sale_ang.phtml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/system/module/Admin_old/view/admin/productc/add.phtml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/system/module/Admin_old/view/admin/productc/edit.phtml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/system/module/Admin_old/view/admin/productc/index.phtml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/system/module/Admin_old/view/admin/question/add.phtml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/system/module/Admin_old/view/admin/question/edit.phtml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/system/module/Admin_old/view/admin/question/index.phtml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/system/module/Admin_old/view/admin/question/module.phtml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/system/module/Admin_old/view/admin/question/task.phtml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/system/module/Admin_old/view/admin/question/view.phtml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/system/module/Admin_old/view/admin/setup/comment.phtml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/system/module/Admin_old/view/admin/setup/index.phtml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/system/module/Admin_old/view/admin/setup/menu.phtml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/system/module/Admin_old/view/admin/setup/other.phtml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/system/module/Admin_old/view/admin/setup/popup.phtml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/system/module/Admin_old/view/admin/setup/robot.phtml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/system/module/Admin_old/view/admin/setup/source.phtml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/system/module/Admin_old/view/admin/setup/template.phtml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/system/module/Admin_old/view/admin/store/add.phtml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/system/module/Admin_old/view/admin/store/adddomain.phtml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/system/module/Admin_old/view/admin/store/addtemplate.phtml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/system/module/Admin_old/view/admin/store/domain.phtml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/system/module/Admin_old/view/admin/store/edit.phtml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/system/module/Admin_old/view/admin/store/editdomain.phtml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/system/module/Admin_old/view/admin/store/edittemplate.phtml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/system/module/Admin_old/view/admin/store/index.phtml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/system/module/Admin_old/view/admin/store/template.phtml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/system/module/Admin_old/view/admin/user/add.phtml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/system/module/Admin_old/view/admin/user/adddomain.phtml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/system/module/Admin_old/view/admin/user/client_list.phtml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/system/module/Admin_old/view/admin/user/contact.phtml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/system/module/Admin_old/view/admin/user/contactview.phtml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/system/module/Admin_old/view/admin/user/domain.phtml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/system/module/Admin_old/view/admin/user/edit.phtml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/system/module/Admin_old/view/admin/user/index.phtml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/system/module/Admin_old/view/layoutAdmin/footer.phtml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/system/module/Admin_old/view/layoutAdmin/header.phtml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/system/module/Admin_old/view/layoutAdmin/layout.phtml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/system/module/Admin_old/view/layoutAdmin/nav.phtml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/system/module/Admin_old/view/layoutAdmin/slideleft.phtml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/system/module/Admin/Module.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/system/module/Admin/Module.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/system/module/Admin/src/Admin/Controller/ManufactureController.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/system/module/Admin/src/Admin/Controller/ManufactureController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/system/module/Authorize/src/Authorize/Permission/Acl.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/system/module/Authorize/src/Authorize/Permission/Acl.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/system/vendor/Menu/Admin.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/system/vendor/Menu/Admin.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -275,17 +49,17 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/public/system/module/Admin/src/Admin/Model" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/public/system/module/Admin/src/Admin/Dg" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/public/system/module/Admin/src/Admin/Dg" />
+      <recent name="$PROJECT_DIR$/public/system/module/Admin/view/admin/manufacture" />
       <recent name="$PROJECT_DIR$/public/system/module/Admin/src/Admin/Model" />
       <recent name="$PROJECT_DIR$/public/system/module/Admin/src/Admin/Controller" />
       <recent name="$PROJECT_DIR$/public/system/config/autoload" />
-      <recent name="$PROJECT_DIR$/public/system/module/Admin/src/Admin/Form" />
-      <recent name="$PROJECT_DIR$/public/system/module/Invoice" />
     </key>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />

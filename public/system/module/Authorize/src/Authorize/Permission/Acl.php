@@ -59,6 +59,7 @@ class Acl extends ZendAcl
         $this->addResource('admin:question');
         $this->addResource('admin:material');
         $this->addResource('admin:invoice');
+        $this->addResource('admin:manufacture');
 
 
         $this->addResource('payment:baokim');
@@ -161,6 +162,9 @@ class Acl extends ZendAcl
                         ),
                         'Đơn hàng' => array(
                             'Xem danh sách đơn hàng' => 'index',
+                        ),
+                        'Nhà cung cấp' => array(
+                            'Xem danh sách nhà cung cấp' => 'index',
                         ),
 //                        'Question' => array (
 //                            'Công việc' => 'task',

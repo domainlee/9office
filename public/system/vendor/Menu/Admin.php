@@ -78,6 +78,14 @@ class Admin extends Navigation
                         'class'=>'fa fa-list-ul'
                     ),
                     array(
+                        'label'	=> 'Nhà cung cấp',
+                        'label2'=> 'Danh muc',
+                        'uri'	=> '/admin/manufacture',
+                        'resource' => 'admin:manufacture',
+                        'privilege' => 'index',
+                        'class'=>'fa fa-list-ul'
+                    ),
+                    array(
                         'label'	=> 'Sản phẩm',
                         'label2'=> 'product',
                         'uri'	=> '/admin/material/product',
