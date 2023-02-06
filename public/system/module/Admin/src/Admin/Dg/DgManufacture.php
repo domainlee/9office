@@ -18,8 +18,11 @@ class DgManufacture extends \Base\Dg\Table {
                 'label' => 'Số điện thoại'
             ),
             array(
-                'label' => 'Xem',
-                'style' => 'text-align: center;width: 5%'
+                'label' => 'Địa chỉ'
+            ),
+            array(
+                'label' => 'Ngày tạo',
+                'style' => 'text-align: center;width: 15%'
             ),
             array(
                 'label' => 'Xóa',
@@ -40,7 +43,7 @@ class DgManufacture extends \Base\Dg\Table {
                 ),
                 array (
                     'type' => 'text',
-                    'value' => '<a href="/admin/article/edit/'.$item->getId().($this->urlQuery ? '?'.$this->urlQuery:null).'">'. $item->getName().'</a></a>',
+                    'value' => '<a href="/admin/manufacture/edit/'.$item->getId().($this->urlQuery ? '?'.$this->urlQuery:null).'">'. $item->getName().'</a></a>',
                     'htmlOptions'=> array('style'=>'vertical-align: middle'),
                 ),
                 array(
@@ -50,7 +53,12 @@ class DgManufacture extends \Base\Dg\Table {
                 ),
                 array(
                     'type' => 'text',
-                    'value' => '',
+                    'value' => $item->getAddress(),
+                    'htmlOptions'=> array('style'=>'vertical-align: middle'),
+                ),
+                array(
+                    'type' => 'text',
+                    'value' => $item->getCreatedDateTime(),
                     'htmlOptions'=> array('style'=>'text-align: center;vertical-align: middle'),
                 ),
                 array(

@@ -10,28 +10,16 @@ class ManufactureMapper extends Base{
 
     public function get($item)
     {
-        if (! $item->getId() && !$item->getStoreId() && !$item->getTitle()) {
+        if (! $item->getId() && !$item->getName()) {
             return null;
         }
         $select = $this->getDbSql()->select(array('ar' => $this->getTableName()));
 
-        $select->join(array('a'=>'article_categories'),
-            'a.id = ar.categoryId',array(
-                'cateName' => 'name'
-            ), \Zend\Db\Sql\Select::JOIN_LEFT
-        );
-
         if($item->getId()) {
             $select->where(['ar.id' => $item->getId()]);
         }
-        if($item->getStoreId()) {
-            $select->where(['ar.storeId' => $item->getStoreId()]);
-        }
-        if($item->getTitle()) {
-            $select->where(['ar.title' => $item->getTitle()]);
-        }
-        if($item->getUrl()) {
-            $select->where(['ar.url' => $item->getUrl()]);
+        if($item->getName()) {
+            $select->where(['ar.name' => $item->getName()]);
         }
         $select->limit(1);
 
@@ -107,35 +95,21 @@ class ManufactureMapper extends Base{
 		return $rs;
 	}
 	/**
-	 * @param \Admin\Model\Article $model
+	 * @param \Admin\Model\Manufacture $model
 	 */
 
 	public function save($model) {
         $xss = new xssClean();
         $data = array(
-            'categoryId' => $model->getCategoryId(),
-            'storeId'=> $model->getStoreId(),
-            'image' => $model->getImage(),
-            'title' => $model->getTitle(),
-            'type' => $model->getType(),
-            'description' => $model->getDescription(),
-            'content' => $model->getContent(),
-            'status' => $model->getStatus(),
-            'extraContent' => $model->getExtraContent(),
+            'name' => $model->getName(),
+            'address' => $model->getAddress(),
+            'phone' => $model->getPhone(),
             'createdById' => $model->getCreatedById(),
             'createdDateTime' => $model->getCreatedDateTime(),
-            'tags' => $model->getTags(),
-            'metaTitle' => $model->getMetaTitle(),
-            'metaKeyword' => $model->getMetaKeyword(),
-            'metaDescription' => $model->getMetaDescription(),
-            'articleRelated' => $model->getArticleRelated(),
-            'view' => $model->getView(),
-            'url' => $model->getUrl(),
 		);
 
-
         $data = $xss->cleanInputs($data);
-        $data['content'] = $model->getContent();
+
         /* @var $dbAdapter \Zend\Db\Adapter\Adapter */
 		$dbAdapter = $this->getServiceLocator()->get('dbAdapter');
 		/* @var $dbSql \Zend\Db\Sql\Sql */

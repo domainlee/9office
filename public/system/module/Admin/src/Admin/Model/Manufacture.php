@@ -111,7 +111,11 @@ class Manufacture extends Base{
     public function toFormValues()
     {
         $data =  array(
-
+            'name' => $this->getName(),
+            'address' => $this->getAddress(),
+            'phone' => $this->getPhone(),
+            'createdById' => $this->getCreatedById(),
+            'createdDateTime' => $this->getCreatedDateTime(),
         );
         return $data;
     }
