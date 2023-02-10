@@ -15,18 +15,19 @@ class MaterialController extends AbstractActionController{
         $this->layout('layout/admin');
 //        echo 'index material';
 //        die;
-		$model = new \Admin\Model\Article();
+		$model = new \Admin\Model\Material();
         $sl = $this->getServiceLocator();
-		$mapper = $sl->get('Admin\Model\ArticleMapper');
+		$mapper = $sl->get('Admin\Model\MaterialMapper');
         $u = $sl->get('User\Service\User');
-        $storeId = $u->getStoreId();
 //        $slug = $this->params()->fromQuery();
 //        print_r($this->getRequest()->getUri()->getQuery());die;
+//        $manufacture = new \Admin\Model\Manufacture();
+//        $manufactureMapper = $this->getServiceLocator()->get('Admin\Model\ManufactureMapper');
+//        $facture = $manufactureMapper->fetchAll($manufacture);
 
 		$model->exchangeArray((array)$this->getRequest()->getQuery());
         $options['isAdmin'] = $this->user()->isSuperAdmin();
-        $fFilter = new \Admin\Form\ArticleSearch($options);
-        $model->setStoreId($storeId);
+//        $fFilter = new \Admin\Form\ArticleSearch($options);
 
 //        $optionMapper = $sl->get('Admin\Model\OptionMapper');
 //        $option = new \Admin\Model\Option();
@@ -37,7 +38,7 @@ class MaterialController extends AbstractActionController{
 		$results = $mapper->search($model, array($page,10));
 
 		return new ViewModel(array(
-			'fFilter' => $fFilter,
+//			'fFilter' => $fFilter,
 			'results' => $results,
             'url' => $this->getRequest()->getUri()->getQuery(),
             'uri' => $this->getRequest()->getUri()->getQuery(),
@@ -53,147 +54,37 @@ class MaterialController extends AbstractActionController{
         $u = $this->getServiceLocator()->get('User\Service\User');
         $storeId = $u->getStoreId();
 
-        $model = new \Admin\Model\Article();
-		$modelCate = new \Admin\Model\Articlec();
-        if(!$this->user()->isSuperAdmin()){
-            $modelCate->setStoreId($storeId);
-        }
-		$mapperCate = $this->getServiceLocator()->get('Admin\Model\ArticlecMapper');
-        $mapper = $this->getServiceLocator()->get('Admin\Model\ArticleMapper');
-        $category = $mapperCate->fetchAll($modelCate);
-		$form = new \Admin\Form\Article();
-		$form->setCategoryIds($model->toSelectBoxArray($category,\Admin\Model\Article::SELECT_MODE_ALL));
+        $model = new \Admin\Model\Material();
+		$manufacture = new \Admin\Model\Manufacture();
+        $manufactureMapper = $this->getServiceLocator()->get('Admin\Model\ManufactureMapper');
+        $facture = $manufactureMapper->fetchAll($manufacture);
+
+        $mapper = $this->getServiceLocator()->get('Admin\Model\MaterialMapper');
+		$form = new \Admin\Form\Material();
+		$types = $model->type_form;
+		$form->setCategoryIds($types);
+		$form->setNCC($facture);
 
 		/****** Option Field ********/
-        $optionMapper = $this->getServiceLocator()->get('Admin\Model\OptionMapper');
-        $option = new \Admin\Model\Option();
-        $option->setStoreId($storeId);
-        $optionMapper->get($option);
-        if(!empty($option->getArticleField())) {
-            $articleField = json_decode($option->getArticleField(), true);
-        }
+
 
 		if($this->getRequest()->isPost()){
 			$form->setData(array_merge_recursive($this->getRequest()->getPost()->toArray(),$this->getRequest()->getFiles()->toArray()));
 			if($form->isValid()){
-
                 $data = $form->getData();
-                $type = $this->getRequest()->getPost()['typeArticle'];
-
                 $mediaMapper = $this->getServiceLocator()->get('Admin\Model\MediaMapper');
                 $mediaItemMapper = $this->getServiceLocator()->get('Admin\Model\MediaItemMapper');
-                $articleRelated = $data['articleRelated'];
-                if($articleRelated) {
-                    $articleRelateds = [];
-                    foreach($articleRelated as $p) {
-                        $articleMapper = $this->getServiceLocator()->get('Admin\Model\ArticleMapper');
-                        $articleR = new \Admin\Model\Article();
-                        $articleR->setId((int)$p);
-                        $r = $articleMapper->get($articleR);
-                        if(!empty($r)) {
-                            $articleRelateds[] = ['id' => $r->getId(), 'url' => $r->getViewLink(), 'title' => $r->getTitle(), 'image' => $r->getImage()];
-                        }
-                    }
-                }
-                if(isset($data['images']) && $data['images'] != ''){
-                    $imgJson = [];
-                    $imagesArray = explode(',', $data['images']);
-                    foreach($imagesArray as $i){
-                        $media = new \Admin\Model\Media();
-                        $media->setId($i);
-                        $rm = $mediaMapper->get($media);
-                        if($rm) {
-                            $imgJson[$i] = $rm->getPictureUri();
-                        }
-                    }
-                    $model->setImage(json_encode($imgJson));
-                }
 
                 $model->exchangeArray($data);
                 $model->setCreatedDateTime(DateBase::getCurrentDateTime());
-                $model->setStoreId($storeId);
                 $model->setCreatedById($u->getId());
-                $model->setStatus(\Admin\Model\Article::STATUS_ACTIVE);
-                $model->setType($type);
-                if(!empty($articleRelateds)) {
-                    $model->setArticleRelated(json_encode($articleRelateds));
-                }
-
-                $content = $this->getRequest()->getPost()->toArray();
-                if(!empty($content)) {
-                    $extraContent = [];
-                    foreach($content as $k => $v) {
-                        $field = explode('_', $k);
-                        if($field[0] == 'field') {
-                            $extraContent[$field[1]] = $v;
-                        }
-                    }
-                    if(!empty($extraContent)) {
-                        $model->setExtraContent(json_encode($extraContent));
-                    }
-                }
-
-                if(!empty($data['url'])) {
-
-                    $url = \Base\Model\Resource::slugify($data['url']);
-
-                    $pageMapper = $this->getServiceLocator()->get('Admin\Model\PageMapper');
-                    $pageUrl = new \Admin\Model\Page();
-                    $pageUrl->setUrl($url);
-                    $pageUrl->setStoreId($storeId);
-                    $pagerModelUrl = $pageMapper->get($pageUrl);
-
-                    $productMapper = $this->getServiceLocator()->get('Admin\Model\ProductMapper');
-                    $pmodelUrl = new \Admin\Model\Product();
-                    $pmodelUrl->setStoreId($storeId);
-                    $pmodelUrl->setUrl($url);
-                    $prModelUrl = $productMapper->get($pmodelUrl);
-
-                    $modelUrl = new \Admin\Model\Article();
-                    $modelUrl->setStoreId($storeId);
-                    $modelUrl->setUrl($url);
-                    $rModelUrl = $mapper->get($modelUrl);
-
-                    if($rModelUrl || $prModelUrl || $pagerModelUrl) {
-                        $url1 = substr($url, 0, -2);
-                        $url2 = substr($url, -2);
-                        if(is_numeric($url2)) {
-                            $url = $url1 . sprintf("%02d", $url2 + 1);
-                        } else {
-                            $url = $url.'-01';
-                        }
-                        $model->setUrl($url);
-                    } else {
-                        $model->setUrl($url);
-                    }
-                }
-
-
                 $mapper->save($model);
 
-                $mediaItemMapper->deleteTaskTag($model->getId());
-                if(isset($data['images']) && $data['images'] != ''){
-                    $imagesArray = explode(',', $data['images']);
-                    $c = 1;
-                    foreach($imagesArray as $i){
-                        if($i){
-                            $mediaItem = new \Admin\Model\MediaItem();
-                            $mediaItem->setType(\Admin\Model\MediaItem::FILE_ARTICLE);
-                            $mediaItem->setItemId($model->getId());
-                            $mediaItem->setFileItem($i);
-                            $mediaItem->setSort($c++);
-                            $mediaItem->setStoreId($storeId);
-                            $mediaItemMapper->save($mediaItem);
-                        }
-                    }
-                }
-
-                $this->redirect()->toUrl('/admin/article');
+                $this->redirect()->toUrl('/admin/material');
 			}
 		}
 		return new ViewModel(array(
             'form' => $form,
-            'field' => $articleField,
 		));
 	}
 
@@ -205,180 +96,44 @@ class MaterialController extends AbstractActionController{
         $u = $this->getServiceLocator()->get('User\Service\User');
         $storeId = $u->getStoreId();
 
-        $mapper = $this->getServiceLocator()->get('Admin\Model\ArticleMapper');
-        $model = new \Admin\Model\Article();
+        $mapper = $this->getServiceLocator()->get('Admin\Model\MaterialMapper');
+
+        $model = new \Admin\Model\Material();
         $model->setId($id);
-        $model->setStoreId($storeId);
 
         if(!$mapper->get($model)){
-            $this->redirect()->toUrl('/admin/article');
+            $this->redirect()->toUrl('/admin/material');
         }
+
+        $manufacture = new \Admin\Model\Manufacture();
+        $manufactureMapper = $this->getServiceLocator()->get('Admin\Model\ManufactureMapper');
+        $facture = $manufactureMapper->fetchAll($manufacture);
+
+        $form = new \Admin\Form\Material();
+        $types = $model->type_form;
+        $form->setCategoryIds($types);
+        $form->setNCC($facture);
 
 		$modelCate = new \Admin\Model\Articlec();
         $modelCate->setStoreId($storeId);
 		$mapperCate = $this->getServiceLocator()->get('Admin\Model\ArticlecMapper');
 		$category = $mapperCate->fetchAll($modelCate);
 
-		$form = new \Admin\Form\Article();
-
-        $form->setCategoryIds($modelCate->toSelectBoxArray($category,\Admin\Model\Articlec::SELECT_MODE_ALL));
-
         $data = $model->toFormValues();
-        $mediaItem = new \Admin\Model\MediaItem();
-        $mediaItem->setItemId($model->getId());
-        $mediaItem->setType(\Admin\Model\MediaItem::FILE_ARTICLE);
-
-        $mediaMapper = $this->getServiceLocator()->get('Admin\Model\MediaItemMapper');
-        $m = $mediaMapper->fetchAll($mediaItem);
-        $fI = [];
-        if(isset($m)){
-            foreach($m as $i){
-                $fI[] = $i->getFileItem();
-            }
-        }
-
-        if($model->getArticleRelated()) {
-            $articleR = json_decode($model->getArticleRelated());
-            if(!empty($articleR)) {
-                $ar = [];
-                foreach($articleR as $p) {
-                    $ar[$p->id] = ['label' => $p->title, 'value' => $p->id, 'selected' => true];
-                }
-            }
-        }
-
-        $data['images'] = implode(',', $fI);
-        $storeId = $data['storeId'];
-        $status = $data['status'];
-        $createdById = $data['createdById'];
-        $typeCurrent = $data['type'];
-        $view = $data['view'];
-        $extraContent = json_decode($data['extraContent'], true);
-
         $form->setData($data);
-        $form->setCategoryIds($model->toSelectBoxArray($category,\Admin\Model\Article::SELECT_MODE_ALL));
-        $form->setArticleRelated($ar);
-
-        /****** Option Field ********/
-        $optionMapper = $this->getServiceLocator()->get('Admin\Model\OptionMapper');
-        $option = new \Admin\Model\Option();
-        $option->setStoreId($storeId);
-        $optionMapper->get($option);
-        if(!empty($option->getArticleField())) {
-            $articleField = json_decode($option->getArticleField(), true);
-        }
+//        $form->setCategoryIds();
 
 		if($this->getRequest()->isPost()){
             $form->setData(array_merge_recursive($this->getRequest()->getPost()->toArray(),$this->getRequest()->getFiles()->toArray()));
             if($form->isValid()){
                 $data = $form->getData();
-
-                $type = $this->getRequest()->getPost()['typeArticle'];
-                $mediaMapper = $this->getServiceLocator()->get('Admin\Model\MediaMapper');
-                $mediaItemMapper = $this->getServiceLocator()->get('Admin\Model\MediaItemMapper');
-                $mediaItemMapper->deleteTaskTag($id);
-                $articleRelated = $data['articleRelated'];
-
-                $model = new \Admin\Model\Article();
+                $model = new \Admin\Model\Material();
                 $model->setId($id);
                 $model->exchangeArray($data);
                 $model->setCreatedDateTime(DateBase::getCurrentDateTime());
-                $model->setStoreId($storeId);
-                $model->setStatus($status);
                 $model->setCreatedById($u->getId());
-                $model->setType($type);
-                $model->setView($view);
-
-                if(!empty($data['url'])) {
-                    $productMapper = $this->getServiceLocator()->get('Admin\Model\ProductMapper');
-
-                    $url = \Base\Model\Resource::slugify($data['url']);
-
-                    $pageMapper = $this->getServiceLocator()->get('Admin\Model\PageMapper');
-                    $pageUrl = new \Admin\Model\Page();
-                    $pageUrl->setUrl($url);
-                    $pageUrl->setStoreId($storeId);
-                    $pagerModelUrl = $pageMapper->get($pageUrl);
-
-                    $pmodelUrl = new \Admin\Model\Product();
-                    $pmodelUrl->setStoreId($storeId);
-                    $pmodelUrl->setUrl($url);
-                    $prModelUrl = $productMapper->get($pmodelUrl);
-
-                    $modelUrl = new \Admin\Model\Article();
-                    $modelUrl->setStoreId($storeId);
-                    $modelUrl->setUrl($url);
-                    $rModelUrl = $mapper->get($modelUrl);
-
-                    if($rModelUrl && $modelUrl->getId() != $id || $prModelUrl || $pagerModelUrl) {
-                        $url1 = substr($url, 0, -2);
-                        $url2 = substr($url, -2);
-                        if(is_numeric($url2)) {
-                            $url = $url1 . sprintf("%02d", $url2 + 1);
-                        } else {
-                            $url = $url.'-01';
-                        }
-                        $model->setUrl($url);
-                    } else {
-                        $model->setUrl($url);
-                    }
-                }
-
-                if(isset($data['images']) && $data['images'] != ''){
-                    $imgJson = [];
-                    $imagesArray = explode(',', $data['images']);
-                    $c = 1;
-                    foreach($imagesArray as $i){
-                        $media = new \Admin\Model\Media();
-                        $media->setId($i);
-                        $rm = $mediaMapper->get($media);
-                        if($rm) {
-                            $imgJson[$i] = $rm->getPictureUri();
-                            $mediaItem = new \Admin\Model\MediaItem();
-                            $mediaItem->setType(\Admin\Model\MediaItem::FILE_ARTICLE);
-                            $mediaItem->setItemId($id);
-                            $mediaItem->setFileItem($rm->getId());
-                            $mediaItem->setSort($c++);
-                            $mediaItem->setStoreId($storeId);
-                            $mediaItemMapper->save($mediaItem);
-                        }
-                    }
-                    $model->setImage(json_encode($imgJson));
-                }
-
-                if($articleRelated) {
-                    $articleRelateds = [];
-                    foreach($articleRelated as $p) {
-                        $articleMapper = $this->getServiceLocator()->get('Admin\Model\ArticleMapper');
-                        $articleR = new \Admin\Model\Article();
-                        $articleR->setId((int)$p);
-                        $r = $articleMapper->get($articleR);
-                        if(!empty($r)) {
-                            $articleRelateds[] = ['id' => $r->getId(), 'url' => $r->getViewLink(), 'title' => $r->getTitle(), 'image' => $r->getImage()];
-                        }
-                    }
-                }
-
-                if(!empty($articleRelateds)) {
-                    $model->setArticleRelated(json_encode($articleRelateds));
-                }
-
-                $content = $this->getRequest()->getPost()->toArray();
-                if(!empty($content)) {
-                    $extraContent = [];
-                    foreach($content as $k => $v) {
-                        $field = explode('_', $k);
-                        if($field[0] == 'field') {
-                            $extraContent[$field[1]] = $v;
-                        }
-                    }
-                    if(!empty($extraContent)) {
-                        $model->setExtraContent(json_encode($extraContent));
-                    }
-                }
-
                 $mapper->save($model);
-                $this->redirect()->toUrl('/admin/article?'.$slug);
+                $this->redirect()->toUrl('/admin/material');
 			}else{
                 print_r($form->getMessages());die;
             }
@@ -386,9 +141,6 @@ class MaterialController extends AbstractActionController{
 		return new ViewModel(array(
 			'form' => $form,
             'itemId' => $id,
-            'type' => $typeCurrent,
-            'field' => $articleField,
-            'extraContent' => $extraContent,
 		));
 	}
 

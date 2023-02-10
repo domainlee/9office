@@ -2,14 +2,19 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="363134c8-8b26-4c11-8dd9-a396a3e0a0dc" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/public/system/module/Admin/src/Admin/Form/Manufacture.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/system/module/Admin/view/admin/manufacture/add.phtml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/system/module/Admin/view/admin/manufacture/edit.phtml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/system/module/Admin/src/Admin/Dg/DgMaterial.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/system/module/Admin/src/Admin/Form/Material.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/system/module/Admin/src/Admin/Model/MaterialMapper.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/system/module/Admin/view/admin/material/add.phtml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/system/module/Admin/view/admin/material/edit.phtml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/system/module/Admin/view/admin/material/index.phtml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/system/public/assets/js/material.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/system/module/Admin/src/Admin/Controller/ManufactureController.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/system/module/Admin/src/Admin/Controller/ManufactureController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/system/module/Admin/src/Admin/Dg/DgManufacture.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/system/module/Admin/src/Admin/Dg/DgManufacture.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/system/module/Admin/src/Admin/Model/Manufacture.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/system/module/Admin/src/Admin/Model/Manufacture.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/system/module/Admin/Module.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/system/module/Admin/Module.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/system/module/Admin/src/Admin/Controller/MaterialController.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/system/module/Admin/src/Admin/Controller/MaterialController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/public/system/module/Admin/src/Admin/Model/ManufactureMapper.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/system/module/Admin/src/Admin/Model/ManufactureMapper.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/system/module/Admin/src/Admin/Model/Material.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/system/module/Admin/src/Admin/Model/Material.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/system/public/assets/js/product.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/system/public/assets/js/product.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -48,17 +53,17 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/public/system/module/Admin/view/admin/manufacture" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/public/system/public/assets/js" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/public/system/module/Admin/view/admin/manufacture" />
+      <recent name="$PROJECT_DIR$/public/system/public/assets/js" />
       <recent name="$PROJECT_DIR$/public/system/module/Admin/src/Admin/Form" />
       <recent name="$PROJECT_DIR$/public/system/module/Admin/src/Admin/Dg" />
+      <recent name="$PROJECT_DIR$/public/system/module/Admin/view/admin/material" />
       <recent name="$PROJECT_DIR$/public/system/module/Admin/src/Admin/Model" />
-      <recent name="$PROJECT_DIR$/public/system/module/Admin/src/Admin/Controller" />
     </key>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />

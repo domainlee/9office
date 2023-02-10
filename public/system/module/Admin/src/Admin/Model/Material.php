@@ -6,11 +6,37 @@ class Material extends Base{
 
  	protected $id;
  	protected $name;
- 	protected $depot;
  	protected $type;
- 	protected $price;
+    protected $totalQuantiy;
+    protected $price;
+    protected $totalPrice;
  	protected $manufactureId;
  	protected $createdById;
+ 	protected $createdDateTime;
+
+ 	protected $manufactureIds;
+
+    public $type_form = array(
+        '1' => 'Cái/ Chiếc',
+        '2' => 'KG',
+        '3' => 'Công',
+    );
+
+    /**
+     * @return mixed
+     */
+    public function getManufactureIds()
+    {
+        return $this->manufactureIds;
+    }
+
+    /**
+     * @param mixed $manufactureIds
+     */
+    public function setManufactureIds($manufactureIds)
+    {
+        $this->manufactureIds = $manufactureIds;
+    }
 
     /**
      * @return mixed
@@ -47,22 +73,6 @@ class Material extends Base{
     /**
      * @return mixed
      */
-    public function getDepot()
-    {
-        return $this->depot;
-    }
-
-    /**
-     * @param mixed $depot
-     */
-    public function setDepot($depot)
-    {
-        $this->depot = $depot;
-    }
-
-    /**
-     * @return mixed
-     */
     public function getType()
     {
         return $this->type;
@@ -79,6 +89,22 @@ class Material extends Base{
     /**
      * @return mixed
      */
+    public function getTotalQuantiy()
+    {
+        return $this->totalQuantiy;
+    }
+
+    /**
+     * @param mixed $totalQuantiy
+     */
+    public function setTotalQuantiy($totalQuantiy)
+    {
+        $this->totalQuantiy = $totalQuantiy;
+    }
+
+    /**
+     * @return mixed
+     */
     public function getPrice()
     {
         return $this->price;
@@ -90,6 +116,22 @@ class Material extends Base{
     public function setPrice($price)
     {
         $this->price = $price;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getTotalPrice()
+    {
+        return $this->totalPrice;
+    }
+
+    /**
+     * @param mixed $totalPrice
+     */
+    public function setTotalPrice($totalPrice)
+    {
+        $this->totalPrice = $totalPrice;
     }
 
     /**
@@ -124,11 +166,39 @@ class Material extends Base{
         $this->createdById = $createdById;
     }
 
+    /**
+     * @return mixed
+     */
+    public function getCreatedDateTime()
+    {
+        return $this->createdDateTime;
+    }
+
+    /**
+     * @param mixed $createdDateTime
+     */
+    public function setCreatedDateTime($createdDateTime)
+    {
+        $this->createdDateTime = $createdDateTime;
+    }
+
+    public function nccs() {
+        return '';
+    }
 
     public function toFormValues()
     {
-        $data =  array(
 
+
+        $data =  array(
+            'name' => $this->getName(),
+            'type' => $this->getType(),
+            'totalQuantiy' => $this->getTotalQuantiy(),
+            'price' => $this->getPrice(),
+            'totalPrice' => $this->getTotalPrice(),
+            'manufactureId' => $this->getManufactureId(),
+            'createdById' => $this->getCreatedById(),
+            'createdDateTime' => $this->getCreatedDateTime(),
         );
         return $data;
     }

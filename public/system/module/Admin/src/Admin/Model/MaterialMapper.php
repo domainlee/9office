@@ -4,9 +4,9 @@ use Base\Mapper\Base;
 use \Base\XSS\xssClean;
 
 
-class ManufactureMapper extends Base{
+class MaterialMapper extends Base{
 	
-	protected $tableName = 'manufacture';
+	protected $tableName = 'material';
 
     public function get($item)
     {
@@ -62,7 +62,7 @@ class ManufactureMapper extends Base{
 	}
 
     /**
-     * @param \Admin\Model\Manufacture $item
+     * @param \Admin\Model\Material $item
      */
 
 	public function fetchAll($item)
@@ -83,24 +83,29 @@ class ManufactureMapper extends Base{
 		}
 		$selectString = $dbSql->getSqlStringForSqlObject($select);
 		$results = $dbAdapter->query($selectString, $dbAdapter::QUERY_MODE_EXECUTE);
-        $rs = array();
-        if($results->count()) {
-            foreach ($results as $k => $row) {
-                $rs[$row['id']] = $row['name'];
-            }
-        }
+	
+		$rs = array();
+		if($results->count()) {
+			foreach ($results as $row) {
+				$model = new \Admin\Model\Article();
+				$model->exchangeArray((array)$row);
+				$rs[] = $model;
+			}
+		}
 		return $rs;
 	}
 	/**
-	 * @param \Admin\Model\Manufacture $model
+	 * @param \Admin\Model\Material $model
 	 */
-
 	public function save($model) {
         $xss = new xssClean();
         $data = array(
             'name' => $model->getName(),
-            'address' => $model->getAddress(),
-            'phone' => $model->getPhone(),
+            'type' => $model->getType(),
+            'totalQuantiy' => $model->getTotalQuantiy(),
+            'price' => $model->getPrice(),
+            'totalPrice' => $model->getTotalPrice(),
+            'manufactureId' => $model->getManufactureId(),
             'createdById' => $model->getCreatedById(),
             'createdDateTime' => $model->getCreatedDateTime(),
 		);
@@ -169,7 +174,14 @@ class ManufactureMapper extends Base{
 		$rs = array();
 		if($results->count()){
 			foreach ($results as $row){
-				$model = new \Admin\Model\Manufacture();
+                $model = new \Admin\Model\Material();
+                if($row['manufactureId']) {
+                    $manufacture = new \Admin\Model\Manufacture();
+                    $manufacture->setId($row['manufactureId']);
+                    $manufactureMapper = $this->getServiceLocator()->get('Admin\Model\ManufactureMapper');
+                    $facture = $manufactureMapper->get($manufacture);
+                    $model->setOptions(['ncc' => $facture->getName()]);
+                }
 				$model->exchangeArray((array)$row);
 				$rs[] = $model;
 			}

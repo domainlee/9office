@@ -50,6 +50,8 @@ class Module {
 
                         'Admin\Model\Manufacture' => 'Admin\Model\Manufacture',
                         'Admin\Model\ManufactureMapper' => 'Admin\Model\ManufactureMapper',
+                        'Admin\Model\Material' => 'Admin\Model\Material',
+                        'Admin\Model\MaterialMapper' => 'Admin\Model\MaterialMapper',
 
                         'Admin\Model\Product' => 'Admin\Model\Product',
 						'Admin\Model\ProductMapper' => 'Admin\Model\ProductMapper',

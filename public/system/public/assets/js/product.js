@@ -203,6 +203,22 @@ $(function(){
 
 $(function(){
 
+    // Material
+    if($('.material-form').length) {
+        var input_price = $('input[name=price]');
+        var manufactureId = $('select[name=manufactureId]');
+        $('select.material-type').on('change', function() {
+            if(this.value == 3) {
+                $('select[name=manufactureId] option:selected').removeAttr('selected');
+                input_price.prop('disabled', false);
+                manufactureId.prop('disabled', true);
+            } else {
+                input_price.prop('disabled', true);
+                manufactureId.prop('disabled', false);
+            }
+        });
+    }
+
     if($('#imageUpload').length) {
         $("#imageUpload").change(function(){
             var ins = document.getElementById('imageUpload').files.length;
