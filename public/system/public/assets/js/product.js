@@ -219,6 +219,27 @@ $(function(){
         });
     }
 
+    if($('.invoice-form').length) {
+        var input_price_invoice = $('input[name=price]');
+        var quantity = $('input[name=quantity]');
+        var intoMoney = $('input[name=intoMoney]');
+
+        quantity.keyup(calculate);
+        input_price_invoice.keyup(calculate);
+
+        function calculate(e) {
+            var value_price = input_price_invoice.val();
+            value_price = value_price.replace(",", "");
+            var value_quantity = quantity.val();
+            value_quantity = value_quantity.replace(",", "");
+
+            intoMoney.val(value_price * value_quantity);
+            intoMoney.autoNumeric().trigger('focusout');
+        }
+    }
+
+
+
     if($('#imageUpload').length) {
         $("#imageUpload").change(function(){
             var ins = document.getElementById('imageUpload').files.length;

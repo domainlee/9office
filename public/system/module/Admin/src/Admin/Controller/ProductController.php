@@ -1916,14 +1916,18 @@ class ProductController extends AbstractActionController{
         $banner = $this->params()->fromQuery('banner');
         $template = $this->params()->fromQuery('template');
         $store = $this->params()->fromQuery('store');
+        $material = $this->params()->fromQuery('material');
         $categoryProduct = $this->params()->fromQuery('categoryproduct');
         $categoryArticle = $this->params()->fromQuery('categoryarticle');
 
         $u = $this->getServiceLocator()->get('User\Service\User');
         $storeId = $u->getStoreId();
-//        print_r();die;
-
-        if($page) {
+        if($material) {
+            $material = new \Admin\Model\Material();
+            $material->setName($keyword);
+            $materialMapper = $this->getServiceLocator()->get('Admin\Model\MaterialMapper');
+            $r = $materialMapper->related($material);
+        } elseif($page) {
             $page = new \Admin\Model\Page();
             $page->setStoreId($storeId);
             $page->setName($keyword);

@@ -211,13 +211,10 @@ class MaterialMapper extends Base{
         $dbSql = $this->getServiceLocator()->get('dbSql');
         $select = $dbSql->select(array("a" => $this->getTableName()));
 
-        if($item->getStoreId()){
-            $select->where(array('a.storeId'=> $item->getStoreId()));
+        if($item->getName()){
+            $select->where("a.name LIKE '%{$item->getName()}%'");
         }
-
-        if($item->getTitle()){
-            $select->where("a.title LIKE '%{$item->getTitle()}%'");
-        }
+        $select->where("a.type != 3");
         $select->limit (10);
         $select->order ( 'a.id DESC' );
         $selectString = $dbSql->getSqlStringForSqlObject($select);
@@ -227,7 +224,7 @@ class MaterialMapper extends Base{
         if($results->count()) {
             foreach ($results as $k => $row) {
                 $rs[$k]['id'] = $row['id'];
-                $rs[$k]['text'] = $row['title'];
+                $rs[$k]['text'] = $row['name'];
             }
         }
         return $rs;

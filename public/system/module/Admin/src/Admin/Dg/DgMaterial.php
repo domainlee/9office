@@ -57,7 +57,7 @@ class DgMaterial extends \Base\Dg\Table {
                 ),
                 array(
                     'type' => 'text',
-                    'value' => '',
+                    'value' => number_format($item->getTotalQuantiy()),
                     'htmlOptions'=> array('style'=>'vertical-align: middle'),
                 ),
                 array(

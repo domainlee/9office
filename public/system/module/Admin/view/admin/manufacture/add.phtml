@@ -25,7 +25,7 @@ $form = $this->form;
                         <div class="col-sm-12">
                             <div class="form-group">
                                 <label class="control-label" for="firstName">Điện thoại</label>
-                                <?= $this->formelement($form->get('phone')->setAttributes(['class' => 'form-control', 'placeholder'=>'Số điện thoại', 'required' => 'required', 'data-parsley-error-message' => 'Tiêu đề không được để trống'])) ?>
+                                <?= $this->formelement($form->get('phone')->setAttributes(['class' => 'form-control', 'placeholder'=>'Số điện thoại', 'required' => 'required', 'data-parsley-error-message' => 'Điện thoại không được để trống'])) ?>
                                 <?= $this->formelementerrors($form->get('phone'),['class' => 'parsley-errors-list filled']) ?>
                             </div>
                         </div>

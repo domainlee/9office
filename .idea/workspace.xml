@@ -2,19 +2,24 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="363134c8-8b26-4c11-8dd9-a396a3e0a0dc" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/public/system/module/Admin/src/Admin/Dg/DgMaterial.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/system/module/Admin/src/Admin/Form/Material.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/system/module/Admin/src/Admin/Model/MaterialMapper.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/system/module/Admin/view/admin/material/add.phtml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/system/module/Admin/view/admin/material/edit.phtml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/system/module/Admin/view/admin/material/index.phtml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/system/public/assets/js/material.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/system/module/Admin/src/Admin/Dg/DgInvoice.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/system/module/Admin/src/Admin/Form/Invoice.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/system/module/Admin/src/Admin/Model/InvoiceMaterial.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/system/module/Admin/src/Admin/Model/InvoiceMaterialMapper.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/system/module/Admin/view/admin/invoice/add.phtml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/system/module/Admin/view/admin/invoice/index.phtml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/public/system/module/Admin/Module.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/system/module/Admin/Module.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/system/module/Admin/src/Admin/Controller/MaterialController.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/system/module/Admin/src/Admin/Controller/MaterialController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/system/module/Admin/src/Admin/Model/ManufactureMapper.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/system/module/Admin/src/Admin/Model/ManufactureMapper.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/system/module/Admin/src/Admin/Model/Material.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/system/module/Admin/src/Admin/Model/Material.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/system/module/Admin/src/Admin/Controller/InvoiceController.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/system/module/Admin/src/Admin/Controller/InvoiceController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/system/module/Admin/src/Admin/Controller/ProductController.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/system/module/Admin/src/Admin/Controller/ProductController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/system/module/Admin/src/Admin/Dg/DgMaterial.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/system/module/Admin/src/Admin/Dg/DgMaterial.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/system/module/Admin/src/Admin/Model/Invoice.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/system/module/Admin/src/Admin/Model/Invoice.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/system/module/Admin/src/Admin/Model/InvoiceMapper.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/system/module/Admin/src/Admin/Model/InvoiceMapper.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/system/module/Admin/src/Admin/Model/MaterialMapper.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/system/module/Admin/src/Admin/Model/MaterialMapper.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/system/module/Admin/view/admin/manufacture/add.phtml" beforeDir="false" afterPath="$PROJECT_DIR$/public/system/module/Admin/view/admin/manufacture/add.phtml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/public/system/public/assets/js/product.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/system/public/assets/js/product.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/system/public/assets/pages/jquery.form-advanced.init.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/system/public/assets/pages/jquery.form-advanced.init.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/system/vendor/Menu/Admin.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/system/vendor/Menu/Admin.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -53,17 +58,17 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/public/system/public/assets/js" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/public/system/module/Admin/src/Admin/Dg" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/public/system/public/assets/js" />
-      <recent name="$PROJECT_DIR$/public/system/module/Admin/src/Admin/Form" />
       <recent name="$PROJECT_DIR$/public/system/module/Admin/src/Admin/Dg" />
-      <recent name="$PROJECT_DIR$/public/system/module/Admin/view/admin/material" />
+      <recent name="$PROJECT_DIR$/public/system/module/Admin/view/admin/invoice" />
+      <recent name="$PROJECT_DIR$/public/system/module/Admin/src/Admin/Form" />
       <recent name="$PROJECT_DIR$/public/system/module/Admin/src/Admin/Model" />
+      <recent name="$PROJECT_DIR$/public/system/public/assets/js" />
     </key>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
@@ -86,6 +91,7 @@
       <workItem from="1673258167946" duration="1132000" />
       <workItem from="1673517290880" duration="2746000" />
       <workItem from="1674013992971" duration="1047000" />
+      <workItem from="1676090663333" duration="16489000" />
     </task>
     <servers />
   </component>
