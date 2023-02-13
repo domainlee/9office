@@ -286,21 +286,19 @@ class InvoiceController extends AbstractActionController{
 	}
 
 
-	public function changeactiveAction(){
+	public function importAction(){
 		$this->layout('layout/admin');
-		$id = $this->getEvent()->getRouteMatch()->getParam('id');
-		$mapper = $this->getServiceLocator()->get('Admin\Model\ArticleMapper');
-		$model = $mapper->getId($id);
-		
-		if(($model->getStatus()) == \Admin\Model\Article::STATUS_ACTIVE){
-			$model->setStatus(\Admin\Model\Article::STATUS_INACTIVE);
-		}
-		else{
-			$model->setStatus(\Admin\Model\Article::STATUS_ACTIVE);
-		}
-		$mapper->save($model);
-		$this->redirect()->toUrl('/admin/article');
+        $id = $this->getRequest()->getPost('id');
+		print_r($id);die;
+		echo $id;die;
+//		$this->redirect()->toUrl('/admin/article');
 	}
+
+    public function exportAction(){
+        $this->layout('layout/admin');
+        $id = $this->getEvent()->getRouteMatch()->getParam('id');
+//		$this->redirect()->toUrl('/admin/article');
+    }
 
 	public function deleteAction(){
 

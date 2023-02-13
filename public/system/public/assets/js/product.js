@@ -238,6 +238,15 @@ $(function(){
         }
     }
 
+    $('.btn-approved-invoice').click(function () {
+        console.log('click approved');
+        var id = $(this).attr('data-id'), _this = $(this);
+        $.post('/admin/invoice/import',{id: id},function(r){
+
+        });
+    });
+
+
 
 
     if($('#imageUpload').length) {

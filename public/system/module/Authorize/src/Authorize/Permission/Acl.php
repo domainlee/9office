@@ -153,12 +153,14 @@ class Acl extends ZendAcl
                         'Vật liệu' => array(
                             'Danh sách vật liệu' => 'index',
                             'Tạo invoice' => 'add',
-                            'Tạo sản phẩm' => 'add_product',
+                            'Danh sách sản phẩm' => 'product',
+                            'Thêm sản phẩm' => 'addproduct',
                         ),
                         'Hoá đơn' => array(
                             'Danh sách invoice' => 'index',
                             'Tạo invoice' => 'add',
-                            'Tạo sản phẩm' => 'add_product',
+                            'Duyệt nhập hàng' => 'import',
+                            'Duyệt xuất hàng' => 'export',
                         ),
                         'Đơn hàng' => array(
                             'Xem danh sách đơn hàng' => 'index',

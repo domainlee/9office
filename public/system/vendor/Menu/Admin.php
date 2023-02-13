@@ -57,7 +57,7 @@ class Admin extends Navigation
                 'label2'=> 'Đơn hàng',
                 'uri'	=> '/admin/order',
                 'resource' => 'admin:order',
-                'privilege' => 'order',
+                'privilege' => 'index',
                 'class'=>'fa fa-plus-square',
             ),
             array(

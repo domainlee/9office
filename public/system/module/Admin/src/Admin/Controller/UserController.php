@@ -81,14 +81,17 @@ class UserController extends AbstractActionController{
                         if($kE[0] == 'hinh-anh') {
                             $de['media'][$kE[1]] = $kE[1];
                         }
-                        if($kE[0] == 'bai-viet') {
-                            $de['article'][$kE[1]] = $kE[1];
+                        if($kE[0] == 'vat-lieu') {
+                            $de['material'][$kE[1]] = $kE[1];
                         }
-                        if($kE[0] == 'san-pham') {
-                            $de['product'][$kE[1]] = $kE[1];
+                        if($kE[0] == 'hoa-don') {
+                            $de['invoice'][$kE[1]] = $kE[1];
                         }
-                        if($kE[0] == 'question') {
-                            $de['question'][$kE[1]] = $kE[1];
+                        if($kE[0] == 'nha-cung-cap') {
+                            $de['manufacture'][$kE[1]] = $kE[1];
+                        }
+                        if($kE[0] == 'don-hang') {
+                            $de['order'][$kE[1]] = $kE[1];
                         }
                     }
                     $user->setDependencies(json_encode($de));
@@ -162,6 +165,12 @@ class UserController extends AbstractActionController{
                         }
                         if($kE[0] == 'hoa-don') {
                             $de['invoice'][$kE[1]] = $kE[1];
+                        }
+                        if($kE[0] == 'nha-cung-cap') {
+                            $de['manufacture'][$kE[1]] = $kE[1];
+                        }
+                        if($kE[0] == 'don-hang') {
+                            $de['order'][$kE[1]] = $kE[1];
                         }
                     }
                     $user->setDependencies(json_encode($de));

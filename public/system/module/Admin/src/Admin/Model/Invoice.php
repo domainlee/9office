@@ -21,10 +21,15 @@ class Invoice extends Base{
  	const IMPORT = 1;
  	const EXPORT = 2;
 
-	protected $statuses = array(
+    public $statuses = array(
 		\Admin\Model\Invoice::STATUS_APPROVED => 'Đã duyệt',
 		\Admin\Model\Invoice::STATUS_NOT_APPROVED => 'Chưa duyệt'
 	);
+
+    public $type_invoice = array(
+        \Admin\Model\Invoice::IMPORT => 'Nhập',
+        \Admin\Model\Invoice::EXPORT => 'Xuất',
+    );
 
     /**
      * @return mixed

@@ -1,5 +1,6 @@
 <?php
 namespace Admin\Dg;
+use Home\Model\DateBase;
 
 class DgInvoice extends \Base\Dg\Table {
 
@@ -47,15 +48,22 @@ class DgInvoice extends \Base\Dg\Table {
                                       </tr>';
                 }
             }
+            $status = '';
+            if($item->getStatus() == 2) {
+                $status = '<span class="label label-danger" style="margin-bottom: 5px;display: inline-block">'.$item->statuses[$item->getStatus()] . '</span><br/><a data-id="'.$item->getId().'" class="btn-approved-invoice btn label btn-sm btn-default btn-rounded waves-effect waves-light">Duyệt</a>';
+            } elseif ($item->getStatus() == 1) {
+                $status = '<span class="label label-success">Đã duyệt</span>';
+            }
+
             $rows[] = array(
                 array(
                     'type' => 'text',
-                    'value' => 'INV-'.$item->getId(),
+                    'value' => 'INV-'.$item->getId().' / '.$item->type_invoice[$item->getType()],
                     'htmlOptions'=> array('style'=>'vertical-align: middle'),
                 ),
                 array (
                     'type' => 'text',
-                    'value' => '<a href="/admin/invoice/edit/'.$item->getId().($this->urlQuery ? '?'.$this->urlQuery:null).'">'. $item->getDescription().'</a></a>',
+                    'value' => '<a>'. $item->getDescription().'</a></a>',
                     'htmlOptions'=> array('style'=>'vertical-align: middle'),
                 ),
                 array(
@@ -71,12 +79,12 @@ class DgInvoice extends \Base\Dg\Table {
                 ),
                 array(
                     'type' => 'text',
-                    'value' => 'Chờ duyệt',
+                    'value' => $status,
                     'htmlOptions'=> array('style'=>'text-align: center;vertical-align: middle'),
                 ),
                 array(
                     'type' => 'text',
-                    'value' => $item->getCreatedDateTime(),
+                    'value' => DateBase::toDisplayDateTime($item->getCreatedDateTime()),
                     'htmlOptions'=> array('style'=>'text-align: center;vertical-align: middle'),
                 ),
                 array(
