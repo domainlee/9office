@@ -23,7 +23,7 @@ class InvoiceMaterial extends Base{
 	protected $status;
 
     const STATUS_APPROVED = 1;
-    const STATUS_NOT_APPROVED = 0;
+    const STATUS_NOT_APPROVED = 2;
 
     protected $statuses = array(
         \Admin\Model\Invoice::STATUS_APPROVED => 'Đã duyệt',

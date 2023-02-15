@@ -62,7 +62,27 @@ class InvoiceMaterialMapper extends Base{
 		return null;
 	}
 
-	
+    public function fetchAllStatus($item){
+
+        $dbAdapter = $this->getServiceLocator()->get('dbAdapter');
+        $dbSql = $this->getServiceLocator()->get('dbSql');
+
+        $select = $dbSql->select(array('ac'=>$this->getTableName()));
+
+        if($item->getInvoiceId()){
+            $select->where(array('ac.invoiceId'=>$item->getInvoiceId(), 'ac.status'=> 2));
+        }
+        $selectString = $dbSql->getSqlStringForSqlObject($select);
+        $results = $dbAdapter->query($selectString, $dbAdapter::QUERY_MODE_EXECUTE);
+        $rs = array();
+        foreach ($results as $row){
+            $model = new \Admin\Model\InvoiceMaterial();
+            $model->exchangeArray((array)$row);
+            $rs[] = $model;
+        }
+        return $rs;
+    }
+
 	public function fetchAll($item){
 
 		$dbAdapter = $this->getServiceLocator()->get('dbAdapter');

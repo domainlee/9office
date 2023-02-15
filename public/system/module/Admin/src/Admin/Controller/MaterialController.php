@@ -100,8 +100,9 @@ class MaterialController extends AbstractActionController{
 
         $model = new \Admin\Model\Material();
         $model->setId($id);
+        $resultMaterial = $mapper->get($model);
 
-        if(!$mapper->get($model)){
+        if(!$resultMaterial){
             $this->redirect()->toUrl('/admin/material');
         }
 
@@ -127,12 +128,8 @@ class MaterialController extends AbstractActionController{
             $form->setData(array_merge_recursive($this->getRequest()->getPost()->toArray(),$this->getRequest()->getFiles()->toArray()));
             if($form->isValid()){
                 $data = $form->getData();
-                $model = new \Admin\Model\Material();
-                $model->setId($id);
-                $model->exchangeArray($data);
-                $model->setCreatedDateTime(DateBase::getCurrentDateTime());
-                $model->setCreatedById($u->getId());
-                $mapper->save($model);
+                $resultMaterial->setName($data['name']);
+                $mapper->save($resultMaterial);
                 $this->redirect()->toUrl('/admin/material');
 			}else{
                 print_r($form->getMessages());die;

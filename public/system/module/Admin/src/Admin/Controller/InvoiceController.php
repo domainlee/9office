@@ -289,9 +289,65 @@ class InvoiceController extends AbstractActionController{
 	public function importAction(){
 		$this->layout('layout/admin');
         $id = $this->getRequest()->getPost('id');
-		print_r($id);die;
-		echo $id;die;
-//		$this->redirect()->toUrl('/admin/article');
+        $u = $this->getServiceLocator()->get('User\Service\User');
+
+        $model = new \Admin\Model\Invoice();
+        $model->setId($id);
+        $mapper = $this->getServiceLocator()->get('Admin\Model\InvoiceMapper');
+        $result = $mapper->get($model);
+        if(empty($result)) {
+            return new JsonModel(array(
+                'code' => 0,
+                'messenger' => 'Không tìm thấy hoá đơn này'
+            ));
+        }
+        if($result->getStatus() != 2) {
+            return new JsonModel(array(
+                'code' => 0,
+                'messenger' => 'Trạng thái đơn hàng đã được duyệt'
+            ));
+        }
+
+        $modelInvoiceMaterial = new \Admin\Model\InvoiceMaterial();
+        $modelInvoiceMaterial->setInvoiceId($result->getId());
+        $modelInvoiceMaterial->setStatus(\Admin\Model\Invoice::STATUS_NOT_APPROVED);
+        $mapperInvoiceMaterialMapper = $this->getServiceLocator()->get('Admin\Model\InvoiceMaterialMapper');
+        $invoiceMaterialResult = $mapperInvoiceMaterialMapper->fetchAllStatus($modelInvoiceMaterial);
+        if(!empty($invoiceMaterialResult)) {
+            foreach ($invoiceMaterialResult as $v) {
+                $material = new \Admin\Model\Material();
+                $material->setId($v->getMaterialId());
+                $mapperMaterial = $this->getServiceLocator()->get('Admin\Model\MaterialMapper');
+                $resultMaterial = $mapperMaterial->get($material);
+                if($resultMaterial->getTotalQuantiy() && $resultMaterial->getPrice() && $resultMaterial->getTotalPrice()) {
+                    $totalPrice = $resultMaterial->getTotalPrice() + $v->getIntoMoney();
+                    $totalQuantity = $resultMaterial->getTotalQuantiy() + $v->getQuantity();
+                    $material->setTotalQuantiy($totalQuantity);
+                    $material->setPrice($totalPrice/$totalQuantity);
+                    $material->setTotalPrice($totalPrice);
+
+                    $v->setInventoryTotalQuantiy($totalQuantity);
+                    $v->setInventoryPrice($totalPrice/$totalQuantity);
+                    $v->setInventoryTotalPrice($totalPrice);
+                } else {
+                    $material->setTotalQuantiy($v->getQuantity());
+                    $material->setPrice($v->getPrice());
+                    $material->setTotalPrice($v->getIntoMoney());
+                }
+                $mapperMaterial->save($material);
+                $v->setStatus(\Admin\Model\Invoice::STATUS_APPROVED);
+                $mapperInvoiceMaterialMapper->save($v);
+            }
+        }
+        $result->setStatus(\Admin\Model\Invoice::STATUS_APPROVED);
+        $result->setUpdatedDateTime(DateBase::getCurrentDateTime());
+        $result->setApprovedById($u->getId());
+        $mapper->save($result);
+
+        return new JsonModel(array(
+            'code' => 1,
+            'messenger' => 'Hoá đơn đã được duyệt'
+        ));
 	}
 
     public function exportAction(){

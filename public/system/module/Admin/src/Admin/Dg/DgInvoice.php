@@ -52,7 +52,7 @@ class DgInvoice extends \Base\Dg\Table {
             if($item->getStatus() == 2) {
                 $status = '<span class="label label-danger" style="margin-bottom: 5px;display: inline-block">'.$item->statuses[$item->getStatus()] . '</span><br/><a data-id="'.$item->getId().'" class="btn-approved-invoice btn label btn-sm btn-default btn-rounded waves-effect waves-light">Duyệt</a>';
             } elseif ($item->getStatus() == 1) {
-                $status = '<span class="label label-success">Đã duyệt</span>';
+                $status = '<span class="label label-success" style="margin-bottom: 5px;display: inline-block">Đã duyệt</span><br/>'.DateBase::toDisplayDateTime($item->getUpdatedDateTime());
             }
 
             $rows[] = array(

@@ -9,7 +9,7 @@ class InvoiceMapper extends Base{
 
     public function get($item)
     {
-        if (!$item->getId() && !$item->getName() && !$item->getStoreId()) {
+        if (!$item->getId() && !$item->getDescription()) {
             return null;
         }
         $select = $this->getDbSql()->select(array('ac' => $this->getTableName()));
@@ -17,11 +17,8 @@ class InvoiceMapper extends Base{
         if($item->getId()) {
             $select->where(['ac.id' => $item->getId()]);
         }
-        if($item->getName()){
-            $select->where(['ac.name'=> $item->getName()]);
-        }
-        if($item->getStoreId()){
-            $select->where(['ac.storeId'=> $item->getStoreId()]);
+        if($item->getDescription()){
+            $select->where(['ac.description'=> $item->getDescription()]);
         }
 
         $select->limit(1);

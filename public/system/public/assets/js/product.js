@@ -242,7 +242,12 @@ $(function(){
         console.log('click approved');
         var id = $(this).attr('data-id'), _this = $(this);
         $.post('/admin/invoice/import',{id: id},function(r){
-
+            if(r.code == 1){
+                alert(r.messenger);
+                location.reload();
+            }else if(r.code == 0){
+                alert(r.messenger);
+            }
         });
     });
 
