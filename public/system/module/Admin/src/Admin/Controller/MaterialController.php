@@ -115,10 +115,10 @@ class MaterialController extends AbstractActionController{
         $form->setCategoryIds($types);
         $form->setNCC($facture);
 
-		$modelCate = new \Admin\Model\Articlec();
-        $modelCate->setStoreId($storeId);
-		$mapperCate = $this->getServiceLocator()->get('Admin\Model\ArticlecMapper');
-		$category = $mapperCate->fetchAll($modelCate);
+		$invoiceMaterial = new \Admin\Model\InvoiceMaterial();
+        $invoiceMaterial->setMaterialId($id);
+        $invoiceMaterialMapper = $this->getServiceLocator()->get('Admin\Model\InvoiceMaterialMapper');
+        $resultInvoiceMaterial = $invoiceMaterialMapper->fetchAll($invoiceMaterial);
 
         $data = $model->toFormValues();
         $form->setData($data);
@@ -138,9 +138,54 @@ class MaterialController extends AbstractActionController{
 		return new ViewModel(array(
 			'form' => $form,
             'itemId' => $id,
+            'materials' => $resultInvoiceMaterial,
 		));
 	}
 
+	public function productAction() {
+        $this->layout('layout/admin');
+        echo 'product 123';die;
+    }
+
+    public function addproductAction() {
+        $this->layout('layout/admin');
+//        $id = $this->getEvent()->getRouteMatch()->getParam('id');
+        $id = $this->getRequest()->getQuery()->id;
+        $img = $this->getRequest()->getQuery()->img;
+        $name = $this->getRequest()->getQuery()->name;
+        print_r($id);
+        print_r($img);
+        print_r($name);
+        die;
+        $api = \Base\Model\Resource::data_api();
+//        print_r($api);die;
+//        echo $id.'product add';die;
+
+//        $api = \Base\Model\Resource::data_api();
+//        $data = array(
+//            'version' => $api['version'],
+//            'appId' => $api['appId'],
+//            'businessId' => $api['businessId'],
+//            'accessToken' => $api['accessToken'],
+//            'data' => '9MPULLAC222201L'
+//        );
+//        $curl = curl_init();
+//        curl_setopt_array($curl, array(
+//            CURLOPT_URL => 'https://open.nhanh.vn/api/product/detail',
+//            CURLOPT_RETURNTRANSFER => true,
+//            CURLOPT_ENCODING => '',
+//            CURLOPT_MAXREDIRS => 10,
+//            CURLOPT_TIMEOUT => 0,
+//            CURLOPT_FOLLOWLOCATION => true,
+//            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+//            CURLOPT_CUSTOMREQUEST => 'POST',
+//            CURLOPT_POSTFIELDS => $data,
+//        ));
+//        $response = curl_exec($curl);
+//        curl_close($curl);
+//        $response = json_decode($response, true);
+
+    }
 
 	public function changeactiveAction(){
 		$this->layout('layout/admin');

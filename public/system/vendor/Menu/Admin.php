@@ -55,7 +55,7 @@ class Admin extends Navigation
                 'icon'  => '<i class="ti-shopping-cart"></i>',
                 'label'	=> 'Đơn hàng',
                 'label2'=> 'Đơn hàng',
-                'uri'	=> '/admin/order',
+                'uri'	=> '/admin/order?page=1&status=Confirmed',
                 'resource' => 'admin:order',
                 'privilege' => 'index',
                 'class'=>'fa fa-plus-square',

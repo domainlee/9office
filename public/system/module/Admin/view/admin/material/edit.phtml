@@ -1,5 +1,6 @@
 <?php
     $form = $this->form;
+    $materials = $this->materials;
     $type = $form->get('type')->getValue();
     echo $this->headtitle($this->escapehtml($this->translate('Sửa - '.$form->get('name')->getValue())));
 ?>
@@ -9,7 +10,7 @@
         <div class="col-sm-12">
             <div class="card-box">
                 <div class="portlet-title">
-                    <h4 class="m-t-0 header-title m-b-20"><b>Sửa vật liệu</b></h4>
+                    <h4 class="m-t-0 header-title m-b-20"><b>Chi tiết vật liệu</b></h4>
                 </div>
                 <div class="portlet-body form">
                     <div class="row">
@@ -48,7 +49,35 @@
                         </div>
                     </div>
                     <div class="row">
+                        <div class="col-sm-12">
+                            <table style="margin: 0 0 15px !important;" class="mr-0 dg table table-hover table-condensed">
+                                  <tr>
+                                    <th>Vật liệu</th>
+                                    <th>Đơn giá</th>
+                                    <th>Số lượng</th>
+                                    <th>Thành tiền</th>
+                                    <th>Đơn giá</th>
+                                    <th>Tồn kho - số lượng</th>
+                                    <th>Tồn kho - thành tiền</th>
+                                  </tr>
 
+                                  <?php
+                                    foreach ($materials as $v):
+                                  ?>
+                                <tr>
+                                    <td><?= $v->getOptions()['materialName']; ?></td>
+                                    <td><?= number_format($v->getPrice()); ?></td>
+                                    <td><?= $v->getQuantity(); ?></td>
+                                    <td><?= number_format($v->getIntoMoney()); ?></td>
+
+                                    <td><?= number_format($v->getInventoryPrice()); ?></td>
+                                    <td><?= $v->getInventoryTotalQuantiy(); ?></td>
+                                    <td><?= number_format($v->getInventoryTotalPrice()); ?></td>
+
+                                  </tr>
+                            <?php endforeach; ?>
+                      </table>
+                        </div>
                     </div>
                     <div class="row">
 

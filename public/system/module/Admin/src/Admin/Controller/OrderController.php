@@ -16,14 +16,19 @@ class OrderController extends AbstractActionController{
 
 		$query = $this->getRequest()->getUri()->getQuery();
         $page = (int)$this->getRequest()->getQuery()->page ? : 1;
-        $status_filter = $this->getRequest()->getQuery()->status ? : 'Confirmed';
-        $data = json_encode(array('page' => $page, 'statuses' => array($status_filter)));
+        $id = (int)$this->getRequest()->getQuery()->id ? : '';
+        $phone = (int)$this->getRequest()->getQuery()->phone ? : '';
+        $status_filter = $this->getRequest()->getQuery()->status ? : '';
+        $data = json_encode(array('id' => $id, 'customerMobile' => $phone, 'page' => $page, 'statuses' => array($status_filter)));
         $curl = curl_init();
+
+        $api = \Base\Model\Resource::data_api();
+
         $data = array(
-            'version' => self::version,
-            'appId' => self::appId,
-            'businessId' => self::businessId,
-            'accessToken' => self::accessToken,
+            'version' => $api['version'],
+            'appId' => $api['appId'],
+            'businessId' => $api['businessId'],
+            'accessToken' => $api['accessToken'],
             'data' => $data
         );
 
@@ -59,6 +64,8 @@ class OrderController extends AbstractActionController{
 			'query'=> $query,
 			'results'=> $response['data'],
 			'fFilter'=> $fFilter,
+            'id' => $id,
+            'phone' => $phone
 		));
 	}
 	public function addAction(){

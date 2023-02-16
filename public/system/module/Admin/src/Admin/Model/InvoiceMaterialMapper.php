@@ -42,19 +42,14 @@ class InvoiceMaterialMapper extends Base{
 	public function getId($id){
 		$dbAdapter = $this->getServiceLocator()->get('dbAdapter');
 		$dbSql = $this->getServiceLocator()->get('dbSql');
-		
 		$select = $dbSql->select(array('ac'=>$this->getTableName()));
-		$select->join(array('a' => 'article_categories'),
-				'a.id  =  ac.parentId', array(
-						'parentName' => 'name',
-				),
-				\Zend\Db\Sql\Select::JOIN_LEFT
-		);
-		$select->where(array('ac.id'=>$id));
+
+		$select->where(array('ac.materialId' => $id));
+
 		$selectString = $dbSql->getSqlStringForSqlObject($select);
 		$results = $dbAdapter->query($selectString, $dbAdapter::QUERY_MODE_EXECUTE);
 		if($results->count()){
-			$model = new \Admin\Model\Articlec();
+			$model = new \Admin\Model\InvoiceMaterial();
 			$data = (array)$results->current();
 			$model->exchangeArray($data);
 			return $model;
@@ -91,7 +86,10 @@ class InvoiceMaterialMapper extends Base{
 		$select = $dbSql->select(array('ac'=>$this->getTableName()));
 
         if($item->getInvoiceId()){
-            $select->where(array('ac.invoiceId'=>$item->getInvoiceId()));
+            $select->where(array('ac.invoiceId' => $item->getInvoiceId()));
+        }
+        if($item->getMaterialId()){
+            $select->where(array('ac.materialId' => $item->getMaterialId()));
         }
 		$selectString = $dbSql->getSqlStringForSqlObject($select);
 
@@ -99,8 +97,13 @@ class InvoiceMaterialMapper extends Base{
 		$rs = array();
 		foreach ($results as $row){
 			$model = new \Admin\Model\InvoiceMaterial();
+            $modelMaterial = new \Admin\Model\Material();
+            $modelMaterial->setId($row['materialId']);
+            $mapperMaterial = $this->getServiceLocator()->get('Admin\Model\MaterialMapper');
+            $resultMaterial = $mapperMaterial->get($modelMaterial);
 			$model->exchangeArray((array)$row);
-			$rs[] = $model;			
+            $model->setOptions(['materialName' => $resultMaterial->getName()]);
+            $rs[] = $model;
 		}
 		return $rs;
 	}

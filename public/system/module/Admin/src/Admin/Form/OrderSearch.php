@@ -38,7 +38,7 @@ class OrderSearch extends ProvidesEventsForm{
             )
         ) );
         $this->add ( array (
-            'name' => 'title',
+            'name' => 'phone',
             'attributes' => array (
                 'type' => 'text',
                 'class' => 'tb m-wrap medium',
@@ -124,7 +124,7 @@ class OrderSearch extends ProvidesEventsForm{
     public function setStatus($array, $value){
         if(!!($element = $this->get('status'))){
             $element->setValueOptions(array(
-                    ''=>'- Trang thái -'
+                    ''=>'- Tất cả -'
                 )+ $array);
             $element->setAttribute('value', $value);
         }

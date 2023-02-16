@@ -72,6 +72,22 @@ class Resource {
 		return $text;
 	}
 
+    const version = 2;
+    const appId = 73193;
+    const businessId = 109797;
+    const accessToken = 'pV0IWWhXrpiM9SWgeGT8kClOaAF7caGiBCyZ4c2iIc2M9dvJLDv9NUTVI2RB4QP29zoQncLxQ4IZdTbYglchdOeBlKF0ovVR5P5TyJ52RHL55IGVPRgMMc6Ll0WHzRjE0kmQILxj2x3dLAuLY6AU13';
+
+
+    static public function data_api() {
+        $data = array(
+            'version' => self::version,
+            'appId' => self::appId,
+            'businessId' => self::businessId,
+            'accessToken' => self::accessToken,
+        );
+        return $data;
+    }
+
     /**
      * @param string $text
      * @param boolean $toLower
