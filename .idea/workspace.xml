@@ -3,7 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="363134c8-8b26-4c11-8dd9-a396a3e0a0dc" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/system/module/Authorize/src/Authorize/Permission/Acl.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/system/module/Authorize/src/Authorize/Permission/Acl.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/system/public/tp/dweb/view/layout/layout.phtml" beforeDir="false" afterPath="$PROJECT_DIR$/public/system/public/tp/dweb/view/layout/layout.phtml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -74,7 +74,10 @@
       <workItem from="1673248074362" duration="6000" />
       <workItem from="1673258167946" duration="1132000" />
       <workItem from="1673517290880" duration="2746000" />
-      <workItem from="1674013992971" duration="1047000" />
+      <workItem from="1674013992971" duration="3050000" />
+      <workItem from="1674037459850" duration="833000" />
+      <workItem from="1675046004907" duration="1000" />
+      <workItem from="1676619053844" duration="3833000" />
     </task>
     <servers />
   </component>

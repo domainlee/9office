@@ -36,21 +36,6 @@ $optionPage = $this->home()->optionPage();
             ];
             echo '<script type="text/javascript" src="'.srcLink($js,4).'"></script>';
         ?>
-        <!-- Facebook Pixel Code -->
-        <script>
-            !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-                n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
-                n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
-                t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
-                document,'script','https://connect.facebook.net/en_US/fbevents.js');
-            fbq('init', '1971198599778175'); // Insert your pixel ID here.
-            fbq('track', 'PageView');
-        </script>
-        <noscript><img height="1" width="1" style="display:none"
-                       src="https://www.facebook.com/tr?id=1971198599778175&ev=PageView&noscript=1"
-            /></noscript>
-        <!-- DO NOT MODIFY -->
-        <!-- End Facebook Pixel Code -->
 
     </head>
     <?php
@@ -88,23 +73,6 @@ $optionPage = $this->home()->optionPage();
         ];
         echo '<script type="text/javascript" src="'.srcLink($js,5).'"></script>';
     ?>
-
-    <!-- Load Facebook SDK for JavaScript -->
-    <div id="fb-root"></div>
-
-    <script>(function(d, s, id) {
-            var js, fjs = d.getElementsByTagName(s)[0];
-            if (d.getElementById(id)) return;
-            js = d.createElement(s); js.id = id;
-            js.src = 'https://connect.facebook.net/vi_VN/sdk/xfbml.customerchat.js#xfbml=1&version=v2.12&autoLogAppEvents=1';
-            fjs.parentNode.insertBefore(js, fjs);
-        }(document, 'script', 'facebook-jssdk'));</script>
-
-    <!-- Your customer chat code -->
-    <div class="fb-customerchat"
-         attribution=setup_tool
-         page_id="125813488001003" theme_color="#07aabe">
-    </div>
 
     <?= $this->render('layout/modal'); ?>
 
