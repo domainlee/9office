@@ -1,0 +1,52 @@
+<?php
+echo $this->headtitle($this->escapehtml($this->translate('Thêm')));
+$form = $this->form;
+?>
+
+
+<form method="post" enctype="multipart/form-data" data-parsley-validate novalidate>
+    <div class="row">
+        <div class="col-sm-8">
+            <div class="card-box">
+                <div class="portlet-title">
+                    <h4 class="m-t-0 header-title m-b-20"><b>Thêm nhà cung cấp</b></h4>
+                </div>
+                <div class="portlet-body form">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <label class="control-label" for="firstName">Tên</label>
+                                <?= $this->formelement($form->get('name')->setAttributes(['class' => 'form-control', 'placeholder'=>'Tên nhà cung cấp', 'required' => 'required', 'data-parsley-error-message' => 'Tiêu đề không được để trống'])) ?>
+                                <?= $this->formelementerrors($form->get('name'),['class' => 'parsley-errors-list filled']) ?>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <label class="control-label" for="firstName">Điện thoại</label>
+                                <?= $this->formelement($form->get('phone')->setAttributes(['class' => 'form-control', 'placeholder'=>'Số điện thoại', 'required' => 'required', 'data-parsley-error-message' => 'Điện thoại không được để trống'])) ?>
+                                <?= $this->formelementerrors($form->get('phone'),['class' => 'parsley-errors-list filled']) ?>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <label class="control-label" for="firstName">Địa chỉ</label>
+                                <?= $this->formelement($form->get('address')->setAttributes(['class' => 'form-control','placeholder'=>'Địa chỉ', 'data-parsley-error-message' => 'Nội dung không được để trống'])) ?>
+                                <?= $this->formelementerrors($form->get('address'),['class' => 'parsley-errors-list filled'])?>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-actions">
+                        <?=$this->formelement($form->get('submit')->setAttributes(['class' => 'loadHomepage btn btn-default']))?>
+                        <?=$this->formelement($form->get('reset')->setAttributes(['class' => 'btn']))?>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- End col-sm-8 -->
+    </div>
+</form>

@@ -8,28 +8,37 @@ use Home\Form\FormBase;
 use Home\Model\DateBase;
 use Home\Model\Base;
 
-class InvoiceController extends AbstractActionController{
+class ManufactureController extends AbstractActionController{
 
 	public function indexAction()
     {
         $this->layout('layout/admin');
-		$model = new \Admin\Model\Invoice();
+		$model = new \Admin\Model\Manufacture();
         $sl = $this->getServiceLocator();
-		$mapper = $sl->get('Admin\Model\InvoiceMapper');
+		$mapper = $sl->get('Admin\Model\ManufactureMapper');
         $u = $sl->get('User\Service\User');
+        $storeId = $u->getStoreId();
+//        $slug = $this->params()->fromQuery();
+//        print_r($this->getRequest()->getUri()->getQuery());die;
 
 		$model->exchangeArray((array)$this->getRequest()->getQuery());
         $options['isAdmin'] = $this->user()->isSuperAdmin();
 //        $fFilter = new \Admin\Form\ArticleSearch($options);
+//        $model->setStoreId($storeId);
 
+//        $optionMapper = $sl->get('Admin\Model\OptionMapper');
+//        $option = new \Admin\Model\Option();
+//        $option->setStoreId($storeId);
+//        $dataOption = $optionMapper->get($option);
+//        $dataOld = !empty($dataOption) ?  json_decode($dataOption->getData(), true):'';
 		$page = (int)$this->getRequest()->getQuery()->page ? : 1;
-		$results = $mapper->search($model, array($page,50));
-
+		$results = $mapper->search($model, array($page,10));
 		return new ViewModel(array(
 //			'fFilter' => $fFilter,
 			'results' => $results,
             'url' => $this->getRequest()->getUri()->getQuery(),
             'uri' => $this->getRequest()->getUri()->getQuery(),
+//            'option' => $dataOld,
         ));
 	}
 
@@ -40,49 +49,43 @@ class InvoiceController extends AbstractActionController{
 
         $u = $this->getServiceLocator()->get('User\Service\User');
         $storeId = $u->getStoreId();
-        $model = new \Admin\Model\Invoice();
+
+        $model = new \Admin\Model\Manufacture();
+
 //		$modelCate = new \Admin\Model\Articlec();
 //        if(!$this->user()->isSuperAdmin()){
 //            $modelCate->setStoreId($storeId);
 //        }
 //		$mapperCate = $this->getServiceLocator()->get('Admin\Model\ArticlecMapper');
-        $mapper = $this->getServiceLocator()->get('Admin\Model\InvoiceMapper');
+        $mapper = $this->getServiceLocator()->get('Admin\Model\ManufactureMapper');
 //        $category = $mapperCate->fetchAll($modelCate);
-		$form = new \Admin\Form\Invoice($this->getServiceLocator(), null);
+		$form = new \Admin\Form\Manufacture();
 //		$form->setCategoryIds($model->toSelectBoxArray($category,\Admin\Model\Article::SELECT_MODE_ALL));
+
+		/****** Option Field ********/
+//        $optionMapper = $this->getServiceLocator()->get('Admin\Model\OptionMapper');
+//        $option = new \Admin\Model\Option();
+//        $option->setStoreId($storeId);
+//        $optionMapper->get($option);
+//        if(!empty($option->getArticleField())) {
+//            $articleField = json_decode($option->getArticleField(), true);
+//        }
 
 		if($this->getRequest()->isPost()){
 			$form->setData(array_merge_recursive($this->getRequest()->getPost()->toArray(),$this->getRequest()->getFiles()->toArray()));
 			if($form->isValid()){
 
                 $data = $form->getData();
-
+                $type = $this->getRequest()->getPost()['typeArticle'];
                 $model->exchangeArray($data);
-                $model->setCreatedDateTime(DateBase::getCurrentDateTime());
-                $model->setUpdatedDateTime(DateBase::getCurrentDateTime());
-                $model->setType($model::IMPORT);
                 $model->setCreatedById($u->getId());
-                $model->setStatus(\Admin\Model\Invoice::STATUS_NOT_APPROVED);
+                $model->setCreatedDateTime(DateBase::getCurrentDateTime());
+//                $model->setCreatedById($u->getId());
+//                if(!empty($articleRelateds)) {
+//                    $model->setArticleRelated(json_encode($articleRelateds));
+//                }
                 $mapper->save($model);
-
-                if($model->getId()) {
-                    $mapperInvoiceMaterial = $this->getServiceLocator()->get('Admin\Model\InvoiceMaterialMapper');
-                    $modelInvoiceMaterial = new \Admin\Model\InvoiceMaterial();
-                    $modelInvoiceMaterial->exchangeArray($data);
-                    $modelInvoiceMaterial->setInvoiceId($model->getId());
-
-                    $modelInvoiceMaterial->setInventoryPrice($modelInvoiceMaterial->getPrice());
-                    $modelInvoiceMaterial->setInventoryTotalQuantiy($modelInvoiceMaterial->getQuantity());
-                    $modelInvoiceMaterial->setInventoryTotalPrice($modelInvoiceMaterial->getIntoMoney());
-
-                    $modelInvoiceMaterial->setCreatedDateTime(DateBase::getCurrentDateTime());
-                    $modelInvoiceMaterial->setType($model::IMPORT);
-                    $modelInvoiceMaterial->setCreatedById($u->getId());
-                    $modelInvoiceMaterial->setStatus(\Admin\Model\Invoice::STATUS_NOT_APPROVED);
-                    $mapperInvoiceMaterial->save($modelInvoiceMaterial);
-                }
-
-                $this->redirect()->toUrl('/admin/invoice');
+                $this->redirect()->toUrl('/admin/article');
 			}
 		}
 		return new ViewModel(array(
@@ -98,180 +101,41 @@ class InvoiceController extends AbstractActionController{
         $u = $this->getServiceLocator()->get('User\Service\User');
         $storeId = $u->getStoreId();
 
-        $mapper = $this->getServiceLocator()->get('Admin\Model\ArticleMapper');
-        $model = new \Admin\Model\Article();
+        $mapper = $this->getServiceLocator()->get('Admin\Model\ManufactureMapper');
+        $model = new \Admin\Model\Manufacture();
         $model->setId($id);
-        $model->setStoreId($storeId);
 
         if(!$mapper->get($model)){
-            $this->redirect()->toUrl('/admin/article');
+            $this->redirect()->toUrl('/admin/manufacture');
         }
 
-		$modelCate = new \Admin\Model\Articlec();
-        $modelCate->setStoreId($storeId);
-		$mapperCate = $this->getServiceLocator()->get('Admin\Model\ArticlecMapper');
-		$category = $mapperCate->fetchAll($modelCate);
-
-		$form = new \Admin\Form\Article();
-
-        $form->setCategoryIds($modelCate->toSelectBoxArray($category,\Admin\Model\Articlec::SELECT_MODE_ALL));
+//		$modelCate = new \Admin\Model\Articlec();
+//        $modelCate->setStoreId($storeId);
+//		$mapperCate = $this->getServiceLocator()->get('Admin\Model\ArticlecMapper');
+//		$category = $mapperCate->fetchAll($modelCate);
+//
+		$form = new \Admin\Form\Manufacture();
+//
+//        $form->setCategoryIds($modelCate->toSelectBoxArray($category,\Admin\Model\Articlec::SELECT_MODE_ALL));
 
         $data = $model->toFormValues();
-        $mediaItem = new \Admin\Model\MediaItem();
-        $mediaItem->setItemId($model->getId());
-        $mediaItem->setType(\Admin\Model\MediaItem::FILE_ARTICLE);
-
-        $mediaMapper = $this->getServiceLocator()->get('Admin\Model\MediaItemMapper');
-        $m = $mediaMapper->fetchAll($mediaItem);
-        $fI = [];
-        if(isset($m)){
-            foreach($m as $i){
-                $fI[] = $i->getFileItem();
-            }
-        }
-
-        if($model->getArticleRelated()) {
-            $articleR = json_decode($model->getArticleRelated());
-            if(!empty($articleR)) {
-                $ar = [];
-                foreach($articleR as $p) {
-                    $ar[$p->id] = ['label' => $p->title, 'value' => $p->id, 'selected' => true];
-                }
-            }
-        }
-
-        $data['images'] = implode(',', $fI);
-        $storeId = $data['storeId'];
-        $status = $data['status'];
         $createdById = $data['createdById'];
-        $typeCurrent = $data['type'];
-        $view = $data['view'];
-        $extraContent = json_decode($data['extraContent'], true);
 
         $form->setData($data);
-        $form->setCategoryIds($model->toSelectBoxArray($category,\Admin\Model\Article::SELECT_MODE_ALL));
-        $form->setArticleRelated($ar);
-
         /****** Option Field ********/
-        $optionMapper = $this->getServiceLocator()->get('Admin\Model\OptionMapper');
-        $option = new \Admin\Model\Option();
-        $option->setStoreId($storeId);
-        $optionMapper->get($option);
-        if(!empty($option->getArticleField())) {
-            $articleField = json_decode($option->getArticleField(), true);
-        }
 
 		if($this->getRequest()->isPost()){
             $form->setData(array_merge_recursive($this->getRequest()->getPost()->toArray(),$this->getRequest()->getFiles()->toArray()));
             if($form->isValid()){
                 $data = $form->getData();
 
-                $type = $this->getRequest()->getPost()['typeArticle'];
-                $mediaMapper = $this->getServiceLocator()->get('Admin\Model\MediaMapper');
-                $mediaItemMapper = $this->getServiceLocator()->get('Admin\Model\MediaItemMapper');
-                $mediaItemMapper->deleteTaskTag($id);
-                $articleRelated = $data['articleRelated'];
-
-                $model = new \Admin\Model\Article();
+                $model = new \Admin\Model\Manufacture();
                 $model->setId($id);
                 $model->exchangeArray($data);
                 $model->setCreatedDateTime(DateBase::getCurrentDateTime());
-                $model->setStoreId($storeId);
-                $model->setStatus($status);
                 $model->setCreatedById($u->getId());
-                $model->setType($type);
-                $model->setView($view);
-
-                if(!empty($data['url'])) {
-                    $productMapper = $this->getServiceLocator()->get('Admin\Model\ProductMapper');
-
-                    $url = \Base\Model\Resource::slugify($data['url']);
-
-                    $pageMapper = $this->getServiceLocator()->get('Admin\Model\PageMapper');
-                    $pageUrl = new \Admin\Model\Page();
-                    $pageUrl->setUrl($url);
-                    $pageUrl->setStoreId($storeId);
-                    $pagerModelUrl = $pageMapper->get($pageUrl);
-
-                    $pmodelUrl = new \Admin\Model\Product();
-                    $pmodelUrl->setStoreId($storeId);
-                    $pmodelUrl->setUrl($url);
-                    $prModelUrl = $productMapper->get($pmodelUrl);
-
-                    $modelUrl = new \Admin\Model\Article();
-                    $modelUrl->setStoreId($storeId);
-                    $modelUrl->setUrl($url);
-                    $rModelUrl = $mapper->get($modelUrl);
-
-                    if($rModelUrl && $modelUrl->getId() != $id || $prModelUrl || $pagerModelUrl) {
-                        $url1 = substr($url, 0, -2);
-                        $url2 = substr($url, -2);
-                        if(is_numeric($url2)) {
-                            $url = $url1 . sprintf("%02d", $url2 + 1);
-                        } else {
-                            $url = $url.'-01';
-                        }
-                        $model->setUrl($url);
-                    } else {
-                        $model->setUrl($url);
-                    }
-                }
-
-                if(isset($data['images']) && $data['images'] != ''){
-                    $imgJson = [];
-                    $imagesArray = explode(',', $data['images']);
-                    $c = 1;
-                    foreach($imagesArray as $i){
-                        $media = new \Admin\Model\Media();
-                        $media->setId($i);
-                        $rm = $mediaMapper->get($media);
-                        if($rm) {
-                            $imgJson[$i] = $rm->getPictureUri();
-                            $mediaItem = new \Admin\Model\MediaItem();
-                            $mediaItem->setType(\Admin\Model\MediaItem::FILE_ARTICLE);
-                            $mediaItem->setItemId($id);
-                            $mediaItem->setFileItem($rm->getId());
-                            $mediaItem->setSort($c++);
-                            $mediaItem->setStoreId($storeId);
-                            $mediaItemMapper->save($mediaItem);
-                        }
-                    }
-                    $model->setImage(json_encode($imgJson));
-                }
-
-                if($articleRelated) {
-                    $articleRelateds = [];
-                    foreach($articleRelated as $p) {
-                        $articleMapper = $this->getServiceLocator()->get('Admin\Model\ArticleMapper');
-                        $articleR = new \Admin\Model\Article();
-                        $articleR->setId((int)$p);
-                        $r = $articleMapper->get($articleR);
-                        if(!empty($r)) {
-                            $articleRelateds[] = ['id' => $r->getId(), 'url' => $r->getViewLink(), 'title' => $r->getTitle(), 'image' => $r->getImage()];
-                        }
-                    }
-                }
-
-                if(!empty($articleRelateds)) {
-                    $model->setArticleRelated(json_encode($articleRelateds));
-                }
-
-                $content = $this->getRequest()->getPost()->toArray();
-                if(!empty($content)) {
-                    $extraContent = [];
-                    foreach($content as $k => $v) {
-                        $field = explode('_', $k);
-                        if($field[0] == 'field') {
-                            $extraContent[$field[1]] = $v;
-                        }
-                    }
-                    if(!empty($extraContent)) {
-                        $model->setExtraContent(json_encode($extraContent));
-                    }
-                }
-
-                $mapper->save($model);
-                $this->redirect()->toUrl('/admin/article?'.$slug);
+                $result = $mapper->save($model);
+                $this->redirect()->toUrl('/admin/manufacture/');
 			}else{
                 print_r($form->getMessages());die;
             }
@@ -279,82 +143,25 @@ class InvoiceController extends AbstractActionController{
 		return new ViewModel(array(
 			'form' => $form,
             'itemId' => $id,
-            'type' => $typeCurrent,
-            'field' => $articleField,
-            'extraContent' => $extraContent,
 		));
 	}
 
 
-	public function importAction(){
+	public function changeactiveAction(){
 		$this->layout('layout/admin');
-        $id = $this->getRequest()->getPost('id');
-        $u = $this->getServiceLocator()->get('User\Service\User');
-
-        $model = new \Admin\Model\Invoice();
-        $model->setId($id);
-        $mapper = $this->getServiceLocator()->get('Admin\Model\InvoiceMapper');
-        $result = $mapper->get($model);
-        if(empty($result)) {
-            return new JsonModel(array(
-                'code' => 0,
-                'messenger' => 'Không tìm thấy hoá đơn này'
-            ));
-        }
-        if($result->getStatus() != 2) {
-            return new JsonModel(array(
-                'code' => 0,
-                'messenger' => 'Trạng thái đơn hàng đã được duyệt'
-            ));
-        }
-
-        $modelInvoiceMaterial = new \Admin\Model\InvoiceMaterial();
-        $modelInvoiceMaterial->setInvoiceId($result->getId());
-        $modelInvoiceMaterial->setStatus(\Admin\Model\Invoice::STATUS_NOT_APPROVED);
-        $mapperInvoiceMaterialMapper = $this->getServiceLocator()->get('Admin\Model\InvoiceMaterialMapper');
-        $invoiceMaterialResult = $mapperInvoiceMaterialMapper->fetchAllStatus($modelInvoiceMaterial);
-        if(!empty($invoiceMaterialResult)) {
-            foreach ($invoiceMaterialResult as $v) {
-                $material = new \Admin\Model\Material();
-                $material->setId($v->getMaterialId());
-                $mapperMaterial = $this->getServiceLocator()->get('Admin\Model\MaterialMapper');
-                $resultMaterial = $mapperMaterial->get($material);
-                if($resultMaterial->getTotalQuantiy() && $resultMaterial->getPrice() && $resultMaterial->getTotalPrice()) {
-                    $totalPrice = $resultMaterial->getTotalPrice() + $v->getIntoMoney();
-                    $totalQuantity = $resultMaterial->getTotalQuantiy() + $v->getQuantity();
-                    $material->setTotalQuantiy($totalQuantity);
-                    $material->setPrice($totalPrice/$totalQuantity);
-                    $material->setTotalPrice($totalPrice);
-
-                    $v->setInventoryTotalQuantiy($totalQuantity);
-                    $v->setInventoryPrice($totalPrice/$totalQuantity);
-                    $v->setInventoryTotalPrice($totalPrice);
-                } else {
-                    $material->setTotalQuantiy($v->getQuantity());
-                    $material->setPrice($v->getPrice());
-                    $material->setTotalPrice($v->getIntoMoney());
-                }
-                $mapperMaterial->save($material);
-                $v->setStatus(\Admin\Model\Invoice::STATUS_APPROVED);
-                $mapperInvoiceMaterialMapper->save($v);
-            }
-        }
-        $result->setStatus(\Admin\Model\Invoice::STATUS_APPROVED);
-        $result->setUpdatedDateTime(DateBase::getCurrentDateTime());
-        $result->setApprovedById($u->getId());
-        $mapper->save($result);
-
-        return new JsonModel(array(
-            'code' => 1,
-            'messenger' => 'Hoá đơn đã được duyệt'
-        ));
+		$id = $this->getEvent()->getRouteMatch()->getParam('id');
+		$mapper = $this->getServiceLocator()->get('Admin\Model\ArticleMapper');
+		$model = $mapper->getId($id);
+		
+		if(($model->getStatus()) == \Admin\Model\Article::STATUS_ACTIVE){
+			$model->setStatus(\Admin\Model\Article::STATUS_INACTIVE);
+		}
+		else{
+			$model->setStatus(\Admin\Model\Article::STATUS_ACTIVE);
+		}
+		$mapper->save($model);
+		$this->redirect()->toUrl('/admin/article');
 	}
-
-    public function exportAction(){
-        $this->layout('layout/admin');
-        $id = $this->getEvent()->getRouteMatch()->getParam('id');
-//		$this->redirect()->toUrl('/admin/article');
-    }
 
 	public function deleteAction(){
 

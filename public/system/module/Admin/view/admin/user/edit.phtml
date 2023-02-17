@@ -114,6 +114,12 @@
                                             <?php if($k == 'Hoá đơn'): ?>
                                                 <input id="remember-2" <?= !empty($vDep['invoice'][$v]) ? 'checked':'' ?> name="<?= vnString($k).' '.$v ?>" type="checkbox" >
                                             <?php endif; ?>
+                                            <?php if($k == 'Đơn hàng'): ?>
+                                                <input id="remember-2" <?= !empty($vDep['order'][$v]) ? 'checked':'' ?> name="<?= vnString($k).' '.$v ?>" type="checkbox" >
+                                            <?php endif; ?>
+                                            <?php if($k == 'Nhà cung cấp'): ?>
+                                                <input id="remember-2" <?= !empty($vDep['manufacture'][$v]) ? 'checked':'' ?> name="<?= vnString($k).' '.$v ?>" type="checkbox" >
+                                            <?php endif; ?>
                                             <label for="remember-2"> <?= $text ?> </label>
                                         </div>
                                         <?php

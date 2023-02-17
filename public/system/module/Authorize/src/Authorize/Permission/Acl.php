@@ -59,6 +59,7 @@ class Acl extends ZendAcl
         $this->addResource('admin:question');
         $this->addResource('admin:material');
         $this->addResource('admin:invoice');
+        $this->addResource('admin:manufacture');
 
 
         $this->addResource('payment:baokim');
@@ -151,16 +152,22 @@ class Acl extends ZendAcl
 //                        ),
                         'Vật liệu' => array(
                             'Danh sách vật liệu' => 'index',
-                            'Tạo invoice' => 'add',
-                            'Tạo sản phẩm' => 'add_product',
+                            'Tạo vật liệu' => 'add',
+                            'Sửa vật liệu' => 'edit',
+                            'Danh sách sản phẩm' => 'product',
+                            'Thêm sản phẩm' => 'addproduct',
                         ),
                         'Hoá đơn' => array(
                             'Danh sách invoice' => 'index',
                             'Tạo invoice' => 'add',
-                            'Tạo sản phẩm' => 'add_product',
+                            'Duyệt nhập hàng' => 'import',
+                            'Duyệt xuất hàng' => 'export',
                         ),
                         'Đơn hàng' => array(
                             'Xem danh sách đơn hàng' => 'index',
+                        ),
+                        'Nhà cung cấp' => array(
+                            'Xem danh sách nhà cung cấp' => 'index',
                         ),
 //                        'Question' => array (
 //                            'Công việc' => 'task',

@@ -105,6 +105,44 @@ jQuery(document).ready(function () {
         }
     });
 
+    var select_material = $(".select-ajax-material");
+    select_material.each(function () {
+        var selectMaterial = $(this);
+        var length = selectMaterial.attr('data-length') ? selectMaterial.attr('data-length'):5;
+        var placeholderProduct = selectMaterial.attr('data-placeholder') ? selectMaterial.attr('data-placeholder'):'Vật liệu';
+        if(selectMaterial.length) {
+            selectMaterial.select2({
+                placeholder: placeholderProduct,
+                multiple: false,
+                ajax: {
+                    url: "/admin/product/related",
+                    dataType: 'json',
+                    delay: 250,
+                    data: function (params) {
+                        return {
+                            keyword: params.term, // search term
+                            material: true
+                        };
+                    },
+                    processResults: function (data, params) {
+                        return {
+                            results: data,
+                        };
+                    },
+                    cache: true
+                },
+            });
+            selectMaterial.on("select2:select", function (evt) {
+                var element = evt.params.data.element;
+                var $element = $(element);
+                console.log($(this).val());
+                $element.detach();
+                $(this).append($element);
+                $(this).trigger("change");
+            });
+        }
+    });
+
 
     var selectArticle1 = $(".select-ajax-article");
     selectArticle1.each(function () {

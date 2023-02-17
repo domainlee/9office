@@ -55,9 +55,9 @@ class Admin extends Navigation
                 'icon'  => '<i class="ti-shopping-cart"></i>',
                 'label'	=> 'Đơn hàng',
                 'label2'=> 'Đơn hàng',
-                'uri'	=> '/admin/order',
+                'uri'	=> '/admin/order?page=1&status=Confirmed',
                 'resource' => 'admin:order',
-                'privilege' => 'order',
+                'privilege' => 'index',
                 'class'=>'fa fa-plus-square',
             ),
             array(
@@ -74,6 +74,14 @@ class Admin extends Navigation
                         'label2'=> 'material',
                         'uri'	=> '/admin/material',
                         'resource' => 'admin:material',
+                        'privilege' => 'index',
+                        'class'=>'fa fa-list-ul'
+                    ),
+                    array(
+                        'label'	=> 'Nhà cung cấp',
+                        'label2'=> 'Danh muc',
+                        'uri'	=> '/admin/manufacture',
+                        'resource' => 'admin:manufacture',
                         'privilege' => 'index',
                         'class'=>'fa fa-list-ul'
                     ),
@@ -97,7 +105,15 @@ class Admin extends Navigation
                 'module' => 'invoice',
                 'pages'	=> array(
                     array(
-                        'label'	=> 'Nhập vật liệu',
+                        'label'	=> 'Hoá đơn',
+                        'label2'=> 'bai viet',
+                        'uri'	=> '/admin/invoice/index',
+                        'resource' => 'admin:invoice',
+                        'privilege' => 'index',
+                        'class'=>'fa fa-list-ul',
+                    ),
+                    array(
+                        'label'	=> 'Nhập hàng',
                         'label2'=> 'bai viet',
                         'uri'	=> '/admin/invoice/add',
                         'resource' => 'admin:invoice',
@@ -105,7 +121,7 @@ class Admin extends Navigation
                         'class'=>'fa fa-list-ul',
                     ),
                     array(
-                        'label'	=> 'Tạo bởi đơn hàng',
+                        'label'	=> 'Xuất - bởi đơn hàng',
                         'label2'=> 'Danh muc',
                         'uri'	=> '/admin/invoice/order',
                         'resource' => 'admin:invoice',
@@ -113,7 +129,7 @@ class Admin extends Navigation
                         'class'=>'fa fa-list-ul'
                     ),
                     array(
-                        'label'	=> 'Tạo hoá đơn khác',
+                        'label'	=> 'Xuất - bởi hoá đơn khác',
                         'label2'=> 'Danh muc',
                         'uri'	=> '/admin/invoice/other',
                         'resource' => 'admin:invoice',

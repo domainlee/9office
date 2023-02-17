@@ -203,6 +203,57 @@ $(function(){
 
 $(function(){
 
+    // Material
+    if($('.material-form').length) {
+        var input_price = $('input[name=price]');
+        var manufactureId = $('select[name=manufactureId]');
+        $('select.material-type').on('change', function() {
+            if(this.value == 3) {
+                $('select[name=manufactureId] option:selected').removeAttr('selected');
+                input_price.prop('disabled', false);
+                manufactureId.prop('disabled', true);
+            } else {
+                input_price.prop('disabled', true);
+                manufactureId.prop('disabled', false);
+            }
+        });
+    }
+
+    if($('.invoice-form').length) {
+        var input_price_invoice = $('input[name=price]');
+        var quantity = $('input[name=quantity]');
+        var intoMoney = $('input[name=intoMoney]');
+
+        quantity.keyup(calculate);
+        input_price_invoice.keyup(calculate);
+
+        function calculate(e) {
+            var value_price = input_price_invoice.val();
+            value_price = value_price.replace(",", "");
+            var value_quantity = quantity.val();
+            value_quantity = value_quantity.replace(",", "");
+
+            intoMoney.val(value_price * value_quantity);
+            intoMoney.autoNumeric().trigger('focusout');
+        }
+    }
+
+    $('.btn-approved-invoice').click(function () {
+        console.log('click approved');
+        var id = $(this).attr('data-id'), _this = $(this);
+        $.post('/admin/invoice/import',{id: id},function(r){
+            if(r.code == 1){
+                alert(r.messenger);
+                location.reload();
+            }else if(r.code == 0){
+                alert(r.messenger);
+            }
+        });
+    });
+
+
+
+
     if($('#imageUpload').length) {
         $("#imageUpload").change(function(){
             var ins = document.getElementById('imageUpload').files.length;

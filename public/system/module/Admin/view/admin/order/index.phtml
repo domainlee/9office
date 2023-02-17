@@ -1,9 +1,33 @@
 <?php
 echo $this->headtitle($this->escapehtml($this->translate('Danh sách hóa đơn')));
-echo $this->headscript()->prependFile($this->basepath().'/js/order/order.js');
+//print_r($this->results);die;
 $order = $this->results['orders'];
+$total = $this->results['totalPages'];
+$page = $this->results['page'] ? $this->results['page']:1;
+$query = $this->query;
+$page_prev = ($page == 1 ? 1:$page-1);
+$page_next = ($total == $page ? $page:$page + 1);
+$id = $this->id;
+$phone = $this->phone;
+
+if($query) {
+    $page_prev = preg_replace ( '/page=([0-9])/','page='.$page_prev, $query );
+    $page_next = preg_replace ( '/page=([0-9])/','page='.$page_next, $query );
+} else {
+    $page_prev = 'page='.$page_prev;
+    $page_next = 'page='.$page_next;
+}
+
 ?>
 
+<style>
+    .list_product > div {
+        margin: 0 0 10px;
+    }
+    .list_product > div:last-child, .list_product > div:last-child p {
+        margin: 0;
+    }
+</style>
 <div class="row">
     <div class="col-sm-12">
         <div class="card-box">
@@ -20,10 +44,14 @@ $order = $this->results['orders'];
                                     $form = $this->fFilter;
                                     ?>
                                     <div class="form-group">
-                                        <?=$this->formelement($form->get('id')->setAttributes(['class' => 'form-control','placeholder'=>'Id']))?>
+                                        <?=$this->formelement($form->get('page')->setAttributes(['value' => $page]))?>
+                                        <?=$this->formelement($form->get('id')->setAttributes(['class' => 'form-control','placeholder'=>'Id', 'value' => $id]))?>
                                     </div>
                                     <div class="form-group">
-                                        <?=$this->formelement($form->get('title')->setAttributes(['class' => 'form-control','placeholder'=>'Tên khách hàng']))?>
+                                        <?=$this->formelement($form->get('phone')->setAttributes(['class' => 'form-control','placeholder'=>'Số điện thoại khách hàng', 'value' => $phone]))?>
+                                    </div>
+                                    <div class="form-group">
+                                        <?=$this->formelement($form->get('status')->setAttributes(['class' => 'form-control']))?>
                                     </div>
                                     <div class="form-group"><input name="submit" type="submit" class="btn btn-default " value="Tìm Kiếm"></div>
                                 </form>
@@ -39,7 +67,7 @@ $order = $this->results['orders'];
                                     <th>Địa chỉ</th>
                                     <th style="width: 40%">Sản phẩm</th>
                                     <th style="text-align: center;width: 8%">Trạng thái</th>
-                                    <th style="text-align: center;width: 5%">Xóa</th>
+                                    <th style="text-align: center;width: 10%">Hành động</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -49,18 +77,37 @@ $order = $this->results['orders'];
                                         <td class="id" style="text-align: center;vertical-align: middle"><?php echo $k ?></td>
                                         <td style="vertical-align: middle"><?php echo $v['customerName'] ?></td>
                                         <td style="vertical-align: middle"><?php echo $v['customerAddress'] ?></td>
-                                        <td style="">
-                                            <?php foreach ($v['products'] as $p => $pv): ?>
-                                                <p><?php echo '<strong>'.$pv['productCode'].'</strong>' . ' - ' . $pv['productName']; ?></p>
+                                        <td class="list_product">
+                                            <?php foreach ($v['products'] as $p => $pv):  ?>
+                                                <div class="" style="display: flex">
+                                                    <div>
+                                                        <img style="margin: 0 10px 0 0" class="thumb-md rounded-circle" src="<?php echo $pv['productImage'] ?>" />
+                                                    </div>
+                                                    <div>
+                                                        <?php
+                                                            $url_created_product = '/admin/material/addproduct?id='.$pv['productCode'].'&img='.$pv['productImage'].'&name='.$pv['productName'];
+                                                        ?>
+                                                        <strong><?php echo $pv['productCode']; ?> x <?php echo $pv['quantity']; ?></strong> - <a class="label label-danger" href="<?php echo $url_created_product ?>" target="_blank">Tạo vật liệu</a>
+                                                        <p><?php echo $pv['productName'] ?></p>
+                                                    </div>
+                                                </div>
                                             <?php endforeach; ?>
                                         </td>
                                         <td style="text-align: center;vertical-align: middle"><?php echo $v['statusName'] ?></td>
-                                        <td style="text-align: center;vertical-align: middle"></td>
+                                        <td style="text-align: center;vertical-align: middle"><a class="btn-approved-invoice btn label btn-sm btn-default btn-rounded waves-effect waves-light">Sản xuất</a></td>
                                     </tr>
                                     <?php endforeach; ?>
                                 <?php endif; ?>
                             </tbody>
                         </table>
+
+                        <div class="dataTables_paginate paging_bootstrap pagination pagination__option">
+                            <ul class="pagination">
+                                <li class="prev"><a class="" href="<?php echo 'order?'. $page_prev; ?>"><span>Trang sau</span></a></li>
+                                <li><a class="btn-default"><?php echo $page .'/'.$total;  ?></a></li>
+                                <li><a class="" href="<?php echo 'order?'. $page_next ?>" title="Trang trước"><span>Trang trước</span></a></li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
             </div>

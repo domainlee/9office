@@ -13,15 +13,25 @@ class OrderController extends AbstractActionController{
 
     public function indexAction(){
 		$this->layout('layout/admin');
-        $data = json_encode(array('page' => 70));
+
+		$query = $this->getRequest()->getUri()->getQuery();
+        $page = (int)$this->getRequest()->getQuery()->page ? : 1;
+        $id = (int)$this->getRequest()->getQuery()->id ? : '';
+        $phone = (int)$this->getRequest()->getQuery()->phone ? : '';
+        $status_filter = $this->getRequest()->getQuery()->status ? : '';
+        $data = json_encode(array('id' => $id, 'customerMobile' => $phone, 'page' => $page, 'statuses' => array($status_filter)));
         $curl = curl_init();
+
+        $api = \Base\Model\Resource::data_api();
+
         $data = array(
-            'version' => self::version,
-            'appId' => self::appId,
-            'businessId' => self::businessId,
-            'accessToken' => self::accessToken,
+            'version' => $api['version'],
+            'appId' => $api['appId'],
+            'businessId' => $api['businessId'],
+            'accessToken' => $api['accessToken'],
             'data' => $data
         );
+
 
         curl_setopt_array($curl, array(
             CURLOPT_URL => 'https://open.nhanh.vn/api/order/index',
@@ -39,13 +49,23 @@ class OrderController extends AbstractActionController{
 
         curl_close($curl);
         $response = json_decode($response, true);
-//        print_r($response);die;
         $options['isAdmin'] = $this->user()->isSuperAdmin();
         $fFilter = new \Admin\Form\OrderSearch($options);
-		return new ViewModel(array(
-//			'pages'=> $page,
+
+        $status = array(
+            'New' => 'Đơn mới',
+            'Confirming' => 'Đang xác nhận',
+            'CustomerConfirming' => 'Chờ khách xác nhận',
+            'Confirmed' => 'Đã xác nhận',
+            'Packing' => 'Đang đóng gói',
+        );
+        $fFilter->setStatus($status, $status_filter);
+        return new ViewModel(array(
+			'query'=> $query,
 			'results'=> $response['data'],
 			'fFilter'=> $fFilter,
+            'id' => $id,
+            'phone' => $phone
 		));
 	}
 	public function addAction(){

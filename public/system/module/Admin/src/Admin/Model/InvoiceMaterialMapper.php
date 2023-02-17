@@ -4,12 +4,15 @@ use Base\Mapper\Base;
 use \Base\XSS\xssClean;
 
 
-class InvoiceMapper extends Base{
-	protected $tableName = 'invoice';
+class InvoiceMaterialMapper extends Base{
+	protected $tableName = 'invoice_material';
 
+    /**
+     * @param \Admin\Model\InvoiceMaterial $item
+     */
     public function get($item)
     {
-        if (!$item->getId() && !$item->getDescription()) {
+        if (!$item->getId() && !$item->getInvoiceId()) {
             return null;
         }
         $select = $this->getDbSql()->select(array('ac' => $this->getTableName()));
@@ -17,8 +20,8 @@ class InvoiceMapper extends Base{
         if($item->getId()) {
             $select->where(['ac.id' => $item->getId()]);
         }
-        if($item->getDescription()){
-            $select->where(['ac.description'=> $item->getDescription()]);
+        if($item->getInvoiceId()){
+            $select->where(['ac.invoiceId'=> $item->getInvoiceId()]);
         }
 
         $select->limit(1);
@@ -39,19 +42,14 @@ class InvoiceMapper extends Base{
 	public function getId($id){
 		$dbAdapter = $this->getServiceLocator()->get('dbAdapter');
 		$dbSql = $this->getServiceLocator()->get('dbSql');
-		
 		$select = $dbSql->select(array('ac'=>$this->getTableName()));
-		$select->join(array('a' => 'article_categories'),
-				'a.id  =  ac.parentId', array(
-						'parentName' => 'name',
-				),
-				\Zend\Db\Sql\Select::JOIN_LEFT
-		);
-		$select->where(array('ac.id'=>$id));
+
+		$select->where(array('ac.materialId' => $id));
+
 		$selectString = $dbSql->getSqlStringForSqlObject($select);
 		$results = $dbAdapter->query($selectString, $dbAdapter::QUERY_MODE_EXECUTE);
 		if($results->count()){
-			$model = new \Admin\Model\Articlec();
+			$model = new \Admin\Model\InvoiceMaterial();
 			$data = (array)$results->current();
 			$model->exchangeArray($data);
 			return $model;
@@ -59,7 +57,27 @@ class InvoiceMapper extends Base{
 		return null;
 	}
 
-	
+    public function fetchAllStatus($item){
+
+        $dbAdapter = $this->getServiceLocator()->get('dbAdapter');
+        $dbSql = $this->getServiceLocator()->get('dbSql');
+
+        $select = $dbSql->select(array('ac'=>$this->getTableName()));
+
+        if($item->getInvoiceId()){
+            $select->where(array('ac.invoiceId'=>$item->getInvoiceId(), 'ac.status'=> 2));
+        }
+        $selectString = $dbSql->getSqlStringForSqlObject($select);
+        $results = $dbAdapter->query($selectString, $dbAdapter::QUERY_MODE_EXECUTE);
+        $rs = array();
+        foreach ($results as $row){
+            $model = new \Admin\Model\InvoiceMaterial();
+            $model->exchangeArray((array)$row);
+            $rs[] = $model;
+        }
+        return $rs;
+    }
+
 	public function fetchAll($item){
 
 		$dbAdapter = $this->getServiceLocator()->get('dbAdapter');
@@ -67,20 +85,25 @@ class InvoiceMapper extends Base{
 		
 		$select = $dbSql->select(array('ac'=>$this->getTableName()));
 
-        if($item->getStoreId()){
-            $select->where(array('ac.storeId'=>$item->getStoreId()));
+        if($item->getInvoiceId()){
+            $select->where(array('ac.invoiceId' => $item->getInvoiceId()));
         }
-		if($item->getExcludedId()) {
-			$select->where("m.id <> {$item->getExcludedId()}");
-		}
+        if($item->getMaterialId()){
+            $select->where(array('ac.materialId' => $item->getMaterialId()));
+        }
 		$selectString = $dbSql->getSqlStringForSqlObject($select);
 
 		$results = $dbAdapter->query($selectString, $dbAdapter::QUERY_MODE_EXECUTE);
 		$rs = array();
 		foreach ($results as $row){
-			$model = new \Admin\Model\Articlec();
+			$model = new \Admin\Model\InvoiceMaterial();
+            $modelMaterial = new \Admin\Model\Material();
+            $modelMaterial->setId($row['materialId']);
+            $mapperMaterial = $this->getServiceLocator()->get('Admin\Model\MaterialMapper');
+            $resultMaterial = $mapperMaterial->get($modelMaterial);
 			$model->exchangeArray((array)$row);
-			$rs[] = $model;			
+            $model->setOptions(['materialName' => $resultMaterial->getName()]);
+            $rs[] = $model;
 		}
 		return $rs;
 	}
@@ -119,19 +142,24 @@ class InvoiceMapper extends Base{
 
 
     /**
-     * @param \Admin\Model\Invoice $model
+     * @param \Admin\Model\InvoiceMaterial $model
      */
 	public function save($model){
         $xss = new xssClean();
         $data = array(
-            'type' => $model->getType(),
-            'status' => $model->getStatus(),
-            'description' => $model->getDescription(),
+			'type' => $model->getType(),
+			'materialId' => $model->getMaterialId(),
+			'invoiceId' =>$model->getInvoiceId(),
+			'quantity'=> $model->getQuantity(),
+			'price' => $model->getPrice(),
+			'intoMoney'=> $model->getIntoMoney(),
+			'inventoryTotalQuantiy'=> $model->getInventoryTotalQuantiy(),
+            'inventoryPrice' => $model->getInventoryPrice(),
+            'inventoryTotalPrice' => $model->getInventoryTotalPrice(),
             'createdDateTime' => $model->getCreatedDateTime(),
-            'updatedDateTime' => $model->getUpdatedDateTime(),
             'createdById' => $model->getCreatedById(),
-            'approvedById' => $model->getApprovedById(),
             'orderId' => $model->getOrderId(),
+            'status' => $model->getStatus()
 		);
         $data = $xss->cleanInputs($data);
 
@@ -160,19 +188,33 @@ class InvoiceMapper extends Base{
 		$dbSql = $this->getServiceLocator()->get('dbSql');
 		$select = $dbSql->select(array('ac'=>$this->getTableName()));
 		$rCount  =$dbSql->select(array('ac'=>$this->getTableName()),array('p'=>'count(id)'));
-
+		
+		$select->join(array('a' => 'article_categories'),
+				'a.id  =  ac.parentId', array(
+						'parentName' => 'name',
+				),
+				\Zend\Db\Sql\Select::JOIN_LEFT
+		);
 		if($item->getId()){
 			$select->where(array('ac.id'=>$item->getId()));
 			$rCount->where(array('ac.id'=>$item->getId()));
 		}
-
+		if($item->getName()){
+			$select->where("ac.name LIKE '%{$item->getName()}%'");
+			$rCount->where("ac.name LIKE '%{$item->getName()}%'");
+		}
+		if($item->getStoreId()){
+			$select->where(array('ac.storeId'=>$item->getStoreId()));
+			$rCount->where(array('ac.storeId'=>$item->getStoreId()));
+		}
 		$currentPage = isset ( $paging [0] ) ? $paging [0] : 1;
 		$limit = isset ( $paging [1] ) ? $paging [1] : 20;
 		$offset = ($currentPage - 1) * $limit;
 		$select->limit ( $limit );
 		$select->offset ( $offset );
 		$select->order ( 'ac.id DESC' );
-
+		
+		
 		$selectStr = $dbSql->getSqlStringForSqlObject($select);
 		$rCountStr = $dbSql->getSqlStringForSqlObject($rCount);
 		
@@ -182,31 +224,8 @@ class InvoiceMapper extends Base{
 		$rs = array();
 		if($results->count()){
 			foreach ($results as $row){
-				$model = new \Admin\Model\Invoice();
+				$model = new \Admin\Model\Articlec();
 				$model->exchangeArray((array)$row);
-				if($row['id']) {
-                    $modelInvoiceMaterial = new \Admin\Model\InvoiceMaterial();
-                    $modelInvoiceMaterial->setInvoiceId($row['id']);
-                    $modelInvoiceMaterialMapper = $this->getServiceLocator()->get('Admin\Model\InvoiceMaterialMapper');
-                    $resultInvoiceMaterial = $modelInvoiceMaterialMapper->fetchAll($modelInvoiceMaterial);
-                    if(!empty($resultInvoiceMaterial)) {
-                        $products = array();
-                        foreach ($resultInvoiceMaterial as $v) {
-                            $modelMaterial = new \Admin\Model\Material();
-                            $modelMaterial->setId($v->getMaterialId());
-                            $mapperMaterial = $this->getServiceLocator()->get('Admin\Model\MaterialMapper');
-                            $resultMaterial = $mapperMaterial->get($modelMaterial);
-
-                            $products[] = array(
-                                'material' => $resultMaterial->getName(),
-                                'quantity' => $v->getQuantity(),
-                                'price' => $v->getPrice(),
-                                'intoMoney' => $v->getIntoMoney(),
-                            );
-                        }
-                        $model->setOptions(['products' => $products]);
-                    }
-                }
 				$rs[] = $model;
 			}
 		}
