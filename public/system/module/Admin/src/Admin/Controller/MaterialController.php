@@ -149,42 +149,64 @@ class MaterialController extends AbstractActionController{
 
     public function addproductAction() {
         $this->layout('layout/admin');
-//        $id = $this->getEvent()->getRouteMatch()->getParam('id');
         $id = $this->getRequest()->getQuery()->id;
         $img = $this->getRequest()->getQuery()->img;
         $name = $this->getRequest()->getQuery()->name;
-        print_r($id);
-        print_r($img);
-        print_r($name);
-        die;
-        $api = \Base\Model\Resource::data_api();
-//        print_r($api);die;
-//        echo $id.'product add';die;
+        $query = $this->getRequest()->getQuery();
 
-//        $api = \Base\Model\Resource::data_api();
-//        $data = array(
-//            'version' => $api['version'],
-//            'appId' => $api['appId'],
-//            'businessId' => $api['businessId'],
-//            'accessToken' => $api['accessToken'],
-//            'data' => '9MPULLAC222201L'
-//        );
-//        $curl = curl_init();
-//        curl_setopt_array($curl, array(
-//            CURLOPT_URL => 'https://open.nhanh.vn/api/product/detail',
-//            CURLOPT_RETURNTRANSFER => true,
-//            CURLOPT_ENCODING => '',
-//            CURLOPT_MAXREDIRS => 10,
-//            CURLOPT_TIMEOUT => 0,
-//            CURLOPT_FOLLOWLOCATION => true,
-//            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-//            CURLOPT_CUSTOMREQUEST => 'POST',
-//            CURLOPT_POSTFIELDS => $data,
-//        ));
-//        $response = curl_exec($curl);
-//        curl_close($curl);
-//        $response = json_decode($response, true);
+        $u = $this->getServiceLocator()->get('User\Service\User');
+        $model = new \Admin\Model\ProductMaterial();
+        $mapper = $this->getServiceLocator()->get('Admin\Model\ProductMaterialMapper');
+        $form = new \Admin\Form\ProductMaterial($this->getServiceLocator(), null);
+        if($this->getRequest()->isPost()){
+            $form->setData(array_merge_recursive($this->getRequest()->getPost()->toArray(),$this->getRequest()->getFiles()->toArray()));
+            if($form->isValid()){
+                $data = $form->getData();
+                $model->exchangeArray($data);
+//                $model->setCreatedDateTime(DateBase::getCurrentDateTime());
+//                $model->setUpdatedDateTime(DateBase::getCurrentDateTime());
+//                $model->setType($model::IMPORT);
+//                $model->setCreatedById($u->getId());
+//                $model->setStatus(\Admin\Model\Invoice::STATUS_NOT_APPROVED);
+                $mapper->save($model);
+                if($model->getId()) {
+//                    $mapperInvoiceMaterial = $this->getServiceLocator()->get('Admin\Model\InvoiceMaterialMapper');
+//                    $modelInvoiceMaterial = new \Admin\Model\InvoiceMaterial();
+//                    $modelInvoiceMaterial->exchangeArray($data);
+//                    $modelInvoiceMaterial->setInvoiceId($model->getId());
+//
+//                    $modelInvoiceMaterial->setInventoryPrice($modelInvoiceMaterial->getPrice());
+//                    $modelInvoiceMaterial->setInventoryTotalQuantiy($modelInvoiceMaterial->getQuantity());
+//                    $modelInvoiceMaterial->setInventoryTotalPrice($modelInvoiceMaterial->getIntoMoney());
+//
+//                    $modelInvoiceMaterial->setCreatedDateTime(DateBase::getCurrentDateTime());
+//                    $modelInvoiceMaterial->setType($model::IMPORT);
+//                    $modelInvoiceMaterial->setCreatedById($u->getId());
+//                    $modelInvoiceMaterial->setStatus(\Admin\Model\Invoice::STATUS_NOT_APPROVED);
+//                    $mapperInvoiceMaterial->save($modelInvoiceMaterial);
+                }
 
+                $this->redirect()->toUrl('/admin/material/product');
+            }
+        }
+        return new ViewModel(array(
+            'form' => $form,
+            'query' => $query,
+        ));
+
+
+    }
+
+    public function additemproductAction() {
+        $this->layout('layout/null');
+
+        $model = new \Admin\Model\ProductMaterial();
+        $mapper = $this->getServiceLocator()->get('Admin\Model\ProductMaterialMapper');
+        $form = new \Admin\Form\ProductMaterial($this->getServiceLocator(), null);
+
+        return new ViewModel(array(
+            'form' => $form,
+        ));
     }
 
 	public function changeactiveAction(){

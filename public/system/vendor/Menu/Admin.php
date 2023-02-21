@@ -120,16 +120,16 @@ class Admin extends Navigation
                         'privilege' => 'add',
                         'class'=>'fa fa-list-ul',
                     ),
+//                    array(
+//                        'label'	=> 'Xuất - bởi đơn hàng',
+//                        'label2'=> 'Danh muc',
+//                        'uri'	=> '/admin/invoice/order',
+//                        'resource' => 'admin:invoice',
+//                        'privilege' => 'order',
+//                        'class'=>'fa fa-list-ul'
+//                    ),
                     array(
-                        'label'	=> 'Xuất - bởi đơn hàng',
-                        'label2'=> 'Danh muc',
-                        'uri'	=> '/admin/invoice/order',
-                        'resource' => 'admin:invoice',
-                        'privilege' => 'order',
-                        'class'=>'fa fa-list-ul'
-                    ),
-                    array(
-                        'label'	=> 'Xuất - bởi hoá đơn khác',
+                        'label'	=> 'Xuất hàng',
                         'label2'=> 'Danh muc',
                         'uri'	=> '/admin/invoice/other',
                         'resource' => 'admin:invoice',

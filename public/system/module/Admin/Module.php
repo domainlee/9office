@@ -47,6 +47,10 @@ class Module {
 
                         'Admin\Model\Invoice' => 'Admin\Model\Invoice',
                         'Admin\Model\InvoiceMapper' => 'Admin\Model\InvoiceMapper',
+                        'Admin\Model\ProductMaterial' => 'Admin\Model\ProductMaterial',
+                        'Admin\Model\ProductMaterialItem' => 'Admin\Model\ProductMaterialItem',
+                        'Admin\Model\ProductMaterialMapper' => 'Admin\Model\ProductMaterialMapper',
+                        'Admin\Model\ProductMaterialItemMapper' => 'Admin\Model\ProductMaterialItemMapper',
 
                         'Admin\Model\Manufacture' => 'Admin\Model\Manufacture',
                         'Admin\Model\ManufactureMapper' => 'Admin\Model\ManufactureMapper',

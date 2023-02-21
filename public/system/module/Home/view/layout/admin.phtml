@@ -66,12 +66,7 @@ $menu = $_COOKIE["menuleft"]
     <!-- LOGO -->
     <div class="topbar-left">
         <div class="text-center">
-            <a href="/admin" class="logo"><i class="ti-layout-cta-btn-left icon-c-logo"></i><span>Admin</span></a>
-            <?php
-                $domainUrl = $this->home()->getDomain();
-                $domainUrl ? $_SERVER['HTTP_HOST'] = $domainUrl:$_SERVER['HTTP_HOST'];
-            ?>
-            <a class="url-website-me" title="Xem website của bạn" href="http://<?= $_SERVER['HTTP_HOST'] ?>" target="_blank"><i style="" class="ion-eye"></i></a>
+            <a href="/admin" class="logo"><i class="ti-layout-cta-btn-left icon-c-logo"></i><span>9Office</span></a>
         </div>
     </div>
     <!-- Button mobile view to collapse sidebar menu -->
@@ -90,8 +85,8 @@ $menu = $_COOKIE["menuleft"]
                         <a href="#" class="dropdown-toggle waves-effect waves-light" data-toggle="dropdown"
                            role="button" aria-haspopup="true" aria-expanded="false">Tùy chọn nhanh <span
                                 class="caret"></span></a>
-                        <ul class="dropdown-menu">
-                            <li><a href="/admin">Thêm trang</a></li>
+                        <ul class="dropdown-menu" style="display: none">
+                            <li ><a href="/admin">Thêm trang</a></li>
 <!--                            <hr style="margin: 5px 0"/>-->
 <!--                            <li><a href="/admin/question">Yêu cầu chỉnh sửa Website</a></li>-->
                         </ul>

@@ -1,0 +1,43 @@
+<?php
+$form = $this->form;
+?>
+<style>
+    .form-group {
+        display: flex;
+        flex-direction: column;
+    }
+    .form-group .parsley-errors-list {
+        order: 5;
+    }
+</style>
+<div class="row">
+    <div class="col-sm-3">
+        <div class="form-group">
+            <label class="control-label" for="firstName">Vật liệu</label>
+            <?= $this->formelement($form->get('materialId')->setAttributes(['class' => 'form-control select-ajax-material', 'required' => 'required', 'placeholder'=>'Vật liệu','data-parsley-type' => 'string', 'data-parsley-error-message' => 'Vật liệu không được để trống'])) ?>
+            <?= $this->formelementerrors($form->get('materialId'),['class' => 'parsley-errors-list filled']) ?>
+        </div>
+    </div>
+    <div class="col-sm-3">
+        <div class="form-group">
+            <label class="control-label" for="firstName">Đơn giá</label>
+            <?= $this->formelement($form->get('price')->setAttributes(['name' => 'price[]','class' => 'form-control autonumber', 'placeholder'=>'Đơn giá', 'required' => 'required', 'data-parsley-error-message' => 'Không được để trống'])) ?>
+            <?= $this->formelementerrors($form->get('price'),['class' => 'parsley-errors-list filled']) ?>
+        </div>
+    </div>
+    <div class="col-sm-3">
+        <div class="form-group">
+            <label class="control-label" for="firstName">Số lượng</label>
+            <?= $this->formelement($form->get('quantity')->setAttributes(['class' => 'form-control', 'placeholder'=>'Số lượng', 'required' => 'required', 'data-parsley-type' => 'string', 'data-parsley-error-message' => 'Không được để trống'])) ?>
+            <?= $this->formelementerrors($form->get('quantity'),['class' => 'parsley-errors-list filled']) ?>
+        </div>
+    </div>
+    <div class="col-sm-3">
+        <div class="form-group">
+            <label class="control-label" for="firstName">Thành tiền</label>
+            <?= $this->formelement($form->get('intoMoney')->setAttributes(['class' => 'form-control autonumber', 'placeholder'=>'Thành tiền'])) ?>
+            <?= $this->formelementerrors($form->get('intoMoney'),['class' => 'parsley-errors-list filled']) ?>
+        </div>
+    </div>
+</div>
+

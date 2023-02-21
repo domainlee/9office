@@ -262,6 +262,13 @@ $(function(){
         });
     });
 
+    $('.add-product-item').click(function () {
+        var id = 2;
+        $.post('/admin/material/additemproduct',{id: id},function(r){
+
+        });
+    });
+
 
 
 
