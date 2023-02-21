@@ -17,9 +17,13 @@ class Material extends Base{
  	protected $manufactureIds;
 
     public $type_form = array(
-        '1' => 'Cái/ Chiếc',
-        '2' => 'KG',
+        '1' => 'Cái',
+        '2' => 'KG (Kilogram)',
         '3' => 'Công',
+        '4' => 'Chiếc',
+        '5' => 'CM (Centimet)',
+        '6' => 'Bộ',
+        '7' => 'Con',
     );
 
     /**

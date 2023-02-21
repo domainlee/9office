@@ -190,7 +190,7 @@ class ProductMaterial extends FormBase{
             'name' => 'submit',
             'attributes' => array(
                 'type'  => 'submit',
-                'value' => 'Tạo hoá đơn',
+                'value' => 'Thêm sản phẩm vật liệu',
                 'id' => 'btnSubmit',
                 'class' => 'htmlBtn first btn btn-danger'
             ),
