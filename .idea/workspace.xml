@@ -4,9 +4,25 @@
     <list default="true" id="363134c8-8b26-4c11-8dd9-a396a3e0a0dc" name="Default Changelist" comment="">
       <change afterPath="$PROJECT_DIR$/public/system/public/assets/js/jquery.lazy.min.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+<<<<<<< HEAD
       <change beforePath="$PROJECT_DIR$/public/system/module/Admin/view/admin/order/index.phtml" beforeDir="false" afterPath="$PROJECT_DIR$/public/system/module/Admin/view/admin/order/index.phtml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/public/system/module/Home/view/layout/admin.phtml" beforeDir="false" afterPath="$PROJECT_DIR$/public/system/module/Home/view/layout/admin.phtml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/public/system/public/assets/js/product.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/system/public/assets/js/product.js" afterDir="false" />
+=======
+<<<<<<< HEAD
+      <change beforePath="$PROJECT_DIR$/public/system/public/tp/dweb/view/layout/layout.phtml" beforeDir="false" afterPath="$PROJECT_DIR$/public/system/public/tp/dweb/view/layout/layout.phtml" afterDir="false" />
+=======
+      <change beforePath="$PROJECT_DIR$/public/system/module/Admin/src/Admin/Controller/MaterialController.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/system/module/Admin/src/Admin/Controller/MaterialController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/system/module/Admin/src/Admin/Controller/OrderController.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/system/module/Admin/src/Admin/Controller/OrderController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/system/module/Admin/src/Admin/Form/OrderSearch.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/system/module/Admin/src/Admin/Form/OrderSearch.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/system/module/Admin/src/Admin/Model/InvoiceMaterialMapper.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/system/module/Admin/src/Admin/Model/InvoiceMaterialMapper.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/system/module/Admin/view/admin/material/edit.phtml" beforeDir="false" afterPath="$PROJECT_DIR$/public/system/module/Admin/view/admin/material/edit.phtml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/system/module/Admin/view/admin/order/index.phtml" beforeDir="false" afterPath="$PROJECT_DIR$/public/system/module/Admin/view/admin/order/index.phtml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/system/module/Authorize/src/Authorize/Permission/Acl.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/system/module/Authorize/src/Authorize/Permission/Acl.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/system/module/Base/src/Base/Model/Resource.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/system/module/Base/src/Base/Model/Resource.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/system/vendor/Menu/Admin.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/system/vendor/Menu/Admin.php" afterDir="false" />
+>>>>>>> 004b9a7cc37db392a778057c52086fff90ab5565
+>>>>>>> fddf596d8243f65a03a9b1a1f1474bca91b4429a
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -77,8 +93,19 @@
       <workItem from="1673248074362" duration="6000" />
       <workItem from="1673258167946" duration="1132000" />
       <workItem from="1673517290880" duration="2746000" />
+<<<<<<< HEAD
+      <workItem from="1674013992971" duration="3050000" />
+      <workItem from="1674037459850" duration="833000" />
+      <workItem from="1675046004907" duration="1000" />
+      <workItem from="1676619053844" duration="3833000" />
+=======
       <workItem from="1674013992971" duration="1047000" />
+<<<<<<< HEAD
       <workItem from="1676090663333" duration="37738000" />
+=======
+      <workItem from="1676090663333" duration="35577000" />
+>>>>>>> 004b9a7cc37db392a778057c52086fff90ab5565
+>>>>>>> fddf596d8243f65a03a9b1a1f1474bca91b4429a
     </task>
     <servers />
   </component>
