@@ -202,6 +202,17 @@ $(function(){
 });
 
 $(function(){
+    $('.lazy').Lazy({
+        effect: "fadeIn",
+        effectTime: 500,
+    });
+
+    $('.button-image').magnificPopup({
+        type: 'image',
+        gallery: {
+            enabled:true
+        }
+    });
 
     // Material
     if($('.material-form').length) {

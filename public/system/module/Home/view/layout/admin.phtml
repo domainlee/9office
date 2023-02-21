@@ -29,8 +29,10 @@
         '/assets/plugins/codemirror/css/ambiance.css',
         '/assets/css/components.css',
     ];
-    echo '<link href="'.srcLink($cs,5).'" media="screen" rel="stylesheet" type="text/css">';
+    echo '<link href="'.srcLink($cs,6).'" media="screen" rel="stylesheet" type="text/css">';
     ?>
+
+    <link href="/assets/plugins/magnific-popup/css/magnific-popup.css" media="screen" rel="stylesheet" type="text/css">
 
     <style>
         .fixed-left-void .url-website-me {
@@ -256,6 +258,7 @@ $menu = $_COOKIE["menuleft"]
         ->prependFile($this->basePath() . '/assets/plugins/summernote/lang/summernote-vi-VN.js')
         ->prependFile($this->basePath() . '/assets/plugins/summernote/summernote-image-attributes.js')
         ->prependFile($this->basePath() . '/assets/plugins/summernote/summernote.min.js')
+        ->prependFile($this->basePath() . '/assets/plugins/magnific-popup/js/jquery.magnific-popup.min.js')
 
         ->prependFile($this->basePath() . '/assets/js/fastclick.js')
         ->prependFile($this->basePath() . '/assets/js/detect.js')

@@ -81,7 +81,7 @@ if($query) {
                                             <?php foreach ($v['products'] as $p => $pv):  ?>
                                                 <div class="" style="display: flex">
                                                     <div>
-                                                        <img style="margin: 0 10px 0 0" class="thumb-md rounded-circle" src="<?php echo $pv['productImage'] ?>" />
+                                                        <a title="<?php echo 'Đơn hàng ID-'. $k ?> - <?php echo $pv['productCode']; ?>" href="<?php echo $pv['productImage'] ?>" class="button-image"><img style="margin: 0 10px 0 0" class="thumb-md rounded-circle lazy" data-src="<?php echo $pv['productImage'] ?>" /></a>
                                                     </div>
                                                     <div>
                                                         <?php

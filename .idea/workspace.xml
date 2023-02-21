@@ -2,16 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="363134c8-8b26-4c11-8dd9-a396a3e0a0dc" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/public/system/public/assets/js/jquery.lazy.min.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/system/module/Admin/src/Admin/Controller/MaterialController.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/system/module/Admin/src/Admin/Controller/MaterialController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/system/module/Admin/src/Admin/Controller/OrderController.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/system/module/Admin/src/Admin/Controller/OrderController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/system/module/Admin/src/Admin/Form/OrderSearch.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/system/module/Admin/src/Admin/Form/OrderSearch.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/system/module/Admin/src/Admin/Model/InvoiceMaterialMapper.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/system/module/Admin/src/Admin/Model/InvoiceMaterialMapper.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/system/module/Admin/view/admin/material/edit.phtml" beforeDir="false" afterPath="$PROJECT_DIR$/public/system/module/Admin/view/admin/material/edit.phtml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/public/system/module/Admin/view/admin/order/index.phtml" beforeDir="false" afterPath="$PROJECT_DIR$/public/system/module/Admin/view/admin/order/index.phtml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/system/module/Authorize/src/Authorize/Permission/Acl.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/system/module/Authorize/src/Authorize/Permission/Acl.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/system/module/Base/src/Base/Model/Resource.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/system/module/Base/src/Base/Model/Resource.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/system/vendor/Menu/Admin.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/system/vendor/Menu/Admin.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/system/module/Home/view/layout/admin.phtml" beforeDir="false" afterPath="$PROJECT_DIR$/public/system/module/Home/view/layout/admin.phtml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/system/public/assets/js/product.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/system/public/assets/js/product.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -50,17 +45,17 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/public/system/module/Admin/src/Admin/Dg" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/public/system/public/assets/js" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/public/system/public/assets/js" />
+      <recent name="$PROJECT_DIR$" />
       <recent name="$PROJECT_DIR$/public/system/module/Admin/src/Admin/Dg" />
       <recent name="$PROJECT_DIR$/public/system/module/Admin/view/admin/invoice" />
       <recent name="$PROJECT_DIR$/public/system/module/Admin/src/Admin/Form" />
-      <recent name="$PROJECT_DIR$/public/system/module/Admin/src/Admin/Model" />
-      <recent name="$PROJECT_DIR$/public/system/public/assets/js" />
     </key>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
@@ -83,7 +78,7 @@
       <workItem from="1673258167946" duration="1132000" />
       <workItem from="1673517290880" duration="2746000" />
       <workItem from="1674013992971" duration="1047000" />
-      <workItem from="1676090663333" duration="35577000" />
+      <workItem from="1676090663333" duration="37738000" />
     </task>
     <servers />
   </component>
