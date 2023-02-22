@@ -225,6 +225,8 @@ class MaterialMapper extends Base{
             foreach ($results as $k => $row) {
                 $rs[$k]['id'] = $row['id'];
                 $rs[$k]['text'] = $row['name'];
+                $rs[$k]['price'] = $row['price'];
+                $rs[$k]['totalQuantiy'] = $row['totalQuantiy'];
             }
         }
         return $rs;

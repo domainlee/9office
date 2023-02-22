@@ -262,10 +262,11 @@ $(function(){
         });
     });
 
+    var list_product_material = $('.list-product-material');
     $('.add-product-item').click(function () {
         var id = 2;
         $.post('/admin/material/additemproduct',{id: id},function(r){
-
+            list_product_material.html('').html(r);
         });
     });
 

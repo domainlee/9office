@@ -153,6 +153,7 @@ class MaterialController extends AbstractActionController{
         $img = $this->getRequest()->getQuery()->img;
         $name = $this->getRequest()->getQuery()->name;
         $query = $this->getRequest()->getQuery();
+        unset($_SESSION['count']);
 
         $u = $this->getServiceLocator()->get('User\Service\User');
         $model = new \Admin\Model\ProductMaterial();
@@ -161,6 +162,7 @@ class MaterialController extends AbstractActionController{
         if($this->getRequest()->isPost()){
             $form->setData(array_merge_recursive($this->getRequest()->getPost()->toArray(),$this->getRequest()->getFiles()->toArray()));
             if($form->isValid()){
+                print_r($this->getRequest()->getPost());die;
                 $data = $form->getData();
                 $model->exchangeArray($data);
 //                $model->setCreatedDateTime(DateBase::getCurrentDateTime());
@@ -204,8 +206,23 @@ class MaterialController extends AbstractActionController{
         $mapper = $this->getServiceLocator()->get('Admin\Model\ProductMaterialMapper');
         $form = new \Admin\Form\ProductMaterial($this->getServiceLocator(), null);
 
+        if(!isset($_SESSION['count'])) {
+            $_SESSION['count'] = 2;
+        } else {
+            $_SESSION['count'] = $_SESSION['count'] + 1;
+        }
+
+        $add_pricing = [];
+        for($c = 1; $c <= $_SESSION['count']; $c++) {
+            $add_pricing[] = $c;
+        }
+        $pricing = array();
+
+        $add_pricing = array_merge($pricing, $add_pricing);
+
         return new ViewModel(array(
             'form' => $form,
+            'item' => $add_pricing
         ));
     }
 
