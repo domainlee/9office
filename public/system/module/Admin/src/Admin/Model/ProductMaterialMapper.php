@@ -131,7 +131,6 @@ class ProductMaterialMapper extends Base{
             'createdById' => $model->getCreatedById(),
 		);
         $data = $xss->cleanInputs($data);
-
         $dbAdapter = $this->getServiceLocator()->get('dbAdapter');
 		$dbSql = $this->getServiceLocator()->get('dbSql');
 		if(!$model->getId()){

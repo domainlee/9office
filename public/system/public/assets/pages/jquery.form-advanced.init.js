@@ -132,14 +132,34 @@ jQuery(document).ready(function () {
                     cache: true
                 },
             });
+
+            var parent = selectMaterial.closest("div.row");
             selectMaterial.on("select2:select", function (evt) {
                 var element = evt.params.data.element;
                 var $element = $(element);
                 console.log($(this).val());
+                parent.find('input.price_field').val(evt.params.data.price).trigger('focusout');
                 $element.detach();
                 $(this).append($element);
                 $(this).trigger("change");
             });
+
+            var input_price_invoice = parent.find('input.price_field');
+            var quantity = parent.find('input.quantity_field');
+            var intoMoney = parent.find('input.intoMoney_field');
+
+            quantity.keyup(calculate);
+
+            function calculate(e) {
+                var value_price = input_price_invoice.val();
+                value_price = value_price.replace(",", "");
+                var value_quantity = quantity.val();
+                value_quantity = value_quantity.replace(",", "");
+
+                intoMoney.val(value_price * value_quantity);
+                intoMoney.autoNumeric().trigger('focusout');
+            }
+
         }
     });
 

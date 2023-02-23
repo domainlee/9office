@@ -24,7 +24,7 @@ $item = $this->item;
     <div class="col-sm-3">
         <div class="form-group">
             <label class="control-label" for="firstName">Số lượng</label>
-            <?= $this->formelement($form->get('quantity')->setAttributes(['name' => 'quantity[]','class' => 'form-control', 'placeholder'=>'Số lượng', 'required' => 'required', 'data-parsley-type' => 'string', 'data-parsley-error-message' => 'Không được để trống'])) ?>
+            <?= $this->formelement($form->get('quantity')->setAttributes(['name' => 'quantity[]','class' => 'quantity_field form-control', 'placeholder'=>'Số lượng', 'required' => 'required', 'data-parsley-type' => 'string', 'data-parsley-error-message' => 'Không được để trống'])) ?>
             <?= $this->formelementerrors($form->get('quantity'),['class' => 'parsley-errors-list filled']) ?>
         </div>
     </div>
@@ -32,7 +32,7 @@ $item = $this->item;
         <div class="form-group">
             <label class="control-label" for="firstName">Thành tiền</label>
             <div class="<?= $c > 1 ? 'input-group':'' ?>">
-                <?= $this->formelement($form->get('intoMoney')->setAttributes(['name' => 'intoMoney[]','class' => 'form-control autonumber', 'placeholder'=>'Thành tiền'])) ?>
+                <?= $this->formelement($form->get('intoMoney')->setAttributes(['name' => 'intoMoney[]','class' => 'intoMoney_field form-control autonumber', 'placeholder'=>'Thành tiền'])) ?>
                 <?= $this->formelementerrors($form->get('intoMoney'),['class' => 'parsley-errors-list filled']) ?>
                 <?php if($c > 1): ?>
                 <span class="input-group-btn">
@@ -48,7 +48,7 @@ $item = $this->item;
 
 <script>
     jQuery(document).ready(function () {
-    $('.autonumber').autoNumeric();
+    $('.autonumber').autoNumeric('init', {'mDec':0});
 
     var select_material = $(".select-ajax-material");
     select_material.each(function () {
@@ -91,25 +91,24 @@ $item = $this->item;
                 $(this).append($element);
                 $(this).trigger("change");
             });
+
+            var input_price_invoice = parent.find('input.price_field');
+            var quantity = parent.find('input.quantity_field');
+            var intoMoney = parent.find('input.intoMoney_field');
+
+            quantity.keyup(calculate);
+
+            function calculate(e) {
+                var value_price = input_price_invoice.val();
+                value_price = value_price.replace(",", "");
+                var value_quantity = quantity.val();
+                value_quantity = value_quantity.replace(",", "");
+
+                intoMoney.val(value_price * value_quantity);
+                intoMoney.autoNumeric().trigger('focusout');
+            }
         }
     });
-
-    // var input_price_invoice = $('input.price_field');
-    // var quantity = $('input[name=quantity]');
-    // var intoMoney = $('input[name=intoMoney]');
-    //
-    // quantity.keyup(calculate);
-    // input_price_invoice.keyup(calculate);
-    //
-    // function calculate(e) {
-    //     var value_price = input_price_invoice.val();
-    //     value_price = value_price.replace(",", "");
-    //     var value_quantity = quantity.val();
-    //     value_quantity = value_quantity.replace(",", "");
-    //
-    //     intoMoney.val(value_price * value_quantity);
-    //     intoMoney.autoNumeric().trigger('focusout');
-    // }
 
 });
 

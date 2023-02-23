@@ -38,31 +38,11 @@ class ProductMaterial extends FormBase{
 
         $filter->add ( array (
             'name' => 'price',
+            "type" => "Zend\\InputFilter\\ArrayInput",
             'required' => false,
             'filters' => array (
                 array ('name' => 'Digits'),
                 array ('name' => 'StringTrim'),
-            ),
-            'validators' => array(
-                array(
-                    'name' => 'NotEmpty',
-                    'break_chain_on_failure' => true,
-                    'options' => array(
-                        'messages' => array(
-                            'isEmpty' => 'Bạn chưa nhập giá trị'
-                        )
-                    )
-                ),
-                array(
-                    'name'    => 'StringLength',
-                    'break_chain_on_failure' => true,
-                    'options' => array(
-                        'messages' => array(
-                            StringLength::INVALID => 'Giá trị phải là dạng số',
-                        )
-                    )
-                ),
-
             ),
         ) );
 
@@ -71,31 +51,11 @@ class ProductMaterial extends FormBase{
 
         $filter->add ( array (
             'name' => 'quantity',
+            "type" => "Zend\\InputFilter\\ArrayInput",
             'required' => false,
             'filters' => array (
                 array ('name' => 'Digits'),
                 array ('name' => 'StringTrim'),
-            ),
-            'validators' => array(
-                array(
-                    'name' => 'NotEmpty',
-                    'break_chain_on_failure' => true,
-                    'options' => array(
-                        'messages' => array(
-                            'isEmpty' => 'Giá trị phải là dạng số'
-                        )
-                    )
-                ),
-                array(
-                    'name'    => 'StringLength',
-                    'break_chain_on_failure' => true,
-                    'options' => array(
-                        'messages' => array(
-                            StringLength::INVALID => 'Giá trị phải là dạng số',
-                        )
-                    )
-                ),
-
             ),
         ) );
 
@@ -105,31 +65,32 @@ class ProductMaterial extends FormBase{
         $filter->add ( array (
             'name' => 'intoMoney',
             'required' => false,
+            "type" => "Zend\\InputFilter\\ArrayInput",
             'filters' => array (
                 array ('name' => 'Digits'),
                 array ('name' => 'StringTrim'),
             ),
-            'validators' => array(
-                array(
-                    'name' => 'NotEmpty',
-                    'break_chain_on_failure' => true,
-                    'options' => array(
-                        'messages' => array(
-                            'isEmpty' => 'Bạn chưa nhập giá trị'
-                        )
-                    )
-                ),
-                array(
-                    'name'    => 'StringLength',
-                    'break_chain_on_failure' => true,
-                    'options' => array(
-                        'messages' => array(
-                            StringLength::INVALID => 'Giá trị phải là dạng số',
-                        )
-                    )
-                ),
-
-            ),
+//            'validators' => array(
+//                array(
+//                    'name' => 'NotEmpty',
+//                    'break_chain_on_failure' => true,
+//                    'options' => array(
+//                        'messages' => array(
+//                            'isEmpty' => 'Bạn chưa nhập giá trị'
+//                        )
+//                    )
+//                ),
+//                array(
+//                    'name'    => 'StringLength',
+//                    'break_chain_on_failure' => true,
+//                    'options' => array(
+//                        'messages' => array(
+//                            StringLength::INVALID => 'Giá trị phải là dạng số',
+//                        )
+//                    )
+//                ),
+//
+//            ),
         ) );
 
         $name = new Text('name');

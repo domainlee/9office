@@ -144,7 +144,18 @@ class MaterialController extends AbstractActionController{
 
 	public function productAction() {
         $this->layout('layout/admin');
-        echo 'product 123';die;
+        $model = new \Admin\Model\ProductMaterial();
+        $model->exchangeArray((array)$this->getRequest()->getQuery());
+        $mapper = $this->getServiceLocator()->get('Admin\Model\ProductMaterialMapper');
+
+        $page = (int)$this->getRequest()->getQuery()->page ? : 1;
+        $results = $mapper->search($model, array($page,10));
+
+        return new ViewModel(array(
+            'results' => $results,
+            'url' => $this->getRequest()->getUri()->getQuery(),
+            'uri' => $this->getRequest()->getUri()->getQuery(),
+        ));
     }
 
     public function addproductAction() {
@@ -157,38 +168,41 @@ class MaterialController extends AbstractActionController{
 
         $u = $this->getServiceLocator()->get('User\Service\User');
         $model = new \Admin\Model\ProductMaterial();
+        $model->setImage($img);
         $mapper = $this->getServiceLocator()->get('Admin\Model\ProductMaterialMapper');
         $form = new \Admin\Form\ProductMaterial($this->getServiceLocator(), null);
         if($this->getRequest()->isPost()){
             $form->setData(array_merge_recursive($this->getRequest()->getPost()->toArray(),$this->getRequest()->getFiles()->toArray()));
             if($form->isValid()){
-                print_r($this->getRequest()->getPost());die;
                 $data = $form->getData();
                 $model->exchangeArray($data);
-//                $model->setCreatedDateTime(DateBase::getCurrentDateTime());
-//                $model->setUpdatedDateTime(DateBase::getCurrentDateTime());
-//                $model->setType($model::IMPORT);
-//                $model->setCreatedById($u->getId());
-//                $model->setStatus(\Admin\Model\Invoice::STATUS_NOT_APPROVED);
+                $model->setCreatedDateTime(DateBase::getCurrentDateTime());
+                $model->setCreatedById($u->getId());
                 $mapper->save($model);
                 if($model->getId()) {
-//                    $mapperInvoiceMaterial = $this->getServiceLocator()->get('Admin\Model\InvoiceMaterialMapper');
-//                    $modelInvoiceMaterial = new \Admin\Model\InvoiceMaterial();
-//                    $modelInvoiceMaterial->exchangeArray($data);
-//                    $modelInvoiceMaterial->setInvoiceId($model->getId());
-//
-//                    $modelInvoiceMaterial->setInventoryPrice($modelInvoiceMaterial->getPrice());
-//                    $modelInvoiceMaterial->setInventoryTotalQuantiy($modelInvoiceMaterial->getQuantity());
-//                    $modelInvoiceMaterial->setInventoryTotalPrice($modelInvoiceMaterial->getIntoMoney());
-//
-//                    $modelInvoiceMaterial->setCreatedDateTime(DateBase::getCurrentDateTime());
-//                    $modelInvoiceMaterial->setType($model::IMPORT);
-//                    $modelInvoiceMaterial->setCreatedById($u->getId());
-//                    $modelInvoiceMaterial->setStatus(\Admin\Model\Invoice::STATUS_NOT_APPROVED);
-//                    $mapperInvoiceMaterial->save($modelInvoiceMaterial);
+                    if(!empty($data['materialId'])) {
+                        foreach ($data['materialId'] as $k => $v) {
+                            $price = $data['price'][$k];
+                            $quantity = $data['quantity'][$k];
+                            $intoMoney = $data['intoMoney'][$k];
+                            $mapperProductMaterialItem = $this->getServiceLocator()->get('Admin\Model\ProductMaterialItemMapper');
+                            $modelProductMaterialItem = new \Admin\Model\ProductMaterialItem();
+                            $modelProductMaterialItem->exchangeArray($data);
+                            $modelProductMaterialItem->setMaterialId($v);
+                            $modelProductMaterialItem->setPrice($price);
+                            $modelProductMaterialItem->setQuantity($quantity);
+                            $modelProductMaterialItem->setIntoMoney($intoMoney);
+                            $modelProductMaterialItem->setCreatedDateTime(DateBase::getCurrentDateTime());
+                            $modelProductMaterialItem->setUpdatedDateTime(DateBase::getCurrentDateTime());
+                            $modelProductMaterialItem->setCreatedById($u->getId());
+                            $mapperProductMaterialItem->save($modelProductMaterialItem);
+                        }
+                    }
                 }
 
                 $this->redirect()->toUrl('/admin/material/product');
+            } else {
+                print_r($form->getMessages());
             }
         }
         return new ViewModel(array(

@@ -50,14 +50,14 @@ $query = $this->query;
                             <div class="col-sm-3">
                                 <div class="form-group">
                                     <label class="control-label" for="firstName">Số lượng</label>
-                                    <?= $this->formelement($form->get('quantity')->setAttributes(['name' => 'quantity[]','class' => 'form-control', 'placeholder'=>'Số lượng', 'required' => 'required', 'data-parsley-type' => 'string', 'data-parsley-error-message' => 'Không được để trống'])) ?>
+                                    <?= $this->formelement($form->get('quantity')->setAttributes(['name' => 'quantity[]','class' => 'quantity_field form-control', 'placeholder'=>'Số lượng', 'required' => 'required', 'data-parsley-type' => 'string', 'data-parsley-error-message' => 'Không được để trống'])) ?>
                                     <?= $this->formelementerrors($form->get('quantity'),['class' => 'parsley-errors-list filled']) ?>
                                 </div>
                             </div>
                             <div class="col-sm-3">
                                 <div class="form-group">
                                     <label class="control-label" for="firstName">Thành tiền</label>
-                                    <?= $this->formelement($form->get('intoMoney')->setAttributes(['name' => 'intoMoney[]','class' => 'form-control autonumber', 'placeholder'=>'Thành tiền'])) ?>
+                                    <?= $this->formelement($form->get('intoMoney')->setAttributes(['name' => 'intoMoney[]','class' => 'intoMoney_field form-control autonumber', 'placeholder'=>'Thành tiền'])) ?>
                                     <?= $this->formelementerrors($form->get('intoMoney'),['class' => 'parsley-errors-list filled']) ?>
                                 </div>
                             </div>

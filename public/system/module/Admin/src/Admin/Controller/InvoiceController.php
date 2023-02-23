@@ -52,10 +52,13 @@ class InvoiceController extends AbstractActionController{
 //		$form->setCategoryIds($model->toSelectBoxArray($category,\Admin\Model\Article::SELECT_MODE_ALL));
 
 		if($this->getRequest()->isPost()){
-			$form->setData(array_merge_recursive($this->getRequest()->getPost()->toArray(),$this->getRequest()->getFiles()->toArray()));
-			if($form->isValid()){
+            $form->setData(array_merge_recursive($this->getRequest()->getPost()->toArray(),$this->getRequest()->getFiles()->toArray()));
+
+
+            if($form->isValid()){
 
                 $data = $form->getData();
+                print_r($data);die;
 
                 $model->exchangeArray($data);
                 $model->setCreatedDateTime(DateBase::getCurrentDateTime());
