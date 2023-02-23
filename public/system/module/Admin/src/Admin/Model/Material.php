@@ -12,6 +12,7 @@ class Material extends Base{
     protected $totalPrice;
  	protected $manufactureId;
  	protected $createdById;
+ 	protected $image;
  	protected $createdDateTime;
 
  	protected $manufactureIds;
@@ -25,6 +26,22 @@ class Material extends Base{
         '6' => 'Bộ',
         '7' => 'Con',
     );
+
+    /**
+     * @return mixed
+     */
+    public function getImage()
+    {
+        return $this->image;
+    }
+
+    /**
+     * @param mixed $image
+     */
+    public function setImage($image)
+    {
+        $this->image = $image;
+    }
 
     /**
      * @return mixed
@@ -202,6 +219,7 @@ class Material extends Base{
             'totalPrice' => $this->getTotalPrice(),
             'manufactureId' => $this->getManufactureId(),
             'createdById' => $this->getCreatedById(),
+            'image' => $this->getImage(),
             'createdDateTime' => $this->getCreatedDateTime(),
         );
         return $data;

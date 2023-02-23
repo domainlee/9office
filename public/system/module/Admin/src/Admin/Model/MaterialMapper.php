@@ -107,6 +107,7 @@ class MaterialMapper extends Base{
             'totalPrice' => $model->getTotalPrice(),
             'manufactureId' => $model->getManufactureId(),
             'createdById' => $model->getCreatedById(),
+            'image' => $model->getImage(),
             'createdDateTime' => $model->getCreatedDateTime(),
 		);
 

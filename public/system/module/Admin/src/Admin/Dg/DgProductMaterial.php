@@ -34,7 +34,7 @@ class DgProductMaterial extends \Base\Dg\Table {
             $rows[] = array(
                 array (
                     'type' => 'text',
-                    'value' => '<img class="lazy thumb-md" data-src="'.$item->getImage().'" >',
+                    'value' => '<a title="'.$item->getName().'" href="'.$item->getImage().'" class="button-image"><img class="lazy thumb-md" data-src="'.$item->getImage().'" ></a>',
                     'htmlOptions'=> array('style'=>'vertical-align: middle'),
                 ),
                 array(

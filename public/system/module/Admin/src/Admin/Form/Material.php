@@ -157,6 +157,17 @@ class Material extends ProvidesEventsForm{
             ),
         ) );
 
+        $image = new Text('image');
+        $this->add($image);
+
+        $filter->add ( array (
+            'name' => 'image',
+            'required' => false,
+            'filters' => array (
+                array ('name' => 'StringTrim'),
+            ),
+        ) );
+
         $type = new Select('manufactureId');
         $this->add($type);
         $filter->add ( array (

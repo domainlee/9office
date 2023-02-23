@@ -42,10 +42,18 @@ $form = $this->form;
                         </div>
                     </div>
                     <div class="row">
-
-                    </div>
-                    <div class="row">
-
+                        <div class="col-sm-3">
+                            <div class="form-group form-group__logo">
+                                <label class="control-label">Hình ảnh</label>
+                                <div class="imgLogo">
+                                    <?php if(!empty($value['logo'])): ?>
+                                        <img class="img-responsive img-thumbnail" src="<?= $value['logo'] ?>" >
+                                    <?php endif; ?>
+                                </div>
+                                <input type="file" id="logo" class="filestyle" data-buttonText="Chọn Logo" data-buttonname="btn-white" data-iconname="fa fa-cloud-upload">
+                                <input type="hidden" name="image" class="logo" value="<?= !empty($value['logo']) ? $value['logo']:'' ?>" />
+                            </div>
+                        </div>
                     </div>
                     <div class="form-actions">
                         <?=$this->formelement($form->get('submit')->setAttributes(['class' => 'loadHomepage btn btn-default']))?>

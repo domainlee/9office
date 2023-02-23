@@ -7,6 +7,10 @@ class DgMaterial extends \Base\Dg\Table {
         if(!empty($this->dataSet)):
         $headerArr = array(
             array(
+                'label' => '',
+                'style' => 'text-align: center;width: 2%'
+            ),
+            array(
                 'label' => 'Tên vật liệu',
                 'style' => 'vertical-align: middle;'
             ),
@@ -39,7 +43,16 @@ class DgMaterial extends \Base\Dg\Table {
         $rows = array();
 
         foreach ($this->dataSet as $item) {
+            $img = '';
+            if($item->getImage()) {
+                $img = '<a title="'.$item->getName().'" href="'.$item->getImage().'" class="button-image"><img class="lazy thumb-sm" src="'.$item->getImage().'" ></a>';
+            }
             $rows[] = array(
+                array(
+                    'type' => 'text',
+                    'value' => $img,
+                    'htmlOptions'=> array('style'=>'vertical-align: middle'),
+                ),
                 array (
                     'type' => 'text',
                     'value' => '<a href="/admin/material/edit/'.$item->getId().($this->urlQuery ? '?'.$this->urlQuery:null).'">'. $item->getName().'</a></a>',

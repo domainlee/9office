@@ -2,6 +2,7 @@
     $form = $this->form;
     $materials = $this->materials;
     $type = $form->get('type')->getValue();
+    $image = $form->get('image')->getValue();
     echo $this->headtitle($this->escapehtml($this->translate('Sửa - '.$form->get('name')->getValue())));
 ?>
 
@@ -45,6 +46,20 @@
                                     <input type="hidden" name="manufactureId" value="<?= $form->get('manufactureId')->getValue() ?>" >
                                 <?= $this->formelement($form->get('manufactureId')->setAttributes(['class' => 'form-control', 'disabled' => true])) ?>
                                 <?= $this->formelementerrors($form->get('manufactureId'),['class' => 'parsley-errors-list filled']) ?>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <div class="form-group form-group__logo">
+                                <label class="control-label">Hình ảnh</label>
+                                <div class="imgLogo">
+                                    <?php if(!empty($image)): ?>
+                                        <img class="img-responsive img-thumbnail" src="<?= $image ?>" >
+                                    <?php endif; ?>
+                                </div>
+                                <input type="file" id="logo" class="filestyle" data-buttonText="Chọn Logo" data-buttonname="btn-white" data-iconname="fa fa-cloud-upload">
+                                <input type="hidden" name="image" class="logo" value="<?= !empty($image) ? $image:'' ?>" />
                             </div>
                         </div>
                     </div>

@@ -128,6 +128,7 @@ class MaterialController extends AbstractActionController{
             $form->setData(array_merge_recursive($this->getRequest()->getPost()->toArray(),$this->getRequest()->getFiles()->toArray()));
             if($form->isValid()){
                 $data = $form->getData();
+                $resultMaterial->setImage($data['image']);
                 $resultMaterial->setName($data['name']);
                 $mapper->save($resultMaterial);
                 $this->redirect()->toUrl('/admin/material');
