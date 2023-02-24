@@ -108,6 +108,7 @@ jQuery(document).ready(function () {
     var select_material = $(".select-ajax-material");
     select_material.each(function () {
         var selectMaterial = $(this);
+        var cong = selectMaterial.attr('data-cong');
         var length = selectMaterial.attr('data-length') ? selectMaterial.attr('data-length'):5;
         var placeholderProduct = selectMaterial.attr('data-placeholder') ? selectMaterial.attr('data-placeholder'):'Vật liệu';
         if(selectMaterial.length) {
@@ -121,7 +122,8 @@ jQuery(document).ready(function () {
                     data: function (params) {
                         return {
                             keyword: params.term, // search term
-                            material: true
+                            material: true,
+                            material_not: cong,
                         };
                     },
                     processResults: function (data, params) {

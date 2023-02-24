@@ -1917,6 +1917,7 @@ class ProductController extends AbstractActionController{
         $template = $this->params()->fromQuery('template');
         $store = $this->params()->fromQuery('store');
         $material = $this->params()->fromQuery('material');
+        $material_not = $this->params()->fromQuery('material_not');
         $categoryProduct = $this->params()->fromQuery('categoryproduct');
         $categoryArticle = $this->params()->fromQuery('categoryarticle');
 
@@ -1925,6 +1926,9 @@ class ProductController extends AbstractActionController{
         if($material) {
             $material = new \Admin\Model\Material();
             $material->setName($keyword);
+            if($material_not === 'true') {
+                $material->setOptions(['cong' => true]);
+            }
             $materialMapper = $this->getServiceLocator()->get('Admin\Model\MaterialMapper');
             $r = $materialMapper->related($material);
         } elseif($page) {

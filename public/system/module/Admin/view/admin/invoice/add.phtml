@@ -32,7 +32,7 @@ $form = $this->form;
                         <div class="col-sm-3">
                             <div class="form-group">
                                 <label class="control-label" for="firstName">Vật liệu</label>
-                                <?= $this->formelement($form->get('materialId')->setAttributes(['class' => 'form-control select-ajax-material', 'required' => 'required', 'placeholder'=>'Vật liệu','data-parsley-type' => 'string', 'data-parsley-error-message' => 'Vật liệu không được để trống'])) ?>
+                                <?= $this->formelement($form->get('materialId')->setAttributes(['class' => 'form-control select-ajax-material', 'required' => 'required','data-cong' => 'true', 'placeholder'=>'Vật liệu','data-parsley-type' => 'string', 'data-parsley-error-message' => 'Vật liệu không được để trống'])) ?>
                                 <?= $this->formelementerrors($form->get('materialId'),['class' => 'parsley-errors-list filled']) ?>
                             </div>
                         </div>

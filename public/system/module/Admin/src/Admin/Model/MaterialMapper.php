@@ -215,7 +215,9 @@ class MaterialMapper extends Base{
         if($item->getName()){
             $select->where("a.name LIKE '%{$item->getName()}%'");
         }
-        $select->where("a.type != 3");
+        if($item->getOption('cong')) {
+            $select->where("a.type != 3");
+        }
         $select->limit (10);
         $select->order ( 'a.id DESC' );
         $selectString = $dbSql->getSqlStringForSqlObject($select);
