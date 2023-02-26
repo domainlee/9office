@@ -44,7 +44,7 @@ class DgProductMaterial extends \Base\Dg\Table {
                 ),
                 array (
                     'type' => 'text',
-                    'value' => '<a href="/admin/material/edit/'.$item->getId().($this->urlQuery ? '?'.$this->urlQuery:null).'">'. $item->getName().'</a></a>',
+                    'value' => '<a href="/admin/material/editproduct/'.$item->getId().($this->urlQuery ? '?'.$this->urlQuery:null).'">'. $item->getName().'</a></a>',
                     'htmlOptions'=> array('style'=>'vertical-align: middle'),
                 ),
                 array(

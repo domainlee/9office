@@ -210,34 +210,141 @@ class MaterialController extends AbstractActionController{
             'form' => $form,
             'query' => $query,
         ));
+    }
 
+    public function editproductAction() {
+        $this->layout('layout/admin');
+        $id = $this->getEvent()->getRouteMatch()->getParam('id');
+        unset($_SESSION['count']);
 
+//        $id = $this->getRequest()->getQuery()->id;
+//        $img = $this->getRequest()->getQuery()->img;
+//        $name = $this->getRequest()->getQuery()->name;
+//        $query = $this->getRequest()->getQuery();
+//        unset($_SESSION['count']);
+
+        $u = $this->getServiceLocator()->get('User\Service\User');
+        $model = new \Admin\Model\ProductMaterial();
+//        $model->setImage($img);
+        $mapper = $this->getServiceLocator()->get('Admin\Model\ProductMaterialMapper');
+        $model->setId($id);
+        $result = $mapper->get($model);
+
+        $form = new \Admin\Form\ProductMaterial($this->getServiceLocator(), null);
+        $data = $model->toFormValues();
+        $form->setData($data);
+
+        $mapperProductMaterialItem = $this->getServiceLocator()->get('Admin\Model\ProductMaterialItemMapper');
+        $modelProductMaterialItem = new \Admin\Model\ProductMaterialItem();
+        $modelProductMaterialItem->setProductId($data['productId']);
+
+        $materials = $mapperProductMaterialItem->fetchAll($modelProductMaterialItem);
+
+        if($this->getRequest()->isPost()){
+            $form->setData(array_merge_recursive($this->getRequest()->getPost()->toArray(),$this->getRequest()->getFiles()->toArray()));
+            if($form->isValid()){
+                $data = $form->getData();
+                $model->exchangeArray($data);
+                $model->setCreatedDateTime(DateBase::getCurrentDateTime());
+                $model->setCreatedById($u->getId());
+                $mapper->save($model);
+                if($model->getId()) {
+                    if(!empty($data['materialId'])) {
+                        foreach ($data['materialId'] as $k => $v) {
+                            $price = $data['price'][$k];
+                            $quantity = $data['quantity'][$k];
+                            $intoMoney = $data['intoMoney'][$k];
+                            $mapperProductMaterialItem = $this->getServiceLocator()->get('Admin\Model\ProductMaterialItemMapper');
+                            $modelProductMaterialItem = new \Admin\Model\ProductMaterialItem();
+                            $modelProductMaterialItem->exchangeArray($data);
+                            $modelProductMaterialItem->setMaterialId($v);
+                            $modelProductMaterialItem->setPrice($price);
+                            $modelProductMaterialItem->setQuantity($quantity);
+                            $modelProductMaterialItem->setIntoMoney($intoMoney);
+                            $modelProductMaterialItem->setCreatedDateTime(DateBase::getCurrentDateTime());
+                            $modelProductMaterialItem->setUpdatedDateTime(DateBase::getCurrentDateTime());
+                            $modelProductMaterialItem->setCreatedById($u->getId());
+                            $mapperProductMaterialItem->save($modelProductMaterialItem);
+                        }
+                    }
+                }
+
+                $this->redirect()->toUrl('/admin/material/product');
+            } else {
+                print_r($form->getMessages());
+            }
+        }
+        return new ViewModel(array(
+            'form' => $form,
+            'materials' => $materials,
+//            'query' => $query,
+        ));
     }
 
     public function additemproductAction() {
         $this->layout('layout/null');
-
+        $type = $this->getRequest()->getPost()['type'];
+        $productId = $this->getRequest()->getPost()['product_id'];
+        $productItemId = $this->getRequest()->getPost()['product_item_id'];
+        $materialId = $this->getRequest()->getPost()['material_id'];
         $model = new \Admin\Model\ProductMaterial();
         $mapper = $this->getServiceLocator()->get('Admin\Model\ProductMaterialMapper');
         $form = new \Admin\Form\ProductMaterial($this->getServiceLocator(), null);
+        $resultMaterialItem = array();
 
-        if(!isset($_SESSION['count'])) {
-            $_SESSION['count'] = 2;
-        } else {
-            $_SESSION['count'] = $_SESSION['count'] + 1;
+        if($type === 'add') {
+            if(!isset($_SESSION['count'])) {
+                $_SESSION['count'] = 2;
+            } else {
+                $_SESSION['count'] = $_SESSION['count'] + 1;
+            }
         }
+        if($type === 'remove') {
+            if(!session_id()) {
+                session_start();
+            }
+            if($materialId && $productItemId) {
+                $mapperProductMaterialItem = $this->getServiceLocator()->get('Admin\Model\ProductMaterialItemMapper');
+                $modelMaterialItemDelete = new \Admin\Model\ProductMaterialItem();
+                $modelMaterialItemDelete->setProductId($productItemId);
+                $modelMaterialItemDelete->setMaterialId($materialId);
+                $mapperProductMaterialItem->delete($modelMaterialItemDelete);
 
+                $modelProductMaterialItem = new \Admin\Model\ProductMaterialItem();
+                $modelProductMaterialItem->setProductId($productItemId);
+                $resultMaterialItem = $mapperProductMaterialItem->fetchAll($modelProductMaterialItem);
+            } else {
+                if(isset($_SESSION['count'])) {
+                    $_SESSION['count'] =  $_SESSION['count'] > 0 ? $_SESSION['count'] - 1:0;
+                } else {
+                    $_SESSION['count'] = 0;
+                }
+            }
+        }
+        if($type === 'edit') {
+            if(!isset($_SESSION['count'])) {
+                $_SESSION['count'] = 1;
+            } else {
+                $_SESSION['count'] = $_SESSION['count'] + 1;
+            }
+            if($productId) {
+                $mapperProductMaterialItem = $this->getServiceLocator()->get('Admin\Model\ProductMaterialItemMapper');
+                $modelProductMaterialItem = new \Admin\Model\ProductMaterialItem();
+                $modelProductMaterialItem->setProductId($productId);
+                $resultMaterialItem = $mapperProductMaterialItem->fetchAll($modelProductMaterialItem);
+            }
+        }
         $add_pricing = [];
         for($c = 1; $c <= $_SESSION['count']; $c++) {
             $add_pricing[] = $c;
         }
         $pricing = array();
 
-        $add_pricing = array_merge($pricing, $add_pricing);
-
+        $add_pricing = array_merge($resultMaterialItem, $add_pricing);
         return new ViewModel(array(
             'form' => $form,
-            'item' => $add_pricing
+            'item' => $add_pricing,
+            'material_item' => $resultMaterialItem,
         ));
     }
 

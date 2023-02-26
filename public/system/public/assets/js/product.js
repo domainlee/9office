@@ -264,12 +264,25 @@ $(function(){
 
     var list_product_material = $('.list-product-material');
     $('.add-product-item').click(function () {
-        var id = 2;
-        $.post('/admin/material/additemproduct',{id: id},function(r){
+        $.post('/admin/material/additemproduct',{type: 'add'},function(r){
             list_product_material.html('').html(r);
         });
     });
 
+    $('.edit-product-item').click(function () {
+        var productId = $(this).attr('data-product-id');
+        $.post('/admin/material/additemproduct',{type: 'edit', product_id: productId},function(r){
+            list_product_material.html('').html(r);
+        });
+    });
+
+    $('.remove-product-item').click(function () {
+        var product_id = $(this).attr('data-product');
+        var material_id = $(this).attr('data-material');
+        $.post('/admin/material/additemproduct',{type: 'remove', product_item_id: product_id, material_id: material_id},function(r){
+            list_product_material.html('').html(r);
+        });
+    });
 
 
 

@@ -109,10 +109,13 @@ class ProductMaterial extends Base{
     }
 
 
-    public function toFormValues()
-    {
+    public function toFormValues() {
         $data =  array(
-
+            'productId' => $this->getProductId(),
+            'image' => $this->getImage(),
+            'name' => $this->getName(),
+            'createdDateTime' => $this->getCreatedDateTime(),
+            'createdById' => $this->getCreatedById(),
         );
         return $data;
     }

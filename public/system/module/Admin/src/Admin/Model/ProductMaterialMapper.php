@@ -9,16 +9,13 @@ class ProductMaterialMapper extends Base{
 
     public function get($item)
     {
-        if (!$item->getId() && !$item->getDescription()) {
+        if (!$item->getId()) {
             return null;
         }
         $select = $this->getDbSql()->select(array('ac' => $this->getTableName()));
 
         if($item->getId()) {
             $select->where(['ac.id' => $item->getId()]);
-        }
-        if($item->getDescription()){
-            $select->where(['ac.description'=> $item->getDescription()]);
         }
 
         $select->limit(1);

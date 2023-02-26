@@ -209,8 +209,6 @@ class Material extends Base{
 
     public function toFormValues()
     {
-
-
         $data =  array(
             'name' => $this->getName(),
             'type' => $this->getType(),

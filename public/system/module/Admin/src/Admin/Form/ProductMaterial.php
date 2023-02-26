@@ -109,6 +109,14 @@ class ProductMaterial extends FormBase{
             'filter' => array(array('name'=>'StringStrim')),
         ));
 
+        $image = new Text('image');
+        $this->add($image);
+
+        $filter->add(array(
+            'name' => 'image',
+            'filter' => array(array('name'=>'StringStrim')),
+        ));
+
         $productId = new Text('productId');
         $this->add($productId);
 
@@ -131,10 +139,6 @@ class ProductMaterial extends FormBase{
 
         $filter->add ( array (
             'name' => 'materialId',
-            'class' => 'tb productRelated',
-            'attributes' => array (
-                'id' => 'productRelated'
-            ),
             'required' => false,
             'options' => array (
                 'value_options' => array (
@@ -194,6 +198,14 @@ class ProductMaterial extends FormBase{
 //                $element->setValueOptions($arr);
 //            }
 //        }
+    }
+
+    public function setMaterialSelected($arr){
+        if(!!($element = $this->get('materialId'))){
+            if(!empty($arr)){
+                $element->setValueOptions($arr);
+            }
+        }
     }
 
     public function getErrorMessagesList(){

@@ -67,19 +67,24 @@ class ProductMaterialItemMapper extends Base {
 		
 		$select = $dbSql->select(array('ac'=>$this->getTableName()));
 
-        if($item->getStoreId()){
-            $select->where(array('ac.storeId'=>$item->getStoreId()));
+        if($item->getProductId()){
+            $select->where(array('ac.productId'=>$item->getProductId()));
         }
-		if($item->getExcludedId()) {
-			$select->where("m.id <> {$item->getExcludedId()}");
-		}
+        if($item->getMaterialId()){
+            $select->where(array('ac.materialId'=>$item->getMaterialId()));
+        }
 		$selectString = $dbSql->getSqlStringForSqlObject($select);
-
 		$results = $dbAdapter->query($selectString, $dbAdapter::QUERY_MODE_EXECUTE);
 		$rs = array();
 		foreach ($results as $row){
 			$model = new \Admin\Model\ProductMaterialItem();
-			$model->exchangeArray((array)$row);
+            $modelMaterial = new \Admin\Model\Material();
+            $modelMaterial->setId($row['materialId']);
+            $mapperMaterial = $this->getServiceLocator()->get('Admin\Model\MaterialMapper');
+            $resultMaterial = $mapperMaterial->get($modelMaterial);
+            $model->exchangeArray((array)$row);
+            $model->setOptions(['materialName' => $resultMaterial->getName()]);
+
 			$rs[] = $model;			
 		}
 		return $rs;
@@ -197,10 +202,11 @@ class ProductMaterialItemMapper extends Base {
 		/* @var $dbSql \Zend\Db\Sql\Sql */
 		$dbSql = $this->getServiceLocator()->get('dbSql');
 		$select = $dbSql->delete($this->getTableName());
-		$select->where(array('id'=>$item->getId()));
+		$select->where(array('productId' => $item->getProductId(), 'materialId' => $item->getMaterialId()));
 		$selectStr = $dbSql->getSqlStringForSqlObject($select);
 		return $dbAdapter->query($selectStr,$dbAdapter::QUERY_MODE_EXECUTE);
 	}
+
 	public function getChildren($item) {
 		$model = new \Admin\Model\Productc();
 		$model->setParentId($item->getId());
