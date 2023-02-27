@@ -67,14 +67,12 @@ $image = $form->get('image')->getValue();
                                 <div class="col-sm-3">
                                     <div class="form-group">
                                         <label class="control-label" for="firstName">Thành tiền</label>
-                                        <div class="<?= $c > 1 ? 'input-group':'' ?>">
+                                        <div class="input-group">
                                             <?= $this->formelement($form->get('intoMoney')->setAttributes(['name' => 'intoMoney[]', 'value'=> $v->getIntoMoney(),'class' => 'intoMoney_field form-control autonumber', 'placeholder'=>'Thành tiền'])) ?>
                                             <?= $this->formelementerrors($form->get('intoMoney'),['class' => 'parsley-errors-list filled']) ?>
-                                            <?php if($c > 1): ?>
-                                                <span class="input-group-btn">
-                                                    <button type="button" id="check-minutes" data-material="<?php echo $v->getMaterialId() ?>" data-product="<?php echo $form->get('productId')->getValue() ?>" class="btn remove-product-item"> - </button>
-                                                </span>
-                                            <?php endif; ?>
+                                            <span class="input-group-btn">
+                                                <button type="button" id="check-minutes" data-material="<?php echo $v->getMaterialId() ?>" data-product="<?php echo $form->get('productId')->getValue() ?>" class="btn remove-product-item"> - </button>
+                                            </span>
                                         </div>
                                     </div>
                                 </div>

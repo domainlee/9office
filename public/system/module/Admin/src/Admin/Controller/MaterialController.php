@@ -303,22 +303,24 @@ class MaterialController extends AbstractActionController{
             if(!session_id()) {
                 session_start();
             }
+            $mapperProductMaterialItem = $this->getServiceLocator()->get('Admin\Model\ProductMaterialItemMapper');
+
             if($materialId && $productItemId) {
-                $mapperProductMaterialItem = $this->getServiceLocator()->get('Admin\Model\ProductMaterialItemMapper');
                 $modelMaterialItemDelete = new \Admin\Model\ProductMaterialItem();
                 $modelMaterialItemDelete->setProductId($productItemId);
                 $modelMaterialItemDelete->setMaterialId($materialId);
                 $mapperProductMaterialItem->delete($modelMaterialItemDelete);
-
-                $modelProductMaterialItem = new \Admin\Model\ProductMaterialItem();
-                $modelProductMaterialItem->setProductId($productItemId);
-                $resultMaterialItem = $mapperProductMaterialItem->fetchAll($modelProductMaterialItem);
             } else {
                 if(isset($_SESSION['count'])) {
                     $_SESSION['count'] =  $_SESSION['count'] > 0 ? $_SESSION['count'] - 1:0;
                 } else {
                     $_SESSION['count'] = 0;
                 }
+            }
+            if($productItemId) {
+                $modelProductMaterialItem = new \Admin\Model\ProductMaterialItem();
+                $modelProductMaterialItem->setProductId($productItemId);
+                $resultMaterialItem = $mapperProductMaterialItem->fetchAll($modelProductMaterialItem);
             }
         }
         if($type === 'edit') {
@@ -345,6 +347,7 @@ class MaterialController extends AbstractActionController{
             'form' => $form,
             'item' => $add_pricing,
             'material_item' => $resultMaterialItem,
+            'product_id' => $productId,
         ));
     }
 
