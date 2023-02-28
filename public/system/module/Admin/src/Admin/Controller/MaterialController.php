@@ -174,7 +174,7 @@ class MaterialController extends AbstractActionController{
         $form = new \Admin\Form\ProductMaterial($this->getServiceLocator(), null);
         if($this->getRequest()->isPost()){
             $form->setData(array_merge_recursive($this->getRequest()->getPost()->toArray(),$this->getRequest()->getFiles()->toArray()));
-            if($form->isValid()){
+            if($form->isValid(true)){
                 $data = $form->getData();
                 $model->exchangeArray($data);
                 $model->setCreatedDateTime(DateBase::getCurrentDateTime());
@@ -242,10 +242,10 @@ class MaterialController extends AbstractActionController{
 
         if($this->getRequest()->isPost()){
             $form->setData(array_merge_recursive($this->getRequest()->getPost()->toArray(),$this->getRequest()->getFiles()->toArray()));
-            if($form->isValid()){
+            if($form->isValid(true)){
                 $data = $form->getData();
                 $model->exchangeArray($data);
-                $model->setCreatedDateTime(DateBase::getCurrentDateTime());
+//                $model->setCreatedDateTime(DateBase::getCurrentDateTime());
                 $model->setCreatedById($u->getId());
                 $mapper->save($model);
                 if($model->getId()) {
@@ -254,14 +254,23 @@ class MaterialController extends AbstractActionController{
                             $price = $data['price'][$k];
                             $quantity = $data['quantity'][$k];
                             $intoMoney = $data['intoMoney'][$k];
+                            $id = $data['pmId'][$k];
                             $mapperProductMaterialItem = $this->getServiceLocator()->get('Admin\Model\ProductMaterialItemMapper');
                             $modelProductMaterialItem = new \Admin\Model\ProductMaterialItem();
-                            $modelProductMaterialItem->exchangeArray($data);
+                            $modelProductMaterialItem->setId($id);
+                            $resultProductMaterialItem = $mapperProductMaterialItem->get($modelProductMaterialItem);
+                            $dataMaterialItem = $modelProductMaterialItem->toFormValues();
+
+                            $modelProductMaterialItem->exchangeArray($dataMaterialItem);
+                            $modelProductMaterialItem->setId($id);
                             $modelProductMaterialItem->setMaterialId($v);
+                            $modelProductMaterialItem->setProductId($model->getProductId());
                             $modelProductMaterialItem->setPrice($price);
                             $modelProductMaterialItem->setQuantity($quantity);
                             $modelProductMaterialItem->setIntoMoney($intoMoney);
-                            $modelProductMaterialItem->setCreatedDateTime(DateBase::getCurrentDateTime());
+                            if(!$id) {
+                                $modelProductMaterialItem->setCreatedDateTime(DateBase::getCurrentDateTime());
+                            }
                             $modelProductMaterialItem->setUpdatedDateTime(DateBase::getCurrentDateTime());
                             $modelProductMaterialItem->setCreatedById($u->getId());
                             $mapperProductMaterialItem->save($modelProductMaterialItem);

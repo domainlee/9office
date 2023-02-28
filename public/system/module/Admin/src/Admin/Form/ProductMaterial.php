@@ -133,6 +133,18 @@ class ProductMaterial extends FormBase{
             'filter' => array(array('name'=>'StringStrim')),
         ));
 
+        $pmId = new Text('pmId');
+        $this->add($pmId);
+
+        $filter->add(array(
+            'name' => 'pmId',
+            'attributes' => array(
+                'class' => 'tb ',
+            ),
+            'required' => false,
+            'filter' => array(array('name'=>'StringStrim')),
+        ));
+
 
         $materialId = new Select('materialId');
         $this->add($materialId);
@@ -223,23 +235,21 @@ class ProductMaterial extends FormBase{
     }
 
 
-    public function isValid($b = null)
-    {
+    public function isValid($edit = false) {
         $isVaild = parent::isValid();
-            if($b == 2){
-                if ($isVaild) {
-//                    $product = new \Admin\Model\Product();
-//                    $product->setTitle($this->get('title')->getValue());
-//                    $product->setCategoryId($this->get('categoryId')->getValue());
-//                    $mapper = $this->getServiceLocator()->get('Admin\Model\ProductMapper');
-//                    $r = $mapper->get($product);
-//                    if(count($r)){
-//                        $this->get('title')->setMessages(['Sản phẩm này đã tồn tại']);
-//                        $isVaild = false;
-//                    }
-//                    return $isVaild;
+        if ($isVaild) {
+            if(!$edit) {
+                $productMaterial = new \Admin\Model\ProductMaterial();
+                $productMaterial->setProductId($this->get('productId')->getValue());
+                $mapper = $this->getServiceLocator()->get('Admin\Model\ProductMaterialMapper');
+                $r = $mapper->get($productMaterial);
+                if(count($r)){
+                    $this->get('productId')->setMessages(['Mã sản phẩm này đã tồn tại']);
+                    $isVaild = false;
                 }
+                return $isVaild;
             }
+        }
         return $isVaild;
     }
 }

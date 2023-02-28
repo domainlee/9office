@@ -25,6 +25,7 @@ $query = $this->query;
                                 <?= $this->formelement($form->get('productId')->setAttributes(['class' => 'form-control', 'value' => $query->id ,'placeholder'=>'Mã sản phẩm', 'required' => 'required', 'data-parsley-error-message' => 'Mã sản phẩm không được để trống'])) ?>
                                 <?= $this->formelementerrors($form->get('productId'),['class' => 'parsley-errors-list filled']) ?>
                             </div>
+                            <input type="hidden" value="<?= $query->img ?>" name="image" />
                         </div>
                     </div>
                     <hr/>

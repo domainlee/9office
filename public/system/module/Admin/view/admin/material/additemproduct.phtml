@@ -8,6 +8,7 @@ $product_id = $this->product_id;
 <?php
     foreach ($item as $k => $v):
         $item_material = isset($material_item[$k]) ? $material_item[$k]:null;
+        $id = '';
         $price = '';
         $quantity = '';
         $getIntoMoney = '';
@@ -16,6 +17,7 @@ $product_id = $this->product_id;
         $selected = array();
         if($item_material) {
             $selected[$item_material->getMaterialId()] = ['label' => $item_material->getOption('materialName'), 'value' => $item_material->getMaterialId(), 'selected' => true];
+            $id = $item_material->getId() ? $item_material->getId():'';
             $price = $item_material->getPrice() ? $item_material->getPrice():'';
             $quantity = $item_material->getQuantity() ? $item_material->getQuantity():'';
             $getIntoMoney = $item_material->getIntoMoney() ? $item_material->getIntoMoney():'';
@@ -28,6 +30,7 @@ $product_id = $this->product_id;
     <div class="col-sm-3">
         <div class="form-group">
             <label class="control-label" for="firstName">Vật liệu</label>
+            <input type="hidden" value="<?php echo $id ?>" name="pmId[]">
             <?= $this->formelement($form->get('materialId')->setValueOptions($selected)->setAttributes(['name' => 'materialId[]','class' => 'form-control select-ajax-material', 'data-cong' => 'false', 'required' => 'required', 'placeholder'=>'Vật liệu','data-parsley-type' => 'string', 'data-parsley-error-message' => 'Vật liệu không được để trống'])) ?>
             <?= $this->formelementerrors($form->get('materialId'),['class' => 'parsley-errors-list filled']) ?>
         </div>

@@ -46,6 +46,7 @@ $image = $form->get('image')->getValue();
                                         <?php
                                             $selected[$v->getMaterialId()] = ['label' => $v->getOption('materialName'), 'value' => $v->getMaterialId(), 'selected' => true];
                                         ?>
+                                        <input type="hidden" value="<?php echo $v->getId() ?>" name="pmId[]">
                                         <?= $this->formelement($form->get('materialId')->setValueOptions($selected)->setAttributes(['name' => 'materialId[]', 'value'=> $v->getMaterialId(), 'class' => 'form-control select-ajax-material','data-cong' => 'false', 'required' => 'required', 'placeholder'=>'Vật liệu','data-parsley-type' => 'string', 'data-parsley-error-message' => 'Vật liệu không được để trống'])) ?>
                                         <?= $this->formelementerrors($form->get('materialId'),['class' => 'parsley-errors-list filled']) ?>
                                     </div>

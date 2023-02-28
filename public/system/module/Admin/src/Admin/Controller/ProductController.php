@@ -412,7 +412,8 @@ class ProductController extends AbstractActionController{
                     }
 
                     $this->redirect()->toUrl('/admin/product');
-                }else {
+                }
+                else {
                     $form->getErrorMessagesList();
                 }
 			}
