@@ -53,13 +53,8 @@ class InvoiceController extends AbstractActionController{
 
 		if($this->getRequest()->isPost()){
             $form->setData(array_merge_recursive($this->getRequest()->getPost()->toArray(),$this->getRequest()->getFiles()->toArray()));
-
-
             if($form->isValid()){
-
                 $data = $form->getData();
-                print_r($data);die;
-
                 $model->exchangeArray($data);
                 $model->setCreatedDateTime(DateBase::getCurrentDateTime());
                 $model->setUpdatedDateTime(DateBase::getCurrentDateTime());
