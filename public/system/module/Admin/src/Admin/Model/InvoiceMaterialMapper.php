@@ -91,6 +91,9 @@ class InvoiceMaterialMapper extends Base{
         if($item->getMaterialId()){
             $select->where(array('ac.materialId' => $item->getMaterialId()));
         }
+        if($item->getStatus()){
+            $select->where(array('ac.status' => $item->getStatus()));
+        }
 		$selectString = $dbSql->getSqlStringForSqlObject($select);
 
 		$results = $dbAdapter->query($selectString, $dbAdapter::QUERY_MODE_EXECUTE);

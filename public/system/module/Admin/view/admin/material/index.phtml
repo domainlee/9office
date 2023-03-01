@@ -13,6 +13,7 @@ $option = $this->option;
                     <div class="btn-toolbar">
                         <div class="btn-group focus-btn-group">
                             <a href="/admin/material/add" class="btn btn-default waves-effect waves-light">Thêm vật liệu</a>
+                            <a class="btn btn-white waves-effect waves-light" data-toggle="modal" data-target="#modal-import"><i class="ion-ios7-upload-outline" style="font-size: 16px;margin: 0 3px 0 0"></i> Thêm File Excel</a>
                         </div>
                         <div class="btn-group dropdown-btn-group pull-right">
                             <div class="dataTables_filter mb-15">
@@ -37,4 +38,42 @@ $option = $this->option;
         </div>
     </div>
 </div>
+
+<div id="modal-import" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="full-width-modalLabel" aria-hidden="true" style="display: none;">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <ul class="nav nav-tabs navtab-bg nav-justified">
+
+                <li class="active">
+                    <a href="#file-excel" data-toggle="tab" aria-expanded="false">
+                        <span class="">File Excel</span>
+                    </a>
+                </li>
+            </ul>
+            <div class="tab-content">
+                <div class="import-coin tab-pane active" id="file-excel">
+                    <label id="percentComplete">Lưu ý</label>
+                    <p class="text-dark m-b-30 font-13">
+                        Các bạn có thể import theo mẫu đính kèm sau, tất cả các trường (Tên sản phẩm, mô tả ...) không được thay đổi. Tên ảnh giống như tên ảnh bạn upload trước đó, tên ảnh cách nhau bởi đấu ",".
+                        <a target="_blank" href="https://docs.google.com/spreadsheets/d/1fPfzEKJTAO4jV7l3NBfPuV02eVy0DlV21PexzN-F4N0/edit#gid=0">Mẫu</a>
+                    </p>
+                    <label id="percentComplete">File excel</label>
+                    <form class="form_import_coin" name="form_import">
+                        <div class="form-group">
+                            <input class="excel_file_material filestyle" type="file" name="file_import" data-buttonText="Chọn File Excel"  id="fileName">
+                        </div>
+                        <div class="form-group">
+                            <a class="import-coin__button-import btn btn-insert btn-default waves-effect waves-light">Import</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <input type="hidden" data-value="1" id="pageImage">
+                <button type="button" class="btn" data-dismiss="modal">Đóng</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
 

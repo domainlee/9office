@@ -117,6 +117,7 @@ class MaterialController extends AbstractActionController{
 
 		$invoiceMaterial = new \Admin\Model\InvoiceMaterial();
         $invoiceMaterial->setMaterialId($id);
+        $invoiceMaterial->setStatus(\Admin\Model\InvoiceMaterial::STATUS_APPROVED);
         $invoiceMaterialMapper = $this->getServiceLocator()->get('Admin\Model\InvoiceMaterialMapper');
         $resultInvoiceMaterial = $invoiceMaterialMapper->fetchAll($invoiceMaterial);
 
@@ -148,6 +149,43 @@ class MaterialController extends AbstractActionController{
         $model = new \Admin\Model\ProductMaterial();
         $model->exchangeArray((array)$this->getRequest()->getQuery());
         $mapper = $this->getServiceLocator()->get('Admin\Model\ProductMaterialMapper');
+//        /api/product/search
+
+        $array_id = array('9MPOLLAC225015L','9MPOLLAC231701L','9MPOLLAC226701L');
+        $array_data = array();
+        foreach ($array_id as $v):
+            $api = \Base\Model\Resource::data_api();
+            $data = json_encode(array('page' => 1, 'icpp' => 50, 'name' => $v));
+
+            $data = array(
+                'version' => $api['version'],
+                'appId' => $api['appId'],
+                'businessId' => $api['businessId'],
+                'accessToken' => $api['accessToken'],
+                'data' => $data
+            );
+
+            $curl = curl_init();
+
+            curl_setopt_array($curl, array(
+                CURLOPT_URL => 'https://open.nhanh.vn/api/product/search',
+                CURLOPT_RETURNTRANSFER => true,
+                CURLOPT_ENCODING => '',
+                CURLOPT_MAXREDIRS => 10,
+                CURLOPT_TIMEOUT => 0,
+                CURLOPT_FOLLOWLOCATION => true,
+                CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+                CURLOPT_CUSTOMREQUEST => 'POST',
+                CURLOPT_POSTFIELDS => $data,
+            ));
+
+            $response = curl_exec($curl);
+
+            curl_close($curl);
+            $response = json_decode($response, true);
+            $array_data[] = $response;
+        endforeach;
+        print_r($array_data);die;
 
         $page = (int)$this->getRequest()->getQuery()->page ? : 1;
         $results = $mapper->search($model, array($page,10));
@@ -157,6 +195,16 @@ class MaterialController extends AbstractActionController{
             'url' => $this->getRequest()->getUri()->getQuery(),
             'uri' => $this->getRequest()->getUri()->getQuery(),
         ));
+    }
+
+    public function importmaterialAction() {
+        $data = $this->getRequest()->getPost()['coin_sizes'];
+
+        $general_settings = json_decode(html_entity_decode(stripslashes($data)), true);
+
+
+        print_r($general_settings);
+        die;
     }
 
     public function addproductAction() {

@@ -260,6 +260,9 @@ $menu = $_COOKIE["menuleft"]
         ->prependFile($this->basePath() . '/assets/pages/nestable.js')
         ->prependFile($this->basePath() . '/assets/plugins/nestable/jquery.nestable.js')
 
+        ->prependFile($this->basePath() . '/assets/js/xlsx.full.min.js')
+        ->prependFile($this->basePath() . '/assets/js/jquery.validate.min.js')
+
         ->prependFile($this->basePath() . '/assets/js/jquery-ui.min.js')
         ->prependFile($this->basePath() . '/assets/js/bootstrap.min.js')
         ->prependFile($this->basePath() . '/assets/js/jquery-1.10.1.min.js');

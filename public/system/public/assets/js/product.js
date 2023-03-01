@@ -284,6 +284,81 @@ $(function(){
         });
     });
 
+    var import_coin = {
+        import_coin_inner: $('.import-coin'),
+        _form: $('.form_import_coin'),
+        _buttonImport: $('.import-coin__button-import'),
+        init: function () {
+            // $(window).on( 'load', this.validate );
+            this._buttonImport.on('click', this.import );
+        },
+        validate: function () {
+            // import_coin._form.validate({
+            //     rules: {
+            //         file_import: {
+            //             required : true,
+            //             accept: "application/vnd.ms-excel, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+            //         },
+            //     },
+            //     messages: {
+            //         file_import: "Please select the file, or choose the correct file type xls, xlxs"
+            //     }
+            // });
+        },
+        import: function () {
+            // var formValid = import_coin._form.valid();
+            // if(formValid) {
+                var t = $('input.excel_file_material');
+                if (typeof (FileReader) != "undefined") {
+                    var reader = new FileReader();
+
+                    if (reader.readAsBinaryString) {
+                        reader.onload = function (e) {
+                            import_coin.read_data(e.target.result);
+                        };
+                        reader.readAsBinaryString(t.prop('files')[0]);
+                    } else {
+                        reader.onload = function (e) {
+                            var data = "";
+                            var bytes = new Uint8Array(e.target.result);
+                            for (var i = 0; i < bytes.byteLength; i++) {
+                                data += String.fromCharCode(bytes[i]);
+                            }
+                            import_coin.read_data(data);
+                        };
+                        reader.readAsArrayBuffer(t.prop('files')[0]);
+                    }
+                } else {
+                    alert("This browser does not support HTML5.");
+                }
+            // }
+        },
+        read_data: function (data) {
+            var workbook = XLSX.read(data, {
+                type: 'binary'
+            });
+            var formData = new FormData();
+            formData.append("type", 'import');
+            workbook.SheetNames.forEach(function (k, v) {
+                var sheet = XLSX.utils.sheet_to_row_object_array(workbook.Sheets[k], {defval:''});
+                formData.append(k.replace(/[^A-Z0-9]+/ig, '_').toLowerCase(), JSON.stringify(sheet));
+            });
+            $.ajax({
+                type: "POST",
+                url: '/admin/material/importmaterial',
+                data: formData,
+                dataType: "json",
+                contentType: false,
+                processData: false,
+            }).done(function (e) {
+                // let data = JSON.parse(e);
+                // location.reload();
+            });
+        }
+
+    }
+
+    import_coin.init();
 
 
     if($('#imageUpload').length) {
