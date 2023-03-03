@@ -7,6 +7,8 @@ use Zend\View\Model\JsonModel;
 use Home\Form\FormBase;
 use Home\Model\DateBase;
 use Home\Model\Base;
+use Base\XLSX\XLSXWriter;
+
 
 class MaterialController extends AbstractActionController{
 
@@ -205,6 +207,49 @@ class MaterialController extends AbstractActionController{
 
         print_r($general_settings);
         die;
+    }
+
+    public function exportproductAction() {
+
+        $file_name = 'Product_Upload_List_'.date('ymd').'.xlsx';
+        $sheet_product = 'Products';
+
+        $header_one = array( 'Id','Name','Image');
+
+        $styles_white = array( 'font'=>'Arial', 'font-style'=>'bold', 'fill'=>'#FFF', 'halign'=>'center', 'border'=>'left,right,top,bottom');
+        $styles_blue = array( 'font'=>'Arial', 'font-style'=>'bold', 'fill'=>'#b4c6e7', 'halign'=>'center', 'border'=>'left,right,top,bottom');
+
+        $writer = new XLSXWriter();
+//            $writer->markMergedCell($sheet_product, $start_row = 0, $start_col = 0, $end_row = 0, $end_col = 5);
+//
+//            $writer->markMergedCell($sheet_product, $start_row = 1, $start_col = 0, $end_row = 1, $end_col = 2);
+//            $writer->markMergedCell($sheet_product, $start_row = 1, $start_col = 3, $end_row = 1, $end_col = 5);
+//
+//            $writer->markMergedCell($sheet_product, $start_row = 2, $start_col = 0, $end_row = 2, $end_col = 1);
+//            $writer->markMergedCell($sheet_product, $start_row = 2, $start_col = 2, $end_row = 2, $end_col = 3);
+//            $writer->markMergedCell($sheet_product, $start_row = 2, $start_col = 4, $end_row = 2, $end_col = 5);
+        $v = array('123', 'Product Name', 'https://asad.com/aaa.jpg');
+        $writer->writeSheetRow($sheet_product, $header_one, $styles_white);
+//        foreach ($post as $v) {
+            $writer->writeSheetRow($sheet_product, $v);
+//        }
+        $writer->writeToFile($file_name);
+        header('Content-Description: File Transfer');
+        header("Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
+        header("Content-Disposition: attachment; filename=" . basename($file_name));
+        header("Content-Transfer-Encoding: binary");
+        header("Expires: 0");
+        header("Pragma: public");
+        header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
+        header('Content-Length: ' . filesize($file_name));
+
+        ob_clean();
+        flush();
+
+        readfile($file_name);
+        unlink($file_name);
+        exit;
+
     }
 
     public function addproductAction() {

@@ -30,4 +30,5 @@ return array(
 
     'Base\View\Helper\UriParams'                     => __DIR__ . '/src/Base/View/Helper/UriParams.php',
     'Base\XSS\xssClean'                              => __DIR__ . '/src/Base/XSS/clean.php',
+    'Base\XLSX\XLSXWriter'                              => __DIR__ . '/src/Base/XLSX/class-xlsxwriter.php',
 );
