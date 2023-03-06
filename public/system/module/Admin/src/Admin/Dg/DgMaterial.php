@@ -59,7 +59,7 @@ class DgMaterial extends \Base\Dg\Table {
                 ),
                 array(
                     'type' => 'text',
-                    'value' => 'VL'.$item->getId(),
+                    'value' => '<strong>VL'.$item->getId().'</strong>',
                     'htmlOptions'=> array('style'=>'vertical-align: middle'),
                 ),
                 array (
