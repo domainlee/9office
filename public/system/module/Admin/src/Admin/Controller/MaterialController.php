@@ -387,7 +387,7 @@ class MaterialController extends AbstractActionController{
     private function template_excel($product_items) {
         $file_name = 'Danh sách sản phẩm_'.date('ymd').'.xlsx';
         $sheet_product = 'Sản phẩm';
-        $header_one = array( 'Mã sản phẩm', 'Tên sản phẩm', 'Hình ảnh sản phẩm', 'Tên vật liệu', 'Số lượng');
+        $header_one = array( 'Mã sản phẩm', 'Tên sản phẩm', 'Hình ảnh sản phẩm', 'Mã vật liệu', 'Số lượng');
         $styles_white = array('font'=>'Arial', 'font-style'=>'bold', 'fill'=>'#FFF', 'halign'=>'left', 'border'=>'left,right,top,bottom');
         $writer = new XLSXWriter();
 //            $v = array('123', 'Product Name', 'https://asad.com/aaa.jpg');
