@@ -222,10 +222,8 @@ $(function(){
             if(this.value == 3) {
                 $('select[name=manufactureId] option:selected').removeAttr('selected');
                 input_price.prop('disabled', false);
-                manufactureId.prop('disabled', true);
             } else {
                 input_price.prop('disabled', true);
-                manufactureId.prop('disabled', false);
             }
         });
     }
