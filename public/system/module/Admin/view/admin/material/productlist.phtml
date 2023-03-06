@@ -1,0 +1,81 @@
+<?php
+echo $this->headtitle($this->escapehtml($this->translate('Danh sách sản phẩm')));
+$order = $this->results['products'];
+$total = $this->results['totalPages'];
+$page = $this->results['currentPage'] ? $this->results['currentPage']:1;
+$query = $this->query;
+$page_prev = ($page == 1 ? 1:$page-1);
+$page_next = ($total == $page ? $page:$page + 1);
+
+if($query) {
+    $page_prev = preg_replace ( '/page=([0-9])/','page='.$page_prev, $query );
+    $page_next = preg_replace ( '/page=([0-9])/','page='.$page_next, $query );
+} else {
+    $page_prev = 'page='.$page_prev;
+    $page_next = 'page='.$page_next;
+}
+
+?>
+
+<style>
+    .list_product > div {
+        margin: 0 0 10px;
+    }
+    .list_product > div:last-child, .list_product > div:last-child p {
+        margin: 0;
+    }
+</style>
+<div class="row">
+    <div class="col-sm-12">
+        <div class="card-box">
+            <div class="portlet-body">
+                <div id="sample_editable_1_wrapper" class="dataTables_wrapper form-inline" role="grid">
+                    <div class="btn-toolbar">
+                        <div class="btn-group focus-btn-group">
+                            <a class="button-export-all btn btn-default waves-effect waves-light">Xuất tất cả excel</a>
+                            <a class="button-export-selected btn btn-white waves-effect waves-light" ><i class="ion-ios7-upload-outline" style="font-size: 16px;margin: 0 3px 0 0"></i> Xuất excel đã chọn</a>
+                        </div>
+                        <div class="btn-group dropdown-btn-group pull-right">
+                            <div class="dataTables_filter mb-15">
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="dg-container">
+                        <table class="product_list dg table table-bordered table-hover table-condensed">
+                            <thead>
+                                <tr>
+                                    <th style="width: 1%;"></th>
+                                    <th style="width: 1%;">Hình ảnh</th>
+                                    <th style="width: 5%;">Mã sản phẩm</th>
+                                    <th style="vertical-align: middle;width: 12%;">Tên</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php if(!empty($order)): ?>
+                                    <?php foreach($order as $k => $v):  ?>
+                                    <tr class="even">
+                                        <td style="vertical-align: middle;" class="bs-checkbox "><input type="checkbox" name="productId" value="<?php echo $v['code'] ?>"></td>
+                                        <td class="id" style="vertical-align: middle"><a title="<?php echo $v['name'] ?>" href="<?php echo $v['image'] ?>" class="button-image"><img class="lazy thumb-md" data-src="<?php echo $v['image'] ?>" ></a></td>
+                                        <td class="id" style="vertical-align: middle"><?php echo $v['code'] ?></td>
+                                        <td style="vertical-align: middle"><?php echo $v['name'] ?></td>
+                                    </tr>
+                                    <?php endforeach; ?>
+                                <?php endif; ?>
+                            </tbody>
+                        </table>
+
+                        <div class="dataTables_paginate paging_bootstrap pagination pagination__option">
+                            <ul class="pagination">
+                                <li class="prev"><a class="" href="<?php echo 'productlist?'. $page_prev; ?>"><span>Trang sau</span></a></li>
+                                <li><a class="btn-default"><?php echo $page .'/'.$total;  ?></a></li>
+                                <li><a class="" href="<?php echo 'productlist?'. $page_next ?>" title="Trang trước"><span>Trang trước</span></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

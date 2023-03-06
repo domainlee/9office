@@ -360,6 +360,46 @@ $(function(){
 
     import_coin.init();
 
+    var tmp = [];
+    var table = $('.product_list');
+    var button_selected = $('.button-export-selected');
+    button_selected.prop('disabled', false);
+    var coin_remove = $('.coin_remove');
+    var coin_change = $('.coin_change');
+    coin_change.prop('disabled', true);
+
+    table.on("click", "input[type=checkbox]", function(e){
+        var $this = $(this);
+        var checked = $this.val();
+        if ($this.is(':checked')) {
+            tmp.push(checked);
+        } else {
+            tmp.splice($.inArray(checked, tmp),1);
+        }
+        button_selected.attr('href','/admin/material/exportproduct?ids=' + encodeURIComponent(tmp));
+
+        if(tmp.length > 0) {
+            button_selected.prop('disabled', false);
+        } else {
+            button_selected.prop('disabled', true);
+        }
+        button_selected.attr('data-ids', tmp);
+    });
+
+    $('.button-export-all').click(function () {
+        window.open('/admin/material/exportproduct', '_blank');
+    });
+
+    button_selected.click(function () {
+        if(tmp.length > 0) {
+            tmp = [];
+            button_selected.attr('data-ids', tmp);
+            table.find('input:checkbox').removeAttr('checked');
+        } else {
+            alert('Chưa chọn sản phẩm export');
+        }
+    });
+
 
     if($('#imageUpload').length) {
         $("#imageUpload").change(function(){

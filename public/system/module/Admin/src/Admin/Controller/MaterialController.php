@@ -153,11 +153,27 @@ class MaterialController extends AbstractActionController{
         $mapper = $this->getServiceLocator()->get('Admin\Model\ProductMaterialMapper');
 //        /api/product/search
 
+
+        $page = (int)$this->getRequest()->getQuery()->page ? : 1;
+        $results = $mapper->search($model, array($page,10));
+
+        return new ViewModel(array(
+            'results' => $results,
+            'url' => $this->getRequest()->getUri()->getQuery(),
+            'uri' => $this->getRequest()->getUri()->getQuery(),
+        ));
+    }
+
+    public function productlistAction() {
+        $this->layout('layout/admin');
+        $query = $this->getRequest()->getUri()->getQuery();
+        $page = (int)$this->getRequest()->getQuery()->page ? : 1;
+
         $array_id = array('9MPOLLAC225015L','9MPOLLAC231701L','9MPOLLAC226701L');
-        $array_data = array();
-        foreach ($array_id as $v):
+//        $array_data = array();
+//        foreach ($array_id as $v):
             $api = \Base\Model\Resource::data_api();
-            $data = json_encode(array('page' => 1, 'icpp' => 50, 'name' => $v));
+            $data = json_encode(array('page' => $page, 'icpp' => 50, 'name' => ''));
 
             $data = array(
                 'version' => $api['version'],
@@ -185,17 +201,53 @@ class MaterialController extends AbstractActionController{
 
             curl_close($curl);
             $response = json_decode($response, true);
-            $array_data[] = $response;
-        endforeach;
-        print_r($array_data);die;
 
-        $page = (int)$this->getRequest()->getQuery()->page ? : 1;
-        $results = $mapper->search($model, array($page,10));
-
+//            $totalPage = $response['data']['totalPages'];
+            $product_items = array();
+//            for($c = 1; $c <= $totalPage; $c++) {
+//                $api = \Base\Model\Resource::data_api();
+//                $data = json_encode(array('page' => $c, 'icpp' => 50, 'name' => ''));
+//                $data = array(
+//                    'version' => $api['version'],
+//                    'appId' => $api['appId'],
+//                    'businessId' => $api['businessId'],
+//                    'accessToken' => $api['accessToken'],
+//                    'data' => $data
+//                );
+//
+//                $curl = curl_init();
+//
+//                curl_setopt_array($curl, array(
+//                    CURLOPT_URL => 'https://open.nhanh.vn/api/product/search',
+//                    CURLOPT_RETURNTRANSFER => true,
+//                    CURLOPT_ENCODING => '',
+//                    CURLOPT_MAXREDIRS => 10,
+//                    CURLOPT_TIMEOUT => 0,
+//                    CURLOPT_FOLLOWLOCATION => true,
+//                    CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+//                    CURLOPT_CUSTOMREQUEST => 'POST',
+//                    CURLOPT_POSTFIELDS => $data,
+//                ));
+//
+//                $response = curl_exec($curl);
+//                curl_close($curl);
+//                $response = json_decode($response, true);
+//                if(!empty($response['data']['products'])) {
+//                    foreach ($response['data']['products'] as $v) {
+//                        $product_items[$v['code']] = array(
+//                            'name' => $v['name'],
+//                            'image' => $v['image'],
+//                        );
+//                    }
+//                }
+//                $array_data[] = $response['data'];
+//            }
         return new ViewModel(array(
-            'results' => $results,
-            'url' => $this->getRequest()->getUri()->getQuery(),
-            'uri' => $this->getRequest()->getUri()->getQuery(),
+            'query'=> $query,
+            'results'=> $response['data'],
+//            'fFilter'=> $fFilter,
+//            'id' => $id,
+//            'phone' => $phone
         ));
     }
 
@@ -210,29 +262,140 @@ class MaterialController extends AbstractActionController{
     }
 
     public function exportproductAction() {
+        $selected_products = $this->getRequest()->getQuery()['ids'];
+        $selected = explode(',',$selected_products);
+        if(!empty($selected) && is_array($selected) && $selected_products !== null) {
+            $this->export_selected($selected_products);
+        } else {
+            $this->export_all();
+        }
+    }
 
-        $file_name = 'Product_Upload_List_'.date('ymd').'.xlsx';
-        $sheet_product = 'Products';
+    private function export_selected($products) {
+	    if(empty($products)) {
+	        return false;
+        }
+        $product_items = array();
+	    foreach ($products as $i) {
+            $api = \Base\Model\Resource::data_api();
+            $data = json_encode(array('name' => $i));
+            $data = array(
+                'version' => $api['version'],
+                'appId' => $api['appId'],
+                'businessId' => $api['businessId'],
+                'accessToken' => $api['accessToken'],
+                'data' => $data
+            );
+            $curl = curl_init();
+            curl_setopt_array($curl, array(
+                CURLOPT_URL => 'https://open.nhanh.vn/api/product/search',
+                CURLOPT_RETURNTRANSFER => true,
+                CURLOPT_ENCODING => '',
+                CURLOPT_MAXREDIRS => 10,
+                CURLOPT_TIMEOUT => 0,
+                CURLOPT_FOLLOWLOCATION => true,
+                CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+                CURLOPT_CUSTOMREQUEST => 'POST',
+                CURLOPT_POSTFIELDS => $data,
+            ));
+            $response = curl_exec($curl);
+            curl_close($curl);
+            $response = json_decode($response, true);
+            if(!empty($response['data']['products'])) {
+                foreach ($response['data']['products'] as $v) {
+                    $product_items[$v['code']] = array($v['code'],$v['name'], $v['image']);
+                }
+            }
+        }
+        if(!empty($product_items)) {
+            $this->template_excel($product_items);
+        }
+    }
 
-        $header_one = array( 'Id','Name','Image');
+    private function export_all() {
+        $product_items = array();
+        $api = \Base\Model\Resource::data_api();
+        $data = json_encode(array('icpp' => 50));
+        $data = array(
+            'version' => $api['version'],
+            'appId' => $api['appId'],
+            'businessId' => $api['businessId'],
+            'accessToken' => $api['accessToken'],
+            'data' => $data
+        );
+        $curl = curl_init();
+        curl_setopt_array($curl, array(
+            CURLOPT_URL => 'https://open.nhanh.vn/api/product/search',
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => '',
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 0,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => 'POST',
+            CURLOPT_POSTFIELDS => $data,
+        ));
+        $response = curl_exec($curl);
+        curl_close($curl);
+        $response = json_decode($response, true);
+        $totalPage = $response['data']['totalPages'];
 
-        $styles_white = array( 'font'=>'Arial', 'font-style'=>'bold', 'fill'=>'#FFF', 'halign'=>'center', 'border'=>'left,right,top,bottom');
-        $styles_blue = array( 'font'=>'Arial', 'font-style'=>'bold', 'fill'=>'#b4c6e7', 'halign'=>'center', 'border'=>'left,right,top,bottom');
+        $product_items = array();
 
+        for($c = 1; $c <= $totalPage; $c++) {
+            $api = \Base\Model\Resource::data_api();
+            $data = json_encode(array('page' => $c, 'icpp' => 50, 'name' => ''));
+            $data = array(
+                'version' => $api['version'],
+                'appId' => $api['appId'],
+                'businessId' => $api['businessId'],
+                'accessToken' => $api['accessToken'],
+                'data' => $data
+            );
+
+            $curl = curl_init();
+
+            curl_setopt_array($curl, array(
+                CURLOPT_URL => 'https://open.nhanh.vn/api/product/search',
+                CURLOPT_RETURNTRANSFER => true,
+                CURLOPT_ENCODING => '',
+                CURLOPT_MAXREDIRS => 10,
+                CURLOPT_TIMEOUT => 0,
+                CURLOPT_FOLLOWLOCATION => true,
+                CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+                CURLOPT_CUSTOMREQUEST => 'POST',
+                CURLOPT_POSTFIELDS => $data,
+            ));
+
+            $response = curl_exec($curl);
+            curl_close($curl);
+            $response = json_decode($response, true);
+            if(!empty($response['data']['products'])) {
+                foreach ($response['data']['products'] as $v) {
+                    $product_items[$v['code']] = array($v['code'],$v['name'], $v['image']);
+                }
+            }
+            $array_data[] = $response['data'];
+        }
+
+        if(!empty($product_items)) {
+            $this->template_excel($product_items);
+        }
+
+    }
+
+    private function template_excel($product_items) {
+        $file_name = 'Danh sách sản phẩm_'.date('ymd').'.xlsx';
+        $sheet_product = 'Sản phẩm';
+        $header_one = array( 'Mã sản phẩm', 'Tên sản phẩm', 'Hình ảnh sản phẩm', 'Tên vật liệu', 'Số lượng');
+        $styles_white = array('font'=>'Arial', 'font-style'=>'bold', 'fill'=>'#FFF', 'halign'=>'left', 'border'=>'left,right,top,bottom');
         $writer = new XLSXWriter();
-//            $writer->markMergedCell($sheet_product, $start_row = 0, $start_col = 0, $end_row = 0, $end_col = 5);
-//
-//            $writer->markMergedCell($sheet_product, $start_row = 1, $start_col = 0, $end_row = 1, $end_col = 2);
-//            $writer->markMergedCell($sheet_product, $start_row = 1, $start_col = 3, $end_row = 1, $end_col = 5);
-//
-//            $writer->markMergedCell($sheet_product, $start_row = 2, $start_col = 0, $end_row = 2, $end_col = 1);
-//            $writer->markMergedCell($sheet_product, $start_row = 2, $start_col = 2, $end_row = 2, $end_col = 3);
-//            $writer->markMergedCell($sheet_product, $start_row = 2, $start_col = 4, $end_row = 2, $end_col = 5);
-        $v = array('123', 'Product Name', 'https://asad.com/aaa.jpg');
+//            $v = array('123', 'Product Name', 'https://asad.com/aaa.jpg');
+//            $writer->writeSheetHeader($sheet_product, $header_one, $styles_white );
         $writer->writeSheetRow($sheet_product, $header_one, $styles_white);
-//        foreach ($post as $v) {
-            $writer->writeSheetRow($sheet_product, $v);
-//        }
+        foreach ($product_items as $pi) {
+            $writer->writeSheetRow($sheet_product, $pi);
+        }
         $writer->writeToFile($file_name);
         header('Content-Description: File Transfer');
         header("Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
@@ -242,14 +405,11 @@ class MaterialController extends AbstractActionController{
         header("Pragma: public");
         header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
         header('Content-Length: ' . filesize($file_name));
-
         ob_clean();
         flush();
-
         readfile($file_name);
         unlink($file_name);
         exit;
-
     }
 
     public function addproductAction() {

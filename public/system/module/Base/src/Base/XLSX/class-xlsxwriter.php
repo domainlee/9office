@@ -1,5 +1,6 @@
 <?php
 namespace Base\XLSX;
+use ZipArchive;
 
 /*
  * @license MIT License

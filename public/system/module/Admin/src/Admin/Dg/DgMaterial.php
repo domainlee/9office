@@ -11,6 +11,10 @@ class DgMaterial extends \Base\Dg\Table {
                 'style' => 'text-align: center;width: 2%'
             ),
             array(
+                'label' => 'Mã vật liệu',
+                'style' => 'vertical-align: middle;'
+            ),
+            array(
                 'label' => 'Tên vật liệu',
                 'style' => 'vertical-align: middle;'
             ),
@@ -51,6 +55,11 @@ class DgMaterial extends \Base\Dg\Table {
                 array(
                     'type' => 'text',
                     'value' => $img,
+                    'htmlOptions'=> array('style'=>'vertical-align: middle'),
+                ),
+                array(
+                    'type' => 'text',
+                    'value' => 'VL'.$item->getId(),
                     'htmlOptions'=> array('style'=>'vertical-align: middle'),
                 ),
                 array (

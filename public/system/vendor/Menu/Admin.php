@@ -86,11 +86,19 @@ class Admin extends Navigation
                         'class'=>'fa fa-list-ul'
                     ),
                     array(
-                        'label'	=> 'Sản phẩm',
+                        'label'	=> 'Sản phẩm vật liệu',
                         'label2'=> 'product',
                         'uri'	=> '/admin/material/product',
                         'resource' => 'admin:material',
                         'privilege' => 'product',
+                        'class'=>'fa fa-list-ul',
+                    ),
+                    array(
+                        'label'	=> 'Sản phẩm',
+                        'label2'=> 'product',
+                        'uri'	=> '/admin/material/productlist',
+                        'resource' => 'admin:material',
+                        'privilege' => 'productlist',
                         'class'=>'fa fa-list-ul',
                     ),
                 )
