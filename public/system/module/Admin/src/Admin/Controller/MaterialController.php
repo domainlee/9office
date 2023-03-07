@@ -252,13 +252,54 @@ class MaterialController extends AbstractActionController{
     }
 
     public function importmaterialAction() {
-        $data = $this->getRequest()->getPost()['coin_sizes'];
+        $import_material = $this->getRequest()->getPost()['import_material'];
+        $import_material = json_decode(html_entity_decode(stripslashes($import_material)), true);
+        $u = $this->getServiceLocator()->get('User\Service\User');
 
-        $general_settings = json_decode(html_entity_decode(stripslashes($data)), true);
+        if(!empty($import_material)) {
+            $errors = 0;
+            $success = 0;
+            foreach ($import_material as $v) {
+                $v = array_values($v);
+                $material = new \Admin\Model\Material();
+                $material->setName(trim($v[0]));
 
+                $materialMapper = $this->getServiceLocator()->get('Admin\Model\MaterialMapper');
+                $rMaterial = $materialMapper->searchName($material);
+                if(empty($rMaterial)){
+                    $cong = trim((int)$v[1]);
+                    $price = trim((int)$v[3]);
+                    $manufacture = new \Admin\Model\Manufacture();
+                    $manufacture->setName($v[2]);
+                    $manufactureMapper = $this->getServiceLocator()->get('Admin\Model\ManufactureMapper');
+                    $rManufacture = $manufactureMapper->searchName($manufacture);
+                    if(!empty($rManufacture)) {
+                        $material->setManufactureId($rManufacture->getId());
+                    }
+                    if($cong == 3 && !empty($price)) {
+                        $material->setPrice($price);
+                    }
+                    $material->setType($cong);
+                    $material->setCreatedDateTime(DateBase::getCurrentDateTime());
+                    $material->setCreatedById($u->getId());
+                    $materialMapper->save($material);
+                    $success += 1;
+                } else {
+                    $errors += 1;
+                }
+            }
 
-        print_r($general_settings);
-        die;
+            return new JsonModel(array(
+                'code' => 1,
+                'errors' => $errors,
+                'success' => $success,
+            ));
+        }
+
+        return new JsonModel(array(
+            'code' => 0,
+            'messenger' => 'Dữ liệu không phù hợp'
+        ));
     }
 
     public function exportproductAction() {

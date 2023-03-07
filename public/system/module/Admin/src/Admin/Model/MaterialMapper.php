@@ -36,6 +36,31 @@ class MaterialMapper extends Base{
         return null;
     }
 
+    public function searchName($item)
+    {
+        if (!$item->getName()) {
+            return null;
+        }
+        $select = $this->getDbSql()->select(array('ar' => $this->getTableName()));
+
+        if($item->getName()) {
+            $select->where("ar.name LIKE '%{$item->getName()}%'");
+        }
+        $select->limit(1);
+
+        $dbSql = $this->getServiceLocator()->get('dbSql');
+        $dbAdapter = $this->getServiceLocator()->get('dbAdapter');
+        $query = $dbSql->getSqlStringForSqlObject($select);
+        $results = $dbAdapter->query($query, $dbAdapter::QUERY_MODE_EXECUTE);
+
+        if ($results->count()) {
+            $item->exchangeArray((array) $results->current());
+            return $item;
+        }
+
+        return null;
+    }
+
 	public function getId($id){
 		/* @var $dbAdapter \Zend\Db\Adapter\Adapter */
 		$dbAdapter = $this->getServiceLocator()->get('dbAdapter');

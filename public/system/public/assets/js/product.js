@@ -286,6 +286,8 @@ $(function(){
         import_coin_inner: $('.import-coin'),
         _form: $('.form_import_coin'),
         _buttonImport: $('.import-coin__button-import'),
+        _errors: $('.errors'),
+        _success: $('.success'),
         init: function () {
             // $(window).on( 'load', this.validate );
             this._buttonImport.on('click', this.import );
@@ -349,7 +351,8 @@ $(function(){
                 contentType: false,
                 processData: false,
             }).done(function (e) {
-                // let data = JSON.parse(e);
+                import_coin._errors.text('').text(e.errors + ' Vật liệu đã tồn tại, hoặc dự liệu chưa phù hợp');
+                import_coin._success.text('').text(e.success + ' Tạo mới');
                 // location.reload();
             });
         }
