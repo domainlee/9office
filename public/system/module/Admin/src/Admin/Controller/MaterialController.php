@@ -253,7 +253,9 @@ class MaterialController extends AbstractActionController{
 
     public function importmaterialAction() {
         $import_material = $this->getRequest()->getPost()['import_material'];
+        $product_material = $this->getRequest()->getPost()['product_material'];
         $import_material = json_decode(html_entity_decode(stripslashes($import_material)), true);
+        $product_material = json_decode(html_entity_decode(stripslashes($product_material)), true);
         $u = $this->getServiceLocator()->get('User\Service\User');
 
         if(!empty($import_material)) {
@@ -296,6 +298,55 @@ class MaterialController extends AbstractActionController{
             ));
         }
 
+        if(!empty($product_material)) {
+            $printedSeasons = [];
+            $mapperProductMaterialItem = $this->getServiceLocator()->get('Admin\Model\ProductMaterialItemMapper');
+            $mapperProductMaterial = $this->getServiceLocator()->get('Admin\Model\ProductMaterialMapper');
+            $mapperMaterial = $this->getServiceLocator()->get('Admin\Model\MaterialMapper');
+            $errors = 0;
+            $success = 0;
+            foreach ($product_material as $v) {
+                $v = array_values($v);
+                $sku = trim($v[0]);
+                $quantity = trim($v[4]);
+                $quantity = (float)str_replace(",", ".", $quantity);;
+
+                $materialId = (int)substr(trim($v[3]),2);
+                $material = new \Admin\Model\Material();
+                $material->setId($materialId);
+                $materialR = $mapperMaterial->get($material);
+                if($materialR) {
+                    $modelProductMaterialItem = new \Admin\Model\ProductMaterialItem();
+                    $modelProductMaterialItem->setProductId($sku);
+                    $modelProductMaterialItem->setMaterialId($materialR->getId());
+                    $rProductMaterialItem = $mapperProductMaterialItem->getProductMaterial($modelProductMaterialItem);
+                    if(!$rProductMaterialItem) {
+                        if($materialR->getPrice()) {
+                            $modelProductMaterialItem->setPrice($materialR->getPrice());
+                            $modelProductMaterialItem->setIntoMoney($quantity*$materialR->getPrice());
+                        }
+                        $modelProductMaterialItem->setQuantity($quantity);
+                        $modelProductMaterialItem->setUpdatedDateTime(DateBase::getCurrentDateTime());
+                        $modelProductMaterialItem->setCreatedDateTime(DateBase::getCurrentDateTime());
+                        $modelProductMaterialItem->setCreatedById($u->getId());
+                        $mapperProductMaterialItem->save($modelProductMaterialItem);
+                        $success += 1;
+                    } else {
+                        $errors += 1;
+                    }
+                    if(!in_array($sku, $printedSeasons)) {
+                        $printedSeasons[] = $sku;
+    //                    echo $sku.'<br/>';
+                    }
+                }
+            }
+            return new JsonModel(array(
+                'code' => 1,
+                'errors' => $errors,
+                'success' => $success,
+            ));
+        }
+        die;
         return new JsonModel(array(
             'code' => 0,
             'messenger' => 'Dữ liệu không phù hợp'
@@ -306,7 +357,7 @@ class MaterialController extends AbstractActionController{
         $selected_products = $this->getRequest()->getQuery()['ids'];
         $selected = explode(',',$selected_products);
         if(!empty($selected) && is_array($selected) && $selected_products !== null) {
-            $this->export_selected($selected_products);
+            $this->export_selected($selected);
         } else {
             $this->export_all();
         }
@@ -427,7 +478,7 @@ class MaterialController extends AbstractActionController{
 
     private function template_excel($product_items) {
         $file_name = 'Danh sách sản phẩm_'.date('ymd').'.xlsx';
-        $sheet_product = 'Sản phẩm';
+        $sheet_product = 'Product Material';
         $header_one = array( 'Mã sản phẩm', 'Tên sản phẩm', 'Hình ảnh sản phẩm', 'Mã vật liệu', 'Số lượng');
         $styles_white = array('font'=>'Arial', 'font-style'=>'bold', 'fill'=>'#FFF', 'halign'=>'left', 'border'=>'left,right,top,bottom');
         $writer = new XLSXWriter();
@@ -546,7 +597,7 @@ class MaterialController extends AbstractActionController{
                     if(!empty($data['materialId'])) {
                         foreach ($data['materialId'] as $k => $v) {
                             $price = $data['price'][$k];
-                            $quantity = $data['quantity'][$k];
+                            $quantity = (float)str_replace(",", ".", $data['quantity'][$k]);;
                             $intoMoney = $data['intoMoney'][$k];
                             $id = $data['pmId'][$k];
                             $mapperProductMaterialItem = $this->getServiceLocator()->get('Admin\Model\ProductMaterialItemMapper');
