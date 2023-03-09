@@ -16,8 +16,8 @@ class OrderController extends AbstractActionController{
 
 		$query = $this->getRequest()->getUri()->getQuery();
         $page = (int)$this->getRequest()->getQuery()->page ? : 1;
-        $id = (int)$this->getRequest()->getQuery()->id ? : '';
-        $phone = (int)$this->getRequest()->getQuery()->phone ? : '';
+        $id = $this->getRequest()->getQuery()->id ? : '';
+        $phone = $this->getRequest()->getQuery()->phone ? : '';
         $status_filter = $this->getRequest()->getQuery()->status ? : '';
         $data = json_encode(array('id' => $id, 'customerMobile' => $phone, 'page' => $page, 'statuses' => array($status_filter)));
         $curl = curl_init();
@@ -60,12 +60,18 @@ class OrderController extends AbstractActionController{
             'Packing' => 'Đang đóng gói',
         );
         $fFilter->setStatus($status, $status_filter);
+
+        $productMaterialItem = new \Admin\Model\ProductMaterialItem();
+        $mapperProductMaterialItem = $this->getServiceLocator()->get('Admin\Model\ProductMaterialItemMapper');
+        $productMaterial = $mapperProductMaterialItem->fetchAll3($productMaterialItem);
+
         return new ViewModel(array(
 			'query'=> $query,
 			'results'=> $response['data'],
 			'fFilter'=> $fFilter,
             'id' => $id,
-            'phone' => $phone
+            'phone' => $phone,
+            'product_material' => $productMaterial
 		));
 	}
 	public function addAction(){

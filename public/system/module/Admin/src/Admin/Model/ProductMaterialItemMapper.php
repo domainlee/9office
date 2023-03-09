@@ -119,6 +119,30 @@ class ProductMaterialItemMapper extends Base {
         return $rs;
     }
 
+    public function fetchAll3($item)
+    {
+        /* @var $dbAdapter \Zend\Db\Adapter\Adapter */
+        $dbAdapter = $this->getServiceLocator()->get('dbAdapter');
+
+        /* @var $dbSql \Zend\Db\Sql\Sql */
+        $dbSql = $this->getServiceLocator()->get('dbSql');
+        $select = $dbSql->select(array("ac" => $this->getTableName()));
+
+        if($item->getId()) {
+            $select->where(array('ac.id' => $item->getId()));
+        }
+        $selectString = $dbSql->getSqlStringForSqlObject($select);
+        $results = $dbAdapter->query($selectString, $dbAdapter::QUERY_MODE_EXECUTE);
+
+        $all = array();
+        if($results->count()) {
+            foreach ($results as $row) {
+                $all[$row['productId']][] = array('materialId' => $row['materialId'], 'quantity' => $row['quantity'], 'price' => $row['price'], 'intoMoney' => $row['intoMoney']);
+            }
+        }
+        return $all;
+    }
+
 
     /**
      * @param \Admin\Model\ProductMaterialItem $model

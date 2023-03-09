@@ -9,6 +9,7 @@ $page_prev = ($page == 1 ? 1:$page-1);
 $page_next = ($total == $page ? $page:$page + 1);
 $id = $this->id;
 $phone = $this->phone;
+$product_material = $this->product_material;
 
 if($query) {
     $page_prev = preg_replace ( '/page=([0-9])/','page='.$page_prev, $query );
@@ -72,10 +73,15 @@ if($query) {
                             </thead>
                             <tbody>
                                 <?php if(!empty($order)): ?>
-                                    <?php foreach($order as $k => $v): ?>
+                                    <?php foreach($order as $k => $v):
+                                        $title = '';
+                                        if(in_array($k, $product_material)){
+                                            $title = 'ready';
+                                        }
+                                    ?>
                                     <tr class="even">
                                         <td class="id" style="text-align: center;vertical-align: middle"><?php echo $k ?></td>
-                                        <td style="vertical-align: middle"><?php echo $v['customerName'] ?></td>
+                                        <td style="vertical-align: middle"><?php echo $v['customerName'].' '.$title ?></td>
                                         <td style="vertical-align: middle"><?php echo $v['customerAddress'] ?></td>
                                         <td class="list_product">
                                             <?php foreach ($v['products'] as $p => $pv):  ?>
