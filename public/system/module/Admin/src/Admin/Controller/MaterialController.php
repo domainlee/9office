@@ -308,6 +308,8 @@ class MaterialController extends AbstractActionController{
             foreach ($product_material as $v) {
                 $v = array_values($v);
                 $sku = trim($v[0]);
+                $name = trim($v[1]);
+                $image = trim($v[2]);
                 $quantity = trim($v[4]);
                 $quantity = (float)str_replace(",", ".", $quantity);;
 
@@ -336,7 +338,16 @@ class MaterialController extends AbstractActionController{
                     }
                     if(!in_array($sku, $printedSeasons)) {
                         $printedSeasons[] = $sku;
-    //                    echo $sku.'<br/>';
+                        $modelProductMaterial = new \Admin\Model\ProductMaterial();
+                        $modelProductMaterial->setProductId($sku);
+                        $rPM = $mapperProductMaterial->get($modelProductMaterial);
+                        if(!$rPM) {
+                            $modelProductMaterial->setCreatedDateTime(DateBase::getCurrentDateTime());
+                            $modelProductMaterial->setCreatedById($u->getId());
+                            $modelProductMaterial->setName($name);
+                            $modelProductMaterial->setImage($image);
+                            $mapperProductMaterial->save($modelProductMaterial);
+                        }
                     }
                 }
             }
@@ -477,13 +488,14 @@ class MaterialController extends AbstractActionController{
     }
 
     private function template_excel($product_items) {
+	    if(empty($product_items)) {
+	        return false;
+        }
         $file_name = 'Danh sách sản phẩm_'.date('ymd').'.xlsx';
         $sheet_product = 'Product Material';
         $header_one = array( 'Mã sản phẩm', 'Tên sản phẩm', 'Hình ảnh sản phẩm', 'Mã vật liệu', 'Số lượng');
         $styles_white = array('font'=>'Arial', 'font-style'=>'bold', 'fill'=>'#FFF', 'halign'=>'left', 'border'=>'left,right,top,bottom');
         $writer = new XLSXWriter();
-//            $v = array('123', 'Product Name', 'https://asad.com/aaa.jpg');
-//            $writer->writeSheetHeader($sheet_product, $header_one, $styles_white );
         $writer->writeSheetRow($sheet_product, $header_one, $styles_white);
         foreach ($product_items as $pi) {
             $writer->writeSheetRow($sheet_product, $pi);
