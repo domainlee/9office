@@ -156,7 +156,7 @@ jQuery(document).ready(function () {
                 var value_price = input_price_invoice.val();
                 value_price = value_price.replace(",", "");
                 var value_quantity = quantity.val();
-                value_quantity = value_quantity.replace(",", "");
+                value_quantity = value_quantity.replace(",", ".");
 
                 intoMoney.val(value_price * value_quantity);
                 intoMoney.autoNumeric().trigger('focusout');

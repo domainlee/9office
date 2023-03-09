@@ -54,7 +54,6 @@ class ProductMaterial extends FormBase{
             "type" => "Zend\\InputFilter\\ArrayInput",
             'required' => false,
             'filters' => array (
-                array ('name' => 'Digits'),
                 array ('name' => 'StringTrim'),
             ),
         ) );
