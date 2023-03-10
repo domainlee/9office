@@ -10,7 +10,6 @@ $page_next = ($total == $page ? $page:$page + 1);
 $id = $this->id;
 $phone = $this->phone;
 $product_material = $this->product_material;
-
 if($query) {
     $page_prev = preg_replace ( '/page=([0-9])/','page='.$page_prev, $query );
     $page_next = preg_replace ( '/page=([0-9])/','page='.$page_next, $query );
@@ -65,7 +64,6 @@ if($query) {
                                 <tr>
                                     <th style="text-align: center;width: 8%;">Order Id</th>
                                     <th style="vertical-align: middle;width: 12%;">Tên</th>
-                                    <th>Địa chỉ</th>
                                     <th style="width: 40%">Sản phẩm</th>
                                     <th style="text-align: center;width: 8%">Trạng thái</th>
                                     <th style="text-align: center;width: 10%">Hành động</th>
@@ -74,33 +72,46 @@ if($query) {
                             <tbody>
                                 <?php if(!empty($order)): ?>
                                     <?php foreach($order as $k => $v):
-                                        $title = '';
-                                        if(in_array($k, $product_material)){
-                                            $title = 'ready';
-                                        }
+
                                     ?>
                                     <tr class="even">
                                         <td class="id" style="text-align: center;vertical-align: middle"><?php echo $k ?></td>
-                                        <td style="vertical-align: middle"><?php echo $v['customerName'].' '.$title ?></td>
-                                        <td style="vertical-align: middle"><?php echo $v['customerAddress'] ?></td>
+                                        <td style="vertical-align: middle"><?php echo $v['customerName'] ?></td>
                                         <td class="list_product">
-                                            <?php foreach ($v['products'] as $p => $pv):  ?>
+                                            <?php $approved = false; foreach ($v['products'] as $p => $pv): ?>
                                                 <div class="" style="display: flex">
                                                     <div>
                                                         <a title="<?php echo 'Đơn hàng ID-'. $k ?> - <?php echo $pv['productCode']; ?>" href="<?php echo $pv['productImage'] ?>" class="button-image"><img style="margin: 0 10px 0 0" class="thumb-md rounded-circle lazy" data-src="<?php echo $pv['productImage'] ?>" /></a>
                                                     </div>
                                                     <div>
                                                         <?php
-                                                            $url_created_product = '/admin/material/addproduct?id='.$pv['productCode'].'&img='.$pv['productImage'].'&name='.$pv['productName'];
+                                                            $url_created_product = '';
+                                                            if(isset($product_material[$pv['productCode']])){
+                                                                $named = '';
+                                                                $c = 0;
+                                                                foreach ($product_material[$pv['productCode']] as $pi) {
+                                                                    $c++;
+                                                                    $named .= $c.'. '.$pi['materialName'].' - SL: '.$pi['quantity'] .'<br/>';
+                                                                }
+                                                                $approved = true;
+                                                                $url_created_product = '<span class="label label-success" data-toggle="tooltip" data-html="true" data-placement="top" title="" data-original-title="'.$named.'">Vật liệu đã có</span>';
+                                                            } else {
+                                                                $approved = false;
+                                                                $url_created_product = '<a class="label label-danger" href="'.'/admin/material/addproduct?id='.$pv['productCode'].'&img='.$pv['productImage'].'&name='.$pv['productName'].'" target="_blank">Tạo vật liệu</a>';
+                                                            }
                                                         ?>
-                                                        <strong><?php echo $pv['productCode']; ?> x <?php echo $pv['quantity']; ?></strong> - <a class="label label-danger" href="<?php echo $url_created_product ?>" target="_blank">Tạo vật liệu</a>
+                                                        <strong><?php echo $pv['productCode']; ?> x <?php echo $pv['quantity']; ?></strong> - <?php echo $url_created_product ?>
                                                         <p><?php echo $pv['productName'] ?></p>
                                                     </div>
                                                 </div>
                                             <?php endforeach; ?>
                                         </td>
                                         <td style="text-align: center;vertical-align: middle"><?php echo $v['statusName'] ?></td>
-                                        <td style="text-align: center;vertical-align: middle"><a class="btn-approved-invoice btn label btn-sm btn-default btn-rounded waves-effect waves-light">Sản xuất</a></td>
+                                        <td style="text-align: center;vertical-align: middle">
+                                            <?php if($approved): ?>
+                                                <a class="btn-approved-invoice btn label btn-sm btn-default btn-rounded waves-effect waves-light">Sản xuất</a>
+                                            <?php endif; ?>
+                                        </td>
                                     </tr>
                                     <?php endforeach; ?>
                                 <?php endif; ?>

@@ -164,7 +164,11 @@ class ProductMaterialItemMapper extends Base {
         $all = array();
         if($results->count()) {
             foreach ($results as $row) {
-                $all[$row['productId']][] = array('materialId' => $row['materialId'], 'quantity' => $row['quantity'], 'price' => $row['price'], 'intoMoney' => $row['intoMoney']);
+                $modelMaterial = new \Admin\Model\Material();
+                $modelMaterial->setId($row['materialId']);
+                $mapperMaterial = $this->getServiceLocator()->get('Admin\Model\MaterialMapper');
+                $resultMaterial = $mapperMaterial->get($modelMaterial);
+                $all[$row['productId']][] = array('materialId' => $row['materialId'], 'materialName' => $resultMaterial->getName(), 'quantity' => $row['quantity'], 'price' => $row['price'], 'intoMoney' => $row['intoMoney']);
             }
         }
         return $all;
