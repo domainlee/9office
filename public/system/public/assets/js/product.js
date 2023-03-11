@@ -361,6 +361,10 @@ $(function(){
 
     import_coin.init();
 
+    jQuery('#date-range').datepicker({
+        toggleActive: true,
+    });
+
     var tmp = [];
     var table = $('.product_list');
     var button_selected = $('.button-export-selected');

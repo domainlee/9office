@@ -5,14 +5,14 @@ $order = $this->results['orders'];
 $total = $this->results['totalPages'];
 $page = $this->results['page'] ? $this->results['page']:1;
 $query = $this->query;
-$page_prev = ($page == 1 ? 1:$page-1);
-$page_next = ($total == $page ? $page:$page + 1);
+$page_prev = (int)($page == 1 ? 1:$page-1);
+$page_next = (int)($total == $page ? $page:$page + 1);
 $id = $this->id;
 $phone = $this->phone;
 $product_material = $this->product_material;
 if($query) {
-    $page_prev = preg_replace ( '/page=([0-9])/','page='.$page_prev, $query );
-    $page_next = preg_replace ( '/page=([0-9])/','page='.$page_next, $query );
+    $page_prev = preg_replace ( '/page=\d*/i','page='.$page_prev, $query );
+    $page_next = preg_replace ( '/page=\d*/i','page='.$page_next, $query );
 } else {
     $page_prev = 'page='.$page_prev;
     $page_next = 'page='.$page_next;
@@ -48,6 +48,13 @@ if($query) {
                                         <?=$this->formelement($form->get('id')->setAttributes(['class' => 'form-control','placeholder'=>'Id', 'value' => $id]))?>
                                     </div>
                                     <div class="form-group">
+                                        <div class="input-daterange input-group" id="date-range">
+                                            <input type="text" class="form-control" name="start">
+                                            <span class="input-group-addon bg-custom b-0 text-white">Đến</span>
+                                            <input type="text" class="form-control" name="end">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
                                         <?=$this->formelement($form->get('phone')->setAttributes(['class' => 'form-control','placeholder'=>'Số điện thoại khách hàng', 'value' => $phone]))?>
                                     </div>
                                     <div class="form-group">
@@ -62,6 +69,7 @@ if($query) {
                         <table class="dg table table-bordered table-hover table-condensed">
                             <thead>
                                 <tr>
+                                    <th style="width: 2%;"></th>
                                     <th style="text-align: center;width: 8%;">Order Id</th>
                                     <th style="vertical-align: middle;width: 12%;">Tên</th>
                                     <th style="width: 40%">Sản phẩm</th>
@@ -75,6 +83,7 @@ if($query) {
 
                                     ?>
                                     <tr class="even">
+                                        <td style="width: 2%; vertical-align: middle;" class="bs-checkbox "><div class="checkbox"><input type="checkbox" name="productId" value="<?php echo $k ?>"><label></label></div></td>
                                         <td class="id" style="text-align: center;vertical-align: middle"><?php echo $k ?></td>
                                         <td style="vertical-align: middle"><?php echo $v['customerName'] ?></td>
                                         <td class="list_product">

@@ -8,8 +8,8 @@ $page_prev = ($page == 1 ? 1:$page-1);
 $page_next = ($total == $page ? $page:$page + 1);
 
 if($query) {
-    $page_prev = preg_replace ( '/page=([0-9])/','page='.$page_prev, $query );
-    $page_next = preg_replace ( '/page=([0-9])/','page='.$page_next, $query );
+    $page_prev = preg_replace ( '/page=\d*/i','page='.$page_prev, $query );
+    $page_next = preg_replace ( '/page=\d*/i','page='.$page_next, $query );
 } else {
     $page_prev = 'page='.$page_prev;
     $page_next = 'page='.$page_next;
@@ -45,7 +45,7 @@ if($query) {
                         <table class="product_list dg table table-bordered table-hover table-condensed">
                             <thead>
                                 <tr>
-                                    <th style="width: 1%;"></th>
+                                    <th style="width: 0.2%;"></th>
                                     <th style="width: 1%;">Hình ảnh</th>
                                     <th style="width: 5%;">Mã sản phẩm</th>
                                     <th style="vertical-align: middle;width: 12%;">Tên</th>
@@ -55,7 +55,7 @@ if($query) {
                                 <?php if(!empty($order)): ?>
                                     <?php foreach($order as $k => $v):  ?>
                                     <tr class="even">
-                                        <td style="vertical-align: middle;" class="bs-checkbox "><input type="checkbox" name="productId" value="<?php echo $v['code'] ?>"></td>
+                                        <td style="width: 0.2%; vertical-align: middle;" class="bs-checkbox "><div class="checkbox"><input type="checkbox" name="productId" value="<?php echo $v['code'] ?>"><label></label></div></td>
                                         <td class="id" style="vertical-align: middle"><a title="<?php echo $v['name'] ?>" href="<?php echo $v['image'] ?>" class="button-image"><img class="lazy thumb-md" data-src="<?php echo $v['image'] ?>" ></a></td>
                                         <td class="id" style="vertical-align: middle"><?php echo $v['code'] ?></td>
                                         <td style="vertical-align: middle"><?php echo $v['name'] ?></td>
