@@ -162,6 +162,7 @@ class InvoiceMaterialMapper extends Base{
             'createdDateTime' => $model->getCreatedDateTime(),
             'createdById' => $model->getCreatedById(),
             'orderId' => $model->getOrderId(),
+            'productId' => $model->getProductId(),
             'status' => $model->getStatus()
 		);
         $data = $xss->cleanInputs($data);

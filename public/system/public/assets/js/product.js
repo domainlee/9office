@@ -260,6 +260,21 @@ $(function(){
         });
     });
 
+    $('.btn-in-production').on('click', function () {
+        var data = $(this).attr('data-production'), _this = $(this);
+
+        if (confirm('Bạn sẽ sản xuất đơn hàng này ?')) {
+            $.post('/admin/material/ordermanufacture',{data: data},function(r){
+                // if(r.code == 1){
+                //     alert(r.messenger);
+                //     location.reload();
+                // }else if(r.code == 0){
+                //     alert(r.messenger);
+                // }
+            });
+        }
+    });
+
     var list_product_material = $('.list-product-material');
     $('.add-product-item').click(function () {
         $.post('/admin/material/additemproduct',{type: 'add'},function(r){

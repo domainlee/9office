@@ -89,7 +89,7 @@ if($query) {
                                         <td class="id" style="text-align: center;vertical-align: middle"><?php echo DateBase::toDisplayDateTime($v['createdDateTime'])  ?></td>
                                         <td style="vertical-align: middle"><?php echo $v['customerName'] ?></td>
                                         <td class="list_product">
-                                            <?php $approved = false; foreach ($v['products'] as $p => $pv): ?>
+                                            <?php $approved = false; $materials = array(); foreach ($v['products'] as $p => $pv): ?>
                                                 <div class="" style="display: flex">
                                                     <div>
                                                         <a title="<?php echo 'Đơn hàng ID-'. $k ?> - <?php echo $pv['productCode']; ?>" href="<?php echo $pv['productImage'] ?>" class="button-image"><img style="margin: 0 10px 0 0" class="thumb-md rounded-circle lazy" data-src="<?php echo $pv['productImage'] ?>" /></a>
@@ -100,16 +100,22 @@ if($query) {
                                                             if(isset($product_material[$pv['productCode']])){
                                                                 $named = '';
                                                                 $c = 0;
-                                                                foreach ($product_material[$pv['productCode']] as $pi) {
+                                                                $products = array();
+                                                                foreach ($product_material[$pv['productCode']] as $kpi => $pi) {
                                                                     $c++;
                                                                     $named .= $c.'. '.$pi['materialName'].' - SL: '.$pi['quantity'] .'<br/>';
+                                                                    $products[] = array(
+                                                                        'materialId' => $pi['materialId'],
+                                                                        'quantity' => $pi['quantity']*$pv['quantity']
+                                                                    );
                                                                 }
+                                                                $materials[$k][$pv['productCode']] = $products;
                                                                 if($approved === 'false') {
                                                                     $approved = false;
                                                                 } else {
                                                                     $approved = true;
                                                                 }
-                                                                $url_created_product = '<span class="label label-success" data-toggle="tooltip" data-html="true" data-placement="top" title="" data-original-title="'.$named.'">Vật liệu đã có</span>';
+                                                                $url_created_product = '<span class="label label-success" data-toggle="tooltip" data-html="true" data-placement="top" title="" data-original-title="'.$named.'">Vật liệu sử dụng</span>';
                                                             } else {
                                                                 $approved = 'false';
                                                                 $url_created_product = '<a class="label label-danger" href="'.'/admin/material/addproduct?id='.$pv['productCode'].'&img='.$pv['productImage'].'&name='.$pv['productName'].'" target="_blank">Tạo vật liệu</a>';
@@ -124,7 +130,7 @@ if($query) {
                                         <td style="text-align: center;vertical-align: middle"><?php echo $v['statusName'] ?></td>
                                         <td style="text-align: center;vertical-align: middle">
                                             <?php if($approved && $approved !== 'false'): ?>
-                                                <a class="btn-approved-invoice btn label btn-sm btn-default btn-rounded waves-effect waves-light">Sản xuất</a>
+                                                <a data-production='<?= json_encode($materials); ?>' class="btn-in-production btn label btn-sm btn-default btn-rounded waves-effect waves-light">Sản xuất</a>
                                             <?php endif; ?>
                                         </td>
                                     </tr>

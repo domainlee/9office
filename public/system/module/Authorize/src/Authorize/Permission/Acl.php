@@ -85,7 +85,7 @@ class Acl extends ZendAcl
         //member
         $this->allow('Admin', 'admin:admin', array('index', 'optionadmin'));
         $this->allow('Guest', 'admin:admin', array('huongdan'));
-        $this->allow('Guest', 'admin:material', array('additemproduct', 'importmaterial', 'exportproduct'));
+        $this->allow('Guest', 'admin:material', array('additemproduct', 'importmaterial', 'exportproduct', 'ordermanufacture'));
 //        $this->allow('Admin', 'admin:page', array('index','add','edit','change','delete', 'homepage'));
 //        $this->allow('Admin', 'admin:article', array('index','add','edit','category','addcategory', 'change','changec', 'delete', 'editcategory', 'deletec'));
 //        $this->allow('Admin', 'admin:product', array('index','add','edit','delete', 'attr', 'deleteattr', 'loadattr', 'category', 'addcategory', 'editcategory', 'deletecategory', 'change', 'changec', 'order', 'orderview', 'brand', 'addbrand', 'editbrand', 'deletebrand', 'changeBrand', 'importexcel', 'type', 'related', 'changeorder', 'deleteorder'));

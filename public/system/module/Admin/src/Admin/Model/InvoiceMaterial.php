@@ -20,6 +20,7 @@ class InvoiceMaterial extends Base{
 	protected $createdDateTime;
 	protected $createdById;
 	protected $orderId;
+	protected $productId;
 	protected $status;
 
     const STATUS_APPROVED = 1;
@@ -252,6 +253,22 @@ class InvoiceMaterial extends Base{
     public function setStatus($status)
     {
         $this->status = $status;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getProductId()
+    {
+        return $this->productId;
+    }
+
+    /**
+     * @param mixed $productId
+     */
+    public function setProductId($productId)
+    {
+        $this->productId = $productId;
     }
 
 
