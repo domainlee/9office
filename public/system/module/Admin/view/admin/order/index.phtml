@@ -1,4 +1,5 @@
 <?php
+use Home\Model\DateBase;
 echo $this->headtitle($this->escapehtml($this->translate('Danh sách hóa đơn')));
 //print_r($this->results);die;
 $order = $this->results['orders'];
@@ -17,7 +18,6 @@ if($query) {
     $page_prev = 'page='.$page_prev;
     $page_next = 'page='.$page_next;
 }
-
 ?>
 
 <style>
@@ -86,7 +86,7 @@ if($query) {
                                     <tr class="even">
                                         <td style="width: 2%; vertical-align: middle;" class="bs-checkbox "><div class="checkbox"><input type="checkbox" name="productId" value="<?php echo $k ?>"><label></label></div></td>
                                         <td class="id" style="text-align: center;vertical-align: middle"><?php echo $k ?></td>
-                                        <td class="id" style="text-align: center;vertical-align: middle"><?php echo $v['createdDateTime'] ?></td>
+                                        <td class="id" style="text-align: center;vertical-align: middle"><?php echo DateBase::toDisplayDateTime($v['createdDateTime'])  ?></td>
                                         <td style="vertical-align: middle"><?php echo $v['customerName'] ?></td>
                                         <td class="list_product">
                                             <?php $approved = false; foreach ($v['products'] as $p => $pv): ?>

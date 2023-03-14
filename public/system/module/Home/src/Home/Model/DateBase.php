@@ -15,7 +15,7 @@ class DateBase extends DateTime
 	const COMMON_TIME_FORMAT = 'H:i:s';
 	const DISPLAY_DATE_FORMAT = 'd/m/Y';
 	const COMMON_DATETIME_FORMAT = 'Y-m-d H:i:s';
-	const DISPLAY_DATETIME_FORMAT = 'd/m/Y H:i:s';
+	const DISPLAY_DATETIME_FORMAT = 'H:i:s d/m/Y ';
 
 
 	const FILEPATH_DATE_FORMAT = 'Ymd';
