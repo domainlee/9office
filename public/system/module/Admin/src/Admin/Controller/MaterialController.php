@@ -790,7 +790,7 @@ class MaterialController extends AbstractActionController{
         $invoice->setOrderId($orderId);
         $invoiceMapper = $this->getServiceLocator()->get('Admin\Model\InvoiceMapper');
         $rInvoice = $invoiceMapper->save($invoice);
-        $invoiceId = 18; //$rInvoice->getGeneratedValue();
+        $invoiceId = $rInvoice->getGeneratedValue();
         if($invoiceId) {
             foreach ($order_products as $op) {
                 foreach ($op as $productId => $product) {
@@ -833,6 +833,19 @@ class MaterialController extends AbstractActionController{
                     }
                 }
             }
+            $orderManufacture = new \Admin\Model\OrderManufacture();
+            $orderManufactureMapper = $this->getServiceLocator()->get('Admin\Model\OrderManufactureMapper');
+            $orderManufacturer = $orderManufactureMapper->get($orderManufacture);
+
+            if($orderManufacturer) {
+                $orderManufacture->setId($orderManufacturer->getId());
+            }
+            $orderManufacture->setStatus(\Admin\Model\OrderManufacture::IN_PRODUCTION);
+            $orderManufacture->setOrderId($orderId);
+            $orderManufacture->setCreatedDateTime(DateBase::getCurrentDateTime());
+            $orderManufacture->setCreatedById($u->getId());
+            $orderManufacture->setStartDateTime(DateBase::getCurrentDateTime());
+            $orderManufactureMapper->save($orderManufacture);
         }
 
         return new JsonModel(array(

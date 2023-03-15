@@ -7,6 +7,37 @@ class OrderManufactureMapper extends Base{
 	protected $tableName = 'order_manufacture';
 
     /**
+     * @param \Admin\Model\OrderManufacture $item
+     */
+    public function get($item)
+    {
+        if (!$item->getId() && !$item->getOrderId()) {
+            return null;
+        }
+        $select = $this->getDbSql()->select(array('ac' => $this->getTableName()));
+
+        if($item->getId()) {
+            $select->where(['ac.id' => $item->getId()]);
+        }
+        if($item->getOrderId()){
+            $select->where(['ac.orderId'=> $item->getOrderId()]);
+        }
+
+        $select->limit(1);
+
+        $dbSql = $this->getServiceLocator()->get('dbSql');
+        $dbAdapter = $this->getServiceLocator()->get('dbAdapter');
+        $query = $dbSql->getSqlStringForSqlObject($select);
+        $results = $dbAdapter->query($query, $dbAdapter::QUERY_MODE_EXECUTE);
+
+        if ($results->count()) {
+            $item->exchangeArray((array) $results->current());
+            return $item;
+        }
+
+        return null;
+    }
+    /**
      * @param \Admin\Model\OrderManufacture $model
      */
 	public function save($model){
