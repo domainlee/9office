@@ -3,10 +3,6 @@ echo $this->headtitle($this->escapehtml($this->translate('Thêm')));
 $form = $this->form;
 ?>
 <style>
-    .form-group {
-        display: flex;
-        flex-direction: column;
-    }
     .form-group .parsley-errors-list {
         order: 5;
     }
@@ -28,18 +24,24 @@ $form = $this->form;
                             </div>
                         </div>
                     </div>
-                    <div class="row">
+                    <hr/>
+                    <div class="form-group">
+                        <a class="add-product-item-invoice btn btn-primary waves-effect waves-light">Thêm vật liệu</a>
+                    </div>
+
+                    <div class="list-product-material-invoice">
+                        <div class="row">
                         <div class="col-sm-3">
                             <div class="form-group">
                                 <label class="control-label" for="firstName">Vật liệu</label>
-                                <?= $this->formelement($form->get('materialId')->setAttributes(['class' => 'form-control select-ajax-material', 'required' => 'required','data-cong' => 'true', 'placeholder'=>'Vật liệu','data-parsley-type' => 'string', 'data-parsley-error-message' => 'Vật liệu không được để trống'])) ?>
+                                <?= $this->formelement($form->get('materialId')->setAttributes(['name' => 'materialId[]','class' => 'form-control select-ajax-material', 'required' => 'required','data-cong' => 'true', 'placeholder'=>'Vật liệu','data-parsley-type' => 'string', 'data-parsley-error-message' => 'Vật liệu không được để trống'])) ?>
                                 <?= $this->formelementerrors($form->get('materialId'),['class' => 'parsley-errors-list filled']) ?>
                             </div>
                         </div>
                         <div class="col-sm-3">
                             <div class="form-group">
                                 <label class="control-label" for="firstName">Đơn giá</label>
-                                <?= $this->formelement($form->get('price')->setAttributes(['class' => 'form-control autonumber', 'placeholder'=>'Đơn giá', 'required' => 'required', 'data-parsley-error-message' => 'Không được để trống'])) ?>
+                                <?= $this->formelement($form->get('price')->setAttributes(['name' => 'price[]','class' => 'form-control autonumber', 'placeholder'=>'Đơn giá', 'required' => 'required', 'data-parsley-error-message' => 'Không được để trống'])) ?>
                                 <?= $this->formelementerrors($form->get('price'),['class' => 'parsley-errors-list filled']) ?>
                             </div>
                         </div>
@@ -53,13 +55,11 @@ $form = $this->form;
                         <div class="col-sm-3">
                             <div class="form-group">
                                 <label class="control-label" for="firstName">Thành tiền</label>
-                                <?= $this->formelement($form->get('intoMoney')->setAttributes(['class' => 'form-control autonumber', 'placeholder'=>'Thành tiền'])) ?>
+                                <?= $this->formelement($form->get('intoMoney')->setAttributes(['name' => 'quantity[]','class' => 'form-control autonumber', 'placeholder'=>'Thành tiền'])) ?>
                                 <?= $this->formelementerrors($form->get('intoMoney'),['class' => 'parsley-errors-list filled']) ?>
                             </div>
                         </div>
                     </div>
-                    <div class="row">
-
                     </div>
                     <div class="form-actions">
                         <?=$this->formelement($form->get('submit')->setAttributes(['class' => 'loadHomepage btn btn-default']))?>

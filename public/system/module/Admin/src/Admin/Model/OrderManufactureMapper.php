@@ -75,6 +75,66 @@ class OrderManufactureMapper extends Base{
 	}
 
 
+    public function fetchAll($item)
+    {
+        /* @var $dbAdapter \Zend\Db\Adapter\Adapter */
+        $dbAdapter = $this->getServiceLocator()->get('dbAdapter');
+
+        /* @var $dbSql \Zend\Db\Sql\Sql */
+        $dbSql = $this->getServiceLocator()->get('dbSql');
+        $select = $dbSql->select(array("ac" => $this->getTableName()));
+
+        if($item->getId()) {
+            $select->where(array('ac.id' => $item->getId()));
+        }
+        $selectString = $dbSql->getSqlStringForSqlObject($select);
+        $results = $dbAdapter->query($selectString, $dbAdapter::QUERY_MODE_EXECUTE);
+
+        $all = array();
+        if($results->count()) {
+            foreach ($results as $row) {
+//                $modelMaterial = new \Admin\Model\Material();
+//                $modelMaterial->setId($row['materialId']);
+//                $mapperMaterial = $this->getServiceLocator()->get('Admin\Model\MaterialMapper');
+//                $resultMaterial = $mapperMaterial->get($modelMaterial);
+                $all[$row['orderId']] = array(
+                    'orderId' => $row['orderId'],
+                    'status' => $row['status'],
+                    'startDateTime' => $row['startDateTime'],
+                    'endDateTime' => $row['endDateTime'],
+                );
+            }
+        }
+        return $all;
+    }
+
+    public function fetchStatus($item)
+    {
+        /* @var $dbAdapter \Zend\Db\Adapter\Adapter */
+        $dbAdapter = $this->getServiceLocator()->get('dbAdapter');
+
+        /* @var $dbSql \Zend\Db\Sql\Sql */
+        $dbSql = $this->getServiceLocator()->get('dbSql');
+        $select = $dbSql->select(array("ac" => $this->getTableName()));
+
+        if($item->getStatus()) {
+            $select->where(array('ac.status' => $item->getStatus()));
+        }
+        $selectString = $dbSql->getSqlStringForSqlObject($select);
+        $results = $dbAdapter->query($selectString, $dbAdapter::QUERY_MODE_EXECUTE);
+
+        $all = array();
+        if($results->count()) {
+            foreach ($results as $row) {
+                $all[] = $row['orderId'];
+            }
+        }
+        return $all;
+    }
+
+
+
+
 
 
 }

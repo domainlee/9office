@@ -39,30 +39,10 @@ class Invoice extends FormBase{
         $filter->add ( array (
             'name' => 'price',
             'required' => false,
+            "type" => "Zend\\InputFilter\\ArrayInput",
             'filters' => array (
                 array ('name' => 'Digits'),
                 array ('name' => 'StringTrim'),
-            ),
-            'validators' => array(
-                array(
-                    'name' => 'NotEmpty',
-                    'break_chain_on_failure' => true,
-                    'options' => array(
-                        'messages' => array(
-                            'isEmpty' => 'Bạn chưa nhập giá trị'
-                        )
-                    )
-                ),
-                array(
-                    'name'    => 'StringLength',
-                    'break_chain_on_failure' => true,
-                    'options' => array(
-                        'messages' => array(
-                            StringLength::INVALID => 'Giá trị phải là dạng số',
-                        )
-                    )
-                ),
-
             ),
         ) );
 
@@ -72,30 +52,10 @@ class Invoice extends FormBase{
         $filter->add ( array (
             'name' => 'quantity',
             'required' => false,
+            "type" => "Zend\\InputFilter\\ArrayInput",
             'filters' => array (
                 array ('name' => 'Digits'),
                 array ('name' => 'StringTrim'),
-            ),
-            'validators' => array(
-                array(
-                    'name' => 'NotEmpty',
-                    'break_chain_on_failure' => true,
-                    'options' => array(
-                        'messages' => array(
-                            'isEmpty' => 'Giá trị phải là dạng số'
-                        )
-                    )
-                ),
-                array(
-                    'name'    => 'StringLength',
-                    'break_chain_on_failure' => true,
-                    'options' => array(
-                        'messages' => array(
-                            StringLength::INVALID => 'Giá trị phải là dạng số',
-                        )
-                    )
-                ),
-
             ),
         ) );
 
@@ -105,30 +65,10 @@ class Invoice extends FormBase{
         $filter->add ( array (
             'name' => 'intoMoney',
             'required' => false,
+            "type" => "Zend\\InputFilter\\ArrayInput",
             'filters' => array (
                 array ('name' => 'Digits'),
                 array ('name' => 'StringTrim'),
-            ),
-            'validators' => array(
-                array(
-                    'name' => 'NotEmpty',
-                    'break_chain_on_failure' => true,
-                    'options' => array(
-                        'messages' => array(
-                            'isEmpty' => 'Bạn chưa nhập giá trị'
-                        )
-                    )
-                ),
-                array(
-                    'name'    => 'StringLength',
-                    'break_chain_on_failure' => true,
-                    'options' => array(
-                        'messages' => array(
-                            StringLength::INVALID => 'Giá trị phải là dạng số',
-                        )
-                    )
-                ),
-
             ),
         ) );
 

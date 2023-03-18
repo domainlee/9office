@@ -137,7 +137,7 @@ class Admin extends Navigation
 //                        'class'=>'fa fa-list-ul'
 //                    ),
                     array(
-                        'label'	=> 'Xuất hàng',
+                        'label'	=> 'Xuất hàng thủ công',
                         'label2'=> 'Danh muc',
                         'uri'	=> '/admin/invoice/other',
                         'resource' => 'admin:invoice',
@@ -256,15 +256,15 @@ class Admin extends Navigation
 //                    ),
                 )
             ),
-            array(
-                'icon'  => '<i class="ti-settings"></i>',
-                'label'	=> 'Cấu hình',
-                'class' => 'fa fa-dot-circle-o',
-                'uri'	=> '/admin/setup',
-                'resource' => 'admin:setup',
-                'privilege' => 'index',
-                'module' => 'setup',
-            ),
+//            array(
+//                'icon'  => '<i class="ti-settings"></i>',
+//                'label'	=> 'Cấu hình',
+//                'class' => 'fa fa-dot-circle-o',
+//                'uri'	=> '/admin/setup',
+//                'resource' => 'admin:setup',
+//                'privilege' => 'index',
+//                'module' => 'setup',
+//            ),
 //            array(
 //                'icon'  => '<i class="ti-harddrives"></i>',
 //                'label'	=> 'Doanh nghiệp',

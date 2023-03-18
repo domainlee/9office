@@ -6,6 +6,8 @@ $order = $this->results['orders'];
 $total = $this->results['totalPages'];
 $page = $this->results['page'] ? $this->results['page']:1;
 $query = $this->query;
+$query_request = $this->query_request;
+$order_production = $this->order_production;
 $page_prev = (int)($page == 1 ? 1:$page-1);
 $page_next = (int)($total == $page ? $page:$page + 1);
 $id = $this->id;
@@ -18,6 +20,8 @@ if($query) {
     $page_prev = 'page='.$page_prev;
     $page_next = 'page='.$page_next;
 }
+$startDate = !empty($query_request->start) ? $query_request->start:'';
+$endDate = !empty($query_request->end) ? $query_request->end:'';
 ?>
 
 <style>
@@ -45,13 +49,13 @@ if($query) {
                                     ?>
                                     <div class="form-group">
                                         <?=$this->formelement($form->get('page')->setAttributes(['value' => $page]))?>
-                                        <?=$this->formelement($form->get('id')->setAttributes(['class' => 'form-control','placeholder'=>'Id', 'value' => $id]))?>
+                                        <?=$this->formelement($form->get('id')->setAttributes(['class' => 'form-control','placeholder'=>'Mã Đơn hàng', 'value' => $id]))?>
                                     </div>
                                     <div class="form-group">
                                         <div class="input-daterange input-group" id="date-range">
-                                            <input type="text" class="form-control" name="start">
+                                            <input type="text" class="form-control" placeholder="Từ ngày" name="start" value="<?php echo $startDate ?>">
                                             <span class="input-group-addon bg-custom b-0 text-white">Đến</span>
-                                            <input type="text" class="form-control" name="end">
+                                            <input type="text" class="form-control" placeholder="Đến ngày" name="end" value="<?php echo $endDate ?>">
                                         </div>
                                     </div>
                                     <div class="form-group">
@@ -70,7 +74,7 @@ if($query) {
                             <thead>
                                 <tr>
                                     <th style="width: 2%;"></th>
-                                    <th style="text-align: center;width: 8%;">Order Id</th>
+                                    <th style="text-align: center;width: 8%;">Mã đơn hàng</th>
                                     <th style="text-align: center;width: 8%;">Ngày</th>
                                     <th style="vertical-align: middle;width: 12%;">Tên</th>
                                     <th style="width: 40%">Sản phẩm</th>
@@ -129,9 +133,23 @@ if($query) {
                                         </td>
                                         <td style="text-align: center;vertical-align: middle"><?php echo $v['statusName'] ?></td>
                                         <td style="text-align: center;vertical-align: middle">
+                                            <?php if(isset($order_production[$k]) && $order_production[$k]['status'] == \Admin\Model\OrderManufacture::IN_PRODUCTION): $approved = false; ?>
+                                                <span class="label label-warning m-b-5 d-block">Đang sản xuất</span>
+                                                <p class="text-muted m-t-5 m-b-5 font-13"><?= 'Ngày bắt đầu: '.DateBase::toDisplayDateTime($order_production[$k]['startDateTime']) ?></p>
+                                                <a data-order='<?= $k ?>' class="btn-in-finished btn label btn-sm btn-default btn-rounded waves-effect waves-light">Hoàn thành</a>
+                                            <?php endif; ?>
+
+                                            <?php if(isset($order_production[$k]) && $order_production[$k]['status'] == \Admin\Model\OrderManufacture::FINISHED_PRODUCTION): $approved = false; ?>
+                                                <p class="text-muted m-t-5 m-b-5 font-13"><?= 'Ngày bắt đầu: '.DateBase::toDisplayDateTime($order_production[$k]['startDateTime']) ?></p>
+                                                <span class="label label-success m-b-5 d-block">Hoàn thành</span>
+                                                <p class="text-muted m-t-5 m-b-5 font-13"><?= 'Ngày kết thúc: '.DateBase::toDisplayDateTime($order_production[$k]['endDateTime']) ?></p>
+                                            <?php endif; ?>
+
                                             <?php if($approved && $approved !== 'false'): ?>
                                                 <a data-production='<?= json_encode($materials); ?>' class="btn-in-production btn label btn-sm btn-default btn-rounded waves-effect waves-light">Sản xuất</a>
                                             <?php endif; ?>
+
+
                                         </td>
                                     </tr>
                                     <?php endforeach; ?>

@@ -16,9 +16,12 @@ class DateBase extends DateTime
 	const DISPLAY_DATE_FORMAT = 'd/m/Y';
 	const COMMON_DATETIME_FORMAT = 'Y-m-d H:i:s';
 	const DISPLAY_DATETIME_FORMAT = 'H:i:s d/m/Y ';
+    const COMMON_DATE_FORMAT_TWO = 'Y-m-d';
+
+    const DISPLAY_DATE_FORMAT_TWO = 'm/d/Y';
 
 
-	const FILEPATH_DATE_FORMAT = 'Ymd';
+    const FILEPATH_DATE_FORMAT = 'Ymd';
 
 	/**
 	 * @author DWEB
@@ -75,12 +78,24 @@ class DateBase extends DateTime
 		if($d){
 			$date = DateTime::createFromFormat(self::DISPLAY_DATE_FORMAT, $d);
 			if($date){
-			    return $date->format(self::COMMON_DATE_FORMAT);
+			    return $date->format(self::COMMON_DATE_FORMAT_TWO);
 			}
 
 		}
 		return '';
 	}
+
+    public static function toCommonDateTwo($d)
+    {
+        if($d){
+            $date = DateTime::createFromFormat(self::DISPLAY_DATE_FORMAT_TWO, $d);
+            if($date){
+                return $date->format(self::COMMON_DATE_FORMAT_TWO);
+            }
+
+        }
+        return '';
+    }
 
 	/**
 	 * @author DWEB

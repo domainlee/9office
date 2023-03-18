@@ -37,6 +37,7 @@ class InvoiceController extends AbstractActionController{
     {
 		$this->layout('layout/admin');
 //        $storeId = $this->getServiceLocator()->get('Store\Service\Store')->getStoreId();
+        unset($_SESSION['count']);
 
         $u = $this->getServiceLocator()->get('User\Service\User');
         $storeId = $u->getStoreId();
@@ -62,22 +63,52 @@ class InvoiceController extends AbstractActionController{
                 $model->setCreatedById($u->getId());
                 $model->setStatus(\Admin\Model\Invoice::STATUS_NOT_APPROVED);
                 $mapper->save($model);
+//                $model->setId(2);
+//                if($model->getId()) {
+//                    $mapperInvoiceMaterial = $this->getServiceLocator()->get('Admin\Model\InvoiceMaterialMapper');
+//                    $modelInvoiceMaterial = new \Admin\Model\InvoiceMaterial();
+//                    $modelInvoiceMaterial->exchangeArray($data);
+//                    $modelInvoiceMaterial->setInvoiceId($model->getId());
+//
+//                    $modelInvoiceMaterial->setInventoryPrice($modelInvoiceMaterial->getPrice());
+//                    $modelInvoiceMaterial->setInventoryTotalQuantiy($modelInvoiceMaterial->getQuantity());
+//                    $modelInvoiceMaterial->setInventoryTotalPrice($modelInvoiceMaterial->getIntoMoney());
+//
+//                    $modelInvoiceMaterial->setCreatedDateTime(DateBase::getCurrentDateTime());
+//                    $modelInvoiceMaterial->setType($model::IMPORT);
+//                    $modelInvoiceMaterial->setCreatedById($u->getId());
+//                    $modelInvoiceMaterial->setStatus(\Admin\Model\Invoice::STATUS_NOT_APPROVED);
+//                    $mapperInvoiceMaterial->save($modelInvoiceMaterial);
+//                }
 
                 if($model->getId()) {
-                    $mapperInvoiceMaterial = $this->getServiceLocator()->get('Admin\Model\InvoiceMaterialMapper');
-                    $modelInvoiceMaterial = new \Admin\Model\InvoiceMaterial();
-                    $modelInvoiceMaterial->exchangeArray($data);
-                    $modelInvoiceMaterial->setInvoiceId($model->getId());
+                    if(!empty($data['materialId'])) {
+                        foreach ($data['materialId'] as $k => $v) {
+                            $price = (float)str_replace(",", ".", $data['price'][$k]);;
+                            $quantity = (float)str_replace(",", ".", $data['quantity'][$k]);;
+                            $intoMoney = $data['intoMoney'][$k];
+                            $mapperInvoiceMaterial = $this->getServiceLocator()->get('Admin\Model\InvoiceMaterialMapper');
+                            $modelInvoiceMaterial = new \Admin\Model\InvoiceMaterial();
+                            $modelInvoiceMaterial->exchangeArray($data);
+                            $modelInvoiceMaterial->setInvoiceId($model->getId());
+                            $modelInvoiceMaterial->setMaterialId($data['materialId'][$k]);
 
-                    $modelInvoiceMaterial->setInventoryPrice($modelInvoiceMaterial->getPrice());
-                    $modelInvoiceMaterial->setInventoryTotalQuantiy($modelInvoiceMaterial->getQuantity());
-                    $modelInvoiceMaterial->setInventoryTotalPrice($modelInvoiceMaterial->getIntoMoney());
+                            $modelInvoiceMaterial->setPrice($price);
+                            $modelInvoiceMaterial->setQuantity($quantity);
+                            $modelInvoiceMaterial->setIntoMoney($intoMoney);
 
-                    $modelInvoiceMaterial->setCreatedDateTime(DateBase::getCurrentDateTime());
-                    $modelInvoiceMaterial->setType($model::IMPORT);
-                    $modelInvoiceMaterial->setCreatedById($u->getId());
-                    $modelInvoiceMaterial->setStatus(\Admin\Model\Invoice::STATUS_NOT_APPROVED);
-                    $mapperInvoiceMaterial->save($modelInvoiceMaterial);
+                            $modelInvoiceMaterial->setInventoryPrice($price);
+                            $modelInvoiceMaterial->setInventoryTotalQuantiy($quantity);
+                            $modelInvoiceMaterial->setInventoryTotalPrice($intoMoney);
+
+                            $modelInvoiceMaterial->setCreatedDateTime(DateBase::getCurrentDateTime());
+                            $modelInvoiceMaterial->setType($model::IMPORT);
+                            $modelInvoiceMaterial->setCreatedById($u->getId());
+                            $modelInvoiceMaterial->setStatus(\Admin\Model\Invoice::STATUS_NOT_APPROVED);
+//                            print_r($modelInvoiceMaterial);
+                            $mapperInvoiceMaterial->save($modelInvoiceMaterial);
+                        }
+                    }
                 }
 
                 $this->redirect()->toUrl('/admin/invoice');

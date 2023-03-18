@@ -4,6 +4,8 @@ namespace Admin\Controller;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 use Zend\View\Model\JsonModel;
+use Home\Model\DateBase;
+
 class OrderController extends AbstractActionController{
 
     const version = 2;
@@ -19,7 +21,31 @@ class OrderController extends AbstractActionController{
         $id = $this->getRequest()->getQuery()->id ? : '';
         $phone = $this->getRequest()->getQuery()->phone ? : '';
         $status_filter = $this->getRequest()->getQuery()->status ? : '';
-        $data = json_encode(array('id' => $id, 'customerMobile' => $phone, 'page' => $page, 'statuses' => array($status_filter)));
+        $startDate = $this->getRequest()->getQuery()->start ? : '';
+        $endDate = $this->getRequest()->getQuery()->end ? : '';
+        $startDate = DateBase::toCommonDateTwo($startDate);
+        $endDate = DateBase::toCommonDateTwo($endDate);
+        $query_request = $this->getRequest()->getQuery();
+
+        $inProduction = array();
+        if($status_filter == 'InProduction') {
+            $status_filter = '';
+            $orderManufacture = new \Admin\Model\OrderManufacture();
+            $orderManufacture->setStatus(\Admin\Model\OrderManufacture::IN_PRODUCTION);
+            $orderManufactureMapper = $this->getServiceLocator()->get('Admin\Model\OrderManufactureMapper');
+            $inProduction = $orderManufactureMapper->fetchStatus($orderManufacture);
+        }
+
+        $finishedProduction = array();
+        if($status_filter == 'FinishedProduction') {
+            $status_filter = '';
+            $orderManufacture = new \Admin\Model\OrderManufacture();
+            $orderManufacture->setStatus(\Admin\Model\OrderManufacture::FINISHED_PRODUCTION);
+            $orderManufactureMapper = $this->getServiceLocator()->get('Admin\Model\OrderManufactureMapper');
+            $finishedProduction = $orderManufactureMapper->fetchStatus($orderManufacture);
+        }
+
+        $data = json_encode(array('id' => $inProduction || $finishedProduction ? array_merge($inProduction,$finishedProduction) : $id, 'customerMobile' => $phone, 'page' => $page, 'statuses' => array($status_filter), 'fromDate' => $startDate,'toDate' => $endDate));
         $curl = curl_init();
 
         $api = \Base\Model\Resource::data_api();
@@ -58,20 +84,29 @@ class OrderController extends AbstractActionController{
             'CustomerConfirming' => 'Chờ khách xác nhận',
             'Confirmed' => 'Đã xác nhận',
             'Packing' => 'Đang đóng gói',
+            'InProduction' => 'Đang sản xuất',
+            'FinishedProduction' => 'Đã sản xuất xong',
         );
+        $status_filter = $this->getRequest()->getQuery()->status ? : '';
         $fFilter->setStatus($status, $status_filter);
 
         $productMaterialItem = new \Admin\Model\ProductMaterialItem();
         $mapperProductMaterialItem = $this->getServiceLocator()->get('Admin\Model\ProductMaterialItemMapper');
         $productMaterial = $mapperProductMaterialItem->fetchAll3($productMaterialItem);
 
+        $orderManufacture = new \Admin\Model\OrderManufacture();
+        $orderManufactureMapper = $this->getServiceLocator()->get('Admin\Model\OrderManufactureMapper');
+        $orderProduction = $orderManufactureMapper->fetchAll($orderManufacture);
+
         return new ViewModel(array(
 			'query'=> $query,
+			'query_request'=> $query_request,
 			'results'=> $response['data'],
 			'fFilter'=> $fFilter,
             'id' => $id,
             'phone' => $phone,
-            'product_material' => $productMaterial
+            'product_material' => $productMaterial,
+            'order_production' => $orderProduction
 		));
 	}
 	public function addAction(){

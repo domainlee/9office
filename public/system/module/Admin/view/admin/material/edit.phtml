@@ -1,4 +1,5 @@
 <?php
+    use Home\Model\DateBase;
     $form = $this->form;
     $materials = $this->materials;
     $type = $form->get('type')->getValue();
@@ -74,20 +75,22 @@
                                     <th>Đơn giá</th>
                                     <th>Tồn kho - số lượng</th>
                                     <th>Tồn kho - thành tiền</th>
+                                    <th>Ngày Tạo</th>
                                   </tr>
 
                                   <?php
                                     foreach ($materials as $v):
                                   ?>
                                 <tr>
-                                    <td><?= $v->getOptions()['materialName']; ?></td>
+                                    <td><?= $v->getOptions()['materialName'] . ' / '.($v->getType() == 2 ? '<span class="label label-inverse">Xuất</span>':'<span class="label label-default">Nhập</span>'); ?></td>
                                     <td><?= number_format($v->getPrice()); ?></td>
                                     <td><?= $v->getQuantity(); ?></td>
                                     <td><?= number_format($v->getIntoMoney()); ?></td>
 
                                     <td><?= number_format($v->getInventoryPrice()); ?></td>
                                     <td><?= $v->getInventoryTotalQuantiy(); ?></td>
-                                    <td><?= number_format($v->getInventoryTotalPrice()); ?></td>
+                                    <td><strong><?= number_format($v->getInventoryTotalPrice()); ?></strong></td>
+                                    <td><?= DateBase::toDisplayDateTime($v->getCreatedDateTime()); ?></td>
 
                                   </tr>
                             <?php endforeach; ?>

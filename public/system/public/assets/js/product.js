@@ -265,12 +265,27 @@ $(function(){
 
         if (confirm('Bạn sẽ sản xuất đơn hàng này ?')) {
             $.post('/admin/material/ordermanufacture',{data: data},function(r){
-                // if(r.code == 1){
-                //     alert(r.messenger);
-                //     location.reload();
-                // }else if(r.code == 0){
-                //     alert(r.messenger);
-                // }
+                if(r.code == 1){
+                    alert(r.messenger);
+                    location.reload();
+                } else if(r.code == 0){
+                    alert(r.messenger);
+                }
+            });
+        }
+    });
+
+    $('.btn-in-finished').on('click', function () {
+        var order = $(this).attr('data-order'), _this = $(this);
+
+        if (confirm('Xác nhận hoàn thành đơn hàng này ?')) {
+            $.post('/admin/material/orderfinished',{orderId: order},function(r){
+                if(r.code == 1){
+                    alert(r.messenger);
+                    location.reload();
+                } else if(r.code == 0){
+                    alert(r.messenger);
+                }
             });
         }
     });
@@ -294,6 +309,13 @@ $(function(){
         var material_id = $(this).attr('data-material');
         $.post('/admin/material/additemproduct',{type: 'remove', product_item_id: product_id, material_id: material_id},function(r){
             list_product_material.html('').html(r);
+        });
+    });
+
+    var list_product_material_invoice = $('.list-product-material-invoice');
+    $('.add-product-item-invoice').click(function () {
+        $.post('/admin/material/additemproductinvoice',{type: 'add'},function(r){
+            list_product_material_invoice.html('').html(r);
         });
     });
 

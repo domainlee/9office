@@ -1,0 +1,145 @@
+<?php
+$form = $this->form;
+$item = $this->item;
+$material_item = $this->material_item;
+$product_id = $this->product_id;
+?>
+
+<?php
+    foreach ($item as $k => $v):
+        $item_material = isset($material_item[$k]) ? $material_item[$k]:null;
+        $id = '';
+        $price = '';
+        $quantity = '';
+        $getIntoMoney = '';
+        $materialId = '';
+        $productId = '';
+        $selected = array();
+        if($item_material) {
+            $selected[$item_material->getMaterialId()] = ['label' => $item_material->getOption('materialName'), 'value' => $item_material->getMaterialId(), 'selected' => true];
+            $id = $item_material->getId() ? $item_material->getId():'';
+            $price = $item_material->getPrice() ? $item_material->getPrice():'';
+            $quantity = $item_material->getQuantity() ? $item_material->getQuantity():'';
+            $getIntoMoney = $item_material->getIntoMoney() ? $item_material->getIntoMoney():'';
+            $materialId = $item_material->getMaterialId() ? $item_material->getMaterialId():'';
+            $productId = $item_material->getProductId() ? $item_material->getProductId():'';
+        }
+        $productId = !empty($product_id) ? $product_id:'';
+?>
+<div class="row">
+    <div class="col-sm-3">
+        <div class="form-group">
+            <label class="control-label" for="firstName">Vật liệu</label>
+            <input type="hidden" value="<?php echo $id ?>" name="pmId[]">
+            <?= $this->formelement($form->get('materialId')->setValueOptions($selected)->setAttributes(['name' => 'materialId[]','class' => 'form-control select-ajax-material', 'data-cong' => 'true', 'required' => 'required', 'placeholder'=>'Vật liệu','data-parsley-type' => 'string', 'data-parsley-error-message' => 'Vật liệu không được để trống'])) ?>
+            <?= $this->formelementerrors($form->get('materialId'),['class' => 'parsley-errors-list filled']) ?>
+        </div>
+    </div>
+    <div class="col-sm-3">
+        <div class="form-group">
+            <label class="control-label" for="firstName">Đơn giá</label>
+            <?= $this->formelement($form->get('price')->setAttributes(['name' => 'price[]', 'value' => $price, 'class' => 'price_field form-control autonumber', 'placeholder'=>'Đơn giá', 'required' => 'required', 'data-parsley-error-message' => 'Không được để trống'])) ?>
+            <?= $this->formelementerrors($form->get('price'),['class' => 'parsley-errors-list filled']) ?>
+        </div>
+    </div>
+    <div class="col-sm-3">
+        <div class="form-group">
+            <label class="control-label" for="firstName">Số lượng</label>
+            <?= $this->formelement($form->get('quantity')->setAttributes(['name' => 'quantity[]','value' => $quantity, 'class' => 'quantity_field form-control', 'placeholder'=>'Số lượng', 'required' => 'required', 'data-parsley-type' => 'string', 'data-parsley-error-message' => 'Không được để trống'])) ?>
+            <?= $this->formelementerrors($form->get('quantity'),['class' => 'parsley-errors-list filled']) ?>
+        </div>
+    </div>
+    <div class="col-sm-3">
+        <div class="form-group">
+            <label class="control-label" for="firstName">Thành tiền</label>
+            <div class="input-group">
+                <?= $this->formelement($form->get('intoMoney')->setAttributes(['name' => 'intoMoney[]', 'value' => $getIntoMoney, 'class' => 'intoMoney_field form-control autonumber', 'placeholder'=>'Thành tiền'])) ?>
+                <?= $this->formelementerrors($form->get('intoMoney'),['class' => 'parsley-errors-list filled']) ?>
+                <span class="input-group-btn">
+                    <button type="button" id="check-minutes" data-material="<?php echo $materialId ?>" data-product="<?php echo $productId ?>" class="btn remove-product-item"> - </button>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<?php endforeach; ?>
+
+<script>
+    jQuery(document).ready(function () {
+    $('.autonumber').autoNumeric('init', {'mDec':0});
+
+    var select_material = $(".select-ajax-material");
+    select_material.each(function () {
+        var selectMaterial = $(this);
+        var cong = selectMaterial.attr('data-cong');
+        var length = selectMaterial.attr('data-length') ? selectMaterial.attr('data-length'):5;
+        var placeholderProduct = selectMaterial.attr('data-placeholder') ? selectMaterial.attr('data-placeholder'):'Vật liệu';
+        if(selectMaterial.length) {
+            selectMaterial.select2({
+                placeholder: placeholderProduct,
+                multiple: false,
+                ajax: {
+                    url: "/admin/product/related",
+                    dataType: 'json',
+                    delay: 250,
+                    data: function (params) {
+                        return {
+                            keyword: params.term, // search term
+                            material: true,
+                            material_not: cong,
+                        };
+                    },
+                    processResults: function (data, params) {
+                        return {
+                            results: data,
+                        };
+                    },
+                    templateSelection: function(container) {
+                        $(container.element).attr("data-source", 'hehe');
+                        return container.text;
+                    },
+                    cache: true
+                },
+            });
+            var parent = selectMaterial.closest("div.row");
+            selectMaterial.on("select2:select", function (evt) {
+                var element = evt.params.data.element;
+                var $element = $(element);
+                // console.log($(this).val());
+                // parent.find('input.price_field').val(evt.params.data.price).trigger('focusout');
+                $element.detach();
+                $(this).append($element);
+                $(this).trigger("change");
+            });
+
+            var input_price_invoice = parent.find('input.price_field');
+            var quantity = parent.find('input.quantity_field');
+            var intoMoney = parent.find('input.intoMoney_field');
+
+            quantity.keyup(calculate);
+
+            function calculate(e) {
+                var value_price = input_price_invoice.val();
+                value_price = value_price.replace(",", "");
+                var value_quantity = quantity.val();
+                value_quantity = value_quantity.replace(",", ".");
+
+                intoMoney.val(value_price * value_quantity);
+                intoMoney.autoNumeric().trigger('focusout');
+            }
+        }
+    });
+
+    var list_product_material = $('.list-product-material-invoice');
+    $('.remove-product-item').click(function () {
+        var product_id = $(this).attr('data-product');
+        var material_id = $(this).attr('data-material');
+        $.post('/admin/material/additemproductinvoice',{type: 'remove', product_item_id: product_id, material_id: material_id},function(r){
+            list_product_material.html('').html(r);
+        });
+    });
+
+});
+
+</script>

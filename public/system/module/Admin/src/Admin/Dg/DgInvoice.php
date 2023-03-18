@@ -58,7 +58,7 @@ class DgInvoice extends \Base\Dg\Table {
             $rows[] = array(
                 array(
                     'type' => 'text',
-                    'value' => 'INV-'.$item->getId().' / '.$item->type_invoice[$item->getType()],
+                    'value' => 'INV-'.$item->getId().' / <span class="'.($item->getType() == 1 ? 'label label-default':'label label-inverse').'">'.$item->type_invoice[$item->getType()].'</span>',
                     'htmlOptions'=> array('style'=>'vertical-align: middle'),
                 ),
                 array (

@@ -717,6 +717,64 @@ class MaterialController extends AbstractActionController{
         ));
     }
 
+    public function additemproductinvoiceAction() {
+        $this->layout('layout/null');
+        $type = $this->getRequest()->getPost()['type'];
+        $productId = $this->getRequest()->getPost()['product_id'];
+        $productItemId = $this->getRequest()->getPost()['product_item_id'];
+        $materialId = $this->getRequest()->getPost()['material_id'];
+        $model = new \Admin\Model\ProductMaterial();
+        $mapper = $this->getServiceLocator()->get('Admin\Model\ProductMaterialMapper');
+        $form = new \Admin\Form\ProductMaterial($this->getServiceLocator(), null);
+        $resultMaterialItem = array();
+
+        if($type === 'add') {
+            if(!isset($_SESSION['count'])) {
+                $_SESSION['count'] = 2;
+            } else {
+                $_SESSION['count'] = $_SESSION['count'] + 1;
+            }
+        }
+        if($type === 'remove') {
+            if(!session_id()) {
+                session_start();
+            }
+            $mapperProductMaterialItem = $this->getServiceLocator()->get('Admin\Model\ProductMaterialItemMapper');
+
+            if($materialId && $productItemId) {
+                $modelMaterialItemDelete = new \Admin\Model\ProductMaterialItem();
+                $modelMaterialItemDelete->setProductId($productItemId);
+                $modelMaterialItemDelete->setMaterialId($materialId);
+                $mapperProductMaterialItem->delete($modelMaterialItemDelete);
+            } else {
+                if(isset($_SESSION['count'])) {
+                    $_SESSION['count'] =  $_SESSION['count'] > 0 ? $_SESSION['count'] - 1:0;
+                } else {
+                    $_SESSION['count'] = 0;
+                }
+            }
+            if($productItemId) {
+                $modelProductMaterialItem = new \Admin\Model\ProductMaterialItem();
+                $modelProductMaterialItem->setProductId($productItemId);
+                $resultMaterialItem = $mapperProductMaterialItem->fetchAll($modelProductMaterialItem);
+            }
+        }
+
+        $add_pricing = [];
+        for($c = 1; $c <= $_SESSION['count']; $c++) {
+            $add_pricing[] = $c;
+        }
+        $pricing = array();
+
+        $add_pricing = array_merge($resultMaterialItem, $add_pricing);
+        return new ViewModel(array(
+            'form' => $form,
+            'item' => $add_pricing,
+            'material_item' => $resultMaterialItem,
+            'product_id' => $productId,
+        ));
+    }
+
     public function ordermanufactureAction() {
         $data = $this->getRequest()->getPost()['data'];
         $order_products = (array)json_decode($data, true);
@@ -853,6 +911,36 @@ class MaterialController extends AbstractActionController{
             'messenger' => 'Đang sản xuất'
         ));
 
+    }
+
+    public function orderfinishedAction() {
+        $orderId = $this->getRequest()->getPost()['orderId'];
+        $orderId = (int)trim($orderId);
+        $orderManufacture = new \Admin\Model\OrderManufacture();
+        $orderManufacture->setOrderId($orderId);
+        $orderManufactureMapper = $this->getServiceLocator()->get('Admin\Model\OrderManufactureMapper');
+        $orderManufacturer = $orderManufactureMapper->get($orderManufacture);
+        if(!$orderManufacturer) {
+            return new JsonModel(array(
+                'code' => 0,
+                'messenger' => 'Không tìm thấy đơn hàng này'
+            ));
+        }
+        if($orderManufacturer->getStatus() == \Admin\Model\OrderManufacture::FINISHED_PRODUCTION) {
+            return new JsonModel(array(
+                'code' => 0,
+                'messenger' => 'Đơn hàng đã hoàn thành'
+            ));
+        }
+
+        $orderManufacturer->setStatus(\Admin\Model\OrderManufacture::FINISHED_PRODUCTION);
+        $orderManufacturer->setEndDateTime(DateBase::getCurrentDateTime());
+        $orderManufactureMapper->save($orderManufacturer);
+
+        return new JsonModel(array(
+            'code' => 1,
+            'messenger' => 'Đã sản xuất xong đơn hàng'
+        ));
     }
 
     private function array_key_first(array $arr) {
