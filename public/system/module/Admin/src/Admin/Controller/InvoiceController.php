@@ -385,6 +385,69 @@ class InvoiceController extends AbstractActionController{
 //		$this->redirect()->toUrl('/admin/article');
     }
 
+    public function otherAction() {
+        $this->layout('layout/admin');
+        unset($_SESSION['count']);
+        $query = $this->getRequest()->getQuery();
+
+        $u = $this->getServiceLocator()->get('User\Service\User');
+        $mapper = $this->getServiceLocator()->get('Admin\Model\InvoiceMapper');
+        $model = new \Admin\Model\Invoice();
+        $form = new \Admin\Form\InvoiceOther($this->getServiceLocator(), null);
+        if($this->getRequest()->isPost()){
+            $form->setData(array_merge_recursive($this->getRequest()->getPost()->toArray(),$this->getRequest()->getFiles()->toArray()));
+            if($form->isValid(true)){
+                $data = $form->getData();
+                $model->exchangeArray($data);
+                $model->setDescription($data['name']);
+                $model->setCreatedDateTime(DateBase::getCurrentDateTime());
+                $model->setUpdatedDateTime(DateBase::getCurrentDateTime());
+                $model->setType($model::EXPORT);
+                $model->setCreatedById($u->getId());
+                $model->setStatus(\Admin\Model\Invoice::STATUS_NOT_APPROVED);
+                $mapper->save($model);
+
+                if($model->getId()) {
+                    if(!empty($data['materialId'])) {
+                        foreach ($data['materialId'] as $k => $v) {
+                            $price = (float)str_replace(",", ".", $data['price'][$k]);;
+                            $quantity = (float)str_replace(",", ".", $data['quantity'][$k]);;
+                            $intoMoney = $data['intoMoney'][$k];
+                            $mapperInvoiceMaterial = $this->getServiceLocator()->get('Admin\Model\InvoiceMaterialMapper');
+                            $modelInvoiceMaterial = new \Admin\Model\InvoiceMaterial();
+                            $modelInvoiceMaterial->exchangeArray($data);
+                            $modelInvoiceMaterial->setInvoiceId($model->getId());
+                            $modelInvoiceMaterial->setMaterialId($data['materialId'][$k]);
+
+                            $modelInvoiceMaterial->setPrice($price);
+                            $modelInvoiceMaterial->setQuantity($quantity);
+                            $modelInvoiceMaterial->setIntoMoney($intoMoney);
+
+                            $modelInvoiceMaterial->setInventoryPrice($price);
+                            $modelInvoiceMaterial->setInventoryTotalQuantiy($quantity);
+                            $modelInvoiceMaterial->setInventoryTotalPrice($intoMoney);
+
+                            $modelInvoiceMaterial->setCreatedDateTime(DateBase::getCurrentDateTime());
+                            $modelInvoiceMaterial->setType($model::EXPORT);
+                            $modelInvoiceMaterial->setCreatedById($u->getId());
+                            $modelInvoiceMaterial->setStatus(\Admin\Model\Invoice::STATUS_NOT_APPROVED);
+//                            print_r($modelInvoiceMaterial);
+                            $mapperInvoiceMaterial->save($modelInvoiceMaterial);
+                        }
+                    }
+                }
+
+                $this->redirect()->toUrl('/admin/invoice/index');
+            } else {
+                print_r($form->getMessages());
+            }
+        }
+        return new ViewModel(array(
+            'form' => $form,
+            'query' => $query,
+        ));
+    }
+
 	public function deleteAction(){
 
         $id = $this->getRequest()->getPost()['id'];

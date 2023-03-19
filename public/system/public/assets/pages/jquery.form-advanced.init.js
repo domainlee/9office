@@ -140,7 +140,11 @@ jQuery(document).ready(function () {
                 var element = evt.params.data.element;
                 var $element = $(element);
                 console.log($(this).val());
-                parent.find('input.price_field').val(evt.params.data.price).trigger('focusout');
+                console.log();
+                var get_price = parent.find('input.price_field').attr('data-price');
+                if(get_price != 'false') {
+                    parent.find('input.price_field').val(evt.params.data.price).trigger('focusout');
+                }
                 $element.detach();
                 $(this).append($element);
                 $(this).trigger("change");

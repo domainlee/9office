@@ -229,35 +229,37 @@ $(function(){
     }
 
     if($('.invoice-form').length) {
-        var input_price_invoice = $('input[name=price]');
-        var quantity = $('input[name=quantity]');
-        var intoMoney = $('input[name=intoMoney]');
-
-        quantity.keyup(calculate);
-        input_price_invoice.keyup(calculate);
-
-        function calculate(e) {
-            var value_price = input_price_invoice.val();
-            value_price = value_price.replace(",", "");
-            var value_quantity = quantity.val();
-            value_quantity = value_quantity.replace(",", "");
-
-            intoMoney.val(value_price * value_quantity);
-            intoMoney.autoNumeric().trigger('focusout');
-        }
+        // var input_price_invoice = $('input[name=price]');
+        // var quantity = $('input[name=quantity]');
+        // var intoMoney = $('input[name=intoMoney]');
+        //
+        // quantity.keyup(calculate);
+        // input_price_invoice.keyup(calculate);
+        //
+        // function calculate(e) {
+        //     var value_price = input_price_invoice.val();
+        //     value_price = value_price.replace(",", "");
+        //     var value_quantity = quantity.val();
+        //     value_quantity = value_quantity.replace(",", "");
+        //
+        //     intoMoney.val(value_price * value_quantity);
+        //     intoMoney.autoNumeric().trigger('focusout');
+        // }
     }
 
     $('.btn-approved-invoice').click(function () {
         console.log('click approved');
         var id = $(this).attr('data-id'), _this = $(this);
-        $.post('/admin/invoice/import',{id: id},function(r){
-            if(r.code == 1){
-                alert(r.messenger);
-                location.reload();
-            }else if(r.code == 0){
-                alert(r.messenger);
-            }
-        });
+        if (confirm('Bạn sẽ duyệt hoá đơn này ?')) {
+            $.post('/admin/invoice/import',{id: id},function(r){
+                if(r.code == 1){
+                    alert(r.messenger);
+                    location.reload();
+                }else if(r.code == 0){
+                    alert(r.messenger);
+                }
+            });
+        }
     });
 
     $('.btn-in-production').on('click', function () {

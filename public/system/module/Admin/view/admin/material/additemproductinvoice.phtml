@@ -38,7 +38,7 @@ $product_id = $this->product_id;
     <div class="col-sm-3">
         <div class="form-group">
             <label class="control-label" for="firstName">Đơn giá</label>
-            <?= $this->formelement($form->get('price')->setAttributes(['name' => 'price[]', 'value' => $price, 'class' => 'price_field form-control autonumber', 'placeholder'=>'Đơn giá', 'required' => 'required', 'data-parsley-error-message' => 'Không được để trống'])) ?>
+            <?= $this->formelement($form->get('price')->setAttributes(['name' => 'price[]','data-price' => 'false', 'value' => $price, 'class' => 'price_field form-control autonumber', 'placeholder'=>'Đơn giá', 'required' => 'required', 'data-parsley-error-message' => 'Không được để trống'])) ?>
             <?= $this->formelementerrors($form->get('price'),['class' => 'parsley-errors-list filled']) ?>
         </div>
     </div>
