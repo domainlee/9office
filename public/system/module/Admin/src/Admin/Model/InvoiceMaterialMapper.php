@@ -12,7 +12,7 @@ class InvoiceMaterialMapper extends Base{
      */
     public function get($item)
     {
-        if (!$item->getId() && !$item->getInvoiceId()) {
+        if (!$item->getId() && !$item->getInvoiceId() && !$item->getMaterialId()) {
             return null;
         }
         $select = $this->getDbSql()->select(array('ac' => $this->getTableName()));
@@ -22,6 +22,9 @@ class InvoiceMaterialMapper extends Base{
         }
         if($item->getInvoiceId()){
             $select->where(['ac.invoiceId'=> $item->getInvoiceId()]);
+        }
+        if($item->getMaterialId()){
+            $select->where(['ac.materialId'=> $item->getMaterialId()]);
         }
 
         $select->limit(1);

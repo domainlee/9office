@@ -249,16 +249,27 @@ $(function(){
 
     $('.btn-approved-invoice').click(function () {
         console.log('click approved');
-        var id = $(this).attr('data-id'), _this = $(this);
+        var id = $(this).attr('data-id'), type = $(this).attr('data-type');
         if (confirm('Bạn sẽ duyệt hoá đơn này ?')) {
-            $.post('/admin/invoice/import',{id: id},function(r){
-                if(r.code == 1){
-                    alert(r.messenger);
-                    location.reload();
-                }else if(r.code == 0){
-                    alert(r.messenger);
-                }
-            });
+            if(type == 'export') {
+                $.post('/admin/invoice/export',{id: id},function(r){
+                    if(r.code == 1){
+                        alert(r.messenger);
+                        location.reload();
+                    }else if(r.code == 0){
+                        alert(r.messenger);
+                    }
+                });
+            } else if(type == 'import') {
+                $.post('/admin/invoice/import',{id: id},function(r){
+                    if(r.code == 1){
+                        alert(r.messenger);
+                        location.reload();
+                    }else if(r.code == 0){
+                        alert(r.messenger);
+                    }
+                });
+            }
         }
     });
 
