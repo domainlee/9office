@@ -39,7 +39,7 @@ $endDate = !empty($query_request->end) ? $query_request->end:'';
                 <div id="sample_editable_1_wrapper" class="dataTables_wrapper form-inline" role="grid">
                     <div class="btn-toolbar">
                         <div class="btn-group focus-btn-group">
-                            <a href="" class="btn btn-default waves-effect waves-light">Đơn hàng</a>
+                            <a class="button-order-export-selected btn btn-default waves-effect waves-light">Xuất excel</a>
                         </div>
                         <div class="btn-group dropdown-btn-group pull-right">
                             <div class="dataTables_filter mb-15">
@@ -70,7 +70,7 @@ $endDate = !empty($query_request->end) ? $query_request->end:'';
                         </div>
                     </div>
                     <div class="dg-container">
-                        <table class="dg table table-bordered table-hover table-condensed">
+                        <table class="order_list dg table table-bordered table-hover table-condensed">
                             <thead>
                                 <tr>
                                     <th style="width: 2%;"></th>

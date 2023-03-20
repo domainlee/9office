@@ -1,6 +1,9 @@
 <?php
 namespace Admin\Controller;
 
+use Base\XLSX\XLSXWriter;
+use Base\XLSXImage\XLSWriterPlus;
+
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 use Zend\View\Model\JsonModel;
@@ -109,46 +112,78 @@ class OrderController extends AbstractActionController{
             'order_production' => $orderProduction
 		));
 	}
-	public function addAction(){
-		
-	}
-	public function editAction(){
-		
-	}
-	public function deleteAction(){
-		
-	}
-	public function changeStatusAction(){
-		$this->layout('layout/admin');
-		$request = $this->getRequest();
-		$id = $this->getEvent()->getRouteMatch()->getParam('id');
-		$value = $request->getPost('value');
-		$mapper = $this->getServiceLocator()->get('Admin\Model\OrderMapper');
-		$model = $mapper->getId($id);
-		$model->setStatus($value);
-		$mapper->save($model);
-		if($model->getStatus()== \Admin\Model\Order::STATUS_COMPLATE){
-// 			$modelOPro = new \Admin\Model\OrderProduct();
-//  			$mapperOPro = $this->getServiceLocator()->get('Admin\Model\OrderProductMapper');
- 			$modelPro = new \Admin\Model\Product();
-// 			//$qtt = ((int)$modelPro->getQuantity() - $modelOPro->getQuantity());
-			$model = new \Admin\Model\Order();
-// 			$mapper = $this->getServiceLocator()->get('Admin\Model\OrderMapper');
- 			$qtt = $model->getTotalMoney();
- 			echo $qtt;
- 			$modelPro->setQuantity($qtt);
-// 			$modelOPro->setQuantity(10);
-			$mapper->updateQtt($modelPro);
-			
-			return new JsonModel(array(
-					'code'=>1
-			));
-		}
-		return new JsonModel(array(
-			'code'=>1
-		));
-		
-	}
+
+    public function exportAction() {
+
+        $selected_products = $this->getRequest()->getQuery()['ids'];
+        $product_items = explode(',',$selected_products);
+
+        if(empty($product_items)) {
+            return false;
+        }
+
+        $data = json_encode(array('id' => $product_items ));
+        $curl = curl_init();
+
+        $api = \Base\Model\Resource::data_api();
+
+        $data = array(
+            'version' => $api['version'],
+            'appId' => $api['appId'],
+            'businessId' => $api['businessId'],
+            'accessToken' => $api['accessToken'],
+            'data' => $data
+        );
+
+
+        curl_setopt_array($curl, array(
+            CURLOPT_URL => 'https://open.nhanh.vn/api/order/index',
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => '',
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 0,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => 'POST',
+            CURLOPT_POSTFIELDS => $data,
+        ));
+
+        $response = curl_exec($curl);
+
+        curl_close($curl);
+        $response = json_decode($response, true);
+        $product_items = $response['data']['orders'];
+
+        $file_name = 'Danh sách đơn hàng_'.date('ymd').'.xlsx';
+        $sheet_product = 'Đơn hàng xuất ngày '.date('ymd');
+        $header_one = array( 'Mã đơn hàng', 'Ngày', 'Tên', 'Sản phẩm');
+        $styles_white = array('font'=>'Arial', 'font-style'=>'bold', 'fill'=>'#FFF', 'halign'=>'left', 'border'=>'left,right,top,bottom');
+        $writer = new XLSWriterPlus();
+        $writer->writeSheetRow($sheet_product, $header_one, $styles_white);
+
+        foreach ($product_items as $pi) {
+            $data = array($pi['id'], $pi['createdDateTime'], $pi['customerName'], );
+            $writer->writeSheetRow($sheet_product, $data);
+            $writer->addImage('https://global.discourse-cdn.com/envato/original/3X/2/e/2e64f5fae4319ad099d3d279915e90bbdb4da4d9.jpg', $pi['id'], [
+                'startColNum' => 0,
+                'startRowNum' => 0,
+            ]);
+        }
+        $writer->writeToFile($file_name);
+        header('Content-Description: File Transfer');
+        header("Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
+        header("Content-Disposition: attachment; filename=" . basename($file_name));
+        header("Content-Transfer-Encoding: binary");
+        header("Expires: 0");
+        header("Pragma: public");
+        header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
+        header('Content-Length: ' . filesize($file_name));
+        ob_clean();
+        flush();
+        readfile($file_name);
+        unlink($file_name);
+        exit;
+    }
 
 	public function update_order() {
         $mapper = $this->getServiceLocator()->get('Admin\Model\OrderMapper');

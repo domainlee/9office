@@ -8,6 +8,7 @@ use Home\Form\FormBase;
 use Home\Model\DateBase;
 use Home\Model\Base;
 use Base\XLSX\XLSXWriter;
+use Base\XLSXImage\XLSWriterPlus;
 
 
 class MaterialController extends AbstractActionController{

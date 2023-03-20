@@ -415,6 +415,7 @@ $(function(){
         toggleActive: true,
     });
 
+    // Export Product
     var tmp = [];
     var table = $('.product_list');
     var button_selected = $('.button-export-selected');
@@ -452,6 +453,44 @@ $(function(){
             table.find('input:checkbox').removeAttr('checked');
         } else {
             alert('Chưa chọn sản phẩm export');
+        }
+    });
+
+    // Export Order
+    var tmp_order = [];
+    var table_order = $('.order_list');
+    var button_order_selected = $('.button-order-export-selected');
+    button_order_selected.prop('disabled', false);
+
+    table_order.on("click", "input[type=checkbox]", function(e){
+        var $this = $(this);
+        var checked = $this.val();
+        if ($this.is(':checked')) {
+            tmp_order.push(checked);
+        } else {
+            tmp_order.splice($.inArray(checked, tmp_order),1);
+        }
+        button_order_selected.attr('href','/admin/order/export?ids=' + encodeURIComponent(tmp_order));
+
+        if(tmp_order.length > 0) {
+            button_order_selected.prop('disabled', false);
+        } else {
+            button_order_selected.prop('disabled', true);
+        }
+        button_order_selected.attr('data-ids', tmp_order);
+    });
+
+    $('.button-order-export-all').click(function () {
+        window.open('/admin/order/export', '_blank');
+    });
+
+    button_order_selected.click(function () {
+        if(tmp_order.length > 0) {
+            tmp_order = [];
+            button_order_selected.attr('data-ids', tmp_order);
+            table_order.find('input:checkbox').removeAttr('checked');
+        } else {
+            alert('Chưa chọn đơn hàng export');
         }
     });
 
