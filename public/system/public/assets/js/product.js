@@ -486,6 +486,14 @@ $(function(){
 
     button_order_selected.click(function () {
         if(tmp_order.length > 0) {
+            var time = 100;
+            if(tmp_order.length < 10) {
+                time = 1000;
+            } else if(tmp_order.length < 30) {
+                time = 2000;
+            } else if(tmp_order.length < 50) {
+                time = 5000;
+            }
             var form_data = new FormData();
             form_data.append("data", tmp_order);
             $.ajax({
@@ -502,7 +510,7 @@ $(function(){
                     w.document.close();
                     setTimeout(function () {
                         w.window.print();
-                    }, 5000);
+                    }, time);
                 }
             });
             tmp_order = [];
