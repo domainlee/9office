@@ -1,0 +1,88 @@
+<?php
+    use Home\Model\DateBase;
+    $order = $this->product_order;
+?>
+<style>
+    .table-bordered {
+        border: 1px solid #ebeff2;
+    }
+    .table>thead>tr>th, .table>tbody>tr>th, .table>tfoot>tr>th, .table>thead>tr>td, .table>tbody>tr>td, .table>tfoot>tr>td, .table>thead>tr>th, .table-bordered {
+        border-top: 1px solid #ebeff2;
+    }
+    .table>thead>tr>th {
+        vertical-align: bottom;
+        border-bottom: 2px solid #ebeff2;
+    }
+    .table {
+        width: 100%;
+        max-width: 100%;
+        margin-bottom: 20px;
+        font-family: Arial, "Helvetica Neue", "Helvetica", Tahoma, Verdana, sans-serif;
+    }
+    .table-bordered>thead>tr>th, .table-bordered>tbody>tr>th, .table-bordered>tfoot>tr>th, .table-bordered>thead>tr>td, .table-bordered>tbody>tr>td, .table-bordered>tfoot>tr>td {
+        border: 1px solid #ebeff2;
+        padding: 10px 15px;
+    }
+</style>
+<table class="table table-bordered table-hover table-condensed">
+    <thead>
+        <tr>
+            <th>Thông tin</th>
+            <th>Sản phẩm</th>
+        </tr>
+    </thead>
+    <tbody>
+        <?php foreach ($order as $k => $v): ?>
+        <tr class="even">
+            <td>
+                <p><strong>Mã đơn hàng:</strong> <?php echo $k ?></p>
+                <p><strong>Tên khách hàng:</strong> <?php echo $v['customerName'] ?></p>
+                <p><strong>Ngày mua:</strong> <?php echo DateBase::toDisplayDateTime($v['createdDateTime'])  ?></p>
+            </td>
+            <td class="list_product">
+                <?php $approved = false; $materials = array(); foreach ($v['products'] as $p => $pv): ?>
+                    <div class="" style="display: flex">
+                        <div>
+                            <a title="<?php echo 'Đơn hàng ID-'. $k ?> - <?php echo $pv['productCode']; ?>" href="<?php echo $pv['productImage'] ?>" class="button-image">
+                                <img style="width: 80px;height: auto;margin: 0 10px 10px 0" class="thumb-md rounded-circle lazy" src="<?php echo $pv['productImage'] ?>" />
+                            </a>
+                        </div>
+                        <div>
+                            <?php
+                            $url_created_product = '';
+                            if(isset($product_material[$pv['productCode']])){
+                                $named = '';
+                                $c = 0;
+                                $products = array();
+                                foreach ($product_material[$pv['productCode']] as $kpi => $pi) {
+                                    $c++;
+                                    $named .= $c.'. '.$pi['materialName'].' - SL: '.$pi['quantity'] .'<br/>';
+                                    $products[] = array(
+                                        'materialId' => $pi['materialId'],
+                                        'quantity' => $pi['quantity']*$pv['quantity']
+                                    );
+                                }
+                                $materials[$k][$pv['productCode']] = $products;
+                                if($approved === 'false') {
+                                    $approved = false;
+                                } else {
+                                    $approved = true;
+                                }
+                                $url_created_product = '<span class="label label-success" data-toggle="tooltip" data-html="true" data-placement="top" title="" data-original-title="'.$named.'">Vật liệu sử dụng</span>';
+                            } else {
+                                $approved = 'false';
+                                $url_created_product = '<a class="label label-danger" href="'.'/admin/material/addproduct?id='.$pv['productCode'].'&img='.$pv['productImage'].'&name='.$pv['productName'].'" target="_blank">Tạo vật liệu</a>';
+                            }
+                            ?>
+                            <strong><?php echo $pv['productCode']; ?> Số lượng: <?php echo $pv['quantity']; ?></strong>
+                            <p><?php echo $pv['productName'] ?></p>
+                        </div>
+                    </div>
+                <?php endforeach; ?>
+            </td>
+        </tr>
+        <?php endforeach; ?>
+    </tbody>
+</table>
+
+

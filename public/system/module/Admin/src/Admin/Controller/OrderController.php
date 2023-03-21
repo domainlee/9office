@@ -114,8 +114,8 @@ class OrderController extends AbstractActionController{
 	}
 
     public function exportAction() {
-
-        $selected_products = $this->getRequest()->getQuery()['ids'];
+        $this->layout('layout/null');
+        $selected_products = $this->getRequest()->getPost()['data'];
         $product_items = explode(',',$selected_products);
 
         if(empty($product_items)) {
@@ -154,35 +154,39 @@ class OrderController extends AbstractActionController{
         $response = json_decode($response, true);
         $product_items = $response['data']['orders'];
 
-        $file_name = 'Danh sách đơn hàng_'.date('ymd').'.xlsx';
-        $sheet_product = 'Đơn hàng xuất ngày '.date('ymd');
-        $header_one = array( 'Mã đơn hàng', 'Ngày', 'Tên', 'Sản phẩm');
-        $styles_white = array('font'=>'Arial', 'font-style'=>'bold', 'fill'=>'#FFF', 'halign'=>'left', 'border'=>'left,right,top,bottom');
-        $writer = new XLSWriterPlus();
-        $writer->writeSheetRow($sheet_product, $header_one, $styles_white);
+        return new ViewModel(array(
+            'product_order' => $product_items,
+        ));
 
-        foreach ($product_items as $pi) {
-            $data = array($pi['id'], $pi['createdDateTime'], $pi['customerName'], );
-            $writer->writeSheetRow($sheet_product, $data);
-            $writer->addImage('https://global.discourse-cdn.com/envato/original/3X/2/e/2e64f5fae4319ad099d3d279915e90bbdb4da4d9.jpg', $pi['id'], [
-                'startColNum' => 0,
-                'startRowNum' => 0,
-            ]);
-        }
-        $writer->writeToFile($file_name);
-        header('Content-Description: File Transfer');
-        header("Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
-        header("Content-Disposition: attachment; filename=" . basename($file_name));
-        header("Content-Transfer-Encoding: binary");
-        header("Expires: 0");
-        header("Pragma: public");
-        header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
-        header('Content-Length: ' . filesize($file_name));
-        ob_clean();
-        flush();
-        readfile($file_name);
-        unlink($file_name);
-        exit;
+//        $file_name = 'Danh sách đơn hàng_'.date('ymd').'.xlsx';
+//        $sheet_product = 'Đơn hàng xuất ngày '.date('ymd');
+//        $header_one = array( 'Mã đơn hàng', 'Ngày', 'Tên', 'Sản phẩm');
+//        $styles_white = array('font'=>'Arial', 'font-style'=>'bold', 'fill'=>'#FFF', 'halign'=>'left', 'border'=>'left,right,top,bottom');
+//        $writer = new XLSWriterPlus();
+//        $writer->writeSheetRow($sheet_product, $header_one, $styles_white);
+//
+//        foreach ($product_items as $pi) {
+//            $data = array($pi['id'], $pi['createdDateTime'], $pi['customerName'], );
+//            $writer->writeSheetRow($sheet_product, $data);
+//            $writer->addImage('https://global.discourse-cdn.com/envato/original/3X/2/e/2e64f5fae4319ad099d3d279915e90bbdb4da4d9.jpg', $pi['id'], [
+//                'startColNum' => 0,
+//                'startRowNum' => 0,
+//            ]);
+//        }
+//        $writer->writeToFile($file_name);
+//        header('Content-Description: File Transfer');
+//        header("Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
+//        header("Content-Disposition: attachment; filename=" . basename($file_name));
+//        header("Content-Transfer-Encoding: binary");
+//        header("Expires: 0");
+//        header("Pragma: public");
+//        header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
+//        header('Content-Length: ' . filesize($file_name));
+//        ob_clean();
+//        flush();
+//        readfile($file_name);
+//        unlink($file_name);
+//        exit;
     }
 
 	public function update_order() {
