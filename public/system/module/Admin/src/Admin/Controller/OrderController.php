@@ -48,6 +48,8 @@ class OrderController extends AbstractActionController{
             $finishedProduction = $orderManufactureMapper->fetchStatus($orderManufacture);
         }
 
+//        print_r($finishedProduction);die;
+
         $data = json_encode(array('id' => $inProduction || $finishedProduction ? array_merge($inProduction,$finishedProduction) : $id, 'customerMobile' => $phone, 'page' => $page, 'statuses' => array($status_filter), 'fromDate' => $startDate,'toDate' => $endDate));
         $curl = curl_init();
 
@@ -101,6 +103,57 @@ class OrderController extends AbstractActionController{
         $orderManufactureMapper = $this->getServiceLocator()->get('Admin\Model\OrderManufactureMapper');
         $orderProduction = $orderManufactureMapper->fetchAll($orderManufacture);
 
+        $is_print = $this->getRequest()->getPost()['print'];
+        if($is_print) {
+            $this->layout('layout/null');
+            $view = new ViewModel();
+            $totalPage = $response['data']['totalPages'];
+            $order_items = array();
+            for($c = 1; $c <= $totalPage; $c++) {
+                $data = json_encode(array('id' => $inProduction || $finishedProduction ? array_merge($inProduction,$finishedProduction) : $id, 'customerMobile' => $phone, 'page' => $c, 'statuses' => array($status_filter), 'fromDate' => $startDate,'toDate' => $endDate));
+                $curl = curl_init();
+
+                $api = \Base\Model\Resource::data_api();
+
+                $data = array(
+                    'version' => $api['version'],
+                    'appId' => $api['appId'],
+                    'businessId' => $api['businessId'],
+                    'accessToken' => $api['accessToken'],
+                    'data' => $data
+                );
+
+
+                curl_setopt_array($curl, array(
+                    CURLOPT_URL => 'https://open.nhanh.vn/api/order/index',
+                    CURLOPT_RETURNTRANSFER => true,
+                    CURLOPT_ENCODING => '',
+                    CURLOPT_MAXREDIRS => 10,
+                    CURLOPT_TIMEOUT => 0,
+                    CURLOPT_FOLLOWLOCATION => true,
+                    CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+                    CURLOPT_CUSTOMREQUEST => 'POST',
+                    CURLOPT_POSTFIELDS => $data,
+                ));
+
+                $response = curl_exec($curl);
+                curl_close($curl);
+                $response = json_decode($response, true);
+//                $order_items[] = $response['data']['orders'];
+                if(!empty($response['data']['orders'])) {
+                    foreach ($response['data']['orders'] as $v) {
+                        $order_items[$v['id']] = $v;
+                    }
+                }
+            }
+            //Đổi template
+            $view->setTemplate('admin/order/export');
+            $view->setVariables(array(
+                'product_order' => $order_items,
+            ));
+            return $view;
+        }
+
         return new ViewModel(array(
 			'query'=> $query,
 			'query_request'=> $query_request,
@@ -115,14 +168,44 @@ class OrderController extends AbstractActionController{
 
     public function exportAction() {
         $this->layout('layout/null');
-        $selected_products = $this->getRequest()->getPost()['data'];
-        $product_items = explode(',',$selected_products);
+//        $selected_products = $this->getRequest()->getPost()['print'];
+//        $product_items = explode(',',$selected_products);
+//
+//        if(empty($product_items)) {
+//            return false;
+//        }
 
-        if(empty($product_items)) {
-            return false;
+        $query = $this->getRequest()->getUri()->getQuery();
+        $page = (int)$this->getRequest()->getQuery()->page ? : 1;
+        $id = $this->getRequest()->getQuery()->id ? : '';
+        $phone = $this->getRequest()->getQuery()->phone ? : '';
+        $status_filter = $this->getRequest()->getQuery()->status ? : '';
+        $startDate = $this->getRequest()->getQuery()->start ? : '';
+        $endDate = $this->getRequest()->getQuery()->end ? : '';
+        $startDate = DateBase::toCommonDateTwo($startDate);
+        $endDate = DateBase::toCommonDateTwo($endDate);
+        $query_request = $this->getRequest()->getQuery();
+        print_r($this->getRequest()->getQuery());die;
+
+        $inProduction = array();
+        if($status_filter == 'InProduction') {
+            $status_filter = '';
+            $orderManufacture = new \Admin\Model\OrderManufacture();
+            $orderManufacture->setStatus(\Admin\Model\OrderManufacture::IN_PRODUCTION);
+            $orderManufactureMapper = $this->getServiceLocator()->get('Admin\Model\OrderManufactureMapper');
+            $inProduction = $orderManufactureMapper->fetchStatus($orderManufacture);
         }
 
-        $data = json_encode(array('id' => $product_items ));
+        $finishedProduction = array();
+        if($status_filter == 'FinishedProduction') {
+            $status_filter = '';
+            $orderManufacture = new \Admin\Model\OrderManufacture();
+            $orderManufacture->setStatus(\Admin\Model\OrderManufacture::FINISHED_PRODUCTION);
+            $orderManufactureMapper = $this->getServiceLocator()->get('Admin\Model\OrderManufactureMapper');
+            $finishedProduction = $orderManufactureMapper->fetchStatus($orderManufacture);
+        }
+
+        $data = json_encode(array('id' => $inProduction || $finishedProduction ? array_merge($inProduction,$finishedProduction) : $id, 'customerMobile' => $phone, 'page' => $page, 'statuses' => array($status_filter), 'fromDate' => $startDate,'toDate' => $endDate));
         $curl = curl_init();
 
         $api = \Base\Model\Resource::data_api();
@@ -152,6 +235,9 @@ class OrderController extends AbstractActionController{
 
         curl_close($curl);
         $response = json_decode($response, true);
+
+        print_r($response);die;
+
         $product_items = $response['data']['orders'];
 
         return new ViewModel(array(

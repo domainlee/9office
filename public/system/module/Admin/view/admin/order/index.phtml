@@ -4,6 +4,7 @@ echo $this->headtitle($this->escapehtml($this->translate('Danh sách hóa đơn'
 //print_r($this->results);die;
 $order = $this->results['orders'];
 $total = $this->results['totalPages'];
+$totalRecords = $this->results['totalRecords'];
 $page = $this->results['page'] ? $this->results['page']:1;
 $query = $this->query;
 $query_request = $this->query_request;
@@ -13,6 +14,7 @@ $page_next = (int)($total == $page ? $page:$page + 1);
 $id = $this->id;
 $phone = $this->phone;
 $product_material = $this->product_material;
+//echo $query;die;
 if($query) {
     $page_prev = preg_replace ( '/page=\d*/i','page='.$page_prev, $query );
     $page_next = preg_replace ( '/page=\d*/i','page='.$page_next, $query );
@@ -22,6 +24,23 @@ if($query) {
 }
 $startDate = !empty($query_request->start) ? $query_request->start:'';
 $endDate = !empty($query_request->end) ? $query_request->end:'';
+$time = 500;
+if($totalRecords > 10) {
+    $time = 1000;
+}
+if ($totalRecords > 10 && $totalRecords < 50) {
+    $time = 2000;
+}
+if ($totalRecords > 50 && $totalRecords < 100) {
+    $time = 4000;
+}
+if ($totalRecords > 100 && $totalRecords < 200) {
+    $time = 8000;
+}
+if ($totalRecords > 200 && $totalRecords < 1000) {
+    $time = 10000;
+}
+
 ?>
 
 <style>
@@ -39,7 +58,7 @@ $endDate = !empty($query_request->end) ? $query_request->end:'';
                 <div id="sample_editable_1_wrapper" class="dataTables_wrapper form-inline" role="grid">
                     <div class="btn-toolbar">
                         <div class="btn-group focus-btn-group">
-                            <a class="button-order-export-selected btn btn-default waves-effect waves-light">In đơn hàng</a>
+                            <a class="button-order-export-selected btn btn-default waves-effect waves-light" data-query="<?= $query ?>" data-time="<?= $time ?>">In đơn hàng</a>
                         </div>
                         <div class="btn-group dropdown-btn-group pull-right">
                             <div class="dataTables_filter mb-15">

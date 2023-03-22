@@ -470,13 +470,6 @@ $(function(){
         } else {
             tmp_order.splice($.inArray(checked, tmp_order),1);
         }
-        // button_order_selected.attr('href','/admin/order/export?ids=' + encodeURIComponent(tmp_order));
-        //
-        // if(tmp_order.length > 0) {
-        //     button_order_selected.prop('disabled', false);
-        // } else {
-        //     button_order_selected.prop('disabled', true);
-        // }
         button_order_selected.attr('data-ids', tmp_order);
     });
 
@@ -485,40 +478,28 @@ $(function(){
     });
 
     button_order_selected.click(function () {
-        if(tmp_order.length > 0) {
-            var time = 100;
-            if(tmp_order.length < 10) {
-                time = 1000;
-            } else if(tmp_order.length < 30) {
-                time = 2000;
-            } else if(tmp_order.length < 50) {
-                time = 5000;
+        var time = $(this).attr('data-time') ? $(this).attr('data-time'):1000;
+        var query = $(this).attr('data-query');
+
+        var form_data = new FormData();
+        form_data.append("print", true);
+        $.ajax({
+            data: form_data,
+            type: "POST",
+            url: "/admin/order?" + query,
+            cache: false,
+            contentType: false,
+            processData: false,
+            success: function(html) {
+                w = window.open(window.location.href,"_blank");
+                w.document.open();
+                w.document.write(html);
+                w.document.close();
+                setTimeout(function () {
+                    w.window.print();
+                }, time);
             }
-            var form_data = new FormData();
-            form_data.append("data", tmp_order);
-            $.ajax({
-                data: form_data,
-                type: "POST",
-                url: "/admin/order/export",
-                cache: false,
-                contentType: false,
-                processData: false,
-                success: function(html) {
-                    w = window.open(window.location.href,"_blank");
-                    w.document.open();
-                    w.document.write(html);
-                    w.document.close();
-                    setTimeout(function () {
-                        w.window.print();
-                    }, time);
-                }
-            });
-            tmp_order = [];
-            button_order_selected.attr('data-ids', tmp_order);
-            table_order.find('input:checkbox').removeAttr('checked');
-        } else {
-            alert('Chưa chọn đơn hàng in');
-        }
+        });
     });
 
 
