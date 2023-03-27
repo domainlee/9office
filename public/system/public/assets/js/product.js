@@ -356,6 +356,9 @@ $(function(){
             // });
         },
         import: function () {
+            import_coin._buttonImport.text('Đang import');
+            import_coin._buttonImport.removeClass('import-coin__button-import');
+
             // var formValid = import_coin._form.valid();
             // if(formValid) {
                 var t = $('input.excel_file_material');
@@ -364,7 +367,9 @@ $(function(){
 
                     if (reader.readAsBinaryString) {
                         reader.onload = function (e) {
-                            import_coin.read_data(e.target.result);
+                            setTimeout(function () {
+                                import_coin.read_data(e.target.result);
+                            }, 10000);
                         };
                         reader.readAsBinaryString(t.prop('files')[0]);
                     } else {
@@ -374,7 +379,9 @@ $(function(){
                             for (var i = 0; i < bytes.byteLength; i++) {
                                 data += String.fromCharCode(bytes[i]);
                             }
-                            import_coin.read_data(data);
+                            setTimeout(function () {
+                                import_coin.read_data(data);
+                            }, 10000);
                         };
                         reader.readAsArrayBuffer(t.prop('files')[0]);
                     }
@@ -401,13 +408,19 @@ $(function(){
                 contentType: false,
                 processData: false,
             }).done(function (e) {
-                import_coin._errors.text('').text(e.errors + ' Vật liệu đã tồn tại, hoặc dự liệu chưa phù hợp');
+                import_coin._errors.text('').text(e.errors + ' Vật liệu đã tồn tại, hoặc dữ liệu chưa phù hợp');
                 import_coin._success.text('').text(e.success + ' Tạo mới');
                 // location.reload();
+                import_coin._buttonImport.text('Import');
+                import_coin._buttonImport.addClass('import-coin__button-import');
             });
         }
 
     }
+
+    $('#modal-import').on('hidden.bs.modal', function () {
+        location.reload();
+    });
 
     import_coin.init();
 

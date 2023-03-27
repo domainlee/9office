@@ -269,14 +269,14 @@ class MaterialController extends AbstractActionController{
 
                 $materialMapper = $this->getServiceLocator()->get('Admin\Model\MaterialMapper');
                 $rMaterial = $materialMapper->searchName($material);
-                if(empty($rMaterial)){
+                if(!$rMaterial){
                     $cong = trim((int)$v[1]);
                     $price = trim((int)$v[3]);
                     $manufacture = new \Admin\Model\Manufacture();
                     $manufacture->setName($v[2]);
                     $manufactureMapper = $this->getServiceLocator()->get('Admin\Model\ManufactureMapper');
                     $rManufacture = $manufactureMapper->searchName($manufacture);
-                    if(!empty($rManufacture)) {
+                    if($rManufacture) {
                         $material->setManufactureId($rManufacture->getId());
                     }
                     if($cong == 3 && !empty($price)) {
@@ -358,7 +358,6 @@ class MaterialController extends AbstractActionController{
                 'success' => $success,
             ));
         }
-        die;
         return new JsonModel(array(
             'code' => 0,
             'messenger' => 'Dữ liệu không phù hợp'
