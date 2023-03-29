@@ -409,7 +409,7 @@ $(function(){
                 contentType: false,
                 processData: false,
             }).done(function (e) {
-                import_coin._errors.text('').text(e.errors + ' Vật liệu đã tồn tại, hoặc dữ liệu chưa phù hợp');
+                import_coin._errors.text('').text(e.errors + ' Vật liệu đã tồn tại, hoặc dữ liệu chưa phù hợp ( ' + e.error_text + ' )');
                 import_coin._success.text('').text(e.success + ' Tạo mới');
                 // location.reload();
                 import_coin._buttonImport.text('Import');

@@ -262,6 +262,7 @@ class MaterialController extends AbstractActionController{
         if(!empty($import_material)) {
             $errors = 0;
             $success = 0;
+            $error_text = '';
             foreach ($import_material as $v) {
                 $v = array_values($v);
                 $material = new \Admin\Model\Material();
@@ -289,12 +290,14 @@ class MaterialController extends AbstractActionController{
                     $success += 1;
                 } else {
                     $errors += 1;
+                    $error_text .= trim($v[0]).', ';
                 }
             }
 
             return new JsonModel(array(
                 'code' => 1,
                 'errors' => $errors,
+                'error_text' => $error_text,
                 'success' => $success,
             ));
         }
@@ -306,6 +309,7 @@ class MaterialController extends AbstractActionController{
             $mapperMaterial = $this->getServiceLocator()->get('Admin\Model\MaterialMapper');
             $errors = 0;
             $success = 0;
+            $error_text = '';
             foreach ($product_material as $v) {
                 $v = array_values($v);
                 $sku = trim($v[0]);
@@ -336,6 +340,7 @@ class MaterialController extends AbstractActionController{
                         $success += 1;
                     } else {
                         $errors += 1;
+                        $error_text .= trim($v[0]).', ';
                     }
                     if(!in_array($sku, $printedSeasons)) {
                         $printedSeasons[] = $sku;
@@ -355,6 +360,7 @@ class MaterialController extends AbstractActionController{
             return new JsonModel(array(
                 'code' => 1,
                 'errors' => $errors,
+                'error_text' => $error_text,
                 'success' => $success,
             ));
         }
