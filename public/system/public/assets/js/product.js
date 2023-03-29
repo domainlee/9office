@@ -85,6 +85,7 @@ $(function(){
     _delete('.deleteDomain', 'deleteDomain', '/admin/store/delete');
     _delete('.deleteWebsite', 'deleteWebsite', '/admin/user/deletedomain');
     _delete('.deleteComment', 'deleteComment', '/admin/setup/deleteccomment');
+    _delete('.deleteInvoice', 'deleteInvoice', '/admin/invoice/delete');
 
 
     $btnChangeType = $('.changeType');

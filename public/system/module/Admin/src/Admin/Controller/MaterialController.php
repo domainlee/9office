@@ -540,9 +540,9 @@ class MaterialController extends AbstractActionController{
                 if($model->getId()) {
                     if(!empty($data['materialId'])) {
                         foreach ($data['materialId'] as $k => $v) {
-                            $price = (float)str_replace(",", ".", $data['price'][$k]);;
-                            $quantity = (float)str_replace(",", ".", $data['quantity'][$k]);;
-                            $intoMoney = $data['intoMoney'][$k];
+                            $price = (float)str_replace(",", ".", $data['price'][$k]);
+                            $quantity = (float)str_replace(",", ".", $data['quantity'][$k]);
+                            $intoMoney = (float)str_replace(",", ".", $data['intoMoney'][$k]);
                             $mapperProductMaterialItem = $this->getServiceLocator()->get('Admin\Model\ProductMaterialItemMapper');
                             $modelProductMaterialItem = new \Admin\Model\ProductMaterialItem();
                             $modelProductMaterialItem->exchangeArray($data);
@@ -608,9 +608,9 @@ class MaterialController extends AbstractActionController{
                 if($model->getId()) {
                     if(!empty($data['materialId'])) {
                         foreach ($data['materialId'] as $k => $v) {
-                            $price = (float)str_replace(",", ".", $data['price'][$k]);;
-                            $quantity = (float)str_replace(",", ".", $data['quantity'][$k]);;
-                            $intoMoney = $data['intoMoney'][$k];
+                            $price = (float)str_replace(",", ".", $data['price'][$k]);
+                            $quantity = (float)str_replace(",", ".", $data['quantity'][$k]);
+                            $intoMoney = (float)str_replace(",", ".", $data['intoMoney'][$k]);
                             $id = $data['pmId'][$k];
                             $mapperProductMaterialItem = $this->getServiceLocator()->get('Admin\Model\ProductMaterialItemMapper');
                             $modelProductMaterialItem = new \Admin\Model\ProductMaterialItem();

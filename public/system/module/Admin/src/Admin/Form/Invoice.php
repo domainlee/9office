@@ -54,7 +54,6 @@ class Invoice extends FormBase{
             'required' => false,
             "type" => "Zend\\InputFilter\\ArrayInput",
             'filters' => array (
-                array ('name' => 'Digits'),
                 array ('name' => 'StringTrim'),
             ),
         ) );

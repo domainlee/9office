@@ -84,9 +84,10 @@ class InvoiceController extends AbstractActionController{
                 if($model->getId()) {
                     if(!empty($data['materialId'])) {
                         foreach ($data['materialId'] as $k => $v) {
-                            $price = (float)str_replace(",", ".", $data['price'][$k]);;
-                            $quantity = (float)str_replace(",", ".", $data['quantity'][$k]);;
-                            $intoMoney = $data['intoMoney'][$k];
+                            $price = (float)str_replace(",", ".", $data['price'][$k]);
+                            $quantity = (float)str_replace(",", ".", $data['quantity'][$k]);
+                            $intoMoney = (float)str_replace(",", ".", $data['intoMoney'][$k]);
+
                             $mapperInvoiceMaterial = $this->getServiceLocator()->get('Admin\Model\InvoiceMaterialMapper');
                             $modelInvoiceMaterial = new \Admin\Model\InvoiceMaterial();
                             $modelInvoiceMaterial->exchangeArray($data);
@@ -105,7 +106,6 @@ class InvoiceController extends AbstractActionController{
                             $modelInvoiceMaterial->setType($model::IMPORT);
                             $modelInvoiceMaterial->setCreatedById($u->getId());
                             $modelInvoiceMaterial->setStatus(\Admin\Model\Invoice::STATUS_NOT_APPROVED);
-//                            print_r($modelInvoiceMaterial);
                             $mapperInvoiceMaterial->save($modelInvoiceMaterial);
                         }
                     }
@@ -529,9 +529,9 @@ class InvoiceController extends AbstractActionController{
                 if($model->getId()) {
                     if(!empty($data['materialId'])) {
                         foreach ($data['materialId'] as $k => $v) {
-                            $price = (float)str_replace(",", ".", $data['price'][$k]);;
-                            $quantity = (float)str_replace(",", ".", $data['quantity'][$k]);;
-                            $intoMoney = $data['intoMoney'][$k];
+                            $price = (float)str_replace(",", ".", $data['price'][$k]);
+                            $quantity = (float)str_replace(",", ".", $data['quantity'][$k]);
+                            $intoMoney = (float)str_replace(",", ".", $data['intoMoney'][$k]);
                             $mapperInvoiceMaterial = $this->getServiceLocator()->get('Admin\Model\InvoiceMaterialMapper');
                             $modelInvoiceMaterial = new \Admin\Model\InvoiceMaterial();
                             $modelInvoiceMaterial->exchangeArray($data);
@@ -573,22 +573,28 @@ class InvoiceController extends AbstractActionController{
         if(!is_numeric($id)){
             return new JsonModel(array(
                 'code'=> 0,
-                'messenger' => 'Chúng tôi không tìm thấy bài viết này'
+                'messenger' => 'Chúng tôi không tìm thấy hoá đơn này'
             ));
         }
-        $mapper = $this->getServiceLocator()->get('Admin\Model\ArticleMapper');
-        $article = new \Admin\Model\Article();
-        $article->setId($id);
-        if(!$mapper->get($article)){
+        $mapper = $this->getServiceLocator()->get('Admin\Model\InvoiceMapper');
+        $invoice = new \Admin\Model\Invoice();
+        $invoice->setId($id);
+        if(!$mapper->get($invoice)){
             return new JsonModel(array(
                 'code' => 0,
-                'messenger' => 'Chúng tôi không tìm thấy bài viết này'
+                'messenger' => 'Chúng tôi không tìm thấy hoá đơn này'
             ));
         }
-        $mapper->delete($article);
-        if($article->getId()){
-            $mediaMapper = $this->getServiceLocator()->get('Admin\Model\MediaItemMapper');
-            $mediaMapper->deleteTaskTag($article->getId());
+        if($invoice->getStatus() == \Admin\Model\Invoice::STATUS_APPROVED) {
+            return new JsonModel(array(
+                'code' => 0,
+                'messenger' => 'Hoá đơn này đã được duyệt, không được xoá'
+            ));
+        }
+        $mapper->delete($invoice);
+        if($invoice->getId()){
+            $invoiceMaterialMapper = $this->getServiceLocator()->get('Admin\Model\InvoiceMaterialMapper');
+            $invoiceMaterialMapper->deleteByInvoice($invoice->getId());
         }
         return new JsonModel(array(
 			'code' => 1,

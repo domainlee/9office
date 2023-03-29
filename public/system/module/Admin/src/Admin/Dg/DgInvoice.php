@@ -42,15 +42,15 @@ class DgInvoice extends \Base\Dg\Table {
                 foreach ($item->getOptions()['products'] as $v) {
                     $productText .= '<tr>
                                         <td>'.$v['material'].'</td>
-                                        <td>'.number_format($v['price']).'</td>
+                                        <td>'.number_format($v['price'], 0).'</td>
                                         <td>'.$v['quantity'].'</td>
-                                        <td>'.number_format($v['intoMoney']).'</td>
+                                        <td>'.number_format($v['intoMoney'], 0).'</td>
                                       </tr>';
                 }
             }
             $status = '';
             if($item->getStatus() == 2) {
-                $status = '<span class="label label-danger" style="margin-bottom: 5px;display: inline-block">'.$item->statuses[$item->getStatus()] . '</span><br/><a data-id="'.$item->getId().'" data-type="'.($item->getStatus() == 2 ? 'export':'import').'" class="btn-approved-invoice btn label btn-sm btn-default btn-rounded waves-effect waves-light">Duyệt</a>';
+                $status = '<span class="label label-danger" style="margin-bottom: 5px;display: inline-block">'.$item->statuses[$item->getStatus()] . '</span><br/><a data-id="'.$item->getId().'" data-type="'.($item->getType() == 2 ? 'export':'import').'" class="btn-approved-invoice btn label btn-sm btn-default btn-rounded waves-effect waves-light">Duyệt</a>';
             } elseif ($item->getStatus() == 1) {
                 $status = '<span class="label label-success" style="margin-bottom: 5px;display: inline-block">Đã duyệt</span><br/>'.DateBase::toDisplayDateTime($item->getUpdatedDateTime());
             }
@@ -89,7 +89,7 @@ class DgInvoice extends \Base\Dg\Table {
                 ),
                 array(
                     'type' => 'action',
-                    'value' => '<a class="cursor deleteArticle fa fa-trash-o" data-id="'.$item->getId().'"></a>',
+                    'value' => '<a class="cursor deleteInvoice fa fa-trash-o" data-id="'.$item->getId().'"></a>',
                     'htmlOptions'=> array('style'=>'text-align: center;vertical-align: middle'),
                 ),
             );

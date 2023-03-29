@@ -32,7 +32,7 @@ class ManufactureController extends AbstractActionController{
 //        $dataOption = $optionMapper->get($option);
 //        $dataOld = !empty($dataOption) ?  json_decode($dataOption->getData(), true):'';
 		$page = (int)$this->getRequest()->getQuery()->page ? : 1;
-		$results = $mapper->search($model, array($page,10));
+		$results = $mapper->search($model, array($page,50));
 		return new ViewModel(array(
 //			'fFilter' => $fFilter,
 			'results' => $results,

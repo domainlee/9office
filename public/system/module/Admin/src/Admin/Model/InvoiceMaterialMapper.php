@@ -304,6 +304,23 @@ class InvoiceMaterialMapper extends Base{
         }
         return $rs;
     }
+
+    public function deleteByInvoice($invoiceId){
+        if(!$invoiceId){
+            return false;
+        }
+        /* @var $dbAdapter \Zend\Db\Adapter\Adapter */
+        $dbAdapter = $this->getServiceLocator()->get('dbAdapter');
+
+        /* @var $dbSql \Zend\Db\Sql\Sql */
+        $dbSql = $this->getServiceLocator()->get('dbSql');
+        $delete = $this->getDbSql()->delete($this->getTableName());
+        $delete->where(['invoiceId' => $invoiceId]);
+
+        $query = $dbSql->getSqlStringForSqlObject($delete);
+        $result = $dbAdapter->query($query,$dbAdapter::QUERY_MODE_EXECUTE);
+        return $result;
+    }
 	
 }
 

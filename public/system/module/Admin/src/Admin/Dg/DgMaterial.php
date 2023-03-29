@@ -74,17 +74,17 @@ class DgMaterial extends \Base\Dg\Table {
                 ),
                 array(
                     'type' => 'text',
-                    'value' => number_format($item->getPrice()),
+                    'value' => number_format($item->getPrice(), 0),
                     'htmlOptions'=> array('style'=>'vertical-align: middle'),
                 ),
                 array(
                     'type' => 'text',
-                    'value' => number_format($item->getTotalQuantiy()),
+                    'value' => $item->getTotalQuantiy(),
                     'htmlOptions'=> array('style'=>'vertical-align: middle'),
                 ),
                 array(
                     'type' => 'text',
-                    'value' => number_format($item->getTotalPrice()),
+                    'value' => number_format($item->getTotalPrice(), 0),
                     'htmlOptions'=> array('style'=>'vertical-align: middle'),
                 ),
                 array(
