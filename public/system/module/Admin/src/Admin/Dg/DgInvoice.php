@@ -16,7 +16,7 @@ class DgInvoice extends \Base\Dg\Table {
                 'style' => 'vertical-align: middle;'
             ),
             array(
-                'label' => 'Sản phẩm nhập',
+                'label' => 'Sản phẩm',
                 'style' => 'width: 40%'
             ),
             array(
@@ -39,6 +39,7 @@ class DgInvoice extends \Base\Dg\Table {
             $product = $item->getOptions()['products'];
             $productText = '';
             if(!empty($item->getOptions()['products'])) {
+                $totalMoney = 0;
                 foreach ($item->getOptions()['products'] as $v) {
                     $productText .= '<tr>
                                         <td>'.$v['material'].'</td>
@@ -46,7 +47,12 @@ class DgInvoice extends \Base\Dg\Table {
                                         <td>'.$v['quantity'].'</td>
                                         <td>'.number_format($v['intoMoney'], 0).'</td>
                                       </tr>';
+                    $totalMoney += $v['intoMoney'];
                 }
+                $productText .= '<tr>
+                                <td colspan="3"><strong>Tổng tiền:</strong> </td>
+                                <td><strong class="text-pink">'.number_format($totalMoney, 0).'</strong></td>
+                            </tr>';
             }
             $status = '';
             if($item->getStatus() == 2) {

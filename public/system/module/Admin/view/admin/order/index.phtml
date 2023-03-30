@@ -14,10 +14,11 @@ $page_next = (int)($total == $page ? $page:$page + 1);
 $id = $this->id;
 $phone = $this->phone;
 $product_material = $this->product_material;
-//echo $query;die;
+$link = '';
 if($query) {
     $page_prev = preg_replace ( '/page=\d*/i','page='.$page_prev, $query );
     $page_next = preg_replace ( '/page=\d*/i','page='.$page_next, $query );
+    $link = preg_replace ( '/page=\d*/i','', $query );
 } else {
     $page_prev = 'page='.$page_prev;
     $page_next = 'page='.$page_next;
@@ -177,11 +178,19 @@ if ($totalRecords > 200 && $totalRecords < 1000) {
                         </table>
 
                         <div class="dataTables_paginate paging_bootstrap pagination pagination__option">
-                            <ul class="pagination">
+                            <ul class="pagination" style="display: none">
                                 <li class="prev"><a class="" href="<?php echo 'order?'. $page_prev; ?>"><span>Trang sau</span></a></li>
                                 <li><a class="btn-default"><?php echo $page .'/'.$total;  ?></a></li>
                                 <li><a class="" href="<?php echo 'order?'. $page_next ?>" title="Trang trước"><span>Trang trước</span></a></li>
                             </ul>
+                            <label>Trang:
+                                <select class="form-control input-sm" id="paginationControl" size="1">
+                                    <?php for($c = 1; $c <= $total; $c++): ?>
+                                        <option value="<?php echo 'order?page='. $c . $link ?>" <?php echo $c == $page ? 'selected':'' ?>><?php echo $c ?></option>
+                                    <?php endfor; ?>
+                                </select>
+                                / <?php echo $total; ?>
+                            </label>
                         </div>
                     </div>
                 </div>

@@ -516,6 +516,13 @@ $(function(){
         });
     });
 
+    $('#paginationControl').on('change', function () {
+        var url = $(this).val();
+        if (url) {
+            window.location = url;
+        }
+        return false;
+    });
 
     if($('#imageUpload').length) {
         $("#imageUpload").change(function(){
