@@ -84,9 +84,9 @@ class InvoiceController extends AbstractActionController{
                 if($model->getId()) {
                     if(!empty($data['materialId'])) {
                         foreach ($data['materialId'] as $k => $v) {
-                            $price = (float)str_replace(",", ".", $data['price'][$k]);
+                            $price = (float)str_replace(",", "", $data['price'][$k]);
                             $quantity = (float)str_replace(",", ".", $data['quantity'][$k]);
-                            $intoMoney = (float)str_replace(",", ".", $data['intoMoney'][$k]);
+                            $intoMoney = (float)str_replace(",", "", $data['intoMoney'][$k]);
 
                             $mapperInvoiceMaterial = $this->getServiceLocator()->get('Admin\Model\InvoiceMaterialMapper');
                             $modelInvoiceMaterial = new \Admin\Model\InvoiceMaterial();
@@ -529,9 +529,9 @@ class InvoiceController extends AbstractActionController{
                 if($model->getId()) {
                     if(!empty($data['materialId'])) {
                         foreach ($data['materialId'] as $k => $v) {
-                            $price = (float)str_replace(",", ".", $data['price'][$k]);
+                            $price = (float)str_replace(",", "", $data['price'][$k]);
                             $quantity = (float)str_replace(",", ".", $data['quantity'][$k]);
-                            $intoMoney = (float)str_replace(",", ".", $data['intoMoney'][$k]);
+                            $intoMoney = (float)str_replace(",", "", $data['intoMoney'][$k]);
                             $mapperInvoiceMaterial = $this->getServiceLocator()->get('Admin\Model\InvoiceMaterialMapper');
                             $modelInvoiceMaterial = new \Admin\Model\InvoiceMaterial();
                             $modelInvoiceMaterial->exchangeArray($data);

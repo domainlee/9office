@@ -40,10 +40,10 @@ class Invoice extends FormBase{
             'name' => 'price',
             'required' => false,
             "type" => "Zend\\InputFilter\\ArrayInput",
-            'filters' => array (
-                array ('name' => 'Digits'),
-                array ('name' => 'StringTrim'),
-            ),
+//            'filters' => array (
+//                array ('name' => 'Digits'),
+//                array ('name' => 'StringTrim'),
+//            ),
         ) );
 
         $quantity = new Text('quantity');
@@ -66,8 +66,8 @@ class Invoice extends FormBase{
             'required' => false,
             "type" => "Zend\\InputFilter\\ArrayInput",
             'filters' => array (
-                array ('name' => 'Digits'),
-                array ('name' => 'StringTrim'),
+//                array ('name' => 'Digits'),
+//                array ('name' => 'StringTrim'),
             ),
         ) );
 

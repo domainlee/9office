@@ -34,7 +34,9 @@ class DgInvoice extends \Base\Dg\Table {
         );
         $this->headers = $headerArr;
         $rows = array();
-
+        function TrimTrailingZeroes($nbr) {
+            return strpos($nbr,'.')!==false ? rtrim(rtrim($nbr,'0'),'.') : $nbr;
+        }
         foreach ($this->dataSet as $item) {
             $product = $item->getOptions()['products'];
             $productText = '';
@@ -43,15 +45,15 @@ class DgInvoice extends \Base\Dg\Table {
                 foreach ($item->getOptions()['products'] as $v) {
                     $productText .= '<tr>
                                         <td>'.$v['material'].'</td>
-                                        <td>'.number_format($v['price'], 0).'</td>
+                                        <td>'.TrimTrailingZeroes(number_format($v['price'], 2)).'</td>
                                         <td>'.$v['quantity'].'</td>
-                                        <td>'.number_format($v['intoMoney'], 0).'</td>
+                                        <td>'.TrimTrailingZeroes(number_format($v['intoMoney'], 2)).'</td>
                                       </tr>';
                     $totalMoney += $v['intoMoney'];
                 }
                 $productText .= '<tr>
                                 <td colspan="3"><strong>Tổng tiền:</strong> </td>
-                                <td><strong class="text-pink">'.number_format($totalMoney, 0).'</strong></td>
+                                <td><strong class="text-pink">'.TrimTrailingZeroes(number_format($totalMoney, 2)).'</strong></td>
                             </tr>';
             }
             $status = '';

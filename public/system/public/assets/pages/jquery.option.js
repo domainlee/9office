@@ -65,7 +65,7 @@ jQuery(document).ready(function($) {
 
     $(".knob").knob();
 
-    $('.autonumber').autoNumeric('init', {'mDec':0});
+    $('.autonumber').autoNumeric('init');
 
     function sendFile(image) {
         var data = new FormData();

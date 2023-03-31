@@ -67,7 +67,7 @@ $product_id = $this->product_id;
 
 <script>
     jQuery(document).ready(function () {
-    $('.autonumber').autoNumeric('init', {'mDec':0});
+    $('.autonumber').autoNumeric('init');
 
     var select_material = $(".select-ajax-material");
     select_material.each(function () {
@@ -120,8 +120,7 @@ $product_id = $this->product_id;
             quantity.keyup(calculate);
 
             function calculate(e) {
-                var value_price = input_price_invoice.val();
-                value_price = value_price.replace(",", "");
+                var value_price = input_price_invoice.autoNumeric('get');
                 var value_quantity = quantity.val();
                 value_quantity = value_quantity.replace(",", ".");
 

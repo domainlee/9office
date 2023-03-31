@@ -40,10 +40,6 @@ class InvoiceOther extends FormBase{
             'name' => 'price',
             "type" => "Zend\\InputFilter\\ArrayInput",
             'required' => false,
-            'filters' => array (
-                array ('name' => 'Digits'),
-                array ('name' => 'StringTrim'),
-            ),
         ) );
 
         $quantity = new Text('quantity');
@@ -65,10 +61,6 @@ class InvoiceOther extends FormBase{
             'name' => 'intoMoney',
             'required' => false,
             "type" => "Zend\\InputFilter\\ArrayInput",
-            'filters' => array (
-                array ('name' => 'Digits'),
-                array ('name' => 'StringTrim'),
-            )
         ) );
 
         $name = new Text('name');
