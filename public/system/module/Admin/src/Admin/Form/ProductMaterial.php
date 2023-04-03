@@ -40,10 +40,10 @@ class ProductMaterial extends FormBase{
             'name' => 'price',
             "type" => "Zend\\InputFilter\\ArrayInput",
             'required' => false,
-            'filters' => array (
-                array ('name' => 'Digits'),
-                array ('name' => 'StringTrim'),
-            ),
+//            'filters' => array (
+//                array ('name' => 'Digits'),
+//                array ('name' => 'StringTrim'),
+//            ),
         ) );
 
         $quantity = new Text('quantity');
@@ -65,10 +65,10 @@ class ProductMaterial extends FormBase{
             'name' => 'intoMoney',
             'required' => false,
             "type" => "Zend\\InputFilter\\ArrayInput",
-            'filters' => array (
-                array ('name' => 'Digits'),
-                array ('name' => 'StringTrim'),
-            ),
+//            'filters' => array (
+//                array ('name' => 'Digits'),
+//                array ('name' => 'StringTrim'),
+//            ),
 //            'validators' => array(
 //                array(
 //                    'name' => 'NotEmpty',

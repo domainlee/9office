@@ -97,7 +97,9 @@ class InvoiceMaterialMapper extends Base{
         if($item->getStatus()){
             $select->where(array('ac.status' => $item->getStatus()));
         }
-		$selectString = $dbSql->getSqlStringForSqlObject($select);
+//        $select->order ( 'ac.createdDateTime ASC' );
+
+        $selectString = $dbSql->getSqlStringForSqlObject($select);
 
 		$results = $dbAdapter->query($selectString, $dbAdapter::QUERY_MODE_EXECUTE);
 		$rs = array();

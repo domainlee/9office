@@ -77,8 +77,9 @@ class MaterialController extends AbstractActionController{
                 $data = $form->getData();
                 $mediaMapper = $this->getServiceLocator()->get('Admin\Model\MediaMapper');
                 $mediaItemMapper = $this->getServiceLocator()->get('Admin\Model\MediaItemMapper');
-
                 $model->exchangeArray($data);
+                $price = (float)str_replace(",", "", $data['price']);
+                $model->setPrice($price);
                 $model->setCreatedDateTime(DateBase::getCurrentDateTime());
                 $model->setCreatedById($u->getId());
                 $mapper->save($model);
@@ -134,6 +135,10 @@ class MaterialController extends AbstractActionController{
                 $data = $form->getData();
                 $resultMaterial->setImage($data['image']);
                 $resultMaterial->setName($data['name']);
+                if($data['price']) {
+                    $price = (float)str_replace(",", "", $data['price']);
+                    $model->setPrice($price);
+                }
                 $mapper->save($resultMaterial);
                 $this->redirect()->toUrl('/admin/material');
 			}else{
@@ -542,8 +547,8 @@ class MaterialController extends AbstractActionController{
                 $model->exchangeArray($data);
                 $model->setCreatedDateTime(DateBase::getCurrentDateTime());
                 $model->setCreatedById($u->getId());
-                $mapper->save($model);
-                if($model->getId()) {
+//                $mapper->save($model);
+//                if($model->getId()) {
                     if(!empty($data['materialId'])) {
                         foreach ($data['materialId'] as $k => $v) {
                             $price = (float)str_replace(",", "", $data['price'][$k]);
@@ -559,10 +564,12 @@ class MaterialController extends AbstractActionController{
                             $modelProductMaterialItem->setCreatedDateTime(DateBase::getCurrentDateTime());
                             $modelProductMaterialItem->setUpdatedDateTime(DateBase::getCurrentDateTime());
                             $modelProductMaterialItem->setCreatedById($u->getId());
-                            $mapperProductMaterialItem->save($modelProductMaterialItem);
+                            print_r($modelProductMaterialItem);
+//                            $mapperProductMaterialItem->save($modelProductMaterialItem);
                         }
                     }
-                }
+//                }
+                die;
 
                 $this->redirect()->toUrl('/admin/material/product');
             } else {

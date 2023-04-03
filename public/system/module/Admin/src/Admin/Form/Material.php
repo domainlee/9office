@@ -96,31 +96,31 @@ class Material extends ProvidesEventsForm{
         $filter->add ( array (
             'name' => 'price',
             'required' => false,
-            'filters' => array (
-                array ('name' => 'Digits'),
-                array ('name' => 'StringTrim'),
-            ),
-            'validators' => array(
-                array(
-                    'name' => 'NotEmpty',
-                    'break_chain_on_failure' => true,
-                    'options' => array(
-                        'messages' => array(
-                            'isEmpty' => 'Giá trị phải là dạng số'
-                        )
-                    )
-                ),
-                array(
-                    'name'    => 'StringLength',
-                    'break_chain_on_failure' => true,
-                    'options' => array(
-                        'messages' => array(
-                            StringLength::INVALID => 'Giá trị phải là dạng số',
-                        )
-                    )
-                ),
-
-            ),
+//            'filters' => array (
+//                array ('name' => 'Digits'),
+//                array ('name' => 'StringTrim'),
+//            ),
+//            'validators' => array(
+//                array(
+//                    'name' => 'NotEmpty',
+//                    'break_chain_on_failure' => true,
+//                    'options' => array(
+//                        'messages' => array(
+//                            'isEmpty' => 'Giá trị phải là dạng số'
+//                        )
+//                    )
+//                ),
+//                array(
+//                    'name'    => 'StringLength',
+//                    'break_chain_on_failure' => true,
+//                    'options' => array(
+//                        'messages' => array(
+//                            StringLength::INVALID => 'Giá trị phải là dạng số',
+//                        )
+//                    )
+//                ),
+//
+//            ),
         ) );
 
 

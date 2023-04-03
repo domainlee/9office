@@ -488,6 +488,7 @@ class InvoiceController extends AbstractActionController{
                     $iv->setInventoryPrice($resultMaterial->getPrice());
                     $iv->setInventoryTotalPrice($resultMaterial->getTotalPrice());
                 }
+                $iv->setCreatedDateTime(DateBase::getCurrentDateTime());
                 $mapperInvoiceMaterial->save($iv);
             }
 
