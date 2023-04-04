@@ -365,6 +365,7 @@ class InvoiceController extends AbstractActionController{
                 }
                 $mapperMaterial->save($material);
                 $v->setStatus(\Admin\Model\Invoice::STATUS_APPROVED);
+                $v->setCreatedDateTime(DateBase::getCurrentDateTime());
                 $mapperInvoiceMaterialMapper->save($v);
             }
         }
