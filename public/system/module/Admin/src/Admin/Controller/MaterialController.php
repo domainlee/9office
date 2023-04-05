@@ -139,6 +139,9 @@ class MaterialController extends AbstractActionController{
                     $price = (float)str_replace(",", "", $data['price']);
                     $model->setPrice($price);
                 }
+                if(!$resultMaterial->getManufactureId()) {
+                    $resultMaterial->setManufactureId($data['manufactureId']);
+                }
                 $mapper->save($resultMaterial);
                 $this->redirect()->toUrl('/admin/material');
 			}else{

@@ -45,7 +45,7 @@
                             <div class="form-group">
                                 <label class="control-label" for="firstName">Nhà cung cấp</label>
                                     <input type="hidden" name="manufactureId" value="<?= $form->get('manufactureId')->getValue() ?>" >
-                                <?= $this->formelement($form->get('manufactureId')->setAttributes(['class' => 'form-control', 'disabled' => true])) ?>
+                                <?= $this->formelement($form->get('manufactureId')->setAttributes(['class' => 'form-control'])) ?>
                                 <?= $this->formelementerrors($form->get('manufactureId'),['class' => 'parsley-errors-list filled']) ?>
                             </div>
                         </div>
