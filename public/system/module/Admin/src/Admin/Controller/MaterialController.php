@@ -73,7 +73,7 @@ class MaterialController extends AbstractActionController{
 
 		if($this->getRequest()->isPost()){
 			$form->setData(array_merge_recursive($this->getRequest()->getPost()->toArray(),$this->getRequest()->getFiles()->toArray()));
-			if($form->isValid()){
+			if($form->isValid(true)){
                 $data = $form->getData();
                 $mediaMapper = $this->getServiceLocator()->get('Admin\Model\MediaMapper');
                 $mediaItemMapper = $this->getServiceLocator()->get('Admin\Model\MediaItemMapper');
@@ -131,7 +131,7 @@ class MaterialController extends AbstractActionController{
 
 		if($this->getRequest()->isPost()){
             $form->setData(array_merge_recursive($this->getRequest()->getPost()->toArray(),$this->getRequest()->getFiles()->toArray()));
-            if($form->isValid()){
+            if($form->isValid(true)){
                 $data = $form->getData();
                 $resultMaterial->setImage($data['image']);
                 $resultMaterial->setName($data['name']);
@@ -545,13 +545,13 @@ class MaterialController extends AbstractActionController{
         $form = new \Admin\Form\ProductMaterial($this->getServiceLocator(), null);
         if($this->getRequest()->isPost()){
             $form->setData(array_merge_recursive($this->getRequest()->getPost()->toArray(),$this->getRequest()->getFiles()->toArray()));
-            if($form->isValid(true)){
+            if($form->isValid(false)){
                 $data = $form->getData();
                 $model->exchangeArray($data);
                 $model->setCreatedDateTime(DateBase::getCurrentDateTime());
                 $model->setCreatedById($u->getId());
-//                $mapper->save($model);
-//                if($model->getId()) {
+                $mapper->save($model);
+                if($model->getId()) {
                     if(!empty($data['materialId'])) {
                         foreach ($data['materialId'] as $k => $v) {
                             $price = (float)str_replace(",", "", $data['price'][$k]);
@@ -567,13 +567,10 @@ class MaterialController extends AbstractActionController{
                             $modelProductMaterialItem->setCreatedDateTime(DateBase::getCurrentDateTime());
                             $modelProductMaterialItem->setUpdatedDateTime(DateBase::getCurrentDateTime());
                             $modelProductMaterialItem->setCreatedById($u->getId());
-                            print_r($modelProductMaterialItem);
-//                            $mapperProductMaterialItem->save($modelProductMaterialItem);
+                            $mapperProductMaterialItem->save($modelProductMaterialItem);
                         }
                     }
-//                }
-                die;
-
+                }
                 $this->redirect()->toUrl('/admin/material/product');
             } else {
                 print_r($form->getMessages());

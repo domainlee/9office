@@ -113,6 +113,7 @@ class ProductMaterial extends FormBase{
 
         $filter->add(array(
             'name' => 'image',
+            'required' => false,
             'filter' => array(array('name'=>'StringStrim')),
         ));
 
@@ -151,14 +152,14 @@ class ProductMaterial extends FormBase{
         $filter->add ( array (
             'name' => 'materialId',
             'required' => false,
-            'options' => array (
-                'value_options' => array (
-                    '' => '- Vật liệu -'
-                ),
-                'decorator' => array (
-                    'type' => 'li'
-                )
-            ),
+//            'options' => array (
+//                'value_options' => array (
+//                    '' => '- Vật liệu -'
+//                ),
+//                'decorator' => array (
+//                    'type' => 'li'
+//                )
+//            ),
         ) );
 
 
