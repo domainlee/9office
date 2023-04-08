@@ -5,6 +5,7 @@ namespace Base\Form;
 use Zend\Form\Form;
 use Zend\EventManager\EventManagerInterface;
 use Zend\EventManager\EventManager;
+use Zend\ServiceManager\ServiceLocatorInterface;
 
 class ProvidesEventsForm extends Form
 {
@@ -13,6 +14,26 @@ class ProvidesEventsForm extends Form
      */
     protected $events;
 
+    /**
+     * @var ServiceLocatorInterface
+     */
+    protected $serviceLocator;
+
+    /**
+     * @param \Zend\ServiceManager\ServiceLocatorInterface $serviceLocator
+     */
+    public function setServiceLocator(ServiceLocatorInterface $serviceLocator)
+    {
+        $this->serviceLocator = $serviceLocator;
+    }
+
+    /**
+     * @return \Zend\ServiceManager\ServiceLocatorInterface
+     */
+    public function getServiceLocator()
+    {
+        return $this->serviceLocator;
+    }
     /**
      * Set the event manager instance used by this context
      *

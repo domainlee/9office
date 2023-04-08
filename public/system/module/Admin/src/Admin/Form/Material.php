@@ -15,9 +15,11 @@ use Zend\Validator\StringLength;
 
 class Material extends ProvidesEventsForm{
 
-	public function __construct($name=null){
+	public function __construct($sl, $name = null){
 
 		parent::__construct($name);
+
+        $this->setServiceLocator($sl);
 
         $filter = $this->getInputFilter();
 
@@ -270,6 +272,28 @@ class Material extends ProvidesEventsForm{
         }
         return null;
     }
+
+    public function isValid($edit = false) {
+        $isVaild = parent::isValid();
+        if ($isVaild) {
+            if(!$edit) {
+                $material = new \Admin\Model\Material();
+                $material->setName($this->get('name')->getValue());
+                $material->setType($this->get('type')->getValue());
+                $material->setManufactureId($this->get('manufactureId')->getValue());
+                $mapper = $this->getServiceLocator()->get('Admin\Model\MaterialMapper');
+
+                $r = $mapper->get_two($material);
+                if(count($r)){
+                    $this->get('name')->setMessages(['Vật liệu đã tồn tại']);
+                    $isVaild = false;
+                }
+                return $isVaild;
+            }
+        }
+        return $isVaild;
+    }
+
 }
 
 

@@ -110,7 +110,7 @@ class InvoiceMaterialMapper extends Base{
             $mapperMaterial = $this->getServiceLocator()->get('Admin\Model\MaterialMapper');
             $resultMaterial = $mapperMaterial->get($modelMaterial);
 			$model->exchangeArray((array)$row);
-            $model->setOptions(['materialName' => $resultMaterial->getName()]);
+            $model->setOptions(['materialName' => isset($resultMaterial) ? $resultMaterial->getName():'']);
             $rs[] = $model;
 		}
 		return $rs;

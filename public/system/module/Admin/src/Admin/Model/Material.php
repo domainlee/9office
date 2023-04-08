@@ -14,6 +14,7 @@ class Material extends Base{
  	protected $createdById;
  	protected $image;
  	protected $createdDateTime;
+ 	protected $parentId;
 
  	protected $manufactureIds;
 
@@ -26,6 +27,22 @@ class Material extends Base{
         '6' => 'Bộ',
         '7' => 'Con',
     );
+
+    /**
+     * @return mixed
+     */
+    public function getParentId()
+    {
+        return $this->parentId;
+    }
+
+    /**
+     * @param mixed $parentId
+     */
+    public function setParentId($parentId)
+    {
+        $this->parentId = $parentId;
+    }
 
     /**
      * @return mixed

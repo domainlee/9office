@@ -63,7 +63,7 @@ class MaterialController extends AbstractActionController{
         $facture = $manufactureMapper->fetchAll($manufacture);
 
         $mapper = $this->getServiceLocator()->get('Admin\Model\MaterialMapper');
-		$form = new \Admin\Form\Material();
+		$form = new \Admin\Form\Material($this->getServiceLocator(), null);
 		$types = $model->type_form;
 		$form->setCategoryIds($types);
 		$form->setNCC($facture);
@@ -73,11 +73,15 @@ class MaterialController extends AbstractActionController{
 
 		if($this->getRequest()->isPost()){
 			$form->setData(array_merge_recursive($this->getRequest()->getPost()->toArray(),$this->getRequest()->getFiles()->toArray()));
-			if($form->isValid(true)){
+			if($form->isValid(false)){
                 $data = $form->getData();
-                $mediaMapper = $this->getServiceLocator()->get('Admin\Model\MediaMapper');
-                $mediaItemMapper = $this->getServiceLocator()->get('Admin\Model\MediaItemMapper');
                 $model->exchangeArray($data);
+                $parent = new \Admin\Model\Material();
+                $parent->setName(trim($data['name']));
+                $parentId = $mapper->get_parent($parent);
+                if($parentId->getId()) {
+                    $model->setParentId($parentId->getId());
+                }
                 $price = (float)str_replace(",", "", $data['price']);
                 $model->setPrice($price);
                 $model->setCreatedDateTime(DateBase::getCurrentDateTime());
@@ -114,7 +118,7 @@ class MaterialController extends AbstractActionController{
         $manufactureMapper = $this->getServiceLocator()->get('Admin\Model\ManufactureMapper');
         $facture = $manufactureMapper->fetchAll($manufacture);
 
-        $form = new \Admin\Form\Material();
+        $form = new \Admin\Form\Material($this->getServiceLocator(), null);
         $types = $model->type_form;
         $form->setCategoryIds($types);
         $form->setNCC($facture);

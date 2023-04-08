@@ -24,7 +24,6 @@ class InvoiceController extends AbstractActionController{
 
 		$page = (int)$this->getRequest()->getQuery()->page ? : 1;
 		$results = $mapper->search($model, array($page,50));
-
 		return new ViewModel(array(
 //			'fFilter' => $fFilter,
 			'results' => $results,

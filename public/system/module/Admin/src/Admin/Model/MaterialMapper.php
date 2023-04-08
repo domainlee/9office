@@ -36,6 +36,56 @@ class MaterialMapper extends Base{
         return null;
     }
 
+    /**
+     * @param \Admin\Model\Material $item
+     */
+    public function get_two($item)
+    {
+        if (! $item->getType() && !$item->getName() && !$item->getManufactureId()) {
+            return null;
+        }
+        $select = $this->getDbSql()->select(array('ar' => $this->getTableName()));
+
+        $select->where(['ar.type' => $item->getType(), 'ar.name' => $item->getName(), 'ar.manufactureId' => $item->getManufactureId()]);
+
+        $select->limit(1);
+
+        $dbSql = $this->getServiceLocator()->get('dbSql');
+        $dbAdapter = $this->getServiceLocator()->get('dbAdapter');
+        $query = $dbSql->getSqlStringForSqlObject($select);
+        $results = $dbAdapter->query($query, $dbAdapter::QUERY_MODE_EXECUTE);
+
+        if ($results->count()) {
+            $item->exchangeArray((array) $results->current());
+            return $item;
+        }
+
+        return null;
+    }
+
+    /**
+     * @param \Admin\Model\Material $item
+     */
+    public function get_parent($item)
+    {
+        if (!$item->getName()) {
+            return null;
+        }
+        $select = $this->getDbSql()->select(array('ar' => $this->getTableName()));
+        $select->where(['ar.name' => $item->getName()]);
+        $select->limit(1);
+
+        $dbSql = $this->getServiceLocator()->get('dbSql');
+        $dbAdapter = $this->getServiceLocator()->get('dbAdapter');
+        $query = $dbSql->getSqlStringForSqlObject($select);
+        $results = $dbAdapter->query($query, $dbAdapter::QUERY_MODE_EXECUTE);
+        if ($results->count()) {
+            $item->exchangeArray((array) $results->current());
+            return $item;
+        }
+        return null;
+    }
+
     public function searchName($item)
     {
         if (!$item->getName()) {
@@ -134,6 +184,7 @@ class MaterialMapper extends Base{
             'createdById' => $model->getCreatedById(),
             'image' => $model->getImage(),
             'createdDateTime' => $model->getCreatedDateTime(),
+            'parentId' => $model->getParentId(),
 		);
 
         $data = $xss->cleanInputs($data);

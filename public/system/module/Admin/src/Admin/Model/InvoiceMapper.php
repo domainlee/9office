@@ -198,7 +198,7 @@ class InvoiceMapper extends Base{
                             $resultMaterial = $mapperMaterial->get($modelMaterial);
 
                             $products[] = array(
-                                'material' => $resultMaterial->getName(),
+                                'material' => isset($resultMaterial) ? $resultMaterial->getName():'',
                                 'quantity' => $v->getQuantity(),
                                 'price' => $v->getPrice(),
                                 'intoMoney' => $v->getIntoMoney(),
