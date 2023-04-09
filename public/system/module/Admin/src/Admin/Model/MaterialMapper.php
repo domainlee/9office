@@ -39,6 +39,33 @@ class MaterialMapper extends Base{
     /**
      * @param \Admin\Model\Material $item
      */
+    public function getParent($item)
+    {
+        if (! $item->getParentId()) {
+            return null;
+        }
+        $select = $this->getDbSql()->select(array('ar' => $this->getTableName()));
+
+        if($item->getParentId()) {
+            $select->where(['ar.parentId' => $item->getParentId()]);
+        }
+
+        $dbSql = $this->getServiceLocator()->get('dbSql');
+        $dbAdapter = $this->getServiceLocator()->get('dbAdapter');
+        $query = $dbSql->getSqlStringForSqlObject($select);
+        $results = $dbAdapter->query($query, $dbAdapter::QUERY_MODE_EXECUTE);
+        $rs = array();
+        if ($results->count()) {
+            foreach ($results as $row) {
+                $rs[] = $row['id'];
+            }
+        }
+        return $rs;
+    }
+
+    /**
+     * @param \Admin\Model\Material $item
+     */
     public function get_two($item)
     {
         if (! $item->getType() && !$item->getName() && !$item->getManufactureId()) {

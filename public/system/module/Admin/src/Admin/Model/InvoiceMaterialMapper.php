@@ -82,7 +82,6 @@ class InvoiceMaterialMapper extends Base{
     }
 
 	public function fetchAll($item){
-
 		$dbAdapter = $this->getServiceLocator()->get('dbAdapter');
 		$dbSql = $this->getServiceLocator()->get('dbSql');
 		
@@ -93,6 +92,9 @@ class InvoiceMaterialMapper extends Base{
         }
         if($item->getMaterialId()){
             $select->where(array('ac.materialId' => $item->getMaterialId()));
+        }
+        if($item->getOptions()){
+            $select->where(array('ac.materialId' => $item->getOptions()));
         }
         if($item->getStatus()){
             $select->where(array('ac.status' => $item->getStatus()));

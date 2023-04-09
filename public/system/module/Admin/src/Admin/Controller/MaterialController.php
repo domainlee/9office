@@ -123,8 +123,17 @@ class MaterialController extends AbstractActionController{
         $form->setCategoryIds($types);
         $form->setNCC($facture);
 
+
+        $materialParent = new \Admin\Model\Material();
+        $materialParent->setParentId($id);
+        $resultMaterialParent= $mapper->getParent($materialParent);
+
 		$invoiceMaterial = new \Admin\Model\InvoiceMaterial();
-        $invoiceMaterial->setMaterialId($id);
+        if(!empty($resultMaterialParent)) {
+            $invoiceMaterial->setOptions(array_merge($resultMaterialParent, (array)$id));
+        } else {
+            $invoiceMaterial->setMaterialId($id);
+        }
         $invoiceMaterial->setStatus(\Admin\Model\InvoiceMaterial::STATUS_APPROVED);
         $invoiceMaterialMapper = $this->getServiceLocator()->get('Admin\Model\InvoiceMaterialMapper');
         $resultInvoiceMaterial = $invoiceMaterialMapper->fetchAll($invoiceMaterial);

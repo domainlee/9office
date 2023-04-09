@@ -347,16 +347,41 @@ class InvoiceController extends AbstractActionController{
                 $material->setId($v->getMaterialId());
                 $mapperMaterial = $this->getServiceLocator()->get('Admin\Model\MaterialMapper');
                 $resultMaterial = $mapperMaterial->get($material);
+
+                if($resultMaterial->getParentId()) {
+                    $materialParent = new \Admin\Model\Material();
+                    $materialParent->setId($resultMaterial->getParentId());
+                    $resultMaterialParent = $mapperMaterial->get($materialParent);
+
+                    if($resultMaterialParent->getTotalQuantiy() && $resultMaterialParent->getPrice() && $resultMaterialParent->getTotalPrice()) {
+                        $totalPrice = $resultMaterialParent->getTotalPrice() + $v->getIntoMoney();
+                        $totalQuantity = $resultMaterialParent->getTotalQuantiy() + $v->getQuantity();
+                        $materialParent->setTotalQuantiy($totalQuantity);
+                        $materialParent->setPrice($totalPrice/$totalQuantity);
+                        $materialParent->setTotalPrice($totalPrice);
+
+                        $v->setInventoryTotalQuantiy($totalQuantity);
+                        $v->setInventoryPrice($totalPrice/$totalQuantity);
+                        $v->setInventoryTotalPrice($totalPrice);
+                    } else {
+                        $materialParent->setTotalQuantiy($v->getQuantity());
+                        $materialParent->setPrice($v->getPrice());
+                        $materialParent->setTotalPrice($v->getIntoMoney());
+                    }
+                    $mapperMaterial->save($materialParent);
+                }
+
                 if($resultMaterial->getTotalQuantiy() && $resultMaterial->getPrice() && $resultMaterial->getTotalPrice()) {
                     $totalPrice = $resultMaterial->getTotalPrice() + $v->getIntoMoney();
                     $totalQuantity = $resultMaterial->getTotalQuantiy() + $v->getQuantity();
                     $material->setTotalQuantiy($totalQuantity);
                     $material->setPrice($totalPrice/$totalQuantity);
                     $material->setTotalPrice($totalPrice);
-
-                    $v->setInventoryTotalQuantiy($totalQuantity);
-                    $v->setInventoryPrice($totalPrice/$totalQuantity);
-                    $v->setInventoryTotalPrice($totalPrice);
+                    if(!$resultMaterial->getParentId()) {
+                        $v->setInventoryTotalQuantiy($totalQuantity);
+                        $v->setInventoryPrice($totalPrice/$totalQuantity);
+                        $v->setInventoryTotalPrice($totalPrice);
+                    }
                 } else {
                     $material->setTotalQuantiy($v->getQuantity());
                     $material->setPrice($v->getPrice());
