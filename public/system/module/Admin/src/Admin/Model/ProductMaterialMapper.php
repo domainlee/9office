@@ -180,6 +180,31 @@ class ProductMaterialMapper extends Base{
 			foreach ($results as $row){
 				$model = new \Admin\Model\ProductMaterial();
 				$model->exchangeArray((array)$row);
+
+                if($row['productId']) {
+                    $productMaterialItem = new \Admin\Model\ProductMaterialItem();
+                    $productMaterialItem->setProductId($row['productId']);
+                    $productMaterialItemMapper = $this->getServiceLocator()->get('Admin\Model\ProductMaterialItemMapper');
+                    $resultInvoiceMaterial = $productMaterialItemMapper->fetchAll($productMaterialItem);
+                    if(!empty($resultInvoiceMaterial)) {
+                        $products = array();
+                        foreach ($resultInvoiceMaterial as $v) {
+                            $modelMaterial = new \Admin\Model\Material();
+                            $modelMaterial->setId($v->getMaterialId());
+                            $mapperMaterial = $this->getServiceLocator()->get('Admin\Model\MaterialMapper');
+                            $resultMaterial = $mapperMaterial->get($modelMaterial);
+
+                            $products[] = array(
+                                'material' => isset($resultMaterial) ? $resultMaterial->getName():'',
+                                'quantity' => $v->getQuantity(),
+                                'price' => $v->getPrice(),
+                                'intoMoney' => $v->getIntoMoney(),
+                            );
+                        }
+                        $model->setOptions(['products' => $products]);
+                    }
+                }
+
 				$rs[] = $model;
 			}
 		}

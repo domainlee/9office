@@ -11,11 +11,15 @@ class DgProductMaterial extends \Base\Dg\Table {
                 'style' => 'text-align: center;width: 5%'
             ),
             array(
-                'label' => 'Product ID',
+                'label' => 'Mã sản phẩm',
                 'style' => 'vertical-align: middle;'
             ),
             array(
                 'label' => 'Tên sản phẩm vật liệu',
+                'style' => 'vertical-align: middle;'
+            ),
+            array(
+                'label' => 'Vật liệu',
                 'style' => 'vertical-align: middle;'
             ),
             array(
@@ -30,7 +34,30 @@ class DgProductMaterial extends \Base\Dg\Table {
         $this->headers = $headerArr;
         $rows = array();
 
+        function TrimTrailingZeroes($nbr) {
+            return strpos($nbr,'.')!==false ? rtrim(rtrim($nbr,'0'),'.') : $nbr;
+        }
+
         foreach ($this->dataSet as $item) {
+
+            $productText = '';
+            if(!empty($item->getOptions()['products'])) {
+                $totalMoney = 0;
+                foreach ($item->getOptions()['products'] as $v) {
+                    $productText .= '<tr>
+                                        <td>'.$v['material'].'</td>
+                                        <td>'.TrimTrailingZeroes(number_format($v['price'], 2)).'</td>
+                                        <td>'.$v['quantity'].'</td>
+                                        <td>'.TrimTrailingZeroes(number_format($v['intoMoney'], 2)).'</td>
+                                      </tr>';
+                    $totalMoney += $v['intoMoney'];
+                }
+                $productText .= '<tr>
+                                <td colspan="3"><strong>Tổng tiền:</strong> </td>
+                                <td><strong class="text-pink">'.TrimTrailingZeroes(number_format($totalMoney, 2)).'</strong></td>
+                            </tr>';
+            }
+
             $rows[] = array(
                 array (
                     'type' => 'text',
@@ -45,6 +72,17 @@ class DgProductMaterial extends \Base\Dg\Table {
                 array (
                     'type' => 'text',
                     'value' => '<a href="/admin/material/editproduct/'.$item->getId().($this->urlQuery ? '?'.$this->urlQuery:null).'">'. $item->getName().'</a></a>',
+                    'htmlOptions'=> array('style'=>'vertical-align: middle'),
+                ),
+                array (
+                    'type' => 'text',
+                    'value' => '<table style="margin: 0 !important;" class="mr-0 dg table table-hover table-condensed">
+                                  <tr>
+                                    <th>Vật liệu</th>
+                                    <th>Đơn giá</th>
+                                    <th>Số lượng</th>
+                                    <th>Thành tiền</th>
+                                  </tr>'.$productText.'</table>',
                     'htmlOptions'=> array('style'=>'vertical-align: middle'),
                 ),
                 array(

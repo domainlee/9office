@@ -142,6 +142,7 @@ jQuery(document).ready(function () {
                 console.log($(this).val());
                 console.log();
                 var get_price = parent.find('input.price_field').attr('data-price');
+                console.log(get_price);
                 if(get_price != 'false') {
                     parent.find('input.price_field').val(evt.params.data.price).trigger('focusout');
                 }
@@ -157,7 +158,7 @@ jQuery(document).ready(function () {
             quantity.keyup(calculate);
 
             function calculate(e) {
-                var value_price = $('.autonumber').autoNumeric('get');
+                var value_price = input_price_invoice.autoNumeric('get');
                 var value_quantity = quantity.val();
                 value_quantity = value_quantity.replace(",", ".");
 
