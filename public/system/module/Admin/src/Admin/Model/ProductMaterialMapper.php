@@ -162,6 +162,15 @@ class ProductMaterialMapper extends Base{
 			$rCount->where(array('ac.id'=>$item->getId()));
 		}
 
+        if($item->getProductId()){
+            $select->where(array('ac.productId'=>$item->getProductId()));
+            $rCount->where(array('ac.productId'=>$item->getProductId()));
+        }
+        if($item->getName()){
+            $select->where("ac.name LIKE '%{$item->getName()}%'");
+            $rCount->where("ac.name LIKE '%{$item->getName()}%'");
+        }
+
 		$currentPage = isset ( $paging [0] ) ? $paging [0] : 1;
 		$limit = isset ( $paging [1] ) ? $paging [1] : 20;
 		$offset = ($currentPage - 1) * $limit;

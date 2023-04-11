@@ -18,7 +18,16 @@ $option = $this->option;
                         <div class="btn-group dropdown-btn-group pull-right">
                             <div class="dataTables_filter mb-15">
                                 <form action="" method="get" name="ProductSearch" class="form-inline" id="ProductSearch">
-
+                                    <?php
+                                    $form = $this->fFilter;
+                                    ?>
+                                    <div class="form-group">
+                                        <?= $this->formelement($form->get('id')->setAttributes(['class' => 'form-control','placeholder'=>'Mã vật liệu', 'value' => isset($this->query['id']) ? $this->query['id']:'']))?>
+                                    </div>
+                                    <div class="form-group">
+                                        <?= $this->formelement($form->get('name')->setAttributes(['class' => 'form-control','placeholder'=>'Tên vật liệu', 'value' => isset($this->query['name']) ? $this->query['name']:'']))?>
+                                    </div>
+                                    <div class="form-group"><input name="submit" type="submit" class="btn btn-default " value="Tìm Kiếm"></div>
                                 </form>
                             </div>
                         </div>

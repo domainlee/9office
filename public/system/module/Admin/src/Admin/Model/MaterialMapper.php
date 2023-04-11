@@ -247,7 +247,7 @@ class MaterialMapper extends Base{
 //			'cateName' => 'name'
 //			), \Zend\Db\Sql\Select::JOIN_LEFT
 //		);
-		
+
 		if($item->getId()){
 			$select->where(array('ac.id'=>$item->getId()));
 			$rCount->where(array('ac.id'=>$item->getId()));
@@ -260,10 +260,10 @@ class MaterialMapper extends Base{
 //			$select->where(array('ac.storeId'=>$item->getStoreId()));
 //			$rCount->where(array('ac.storeId'=>$item->getStoreId()));
 //		}
-//		if($item->getTitle()){
-//			$select->where("ac.title LIKE '%{$item->getTitle()}%'");
-//			$rCount->where("ac.title LIKE '%{$item->getTitle()}%'");
-//		}
+		if($item->getName()){
+			$select->where("ac.name LIKE '%{$item->getName()}%'");
+			$rCount->where("ac.name LIKE '%{$item->getName()}%'");
+		}
 		$currentPage = isset ( $paging [0] ) ? $paging [0] : 1;
 		$limit = isset ( $paging [1] ) ? $paging [1] : 20;
 		$offset = ($currentPage - 1) * $limit;

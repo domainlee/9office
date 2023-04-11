@@ -31,7 +31,10 @@ class MaterialController extends AbstractActionController{
 		$model->exchangeArray((array)$this->getRequest()->getQuery());
         $options['isAdmin'] = $this->user()->isSuperAdmin();
 //        $fFilter = new \Admin\Form\ArticleSearch($options);
-
+        $fFilter = new \Admin\Form\MaterialSearch($options);
+        if($this->getRequest()->getQuery()['id']) {
+            $model->setId((int)substr(trim($this->getRequest()->getQuery()['id']),2));
+        }
 //        $optionMapper = $sl->get('Admin\Model\OptionMapper');
 //        $option = new \Admin\Model\Option();
 //        $option->setStoreId($storeId);
@@ -41,11 +44,11 @@ class MaterialController extends AbstractActionController{
 		$results = $mapper->search($model, array($page,50));
 
 		return new ViewModel(array(
-//			'fFilter' => $fFilter,
+			'fFilter' => $fFilter,
 			'results' => $results,
             'url' => $this->getRequest()->getUri()->getQuery(),
             'uri' => $this->getRequest()->getUri()->getQuery(),
-//            'option' => $dataOld,
+            'query' => (array)$this->getRequest()->getQuery(),
         ));
 	}
 
@@ -179,10 +182,15 @@ class MaterialController extends AbstractActionController{
         $page = (int)$this->getRequest()->getQuery()->page ? : 1;
         $results = $mapper->search($model, array($page,50));
 
+        $options['isAdmin'] = $this->user()->isSuperAdmin();
+        $fFilter = new \Admin\Form\MaterialProductSearch($options);
+
         return new ViewModel(array(
             'results' => $results,
             'url' => $this->getRequest()->getUri()->getQuery(),
             'uri' => $this->getRequest()->getUri()->getQuery(),
+            'fFilter' => $fFilter,
+            'query' => (array)$this->getRequest()->getQuery(),
         ));
     }
 

@@ -20,15 +20,28 @@ class InvoiceController extends AbstractActionController{
 
 		$model->exchangeArray((array)$this->getRequest()->getQuery());
         $options['isAdmin'] = $this->user()->isSuperAdmin();
-//        $fFilter = new \Admin\Form\ArticleSearch($options);
+        $fFilter = new \Admin\Form\InvoiceSearch($options);
+
+        if($this->getRequest()->getQuery()['name']) {
+            $model->setDescription($this->getRequest()->getQuery()['name']);
+        }
+        $status_filter = $this->getRequest()->getQuery()->status ? : '';
+        $type_filter = $this->getRequest()->getQuery()->type ? : '';
+
+        $status = $model->statuses;
+        $type = $model->type_invoice;
+
+        $fFilter->setStatus($status, $status_filter);
+        $fFilter->setType($type, $type_filter);
 
 		$page = (int)$this->getRequest()->getQuery()->page ? : 1;
 		$results = $mapper->search($model, array($page,50));
 		return new ViewModel(array(
-//			'fFilter' => $fFilter,
+			'fFilter' => $fFilter,
 			'results' => $results,
             'url' => $this->getRequest()->getUri()->getQuery(),
             'uri' => $this->getRequest()->getUri()->getQuery(),
+            'query' => (array)$this->getRequest()->getQuery(),
         ));
 	}
 

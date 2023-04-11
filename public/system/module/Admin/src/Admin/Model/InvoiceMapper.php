@@ -166,6 +166,21 @@ class InvoiceMapper extends Base{
 			$rCount->where(array('ac.id'=>$item->getId()));
 		}
 
+        if($item->getDescription()){
+            $select->where("ac.description LIKE '%{$item->getDescription()}%'");
+            $rCount->where("ac.description LIKE '%{$item->getDescription()}%'");
+        }
+
+        if($item->getStatus()){
+            $select->where(array('ac.status'=>$item->getStatus()));
+            $rCount->where(array('ac.status'=>$item->getStatus()));
+        }
+
+        if($item->getType()){
+            $select->where(array('ac.type'=>$item->getType()));
+            $rCount->where(array('ac.type'=>$item->getType()));
+        }
+
 		$currentPage = isset ( $paging [0] ) ? $paging [0] : 1;
 		$limit = isset ( $paging [1] ) ? $paging [1] : 20;
 		$offset = ($currentPage - 1) * $limit;
