@@ -81,10 +81,14 @@ class MaterialController extends AbstractActionController{
                 $model->exchangeArray($data);
                 $parent = new \Admin\Model\Material();
                 $parent->setName(trim($data['name']));
+
                 $parentId = $mapper->get_parent($parent);
-                if($parentId->getId()) {
-                    $model->setParentId($parentId->getId());
+                if($parentId) {
+                    if($parentId->getId()) {
+                        $model->setParentId($parentId->getId());
+                    }
                 }
+
                 $price = (float)str_replace(",", "", $data['price']);
                 $model->setPrice($price);
                 $model->setCreatedDateTime(DateBase::getCurrentDateTime());
