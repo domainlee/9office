@@ -19,7 +19,15 @@ class DgProductMaterial extends \Base\Dg\Table {
                 'style' => 'vertical-align: middle;'
             ),
             array(
-                'label' => 'Vật liệu',
+                'label' => 'Danh sách vật liệu',
+                'style' => 'vertical-align: middle;'
+            ),
+            array(
+                'label' => 'Số lượng',
+                'style' => 'vertical-align: middle;'
+            ),
+            array(
+                'label' => 'Thành tiền',
                 'style' => 'vertical-align: middle;'
             ),
             array(
@@ -43,7 +51,13 @@ class DgProductMaterial extends \Base\Dg\Table {
             $productText = '';
             if(!empty($item->getOptions()['products'])) {
                 $totalMoney = 0;
+                $totalRowMoney = 0;
+                $totalProduct = 0;
+                $totalQuantity = 0;
+                $named = '';
+                $stt = 1;
                 foreach ($item->getOptions()['products'] as $v) {
+                    $totalProduct++;
                     $productText .= '<tr>
                                         <td>'.$v['material'].'</td>
                                         <td>'.TrimTrailingZeroes(number_format($v['price'], 2)).'</td>
@@ -51,7 +65,11 @@ class DgProductMaterial extends \Base\Dg\Table {
                                         <td>'.TrimTrailingZeroes(number_format($v['intoMoney'], 2)).'</td>
                                       </tr>';
                     $totalMoney += $v['intoMoney'];
+                    $totalQuantity += $v['quantity'];
+                    $named .= $stt++.'. '.$v['material'].' - SL: '.$v['quantity']. ' - Tiền '. TrimTrailingZeroes(number_format($v['price'], 2)) .'<br/>';
+
                 }
+                $totalRowMoney = TrimTrailingZeroes(number_format($totalMoney, 2));
                 $productText .= '<tr>
                                 <td colspan="3"><strong>Tổng tiền:</strong> </td>
                                 <td><strong class="text-pink">'.TrimTrailingZeroes(number_format($totalMoney, 2)).'</strong></td>
@@ -76,13 +94,17 @@ class DgProductMaterial extends \Base\Dg\Table {
                 ),
                 array (
                     'type' => 'text',
-                    'value' => '<table style="margin: 0 !important;" class="mr-0 dg table table-hover table-condensed">
-                                  <tr>
-                                    <th>Vật liệu</th>
-                                    <th>Đơn giá</th>
-                                    <th>Số lượng</th>
-                                    <th>Thành tiền</th>
-                                  </tr>'.$productText.'</table>',
+                    'value' => '<span data-toggle="tooltip" data-html="true" data-placement="bottom" title="" data-original-title="'.$named.'">'.$totalProduct.'</span>',
+                    'htmlOptions'=> array('style'=>'vertical-align: middle'),
+                ),
+                array (
+                    'type' => 'text',
+                    'value' => $totalQuantity,
+                    'htmlOptions'=> array('style'=>'vertical-align: middle'),
+                ),
+                array (
+                    'type' => 'text',
+                    'value' => '<strong class="text-pink">'.$totalRowMoney.'</strong>',
                     'htmlOptions'=> array('style'=>'vertical-align: middle'),
                 ),
                 array(

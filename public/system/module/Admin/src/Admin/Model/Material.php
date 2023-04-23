@@ -26,6 +26,7 @@ class Material extends Base{
         '5' => 'CM (Centimet)',
         '6' => 'Bộ',
         '7' => 'Con',
+        '9' => 'Mét',
     );
 
     /**
