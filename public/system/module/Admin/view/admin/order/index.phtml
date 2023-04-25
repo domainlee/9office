@@ -78,7 +78,7 @@ if ($totalRecords > 200 && $totalRecords < 1000) {
                                             <input type="text" class="form-control" placeholder="Đến ngày" name="end" value="<?php echo $endDate ?>">
                                         </div>
                                     </div>
-                                    <div class="form-group">
+                                    <div class="form-group" style="display: none">
                                         <?=$this->formelement($form->get('phone')->setAttributes(['class' => 'form-control','placeholder'=>'Số điện thoại khách hàng', 'value' => $phone]))?>
                                     </div>
                                     <div class="form-group">
