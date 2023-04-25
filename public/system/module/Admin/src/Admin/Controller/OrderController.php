@@ -104,11 +104,13 @@ class OrderController extends AbstractActionController{
         $orderProduction = $orderManufactureMapper->fetchAll($orderManufacture);
 
         $is_print = $this->getRequest()->getPost()['print'];
-        if($is_print) {
+        $export = $this->getRequest()->getQuery()['export'];
+        if($is_print || $export) {
             $this->layout('layout/null');
             $view = new ViewModel();
             $totalPage = $response['data']['totalPages'];
             $order_items = array();
+            $order_export = array();
             for($c = 1; $c <= $totalPage; $c++) {
                 $data = json_encode(array('id' => $inProduction || $finishedProduction ? array_merge($inProduction,$finishedProduction) : $id, 'customerMobile' => $phone, 'page' => $c, 'statuses' => array($status_filter), 'fromDate' => $startDate,'toDate' => $endDate));
                 $curl = curl_init();
@@ -143,15 +145,24 @@ class OrderController extends AbstractActionController{
                 if(!empty($response['data']['orders'])) {
                     foreach ($response['data']['orders'] as $v) {
                         $order_items[$v['id']] = $v;
+                        $product = '';
+                        $cc = 0;
+                        foreach ($v['products'] as $vv) {
+                            $order_export[] = array($v['id'], $v['customerName'], $vv['productImage'],$vv['productCode'], $vv['productName'], $vv['quantity'], $v['createdDateTime'], $v['statusName']);
+                        }
                     }
                 }
             }
-            //Đổi template
-            $view->setTemplate('admin/order/export');
-            $view->setVariables(array(
-                'product_order' => $order_items,
-            ));
-            return $view;
+            if($export) {
+                $this->template_excel($order_export);
+            } else {
+                //Đổi template
+                $view->setTemplate('admin/order/export');
+                $view->setVariables(array(
+                    'product_order' => $order_items,
+                ));
+                return $view;
+            }
         }
 
         return new ViewModel(array(
@@ -284,6 +295,169 @@ class OrderController extends AbstractActionController{
         echo "hello";
         echo "\r\n";
     }
+
+    public function exportproductAction() {
+        $selected_products = $this->getRequest()->getQuery()['ids'];
+        $selected = explode(',',$selected_products);
+        if(!empty($selected) && is_array($selected) && $selected_products !== null) {
+            $this->export_selected($selected);
+        } else {
+            $this->export_all();
+        }
+    }
+
+    private function export_selected($products) {
+        if(empty($products)) {
+            return false;
+        }
+        $product_items = array();
+        foreach ($products as $i) {
+            $api = \Base\Model\Resource::data_api();
+            $data = json_encode(array('name' => $i));
+            $data = array(
+                'version' => $api['version'],
+                'appId' => $api['appId'],
+                'businessId' => $api['businessId'],
+                'accessToken' => $api['accessToken'],
+                'data' => $data
+            );
+            $curl = curl_init();
+            curl_setopt_array($curl, array(
+                CURLOPT_URL => 'https://open.nhanh.vn/api/product/search',
+                CURLOPT_RETURNTRANSFER => true,
+                CURLOPT_ENCODING => '',
+                CURLOPT_MAXREDIRS => 10,
+                CURLOPT_TIMEOUT => 0,
+                CURLOPT_FOLLOWLOCATION => true,
+                CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+                CURLOPT_CUSTOMREQUEST => 'POST',
+                CURLOPT_POSTFIELDS => $data,
+            ));
+            $response = curl_exec($curl);
+            curl_close($curl);
+            $response = json_decode($response, true);
+            if(!empty($response['data']['products'])) {
+                foreach ($response['data']['products'] as $v) {
+                    $product_items[$v['code']] = array($v['code'],$v['name'], $v['image']);
+                }
+            }
+        }
+        if(!empty($product_items)) {
+            $this->template_excel($product_items);
+        }
+    }
+
+    private function export_all() {
+        $product_items = array();
+        $api = \Base\Model\Resource::data_api();
+        $data = json_encode(array('icpp' => 50));
+        $data = array(
+            'version' => $api['version'],
+            'appId' => $api['appId'],
+            'businessId' => $api['businessId'],
+            'accessToken' => $api['accessToken'],
+            'data' => $data
+        );
+        $curl = curl_init();
+        curl_setopt_array($curl, array(
+            CURLOPT_URL => 'https://open.nhanh.vn/api/product/search',
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => '',
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 0,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => 'POST',
+            CURLOPT_POSTFIELDS => $data,
+        ));
+        $response = curl_exec($curl);
+        curl_close($curl);
+        $response = json_decode($response, true);
+        $totalPage = $response['data']['totalPages'];
+
+        $product_items = array();
+
+        for($c = 1; $c <= $totalPage; $c++) {
+            $api = \Base\Model\Resource::data_api();
+            $data = json_encode(array('page' => $c, 'icpp' => 50, 'name' => ''));
+            $data = array(
+                'version' => $api['version'],
+                'appId' => $api['appId'],
+                'businessId' => $api['businessId'],
+                'accessToken' => $api['accessToken'],
+                'data' => $data
+            );
+
+            $curl = curl_init();
+
+            curl_setopt_array($curl, array(
+                CURLOPT_URL => 'https://open.nhanh.vn/api/product/search',
+                CURLOPT_RETURNTRANSFER => true,
+                CURLOPT_ENCODING => '',
+                CURLOPT_MAXREDIRS => 10,
+                CURLOPT_TIMEOUT => 0,
+                CURLOPT_FOLLOWLOCATION => true,
+                CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+                CURLOPT_CUSTOMREQUEST => 'POST',
+                CURLOPT_POSTFIELDS => $data,
+            ));
+
+            $response = curl_exec($curl);
+            curl_close($curl);
+            $response = json_decode($response, true);
+            if(!empty($response['data']['products'])) {
+                foreach ($response['data']['products'] as $v) {
+                    $product_items[$v['code']] = array($v['code'],$v['name'], $v['image']);
+                }
+            }
+            $array_data[] = $response['data'];
+        }
+
+        if(!empty($product_items)) {
+            $this->template_excel($product_items);
+        }
+
+    }
+
+    private function template_excel($product_items) {
+        if(empty($product_items)) {
+            return false;
+        }
+        $file_name = 'Danh sách đơn hàng_'.date('ymd').'.xlsx';
+        $sheet_product = 'Order '.date('ymd');
+        $header_one = array( 'Mã đơn hàng', 'Khách hàng', 'Hình ảnh','Mã sản phẩm','Tên sản phẩm','Số lượng', 'Ngày', 'Trạng thái');
+        $styles_white = array('font'=>'Arial', 'font-style'=>'bold', 'fill'=>'#FFF', 'halign'=>'left', 'border'=>'left,right,top,bottom');
+        $writer = new XLSXWriter();
+        $writer->writeSheetRow($sheet_product, $header_one, $styles_white);
+        $printedSeasons = [];
+
+        foreach ($product_items as $pi) {
+            $sku = $pi[0];
+            if(!in_array($sku, $printedSeasons)) {
+                $printedSeasons[] = $sku;
+            } else {
+                $pi[0] = ' ';
+                $pi[1] = ' ';
+            }
+            $writer->writeSheetRow($sheet_product, $pi);
+        }
+        $writer->writeToFile($file_name);
+        header('Content-Description: File Transfer');
+        header("Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
+        header("Content-Disposition: attachment; filename=" . basename($file_name));
+        header("Content-Transfer-Encoding: binary");
+        header("Expires: 0");
+        header("Pragma: public");
+        header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
+        header('Content-Length: ' . filesize($file_name));
+        ob_clean();
+        flush();
+        readfile($file_name);
+        unlink($file_name);
+        exit;
+    }
+
+
 }
 
 
