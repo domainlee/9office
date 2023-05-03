@@ -50,7 +50,7 @@ class OrderController extends AbstractActionController{
 
 //        print_r($finishedProduction);die;
 
-        $data = json_encode(array('id' => $inProduction || $finishedProduction ? array_merge($inProduction,$finishedProduction) : $id, 'customerMobile' => $phone, 'page' => $page, 'statuses' => array($status_filter), 'fromDate' => $startDate,'toDate' => $endDate));
+        $data = json_encode(array('depotId' => 110912, 'id' => $inProduction || $finishedProduction ? array_merge($inProduction,$finishedProduction) : $id, 'customerMobile' => $phone, 'page' => $page, 'statuses' => array($status_filter), 'fromDate' => $startDate,'toDate' => $endDate));
         $curl = curl_init();
 
         $api = \Base\Model\Resource::data_api();

@@ -114,7 +114,7 @@ if ($totalRecords > 200 && $totalRecords < 1000) {
                                         <td class="id" style="text-align: center;vertical-align: middle"><?php echo DateBase::toDisplayDateTime($v['createdDateTime'])  ?></td>
                                         <td style="vertical-align: middle"><?php echo $v['customerName'] ?></td>
                                         <td class="list_product">
-                                            <?php $approved = false; $materials = array(); foreach ($v['products'] as $p => $pv): ?>
+                                            <?php $approved = false; $approved_is = true; $materials = array(); foreach ($v['products'] as $p => $pv): ?>
                                                 <div class="" style="display: flex">
                                                     <div>
                                                         <a title="<?php echo 'Đơn hàng ID-'. $k ?> - <?php echo $pv['productCode']; ?>" href="<?php echo $pv['productImage'] ?>" class="button-image"><img style="margin: 0 10px 0 0" class="thumb-md rounded-circle lazy" data-src="<?php echo $pv['productImage'] ?>" /></a>
@@ -143,6 +143,7 @@ if ($totalRecords > 200 && $totalRecords < 1000) {
                                                                 $url_created_product = '<span class="label label-success" data-toggle="tooltip" data-html="true" data-placement="top" title="" data-original-title="'.$named.'">Vật liệu sử dụng</span>';
                                                             } else {
                                                                 $approved = 'false';
+                                                                $approved_is = false;
                                                                 $url_created_product = '<a class="label label-danger" href="'.'/admin/material/addproduct?id='.$pv['productCode'].'&img='.$pv['productImage'].'&name='.$pv['productName'].'" target="_blank">Tạo vật liệu</a>';
                                                             }
                                                         ?>
@@ -165,8 +166,7 @@ if ($totalRecords > 200 && $totalRecords < 1000) {
                                                 <span class="label label-success m-b-5 d-block">Hoàn thành</span>
                                                 <p class="text-muted m-t-5 m-b-5 font-13"><?= 'Ngày kết thúc: '.DateBase::toDisplayDateTime($order_production[$k]['endDateTime']) ?></p>
                                             <?php endif; ?>
-
-                                            <?php if($approved && $approved !== 'false'): ?>
+                                            <?php if($approved_is && $approved && $approved !== 'false'): ?>
                                                 <a data-production='<?= json_encode($materials); ?>' class="btn-in-production btn label btn-sm btn-default btn-rounded waves-effect waves-light">Sản xuất</a>
                                             <?php endif; ?>
 
