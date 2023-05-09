@@ -530,7 +530,6 @@ class MaterialController extends AbstractActionController{
 	    if(empty($product_items)) {
 	        return false;
         }
-	    print_r($product_items);die;
         $file_name = 'Danh sách sản phẩm_'.date('ymd').'.xlsx';
         $sheet_product = 'Product Material';
         $header_one = array( 'Mã sản phẩm', 'Tên sản phẩm', 'Hình ảnh sản phẩm', 'Mã vật liệu', 'Số lượng');
@@ -1315,6 +1314,33 @@ class MaterialController extends AbstractActionController{
         ));
     }
 
+    public function productmaterialdeleteAction() {
+        $id = $this->getRequest()->getPost()['id'];
+
+        $model = new \Admin\Model\ProductMaterial();
+        $model->setId((int)$id);
+        $mapper = $this->getServiceLocator()->get('Admin\Model\ProductMaterialMapper');
+        $model = $mapper->get($model);
+        if($model) {
+            $mapper->delete($model);
+            if($model->getProductId()) {
+                $mapperProductMaterialItem = $this->getServiceLocator()->get('Admin\Model\ProductMaterialItemMapper');
+                $modelMaterialItemDelete = new \Admin\Model\ProductMaterialItem();
+                $modelMaterialItemDelete->setProductId($model->getProductId());
+                $mapperProductMaterialItem->delete2($modelMaterialItemDelete);
+            }
+            return new JsonModel(array(
+                'code' => 1,
+                'messenger' => 'Đã xóa'
+            ));
+        }
+
+        return new JsonModel(array(
+            'code'=> 0,
+            'messenger' => 'Chúng tôi không tìm thấy sản phẩm này'
+        ));
+
+    }
 
     public function deletecAction(){
 

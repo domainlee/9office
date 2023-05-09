@@ -114,7 +114,7 @@ class DgProductMaterial extends \Base\Dg\Table {
                 ),
                 array(
                     'type' => 'action',
-                    'value' => '<a class="cursor deleteArticle fa fa-trash-o" data-id="'.$item->getId().'"></a>',
+                    'value' => '<a class="cursor deleteProductMaterial fa fa-trash-o" data-id="'.$item->getId().'"></a>',
                     'htmlOptions'=> array('style'=>'text-align: center;vertical-align: middle'),
                 ),
             );

@@ -259,6 +259,18 @@ class ProductMaterialItemMapper extends Base {
 		return $dbAdapter->query($selectStr,$dbAdapter::QUERY_MODE_EXECUTE);
 	}
 
+    public function delete2($item){
+        /* @var $dbAdapter \Zend\Db\Adapter\Adapter */
+        $dbAdapter = $this->getServiceLocator()->get('dbAdapter');
+
+        /* @var $dbSql \Zend\Db\Sql\Sql */
+        $dbSql = $this->getServiceLocator()->get('dbSql');
+        $select = $dbSql->delete($this->getTableName());
+        $select->where(array('productId' => $item->getProductId()));
+        $selectStr = $dbSql->getSqlStringForSqlObject($select);
+        return $dbAdapter->query($selectStr,$dbAdapter::QUERY_MODE_EXECUTE);
+    }
+
 	public function getChildren($item) {
 		$model = new \Admin\Model\Productc();
 		$model->setParentId($item->getId());
