@@ -56,6 +56,42 @@ if ($totalRecords > 200 && $totalRecords < 1000) {
     <div class="col-sm-12">
         <div class="card-box">
             <div class="portlet-body">
+                <div class="row">
+                <div class="col-sm-3">
+                    <div class="widget-inline-box text-center">
+                        <h3><i class="text-primary md md-add-shopping-cart"></i><b data-plugin="counterup"><?php echo $totalRecords ?></b></h3>
+                        <h4 class="text-muted font-16">Tổng đơn hàng</h4>
+                    </div>
+                </div>
+                <div class="col-sm-3">
+                    <div class="widget-inline-box text-center">
+                        <h3><i class="text-custom md md-add-shopping-cart"></i> <b data-plugin="counterup"><?php echo $this->production ?></b></h3>
+                        <h4 class="text-muted font-16">Đang sản xuất</h4>
+                    </div>
+                </div>
+                <div class="col-sm-3">
+                    <div class="widget-inline-box text-center">
+                        <h3><i class="text-pink md md-add-shopping-cart"></i> <b data-plugin="counterup"><?php echo $this->finished ?></b></h3>
+                        <h4 class="text-muted font-16">Đã sản xuất xong</h4>
+                    </div>
+                </div>
+                <div class="col-sm-3">
+                    <div class="widget-inline-box text-center b-0">
+                        <h3><i class="text-purple md md-add-shopping-cart"></i> <b data-plugin="counterup"><?php echo $this->order_now ?></b></h3>
+                        <h4 class="text-muted font-16">Hôm nay</h4>
+                    </div>
+                </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-sm-12">
+        <div class="card-box">
+
+            <div class="portlet-body">
                 <div id="sample_editable_1_wrapper" class="dataTables_wrapper form-inline" role="grid">
                     <div class="btn-toolbar">
                         <div class="btn-group focus-btn-group">

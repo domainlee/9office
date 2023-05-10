@@ -3,7 +3,7 @@ namespace Admin\Controller;
 
 use Base\XLSX\XLSXWriter;
 use Base\XLSXImage\XLSWriterPlus;
-
+use \Datetime;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 use Zend\View\Model\JsonModel;
@@ -18,6 +18,8 @@ class OrderController extends AbstractActionController{
 
     public function indexAction(){
 		$this->layout('layout/admin');
+        $now = new DateTime();
+        $nowOrder = $now->format('Y-m-d');
 
 		$query = $this->getRequest()->getUri()->getQuery();
         $page = (int)$this->getRequest()->getQuery()->page ? : 1;
@@ -51,10 +53,10 @@ class OrderController extends AbstractActionController{
 //        print_r($finishedProduction);die;
 
         $data = json_encode(array('depotId' => 110912, 'id' => $inProduction || $finishedProduction ? array_merge($inProduction,$finishedProduction) : $id, 'customerMobile' => $phone, 'page' => $page, 'statuses' => array($status_filter), 'fromDate' => $startDate,'toDate' => $endDate));
+
+
         $curl = curl_init();
-
         $api = \Base\Model\Resource::data_api();
-
         $data = array(
             'version' => $api['version'],
             'appId' => $api['appId'],
@@ -62,8 +64,6 @@ class OrderController extends AbstractActionController{
             'accessToken' => $api['accessToken'],
             'data' => $data
         );
-
-
         curl_setopt_array($curl, array(
             CURLOPT_URL => 'https://open.nhanh.vn/api/order/index',
             CURLOPT_RETURNTRANSFER => true,
@@ -75,10 +75,97 @@ class OrderController extends AbstractActionController{
             CURLOPT_CUSTOMREQUEST => 'POST',
             CURLOPT_POSTFIELDS => $data,
         ));
-
         $response = curl_exec($curl);
-
         curl_close($curl);
+
+        // inProduction
+        $orderManufacture = new \Admin\Model\OrderManufacture();
+        $orderManufacture->setStatus(\Admin\Model\OrderManufacture::IN_PRODUCTION);
+        $orderManufactureMapper = $this->getServiceLocator()->get('Admin\Model\OrderManufactureMapper');
+        $inProductionD = $orderManufactureMapper->fetchStatus($orderManufacture);
+        $production_data = json_encode(array('depotId' => 110912, 'id' => $inProductionD ));
+        $production_curl = curl_init();
+        $api = \Base\Model\Resource::data_api();
+        $productiondata = array(
+            'version' => $api['version'],
+            'appId' => $api['appId'],
+            'businessId' => $api['businessId'],
+            'accessToken' => $api['accessToken'],
+            'data' => $production_data
+        );
+        curl_setopt_array($production_curl, array(
+            CURLOPT_URL => 'https://open.nhanh.vn/api/order/index',
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => '',
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 0,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => 'POST',
+            CURLOPT_POSTFIELDS => $productiondata,
+        ));
+        $production_response = curl_exec($production_curl);
+        $production_response = json_decode($production_response, true);
+        curl_close($production_curl);
+
+        // Finished
+        $orderManufacture = new \Admin\Model\OrderManufacture();
+        $orderManufacture->setStatus(\Admin\Model\OrderManufacture::FINISHED_PRODUCTION);
+        $orderManufactureMapper = $this->getServiceLocator()->get('Admin\Model\OrderManufactureMapper');
+        $finishedProductionD = $orderManufactureMapper->fetchStatus($orderManufacture);
+        $finished_data = json_encode(array('depotId' => 110912, 'id' => $finishedProductionD ));
+        $finished_curl = curl_init();
+        $api = \Base\Model\Resource::data_api();
+        $finisheddata = array(
+            'version' => $api['version'],
+            'appId' => $api['appId'],
+            'businessId' => $api['businessId'],
+            'accessToken' => $api['accessToken'],
+            'data' => $finished_data
+        );
+        curl_setopt_array($finished_curl, array(
+            CURLOPT_URL => 'https://open.nhanh.vn/api/order/index',
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => '',
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 0,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => 'POST',
+            CURLOPT_POSTFIELDS => $finisheddata,
+        ));
+        $finished_response = curl_exec($finished_curl);
+        $finished_response = json_decode($finished_response, true);
+        curl_close($finished_curl);
+
+        // Order today
+
+        $order_now_data = json_encode(array('depotId' => 110912, 'fromDate' => $nowOrder,'toDate' => $nowOrder ));
+        $order_now_curl = curl_init();
+        $api = \Base\Model\Resource::data_api();
+        $ordernow_data = array(
+            'version' => $api['version'],
+            'appId' => $api['appId'],
+            'businessId' => $api['businessId'],
+            'accessToken' => $api['accessToken'],
+            'data' => $order_now_data
+        );
+        curl_setopt_array($order_now_curl, array(
+            CURLOPT_URL => 'https://open.nhanh.vn/api/order/index',
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => '',
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 0,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => 'POST',
+            CURLOPT_POSTFIELDS => $ordernow_data,
+        ));
+        $order_now_response = curl_exec($order_now_curl);
+        $order_now_response = json_decode($order_now_response, true);
+        curl_close($order_now_curl);
+
+
         $response = json_decode($response, true);
         $options['isAdmin'] = $this->user()->isSuperAdmin();
         $fFilter = new \Admin\Form\OrderSearch($options);
@@ -164,11 +251,13 @@ class OrderController extends AbstractActionController{
                 return $view;
             }
         }
-
         return new ViewModel(array(
 			'query'=> $query,
 			'query_request'=> $query_request,
 			'results'=> $response['data'],
+			'production' => $production_response['data']['totalRecords'],
+			'finished' => $finished_response['data']['totalRecords'],
+			'order_now' => $order_now_response['data']['totalRecords'],
 			'fFilter'=> $fFilter,
             'id' => $id,
             'phone' => $phone,
