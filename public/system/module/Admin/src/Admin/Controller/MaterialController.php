@@ -145,6 +145,25 @@ class MaterialController extends AbstractActionController{
         $invoiceMaterialMapper = $this->getServiceLocator()->get('Admin\Model\InvoiceMaterialMapper');
         $resultInvoiceMaterial = $invoiceMaterialMapper->fetchAll($invoiceMaterial);
 
+        $productMaterialItem = new \Admin\Model\ProductMaterialItem();
+        $productMaterialItem->setMaterialId($id);
+        $productMaterialItemMapper = $this->getServiceLocator()->get('Admin\Model\ProductMaterialItemMapper');
+        $productMaterialItems = $productMaterialItemMapper->fetchAll($productMaterialItem);
+        if($productMaterialItems) {
+            $pmis = array();
+            foreach ($productMaterialItems as $pmi) {
+                $pmis[$pmi->getProductId()] = array(
+                    'id' => $pmi->getId(),
+                    'productId' => $pmi->getProductId(),
+                    'quantity' => $pmi->getQuantity(),
+                    'price' => $pmi->getPrice(),
+                    'intoMoney' => $pmi->getIntoMoney(),
+                );
+            }
+            $model->setOptions(['products' => $pmis]);
+        }
+
+
         $data = $model->toFormValues();
         $form->setData($data);
 //        $form->setCategoryIds();
@@ -172,6 +191,7 @@ class MaterialController extends AbstractActionController{
 			'form' => $form,
             'itemId' => $id,
             'materials' => $resultInvoiceMaterial,
+            'products' => $pmis,
 		));
 	}
 

@@ -286,7 +286,26 @@ class MaterialMapper extends Base{
                     $facture = $manufactureMapper->get($manufacture);
                     $model->setOptions(['ncc' => $facture->getName()]);
                 }
-				$model->exchangeArray((array)$row);
+                if($row['id']) {
+                    $productMaterialItem = new \Admin\Model\ProductMaterialItem();
+                    $productMaterialItem->setMaterialId($row['id']);
+                    $productMaterialItemMapper = $this->getServiceLocator()->get('Admin\Model\ProductMaterialItemMapper');
+                    $productMaterialItems = $productMaterialItemMapper->fetchAll($productMaterialItem);
+                    if($productMaterialItems) {
+                        $pmis = array();
+                        foreach ($productMaterialItems as $pmi) {
+                            $pmis[$pmi->getProductId()] = array(
+                                'id' => $pmi->getId(),
+                                'productId' => $pmi->getProductId(),
+                                'quantity' => $pmi->getQuantity(),
+                                'price' => $pmi->getPrice(),
+                                'intoMoney' => $pmi->getIntoMoney(),
+                            );
+                        }
+                        $model->setOptions(['products' => $pmis]);
+                    }
+                }
+                $model->exchangeArray((array)$row);
 				$rs[] = $model;
 			}
 		}

@@ -83,6 +83,31 @@ class ProductMaterialItemMapper extends Base {
 
         return null;
     }
+
+    /**
+     * @param \Admin\Model\ProductMaterialItem $item
+     */
+    public function getProductMaterialTwo($item)
+    {
+        if (!$item->getMaterialId()) {
+            return null;
+        }
+        $select = $this->getDbSql()->select(array('ac' => $this->getTableName()));
+
+        $select->where(['ac.materialId' => $item->getMaterialId()]);
+
+        $dbSql = $this->getServiceLocator()->get('dbSql');
+        $dbAdapter = $this->getServiceLocator()->get('dbAdapter');
+        $query = $dbSql->getSqlStringForSqlObject($select);
+        $results = $dbAdapter->query($query, $dbAdapter::QUERY_MODE_EXECUTE);
+
+        if ($results->count()) {
+            $item->exchangeArray((array) $results->current());
+            return $item;
+        }
+
+        return null;
+    }
 	
 	public function fetchAll($item){
 

@@ -2,6 +2,7 @@
     use Home\Model\DateBase;
     $form = $this->form;
     $materials = $this->materials;
+    $products = $this->products;
     $type = $form->get('type')->getValue();
     $image = $form->get('image')->getValue();
     echo $this->headtitle($this->escapehtml($this->translate('Sửa - '.$form->get('name')->getValue())));
@@ -16,94 +17,116 @@
                 </div>
                 <div class="portlet-body form">
                     <div class="row">
-                        <div class="col-sm-2">
-                            <div class="form-group">
-                                <label class="control-label" for="firstName">Đơn vị</label>
-                                <input type="hidden" name="type" value="<?= $form->get('type')->getValue() ?>" >
-                                <?= $this->formelement($form->get('type')->setAttributes(['class' => 'form-control material-type', 'disabled' => true, 'required' => 'required', 'data-parsley-error-message' => 'Đơn vị không được để trống'])) ?>
-                                <?= $this->formelementerrors($form->get('type'),['class' => 'parsley-errors-list filled']) ?>
-                            </div>
-                        </div>
-                        <div class="col-sm-4">
-                            <div class="form-group">
-                                <label class="control-label" for="firstName">Tên vật liệu</label>
-                                <?= $this->formelement($form->get('name')->setAttributes(['class' => 'form-control', 'placeholder'=>'Tên vật liệu', 'required' => 'required', 'data-parsley-error-message' => 'Tên vật liệu không được để trống'])) ?>
-                                <?= $this->formelementerrors($form->get('name'),['class' => 'parsley-errors-list filled']) ?>
-                            </div>
-                        </div>
-                        <div class="col-sm-3">
-                            <div class="form-group">
-                                <label class="control-label" for="firstName">Đơn giá</label>
-                                <?php if($type != 3): ?>
-                                    <input type="hidden" name="price" value="<?= $form->get('price')->getValue() ?>" >
-                                <?php endif; ?>
-                                <?= $this->formelement($form->get('price')->setAttributes(['class' => 'form-control autonumber', 'placeholder'=>'Đơn giá','data-parsley-type' => 'string', 'disabled' => ($type == 3 ? false:true)])) ?>
-                                <?= $this->formelementerrors($form->get('price'),['class' => 'parsley-errors-list filled']) ?>
-                            </div>
-                        </div>
-                        <div class="col-sm-3">
-                            <div class="form-group">
-                                <label class="control-label" for="firstName">Nhà cung cấp</label>
-                                    <input type="hidden" name="manufactureId" value="<?= $form->get('manufactureId')->getValue() ?>" >
-                                <?= $this->formelement($form->get('manufactureId')->setAttributes(['class' => 'form-control'])) ?>
-                                <?= $this->formelementerrors($form->get('manufactureId'),['class' => 'parsley-errors-list filled']) ?>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-sm-3">
-                            <div class="form-group form-group__logo">
-                                <label class="control-label">Hình ảnh</label>
-                                <div class="imgLogo">
-                                    <?php if(!empty($image)): ?>
-                                        <img class="img-responsive img-thumbnail" src="<?= $image ?>" >
-                                    <?php endif; ?>
+                        <div class="col-sm-9">
+                            <div class="row">
+                                <div class="col-sm-2">
+                                    <div class="form-group">
+                                        <label class="control-label" for="firstName">Đơn vị</label>
+                                        <input type="hidden" name="type" value="<?= $form->get('type')->getValue() ?>" >
+                                        <?= $this->formelement($form->get('type')->setAttributes(['class' => 'form-control material-type', 'disabled' => true, 'required' => 'required', 'data-parsley-error-message' => 'Đơn vị không được để trống'])) ?>
+                                        <?= $this->formelementerrors($form->get('type'),['class' => 'parsley-errors-list filled']) ?>
+                                    </div>
                                 </div>
-                                <input type="file" id="logo" class="filestyle" data-buttonText="Chọn Logo" data-buttonname="btn-white" data-iconname="fa fa-cloud-upload">
-                                <input type="hidden" name="image" class="logo" value="<?= !empty($image) ? $image:'' ?>" />
+                                <div class="col-sm-4">
+                                    <div class="form-group">
+                                        <label class="control-label" for="firstName">Tên vật liệu</label>
+                                        <?= $this->formelement($form->get('name')->setAttributes(['class' => 'form-control', 'placeholder'=>'Tên vật liệu', 'required' => 'required', 'data-parsley-error-message' => 'Tên vật liệu không được để trống'])) ?>
+                                        <?= $this->formelementerrors($form->get('name'),['class' => 'parsley-errors-list filled']) ?>
+                                    </div>
+                                </div>
+                                <div class="col-sm-3">
+                                    <div class="form-group">
+                                        <label class="control-label" for="firstName">Đơn giá</label>
+                                        <?php if($type != 3): ?>
+                                            <input type="hidden" name="price" value="<?= $form->get('price')->getValue() ?>" >
+                                        <?php endif; ?>
+                                        <?= $this->formelement($form->get('price')->setAttributes(['class' => 'form-control autonumber', 'placeholder'=>'Đơn giá','data-parsley-type' => 'string', 'disabled' => ($type == 3 ? false:true)])) ?>
+                                        <?= $this->formelementerrors($form->get('price'),['class' => 'parsley-errors-list filled']) ?>
+                                    </div>
+                                </div>
+                                <div class="col-sm-3">
+                                    <div class="form-group">
+                                        <label class="control-label" for="firstName">Nhà cung cấp</label>
+                                        <input type="hidden" name="manufactureId" value="<?= $form->get('manufactureId')->getValue() ?>" >
+                                        <?= $this->formelement($form->get('manufactureId')->setAttributes(['class' => 'form-control'])) ?>
+                                        <?= $this->formelementerrors($form->get('manufactureId'),['class' => 'parsley-errors-list filled']) ?>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <div class="form-group form-group__logo">
+                                        <label class="control-label">Hình ảnh</label>
+                                        <div class="imgLogo">
+                                            <?php if(!empty($image)): ?>
+                                                <img class="img-responsive img-thumbnail" src="<?= $image ?>" >
+                                            <?php endif; ?>
+                                        </div>
+                                        <input type="file" id="logo" class="filestyle" data-buttonText="Chọn Logo" data-buttonname="btn-white" data-iconname="fa fa-cloud-upload">
+                                        <input type="hidden" name="image" class="logo" value="<?= !empty($image) ? $image:'' ?>" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <table style="margin: 0 0 15px !important;" class="mr-0 dg table table-hover table-condensed">
+                                        <tr>
+                                            <th>Vật liệu</th>
+                                            <th>Đơn giá</th>
+                                            <th>Số lượng</th>
+                                            <th>Thành tiền</th>
+                                            <th>Đơn giá</th>
+                                            <th>Tồn kho - số lượng</th>
+                                            <th>Tồn kho - thành tiền</th>
+                                            <th>Ngày Tạo</th>
+                                        </tr>
+
+                                        <?php
+                                        foreach ($materials as $v):
+                                            ?>
+                                            <tr>
+                                                <td><?= $v->getOptions()['materialName'] . ' / '.($v->getType() == 2 ? '<span class="label label-inverse">Xuất</span>':'<span class="label label-default">Nhập</span>'); ?></td>
+                                                <td><?= number_format($v->getPrice()); ?></td>
+                                                <td><?= $v->getQuantity(); ?></td>
+                                                <td><?= number_format($v->getIntoMoney()); ?></td>
+
+                                                <td><?= number_format($v->getInventoryPrice()); ?></td>
+                                                <td><?= $v->getInventoryTotalQuantiy(); ?></td>
+                                                <td><strong><?= number_format($v->getInventoryTotalPrice()); ?></strong></td>
+                                                <td><?= DateBase::toDisplayDateTime($v->getCreatedDateTime()); ?></td>
+
+                                            </tr>
+                                        <?php endforeach; ?>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="row">
+
+                            </div>
+                            <div class="form-actions">
+                                <?=$this->formelement($form->get('submit')->setAttributes(['class' => 'loadHomepage btn btn-default', 'value' => 'Cập nhật']))?>
+                                <?=$this->formelement($form->get('reset')->setAttributes(['class' => 'btn']))?>
+                            </div>
+                        </div>
+                        <div class="col-sm-3">
+                            <div class="card-box">
+                                <?php if($products): ?>
+                                <h4 class="m-t-0 m-b-20 header-title"><b>Sản phẩm đang sử dụng</b> <span class="text-custom">(<?php echo count($products) ?>)</span></h4>
+                                <div class="inbox-widget nicescroll mx-box" tabindex="5000" style="overflow: hidden; outline: none;">
+                                    <?php foreach ($products as $k => $v): ?>
+                                        <a href="/admin/material/editproduct/<?php echo $v['id'] ?>" target="_blank">
+                                            <div class="inbox-item">
+                                                <p class="inbox-item-author"><?php echo $v['productId'] ?></p>
+                                                <p class="inbox-item-text">Giá: <?php echo $v['price'] ?>, Số lượng: <?php echo $v['quantity'] ?>, Thành tiền: <?php echo $v['intoMoney'] ?></p>
+                                            </div>
+                                        </a>
+                                    <?php endforeach; ?>
+                                </div>
+                                <?php endif; ?>
                             </div>
                         </div>
                     </div>
-                    <div class="row">
-                        <div class="col-sm-12">
-                            <table style="margin: 0 0 15px !important;" class="mr-0 dg table table-hover table-condensed">
-                                  <tr>
-                                    <th>Vật liệu</th>
-                                    <th>Đơn giá</th>
-                                    <th>Số lượng</th>
-                                    <th>Thành tiền</th>
-                                    <th>Đơn giá</th>
-                                    <th>Tồn kho - số lượng</th>
-                                    <th>Tồn kho - thành tiền</th>
-                                    <th>Ngày Tạo</th>
-                                  </tr>
 
-                                  <?php
-                                    foreach ($materials as $v):
-                                  ?>
-                                <tr>
-                                    <td><?= $v->getOptions()['materialName'] . ' / '.($v->getType() == 2 ? '<span class="label label-inverse">Xuất</span>':'<span class="label label-default">Nhập</span>'); ?></td>
-                                    <td><?= number_format($v->getPrice()); ?></td>
-                                    <td><?= $v->getQuantity(); ?></td>
-                                    <td><?= number_format($v->getIntoMoney()); ?></td>
-
-                                    <td><?= number_format($v->getInventoryPrice()); ?></td>
-                                    <td><?= $v->getInventoryTotalQuantiy(); ?></td>
-                                    <td><strong><?= number_format($v->getInventoryTotalPrice()); ?></strong></td>
-                                    <td><?= DateBase::toDisplayDateTime($v->getCreatedDateTime()); ?></td>
-
-                                  </tr>
-                            <?php endforeach; ?>
-                      </table>
-                        </div>
-                    </div>
-                    <div class="row">
-
-                    </div>
-                    <div class="form-actions">
-                        <?=$this->formelement($form->get('submit')->setAttributes(['class' => 'loadHomepage btn btn-default', 'value' => 'Cập nhật']))?>
-                        <?=$this->formelement($form->get('reset')->setAttributes(['class' => 'btn']))?>
-                    </div>
                 </div>
             </div>
         </div>
