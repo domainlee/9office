@@ -291,6 +291,23 @@ $(function(){
         }
     });
 
+    $('.btn-in-process').on('click', function () {
+        var data = $(this).attr('data-orders');
+        var code = $(this).attr('data-code');
+        var quantity = $(this).attr('data-quantity');
+
+        if (confirm('Bạn sẽ sản xuất đơn hàng này ?')) {
+            $.post('/admin/material/processproduct',{data: data, code: code, quantity: quantity},function(r){
+                if(r.code == 1){
+                    alert(r.messenger);
+                    location.reload();
+                } else if(r.code == 0){
+                    alert(r.messenger);
+                }
+            });
+        }
+    });
+
     $('.btn-in-finished').on('click', function () {
         var order = $(this).attr('data-order'), _this = $(this);
 

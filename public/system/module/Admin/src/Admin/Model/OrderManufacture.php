@@ -7,6 +7,7 @@ class OrderManufacture extends Base{
 	
 	protected $id;
     protected $orderId;
+    protected $productId;
     protected $status;
 
 	protected $quantity;
@@ -187,6 +188,22 @@ class OrderManufacture extends Base{
         $this->endDateTime = $endDateTime;
     }
 
+    /**
+     * @return mixed
+     */
+    public function getProductId()
+    {
+        return $this->productId;
+    }
+
+    /**
+     * @param mixed $productId
+     */
+    public function setProductId($productId)
+    {
+        $this->productId = $productId;
+    }
+
 
     public function toFormValues()
     {
@@ -200,6 +217,7 @@ class OrderManufacture extends Base{
             'createdById' => $this->getCreatedById(),
             'startDateTime' => $this->getStartDateTime(),
             'endDateTime' => $this->getEndDateTime(),
+            'productId' => $this->getProductId(),
         );
         return $data;
     }

@@ -132,6 +132,7 @@ class InvoiceMapper extends Base{
             'createdById' => $model->getCreatedById(),
             'approvedById' => $model->getApprovedById(),
             'orderId' => $model->getOrderId(),
+            'productId' => $model->getProductId(),
 		);
         $data = $xss->cleanInputs($data);
 

@@ -305,6 +305,100 @@ class MaterialController extends AbstractActionController{
         ));
     }
 
+    public function productsxAction() {
+        $this->layout('layout/admin');
+        $query = $this->getRequest()->getUri()->getQuery();
+        $page = (int)$this->getRequest()->getQuery()->page ? : 1;
+
+        $array_id = array('9MPOLLAC225015L','9MPOLLAC231701L','9MPOLLAC226701L');
+//        $array_data = array();
+//        foreach ($array_id as $v):
+        $api = \Base\Model\Resource::data_api();
+        $data = json_encode(array('page' => $page, 'icpp' => 50, 'name' => ''));
+
+        $data = array(
+            'version' => $api['version'],
+            'appId' => $api['appId'],
+            'businessId' => $api['businessId'],
+            'accessToken' => $api['accessToken'],
+            'data' => $data
+        );
+
+        $curl = curl_init();
+
+        curl_setopt_array($curl, array(
+            CURLOPT_URL => 'https://open.nhanh.vn/api/product/search',
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => '',
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 0,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => 'POST',
+            CURLOPT_POSTFIELDS => $data,
+        ));
+
+        $response = curl_exec($curl);
+
+        curl_close($curl);
+        $response = json_decode($response, true);
+
+        $totalPage = $response['data']['totalPages'];
+        $product_items = array();
+        for($c = 1; $c <= $totalPage; $c++) {
+            $api = \Base\Model\Resource::data_api();
+            $data = json_encode(array('page' => $c, 'icpp' => 50, 'name' => ''));
+            $data = array(
+                'version' => $api['version'],
+                'appId' => $api['appId'],
+                'businessId' => $api['businessId'],
+                'accessToken' => $api['accessToken'],
+                'data' => $data
+            );
+
+            $curl = curl_init();
+
+            curl_setopt_array($curl, array(
+                CURLOPT_URL => 'https://open.nhanh.vn/api/product/search',
+                CURLOPT_RETURNTRANSFER => true,
+                CURLOPT_ENCODING => '',
+                CURLOPT_MAXREDIRS => 10,
+                CURLOPT_TIMEOUT => 0,
+                CURLOPT_FOLLOWLOCATION => true,
+                CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+                CURLOPT_CUSTOMREQUEST => 'POST',
+                CURLOPT_POSTFIELDS => $data,
+            ));
+
+            $response = curl_exec($curl);
+            curl_close($curl);
+            $response = json_decode($response, true);
+            if(!empty($response['data']['products'])) {
+                foreach ($response['data']['products'] as $v) {
+                    $product_items[$v['code']] = array(
+                        'name' => $v['name'],
+                        'image' => $v['image'],
+                        'code' => $v['code'],
+                        'remain' => $v['inventory']['remain'],
+                    );
+                }
+            }
+        }
+        $productMaterialItem = new \Admin\Model\ProductMaterialItem();
+        $mapperProductMaterialItem = $this->getServiceLocator()->get('Admin\Model\ProductMaterialItemMapper');
+        $productMaterial = $mapperProductMaterialItem->fetchAll3($productMaterialItem);
+
+        return new ViewModel(array(
+            'query'=> $query,
+            'results'=> $product_items,
+            'product_material' => $productMaterial,
+//            'fFilter'=> $fFilter,
+//            'id' => $id,
+//            'phone' => $phone
+        ));
+    }
+
+
     public function importmaterialAction() {
         $import_material = $this->getRequest()->getPost()['import_material'];
         $product_material = $this->getRequest()->getPost()['product_material'];
@@ -969,6 +1063,144 @@ class MaterialController extends AbstractActionController{
             'messenger' => 'Đang sản xuất'
         ));
 
+    }
+
+    public function processproductAction() {
+
+        $orders = $this->getRequest()->getPost()['data'];
+        $code = $this->getRequest()->getPost()['code'];
+        $quantity_code = $this->getRequest()->getPost()['quantity'];
+
+        $u = $this->getServiceLocator()->get('User\Service\User');
+
+        $productMaterialItem = new \Admin\Model\ProductMaterialItem();
+        $mapperProductMaterialItem = $this->getServiceLocator()->get('Admin\Model\ProductMaterialItemMapper');
+        $productMaterial = $mapperProductMaterialItem->fetchAll3($productMaterialItem);
+        $product = $productMaterial[$code];
+
+        if(empty($product)) {
+            return new JsonModel(array(
+                'code' => 0,
+                'messenger' => 'Dữ liệu không phù hợp, hoặc đơn hàng không tồn tại'
+            ));
+        }
+        $material_check = array();
+        $material_empty = array();
+        foreach ($product as $pp) {
+            $materialId = (int)$pp['materialId'];
+            $quantity = (float)$pp['quantity'] * $quantity_code;
+            $material = new \Admin\Model\Material();
+            $material->setId($materialId);
+            $mapperMaterial = $this->getServiceLocator()->get('Admin\Model\MaterialMapper');
+            $resultMaterial = $mapperMaterial->get($material);
+            $material_check[$materialId] = $quantity;
+            if(!$resultMaterial->getTotalQuantiy() || !$resultMaterial->getPrice() || !$resultMaterial->getTotalPrice()) {
+                if($resultMaterial->getType() != 3) {
+                    $material_empty[$materialId] = $resultMaterial->getName();
+                }
+            }
+        }
+        if(!empty($material_empty)) {
+            return new JsonModel(array(
+                'code' => 0,
+                'messenger' => 'Vật liệu không đủ số lượng để sản xuất'
+            ));
+        }
+
+        $quantities = array();
+        foreach ($material_check as $materialId => $qtt) {
+            $material = new \Admin\Model\Material();
+            $material->setId($materialId);
+            $mapperMaterial = $this->getServiceLocator()->get('Admin\Model\MaterialMapper');
+            $resultMaterial = $mapperMaterial->get($material);
+            if($resultMaterial->getTotalQuantiy() < $qtt) {
+                if($resultMaterial->getType() != 3) {
+                    $quantities[$materialId] = $resultMaterial->getName();
+                }
+            }
+        }
+        if(!empty($quantities)) {
+            return new JsonModel(array(
+                'code' => 0,
+                'messenger' => 'Vật liệu không đủ số lượng để sản xuất'
+            ));
+        }
+
+        // Tạo đơn hàng
+        $invoice = new \Admin\Model\Invoice();
+        $invoice->setType(\Admin\Model\Invoice::EXPORT);
+        $invoice->setStatus(\Admin\Model\Invoice::STATUS_APPROVED);
+        $invoice->setDescription('Sản xuất mã sản phẩm "'.$code.'" / '.DateBase::getCurrentDateTime().'');
+        $invoice->setCreatedDateTime(DateBase::getCurrentDateTime());
+        $invoice->setUpdatedDateTime(DateBase::getCurrentDateTime());
+        $invoice->setCreatedById($u->getId());
+        $invoice->setApprovedById($u->getId());
+        $invoice->setProductId($code);
+        $invoiceMapper = $this->getServiceLocator()->get('Admin\Model\InvoiceMapper');
+        $rInvoice = $invoiceMapper->save($invoice);
+        $invoiceId = $rInvoice->getGeneratedValue();
+        if($invoiceId) {
+            foreach ($product as $pp) {
+                $materialId = (int)$pp['materialId'];
+                $quantity = (float)$pp['quantity'] * $quantity_code;
+                $material = new \Admin\Model\Material();
+                $material->setId($materialId);
+                $mapperMaterial = $this->getServiceLocator()->get('Admin\Model\MaterialMapper');
+                $resultMaterial = $mapperMaterial->get($material);
+                if ($resultMaterial && $resultMaterial->getType() != 3) {
+                    $quantityUpdated = $resultMaterial->getTotalQuantiy() - $quantity;
+                    $resultMaterial->setTotalQuantiy($quantityUpdated);
+                    $resultMaterial->setTotalPrice($resultMaterial->getPrice() * $quantityUpdated);
+                }
+                $mapperMaterial->save($resultMaterial);
+                $modelInvoiceMaterial = new \Admin\Model\InvoiceMaterial();
+                $mapperInvoiceMaterial = $this->getServiceLocator()->get('Admin\Model\InvoiceMaterialMapper');
+                $modelInvoiceMaterial->setType(\Admin\Model\Invoice::EXPORT);
+                $modelInvoiceMaterial->setMaterialId($materialId);
+                $modelInvoiceMaterial->setInvoiceId($invoiceId);
+                $modelInvoiceMaterial->setQuantity($quantity);
+                $modelInvoiceMaterial->setPrice($resultMaterial->getPrice());
+                $modelInvoiceMaterial->setIntoMoney($resultMaterial->getPrice() * $quantity);
+                if ($resultMaterial->getType() == 3) {
+                    $modelInvoiceMaterial->setInventoryTotalQuantiy($quantity);
+                    $modelInvoiceMaterial->setInventoryPrice($resultMaterial->getPrice());
+                    $modelInvoiceMaterial->setInventoryTotalPrice($resultMaterial->getPrice() * $quantity);
+                } else {
+                    $modelInvoiceMaterial->setInventoryTotalQuantiy($resultMaterial->getTotalQuantiy());
+                    $modelInvoiceMaterial->setInventoryPrice($resultMaterial->getPrice());
+                    $modelInvoiceMaterial->setInventoryTotalPrice($resultMaterial->getTotalPrice());
+                }
+                $modelInvoiceMaterial->setCreatedDateTime(DateBase::getCurrentDateTime());
+                $modelInvoiceMaterial->setCreatedById($u->getId());
+                $modelInvoiceMaterial->setProductId($code);
+                $modelInvoiceMaterial->setStatus(\Admin\Model\InvoiceMaterial::STATUS_APPROVED);
+                $mapperInvoiceMaterial->save($modelInvoiceMaterial);
+            }
+            $orders = explode('_', $orders);
+            if(!empty($orders)) {
+                foreach ($orders as $orderId) {
+                    if($orderId) {
+                        $orderManufacture = new \Admin\Model\OrderManufacture();
+                        $orderManufactureMapper = $this->getServiceLocator()->get('Admin\Model\OrderManufactureMapper');
+                        $orderManufacturer = $orderManufactureMapper->get($orderManufacture);
+                        if($orderManufacturer) {
+                            $orderManufacture->setId($orderManufacturer->getId());
+                        }
+                        $orderManufacture->setStatus(\Admin\Model\OrderManufacture::IN_PRODUCTION);
+                        $orderManufacture->setOrderId($orderId);
+                        $orderManufacture->setCreatedDateTime(DateBase::getCurrentDateTime());
+                        $orderManufacture->setCreatedById($u->getId());
+                        $orderManufacture->setStartDateTime(DateBase::getCurrentDateTime());
+                        $orderManufactureMapper->save($orderManufacture);
+                    }
+                }
+            }
+        }
+
+        return new JsonModel(array(
+            'code' => 1,
+            'messenger' => 'Đang sản xuất'
+        ));
     }
 
     public function orderfinishedAction() {

@@ -1,0 +1,190 @@
+<?php
+echo $this->headtitle($this->escapehtml($this->translate('Danh sách sản xuất')));
+$product = $this->results;
+$query = $this->query;
+$product_material = $this->product_material;
+
+$data = json_encode(array('depotId' => 110912, 'page' => 1, 'statuses' => array('Confirmed')));
+$curl = curl_init();
+$api = \Base\Model\Resource::data_api();
+$data = array(
+    'version' => $api['version'],
+    'appId' => $api['appId'],
+    'businessId' => $api['businessId'],
+    'accessToken' => $api['accessToken'],
+    'data' => $data
+);
+curl_setopt_array($curl, array(
+    CURLOPT_URL => 'https://open.nhanh.vn/api/order/index',
+    CURLOPT_RETURNTRANSFER => true,
+    CURLOPT_ENCODING => '',
+    CURLOPT_MAXREDIRS => 10,
+    CURLOPT_TIMEOUT => 0,
+    CURLOPT_FOLLOWLOCATION => true,
+    CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+    CURLOPT_CUSTOMREQUEST => 'POST',
+    CURLOPT_POSTFIELDS => $data,
+));
+$response = curl_exec($curl);
+curl_close($curl);
+$response = json_decode($response, true);
+$totalPage = $response['data']['totalPages'];
+$order_product = array();
+
+for($c = 1; $c <= $totalPage; $c++) {
+    $data = json_encode(array('depotId' => 110912, 'page' => $c, 'statuses' => array('Confirmed')));
+    $curl = curl_init();
+
+    $api = \Base\Model\Resource::data_api();
+
+    $data = array(
+        'version' => $api['version'],
+        'appId' => $api['appId'],
+        'businessId' => $api['businessId'],
+        'accessToken' => $api['accessToken'],
+        'data' => $data
+    );
+
+
+    curl_setopt_array($curl, array(
+        CURLOPT_URL => 'https://open.nhanh.vn/api/order/index',
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_ENCODING => '',
+        CURLOPT_MAXREDIRS => 10,
+        CURLOPT_TIMEOUT => 0,
+        CURLOPT_FOLLOWLOCATION => true,
+        CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+        CURLOPT_CUSTOMREQUEST => 'POST',
+        CURLOPT_POSTFIELDS => $data,
+    ));
+
+    $response = curl_exec($curl);
+    curl_close($curl);
+    $response = json_decode($response, true);
+    if(!empty($response['data']['orders'])) {
+        foreach ($response['data']['orders'] as $v) {
+            foreach ($v['products'] as $vv) {
+                $order_product[$v['id']][$vv['productCode']] = $vv['quantity'];
+            }
+        }
+    }
+}
+
+?>
+
+<style>
+    .list_product > div {
+        margin: 0 0 10px;
+    }
+    .list_product > div:last-child, .list_product > div:last-child p {
+        margin: 0;
+    }
+</style>
+<div class="row">
+    <div class="col-sm-12">
+        <div class="card-box">
+            <div class="portlet-body">
+                <div id="sample_editable_1_wrapper" class="dataTables_wrapper form-inline" role="grid">
+                    <div class="btn-toolbar">
+                        <div class="btn-group focus-btn-group">
+                            <a class="button-export-all btn btn-default waves-effect waves-light">Xuất tất cả excel</a>
+                            <a class="button-export-selected btn btn-white waves-effect waves-light" ><i class="ion-ios7-upload-outline" style="font-size: 16px;margin: 0 3px 0 0"></i> Xuất excel đã chọn</a>
+                        </div>
+                        <div class="btn-group dropdown-btn-group pull-right">
+                            <div class="dataTables_filter mb-15">
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="dg-container">
+                        <table class="product_list dg table table-bordered table-hover table-condensed">
+                            <thead>
+                                <tr>
+                                    <th style="width: 0.2%;"></th>
+                                    <th style="width: 1%;">Hình ảnh</th>
+                                    <th style="width: 5%;">Mã sản phẩm</th>
+                                    <th style="width: 5%;">Tồn kho</th>
+                                    <th style="vertical-align: middle;width: 12%;">Đơn hàng</th>
+                                    <th style="vertical-align: middle;width: 12%;">Hoạt động</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php if(!empty($product)): ?>
+                                    <?php
+                                    $show = false;
+                                    // start product
+                                    $stock = 0; $stock_check = false; $approved = false; $approved_is = true; $materials = array();
+                                    foreach($product as $k => $v):
+                                        $orderId = '';
+                                        $quantity_sx = 0;
+                                        $order_string = '';
+                                        foreach ($order_product as $kk => $oe) {
+                                            if(isset($oe[$k])) {
+                                                $show = true;
+                                                $orderId .= 'Đơn hàng <strong>'. $kk . '</strong> Số lượng '.$oe[$k].'<br/>';
+                                                $quantity_sx += $oe[$k];
+                                                $order_string .= $kk.'_';
+                                            }
+                                        }
+                                    // start show
+                                    if($show):
+                                    ?>
+                                    <?php
+                                        $url_created_product = '';
+                                        if(isset($product_material[$k])) {
+                                            $named = '';
+                                            $c = 0;
+                                            $products = array();
+                                            foreach ($product_material[$k] as $kpi => $pi) {
+                                                $c++;
+                                                $named .= $c.'. '.$pi['materialName'].' - SL: '.$pi['quantity'] .'<br/>';
+                                                $products[] = array(
+                                                    'materialId' => $pi['materialId'],
+                                                    'quantity' => $pi['quantity'] * $quantity_sx
+                                                );
+                                            }
+
+                                            $approved = true;
+                                            if($v['remain'] > $quantity_sx) {
+                                                $materials[$order_string.$v['code']] = $products;
+                                                $approved = false;
+                                            }
+                                            $url_created_product = '<span class="label label-success" data-toggle="tooltip" data-html="true" data-placement="top" title="" data-original-title="'.$named.'">Vật liệu sử dụng</span>';
+                                        } else {
+                                            $url_created_product = '<a class="label label-danger" href="'.'/admin/material/addproduct?id='.$k.'&img='.$v['image'].'&name='.$v['name'].'" target="_blank">Tạo vật liệu</a>';
+                                        }
+                                    ?>
+                                    <tr class="even">
+                                        <td style="width: 0.2%; vertical-align: middle;" class="bs-checkbox "><div class="checkbox"><input type="checkbox" name="productId" value="<?php echo $k ?>"><label></label></div></td>
+                                        <td class="id" style="vertical-align: middle"><a title="<?php echo $v['name'] ?>" href="<?php echo $v['image'] ?>" class="button-image"><img class="lazy thumb-md" data-src="<?php echo $v['image'] ?>" ></a></td>
+                                        <td style="vertical-align: middle"><strong><?php echo $v['code'] ?></strong> - <?php echo $url_created_product ?></td>
+                                        <td style="vertical-align: middle"><?php echo $v['remain'] ?></td>
+                                        <td style="vertical-align: middle"><?php echo $orderId ?></td>
+                                        <td style="vertical-align: middle">
+                                            <?php
+                                                if($approved):
+                                                $approved = false;
+                                            ?>
+                                                <a data-orders="<?php echo $order_string ?>" data-code="<?php echo $v['code']; ?>" data-quantity="<?php echo $quantity_sx; ?>" class="btn-in-process btn label btn-sm btn-default btn-rounded waves-effect waves-light">Sản xuất</a>
+                                            <?php endif; ?>
+                                        </td>
+                                    </tr>
+                                    <?php
+                                        // end show
+                                        endif;
+                                        $show = false;
+                                        // end product
+                                        endforeach;
+                                        endif;
+                                    ?>
+                            </tbody>
+                        </table>
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

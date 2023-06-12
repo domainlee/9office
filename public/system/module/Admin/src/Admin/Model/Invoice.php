@@ -14,6 +14,7 @@ class Invoice extends Base{
 	protected $createdById;
 	protected $approvedById;
 	protected $orderId;
+	protected $productId;
 
 	const STATUS_APPROVED = 1;
  	const STATUS_NOT_APPROVED = 2;
@@ -168,6 +169,23 @@ class Invoice extends Base{
     }
 
     /**
+     * @return mixed
+     */
+    public function getProductId()
+    {
+        return $this->productId;
+    }
+
+    /**
+     * @param mixed $productId
+     */
+    public function setProductId($productId)
+    {
+        $this->productId = $productId;
+    }
+
+
+    /**
      * @param mixed $orderId
      */
     public function setOrderId($orderId)
@@ -186,6 +204,7 @@ class Invoice extends Base{
             'createdById' => $this->getCreatedById(),
             'approvedById' => $this->getApprovedById(),
             'orderId' => $this->getOrderId(),
+            'productId' => $this->getProductId(),
         );
         return $data;
     }

@@ -43,6 +43,7 @@ class OrderManufactureMapper extends Base{
 	public function save($model){
 		$data = array(
 			'orderId' => $model->getOrderId(),
+			'productId' => $model->getProductId(),
 			'status' => $model->getStatus(),
 			'quantity' => $model->getQuantity(),
 			'price' => $model->getPrice(),
