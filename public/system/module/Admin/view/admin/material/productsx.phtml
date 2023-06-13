@@ -135,6 +135,15 @@ for($c = 1; $c <= $totalPage; $c++) {
                                             $named = '';
                                             $c = 0;
                                             $products = array();
+
+                                            $approved = true;
+                                            if($v['remain'] >= $quantity_sx) {
+                                                $approved = false;
+                                            } else {
+                                                if($v['remain'] > 0) {
+                                                    $quantity_sx = $quantity_sx - $v['remain'];
+                                                }
+                                            }
                                             foreach ($product_material[$k] as $kpi => $pi) {
                                                 $c++;
                                                 $named .= $c.'. '.$pi['materialName'].' - SL: '.$pi['quantity'] .'<br/>';
@@ -143,11 +152,8 @@ for($c = 1; $c <= $totalPage; $c++) {
                                                     'quantity' => $pi['quantity'] * $quantity_sx
                                                 );
                                             }
-
-                                            $approved = true;
                                             if($v['remain'] > $quantity_sx) {
                                                 $materials[$order_string.$v['code']] = $products;
-                                                $approved = false;
                                             }
                                             $url_created_product = '<span class="label label-success" data-toggle="tooltip" data-html="true" data-placement="top" title="" data-original-title="'.$named.'">Vật liệu sử dụng</span>';
                                         } else {
