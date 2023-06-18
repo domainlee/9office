@@ -59,6 +59,15 @@ class Admin extends Navigation
                 'resource' => 'admin:order',
                 'privilege' => 'index',
                 'class'=>'fa fa-plus-square',
+                'pages'	=> array(
+                    array(
+                        'label'	=> 'Đơn hàng sản xuất',
+                        'uri'	=> '/admin/material/productsx',
+                        'resource' => 'admin:material',
+                        'privilege' => 'productsx',
+                        'class'=>'fa fa-list-ul'
+                    ),
+                )
             ),
             array(
                 'icon'  => '<i class="ti-pencil-alt"></i>',

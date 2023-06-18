@@ -3,7 +3,8 @@ echo $this->headtitle($this->escapehtml($this->translate('Danh sách sản xuấ
 $product = $this->results;
 $query = $this->query;
 $product_material = $this->product_material;
-
+$order_production = $this->order_production;
+use Home\Model\DateBase;
 $data = json_encode(array('depotId' => 110912, 'page' => 1, 'statuses' => array('Confirmed')));
 $curl = curl_init();
 $api = \Base\Model\Resource::data_api();
@@ -105,7 +106,7 @@ for($c = 1; $c <= $totalPage; $c++) {
                                     <th style="width: 5%;">Mã sản phẩm</th>
                                     <th style="width: 5%;">Tồn kho</th>
                                     <th style="vertical-align: middle;width: 12%;">Đơn hàng</th>
-                                    <th style="vertical-align: middle;width: 12%;">Hoạt động</th>
+                                    <th style="text-align: center;vertical-align: middle;width: 12%;">Hoạt động</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -114,6 +115,10 @@ for($c = 1; $c <= $totalPage; $c++) {
                                     $show = false;
                                     // start product
                                     $stock = 0; $stock_check = false; $approved = false; $approved_is = true; $materials = array();
+                                    $product_is_production = false;
+                                    $product_is_finished = false;
+                                    $start_time = '';
+                                    $end_time = '';
                                     foreach($product as $k => $v):
                                         $orderId = '';
                                         $quantity_sx = 0;
@@ -124,6 +129,18 @@ for($c = 1; $c <= $totalPage; $c++) {
                                                 $orderId .= 'Đơn hàng <strong>'. $kk . '</strong> Số lượng '.$oe[$k].'<br/>';
                                                 $quantity_sx += $oe[$k];
                                                 $order_string .= $kk.'_';
+                                                if(isset($order_production[$kk]) && $order_production[$kk]['status'] == \Admin\Model\OrderManufacture::IN_PRODUCTION) {
+                                                    if($order_production[$kk][$k]) {
+                                                        $product_is_production = true;
+                                                    }
+                                                }
+                                                if(isset($order_production[$kk]) && $order_production[$kk]['status'] == \Admin\Model\OrderManufacture::FINISHED_PRODUCTION) {
+                                                    if($order_production[$kk][$k]) {
+                                                        $product_is_finished = true;
+                                                    }
+                                                }
+                                                $start_time = $order_production[$kk]['startDateTime'];
+                                                $end_time = $order_production[$kk]['endDateTime'];
                                             }
                                         }
                                     // start show
@@ -166,11 +183,20 @@ for($c = 1; $c <= $totalPage; $c++) {
                                         <td style="vertical-align: middle"><strong><?php echo $v['code'] ?></strong> - <?php echo $url_created_product ?></td>
                                         <td style="vertical-align: middle"><?php echo $v['remain'] ?></td>
                                         <td style="vertical-align: middle"><?php echo $orderId ?></td>
-                                        <td style="vertical-align: middle">
-                                            <?php
-                                                if($approved):
-                                                $approved = false;
-                                            ?>
+                                        <td style="text-align: center;vertical-align: middle">
+                                            <?php if($product_is_production): $approved = false; ?>
+                                                <span class="label label-warning m-b-5 d-block">Đang sản xuất</span>
+                                                <p class="text-muted m-t-5 m-b-5 font-13"><?= 'Ngày bắt đầu: '.DateBase::toDisplayDateTime($start_time) ?></p>
+                                                <a data-orders='<?= $order_string ?>' data-code='<?= $v['code'] ?>' class="btn-in-order-finished btn label btn-sm btn-default btn-rounded waves-effect waves-light">Hoàn thành</a>
+                                            <?php endif; ?>
+
+                                            <?php if($product_is_finished): $approved = false; ?>
+                                                <p class="text-muted m-t-5 m-b-5 font-13"><?= 'Ngày bắt đầu: '.DateBase::toDisplayDateTime($start_time) ?></p>
+                                                <span class="label label-success m-b-5 d-block">Hoàn thành</span>
+                                                <p class="text-muted m-t-5 m-b-5 font-13"><?= 'Ngày kết thúc: '.DateBase::toDisplayDateTime($end_time) ?></p>
+                                            <?php endif; ?>
+
+                                            <?php if($approved): $approved = false; ?>
                                                 <a data-orders="<?php echo $order_string ?>" data-code="<?php echo $v['code']; ?>" data-quantity="<?php echo $quantity_sx; ?>" class="btn-in-process btn label btn-sm btn-default btn-rounded waves-effect waves-light">Sản xuất</a>
                                             <?php endif; ?>
                                         </td>
@@ -179,6 +205,8 @@ for($c = 1; $c <= $totalPage; $c++) {
                                         // end show
                                         endif;
                                         $show = false;
+                                        $product_is_production = false;
+                                        $product_is_finished = false;
                                         // end product
                                         endforeach;
                                         endif;

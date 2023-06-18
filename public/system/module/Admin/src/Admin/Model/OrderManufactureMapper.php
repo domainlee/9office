@@ -22,7 +22,9 @@ class OrderManufactureMapper extends Base{
         if($item->getOrderId()){
             $select->where(['ac.orderId'=> $item->getOrderId()]);
         }
-
+        if($item->getProductId()){
+            $select->where(['ac.productId'=> $item->getProductId()]);
+        }
         $select->limit(1);
 
         $dbSql = $this->getServiceLocator()->get('dbSql');
@@ -99,6 +101,7 @@ class OrderManufactureMapper extends Base{
 //                $mapperMaterial = $this->getServiceLocator()->get('Admin\Model\MaterialMapper');
 //                $resultMaterial = $mapperMaterial->get($modelMaterial);
                 $all[$row['orderId']] = array(
+                    $row['productId'] => $row['productId'],
                     'orderId' => $row['orderId'],
                     'status' => $row['status'],
                     'startDateTime' => $row['startDateTime'],

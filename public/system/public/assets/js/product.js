@@ -292,6 +292,7 @@ $(function(){
     });
 
     $('.btn-in-process').on('click', function () {
+        var t = $(this);
         var data = $(this).attr('data-orders');
         var code = $(this).attr('data-code');
         var quantity = $(this).attr('data-quantity');
@@ -300,7 +301,7 @@ $(function(){
             $.post('/admin/material/processproduct',{data: data, code: code, quantity: quantity},function(r){
                 if(r.code == 1){
                     alert(r.messenger);
-                    location.reload();
+                    t.text('Đang sản xuất');
                 } else if(r.code == 0){
                     alert(r.messenger);
                 }
@@ -316,6 +317,22 @@ $(function(){
                 if(r.code == 1){
                     alert(r.messenger);
                     location.reload();
+                } else if(r.code == 0){
+                    alert(r.messenger);
+                }
+            });
+        }
+    });
+
+    $('.btn-in-order-finished').on('click', function () {
+        var orders = $(this).attr('data-orders'), _this = $(this);
+        var code = $(this).attr('data-code');
+        var t = $(this);
+        if (confirm('Xác nhận hoàn thành mã sản phẩm này ?')) {
+            $.post('/admin/material/orderfinished',{orders: orders, code: code},function(r){
+                if(r.code == 1){
+                    alert(r.messenger);
+                    t.text('Đã hoàn thành');
                 } else if(r.code == 0){
                     alert(r.messenger);
                 }

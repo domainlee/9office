@@ -388,13 +388,15 @@ class MaterialController extends AbstractActionController{
         $mapperProductMaterialItem = $this->getServiceLocator()->get('Admin\Model\ProductMaterialItemMapper');
         $productMaterial = $mapperProductMaterialItem->fetchAll3($productMaterialItem);
 
+        $orderManufacture = new \Admin\Model\OrderManufacture();
+        $orderManufactureMapper = $this->getServiceLocator()->get('Admin\Model\OrderManufactureMapper');
+        $orderProduction = $orderManufactureMapper->fetchAll($orderManufacture);
+
         return new ViewModel(array(
             'query'=> $query,
             'results'=> $product_items,
             'product_material' => $productMaterial,
-//            'fFilter'=> $fFilter,
-//            'id' => $id,
-//            'phone' => $phone
+            'order_production' => $orderProduction
         ));
     }
 
@@ -1188,6 +1190,7 @@ class MaterialController extends AbstractActionController{
                         }
                         $orderManufacture->setStatus(\Admin\Model\OrderManufacture::IN_PRODUCTION);
                         $orderManufacture->setOrderId($orderId);
+                        $orderManufacture->setProductId($code);
                         $orderManufacture->setCreatedDateTime(DateBase::getCurrentDateTime());
                         $orderManufacture->setCreatedById($u->getId());
                         $orderManufacture->setStartDateTime(DateBase::getCurrentDateTime());
@@ -1205,6 +1208,55 @@ class MaterialController extends AbstractActionController{
 
     public function orderfinishedAction() {
         $orderId = $this->getRequest()->getPost()['orderId'];
+        $orders = $this->getRequest()->getPost()['orders'];
+        $code = $this->getRequest()->getPost()['code'];
+
+        if(!$orderId && !$orders) {
+            return new JsonModel(array(
+                'code' => 0,
+                'messenger' => 'Không tìm thấy đơn hàng này'
+            ));
+        }
+
+        if($orders) {
+            $orders = explode('_', $orders);
+            if(is_array($orders)) {
+                $mes = '';
+                foreach ($orders as $orderId) {
+                    if($orderId) {
+                        $orderId = (int)trim($orderId);
+                        $orderManufacture = new \Admin\Model\OrderManufacture();
+                        $orderManufacture->setOrderId($orderId);
+                        $orderManufacture->setProductId($code);
+                        $orderManufactureMapper = $this->getServiceLocator()->get('Admin\Model\OrderManufactureMapper');
+                        $orderManufacturer = $orderManufactureMapper->get($orderManufacture);
+                        if(!$orderManufacturer) {
+                            return new JsonModel(array(
+                                'code' => 0,
+                                'messenger' => 'Không tìm thấy đơn hàng này'
+                            ));
+                        }
+                        if($orderManufacturer->getStatus() == \Admin\Model\OrderManufacture::FINISHED_PRODUCTION) {
+                            return new JsonModel(array(
+                                'code' => 0,
+                                'messenger' => 'Đơn hàng đã hoàn thành'
+                            ));
+                        }
+
+                        $orderManufacturer->setStatus(\Admin\Model\OrderManufacture::FINISHED_PRODUCTION);
+                        $orderManufacturer->setEndDateTime(DateBase::getCurrentDateTime());
+                        $orderManufactureMapper->save($orderManufacturer);
+                        $mes .= $orderId .',';
+                    }
+                }
+
+                return new JsonModel(array(
+                    'code' => 1,
+                    'messenger' => 'Đã sản xuất xong đơn hàng ' . $mes
+                ));
+            }
+        }
+
         $orderId = (int)trim($orderId);
         $orderManufacture = new \Admin\Model\OrderManufacture();
         $orderManufacture->setOrderId($orderId);
