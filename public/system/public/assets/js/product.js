@@ -297,7 +297,7 @@ $(function(){
         var code = $(this).attr('data-code');
         var quantity = $(this).attr('data-quantity');
 
-        if (confirm('Bạn sẽ sản xuất đơn hàng này ?')) {
+        if (confirm('Bạn sẽ sản xuất đơn hàng này ? Mã sản phẩm '+ code +' với số lượng ' + quantity)) {
             $.post('/admin/material/processproduct',{data: data, code: code, quantity: quantity},function(r){
                 if(r.code == 1){
                     alert(r.messenger);
