@@ -309,6 +309,7 @@ class MaterialController extends AbstractActionController{
         $this->layout('layout/admin');
         $query = $this->getRequest()->getUri()->getQuery();
         $page = (int)$this->getRequest()->getQuery()->page ? : 1;
+        $query_router = $this->getRequest()->getQuery();
 
         $array_id = array('9MPOLLAC225015L','9MPOLLAC231701L','9MPOLLAC226701L');
 //        $array_data = array();
@@ -394,6 +395,7 @@ class MaterialController extends AbstractActionController{
 
         return new ViewModel(array(
             'query'=> $query,
+            'query_router'=> $query_router,
             'results'=> $product_items,
             'product_material' => $productMaterial,
             'order_production' => $orderProduction
@@ -646,6 +648,7 @@ class MaterialController extends AbstractActionController{
 	    if(empty($product_items)) {
 	        return false;
         }
+	    print_r($product_items);die;
         $file_name = 'Danh sách sản phẩm_'.date('ymd').'.xlsx';
         $sheet_product = 'Product Material';
         $header_one = array( 'Mã sản phẩm', 'Tên sản phẩm', 'Hình ảnh sản phẩm', 'Mã vật liệu', 'Số lượng');

@@ -2,8 +2,14 @@
 echo $this->headtitle($this->escapehtml($this->translate('Danh sách sản xuất')));
 $product = $this->results;
 $query = $this->query;
+$query_router = $this->query_router;
+$export_all = $query_router['selectall'] == 'true' ? true:false;
+$export_id = $query_router['selected_id'] ? $query_router['selected_id']:false;
+$export_id = explode(',', $export_id);
 $product_material = $this->product_material;
 $order_production = $this->order_production;
+
+use Base\XLSX\XLSXWriter;
 use Home\Model\DateBase;
 $data = json_encode(array('depotId' => 110912, 'page' => 1, 'statuses' => array('Confirmed')));
 $curl = curl_init();
@@ -65,7 +71,7 @@ for($c = 1; $c <= $totalPage; $c++) {
     if(!empty($response['data']['orders'])) {
         foreach ($response['data']['orders'] as $v) {
             foreach ($v['products'] as $vv) {
-                $order_product[$v['id']][$vv['productCode']] = $vv['quantity'];
+                $order_product[$v['id']][$vv['productCode']] = array($vv['quantity'], $v['createdDateTime']);
             }
         }
     }
@@ -88,8 +94,8 @@ for($c = 1; $c <= $totalPage; $c++) {
                 <div id="sample_editable_1_wrapper" class="dataTables_wrapper form-inline" role="grid">
                     <div class="btn-toolbar">
                         <div class="btn-group focus-btn-group">
-                            <a class="button-export-all btn btn-default waves-effect waves-light">Xuất tất cả excel</a>
-                            <a class="button-export-selected btn btn-white waves-effect waves-light" ><i class="ion-ios7-upload-outline" style="font-size: 16px;margin: 0 3px 0 0"></i> Xuất excel đã chọn</a>
+                            <a class="button-export-all btn btn-default waves-effect waves-light" target="_blank" href="/admin/material/productsx?selectall=true">Xuất tất cả excel</a>
+                            <a class="button-export-product-sx btn btn-white waves-effect waves-light " ><i class="ion-ios7-upload-outline" style="font-size: 16px;margin: 0 3px 0 0"></i> Xuất excel đã chọn</a>
                         </div>
                         <div class="btn-group dropdown-btn-group pull-right">
                             <div class="dataTables_filter mb-15">
@@ -103,10 +109,11 @@ for($c = 1; $c <= $totalPage; $c++) {
                                 <tr>
                                     <th style="width: 0.2%;"></th>
                                     <th style="width: 1%;">Hình ảnh</th>
-                                    <th style="width: 5%;">Mã sản phẩm</th>
+                                    <th style="width: 10%;">Mã sản phẩm</th>
+                                    <th style="width: 10%;">Tên sản phẩm</th>
                                     <th style="width: 5%;">Tồn kho</th>
                                     <th style="vertical-align: middle;width: 12%;">Đơn hàng</th>
-                                    <th style="text-align: center;vertical-align: middle;width: 12%;">Hoạt động</th>
+                                    <th style="text-align: center;vertical-align: middle;width: 5%;">Hoạt động</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -119,15 +126,18 @@ for($c = 1; $c <= $totalPage; $c++) {
                                     $product_is_finished = false;
                                     $start_time = '';
                                     $end_time = '';
+                                    $export = array();
                                     foreach($product as $k => $v):
                                         $orderId = '';
+                                        $order_desc = '';
                                         $quantity_sx = 0;
                                         $order_string = '';
                                         foreach ($order_product as $kk => $oe) {
                                             if(isset($oe[$k])) {
                                                 $show = true;
-                                                $orderId .= 'Đơn hàng <strong>'. $kk . '</strong> Số lượng '.$oe[$k].'<br/>';
-                                                $quantity_sx += $oe[$k];
+                                                $orderId .= 'Đơn hàng <strong>'. $kk . '</strong> Số lượng '.$oe[$k][0].' Ngày '.DateBase::toDisplayDateTime($oe[$k][1]).'<br/>';
+                                                $order_desc .= 'Đơn hàng '. $kk . ' Số lượng '.$oe[$k][0].' Ngày '.DateBase::toDisplayDateTime($oe[$k][1]).'<br/>';
+                                                $quantity_sx += $oe[$k][0];
                                                 $order_string .= $kk.'_';
                                                 if(isset($order_production[$kk]) && $order_production[$kk]['status'] == \Admin\Model\OrderManufacture::IN_PRODUCTION) {
                                                     if($order_production[$kk][$k]) {
@@ -138,6 +148,26 @@ for($c = 1; $c <= $totalPage; $c++) {
                                                     if($order_production[$kk][$k]) {
                                                         $product_is_finished = true;
                                                     }
+                                                }
+                                                if(in_array($k,$export_id)){
+                                                    $export[] = array(
+                                                        $v['code'],
+                                                        $v['name'],
+                                                        $v['image'],
+                                                        $v['remain'],
+                                                        $kk,
+                                                        $oe[$k][0],
+                                                    );
+                                                }
+                                                if($export_all) {
+                                                    $export[] = array(
+                                                        $v['code'],
+                                                        $v['name'],
+                                                        $v['image'],
+                                                        $v['remain'],
+                                                        $kk,
+                                                        $oe[$k][0],
+                                                    );
                                                 }
                                                 $start_time = $order_production[$kk]['startDateTime'];
                                                 $end_time = $order_production[$kk]['endDateTime'];
@@ -176,11 +206,30 @@ for($c = 1; $c <= $totalPage; $c++) {
                                         } else {
                                             $url_created_product = '<a class="label label-danger" href="'.'/admin/material/addproduct?id='.$k.'&img='.$v['image'].'&name='.$v['name'].'" target="_blank">Tạo vật liệu</a>';
                                         }
+//                                        if(in_array($k,$export_id)){
+//                                            $export[] = array(
+//                                                $v['code'],
+//                                                $v['name'],
+//                                                $v['image'],
+//                                                $order_desc,
+//                                                $v['remain'],
+//                                            );
+//                                        }
+//                                        if($export_all) {
+//                                            $export[] = array(
+//                                                $v['code'],
+//                                                $v['name'],
+//                                                $v['image'],
+//                                                $order_desc,
+//                                                $v['remain'],
+//                                            );
+//                                        }
                                     ?>
                                     <tr class="even">
                                         <td style="width: 0.2%; vertical-align: middle;" class="bs-checkbox "><div class="checkbox"><input type="checkbox" name="productId" value="<?php echo $k ?>"><label></label></div></td>
                                         <td class="id" style="vertical-align: middle"><a title="<?php echo $v['name'] ?>" href="<?php echo $v['image'] ?>" class="button-image"><img class="lazy thumb-md" data-src="<?php echo $v['image'] ?>" ></a></td>
                                         <td style="vertical-align: middle"><strong><?php echo $v['code'] ?></strong> - <?php echo $url_created_product ?></td>
+                                        <td style="vertical-align: middle"><?php echo $v['name'] ?></td>
                                         <td style="vertical-align: middle"><?php echo $v['remain'] ?></td>
                                         <td style="vertical-align: middle"><?php echo $orderId ?></td>
                                         <td style="text-align: center;vertical-align: middle">
@@ -209,6 +258,42 @@ for($c = 1; $c <= $totalPage; $c++) {
                                         $product_is_finished = false;
                                         // end product
                                         endforeach;
+
+                                        if(!empty($export)) {
+                                            $file_name = 'Danh sách sản phẩm sản xuất_'.date('ymd').'.xlsx';
+                                            $sheet_product = 'Product Material';
+                                            $header_one = array( 'Mã sản phẩm', 'Tên sản phẩm', 'Hình ảnh sản phẩm', 'Tồn kho', 'Đơn hàng', 'Tổng số lượng');
+                                            $styles_white = array('font'=>'Arial', 'font-style'=>'bold', 'fill'=>'#FFF', 'halign'=>'left', 'border'=>'left,right,top,bottom');
+                                            $writer = new XLSXWriter();
+                                            $writer->writeSheetRow($sheet_product, $header_one, $styles_white);
+                                            $printedSeasons = [];
+                                            foreach ($export as $pi) {
+                                                $sku = $pi[0];
+                                                if(!in_array($sku, $printedSeasons)) {
+                                                    $printedSeasons[] = $sku;
+                                                } else {
+                                                    $pi[0] = ' ';
+                                                    $pi[1] = ' ';
+                                                    $pi[2] = ' ';
+                                                    $pi[3] = ' ';
+                                                }
+                                                $writer->writeSheetRow($sheet_product, $pi);
+                                            }
+                                            $writer->writeToFile($file_name);
+                                            header('Content-Description: File Transfer');
+                                            header("Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
+                                            header("Content-Disposition: attachment; filename=" . basename($file_name));
+                                            header("Content-Transfer-Encoding: binary");
+                                            header("Expires: 0");
+                                            header("Pragma: public");
+                                            header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
+                                            header('Content-Length: ' . filesize($file_name));
+                                            ob_clean();
+                                            flush();
+                                            readfile($file_name);
+                                            unlink($file_name);
+                                            exit;
+                                        }
                                         endif;
                                     ?>
                             </tbody>
