@@ -262,7 +262,7 @@ for($c = 1; $c <= $totalPage; $c++) {
                                         if(!empty($export)) {
                                             $file_name = 'Danh sách sản phẩm sản xuất_'.date('ymd').'.xlsx';
                                             $sheet_product = 'Product Material';
-                                            $header_one = array( 'Mã sản phẩm', 'Tên sản phẩm', 'Hình ảnh sản phẩm', 'Tồn kho', 'Đơn hàng', 'Tổng số lượng');
+                                            $header_one = array( 'Mã sản phẩm', 'Tên sản phẩm', 'Hình ảnh sản phẩm', 'Tồn kho', 'Đơn hàng', 'Số lượng');
                                             $styles_white = array('font'=>'Arial', 'font-style'=>'bold', 'fill'=>'#FFF', 'halign'=>'left', 'border'=>'left,right,top,bottom');
                                             $writer = new XLSXWriter();
                                             $writer->writeSheetRow($sheet_product, $header_one, $styles_white);
