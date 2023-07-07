@@ -521,6 +521,14 @@ class MaterialController extends AbstractActionController{
         ));
     }
 
+    public function crontabAction() {
+        $store = new \Admin\Model\Store();
+        $mapperStore = $this->getServiceLocator()->get('Admin\Model\StoreMapper');
+        $store->setName(date('h:i:s'));
+        $store->setStatus(2);
+        $mapperStore->save($store);
+    }
+
     public function exportproductAction() {
         $selected_products = $this->getRequest()->getQuery()['ids'];
         $selected = explode(',',$selected_products);
