@@ -3,18 +3,48 @@ namespace Admin\Model;
 
 use Base\Model\Base;
 class OrderProduct extends Base{
-	protected $id;
+
 	protected $orderId;
 	protected $productId;
-	protected $storeId;
-	protected $productPrice;
+	protected $productName;
+	protected $productCode;
+	protected $productImage;
+	protected $price;
 	protected $quantity;
-	protected $product;
-	protected $productColor;
-    protected $productSize;
-    protected $priceOff;
-    protected $productName;
-    protected $quantityTotal;
+    protected $stock;
+    protected $discount;
+
+    /**
+     * @return mixed
+     */
+    public function getOrderId()
+    {
+        return $this->orderId;
+    }
+
+    /**
+     * @param mixed $orderId
+     */
+    public function setOrderId($orderId)
+    {
+        $this->orderId = $orderId;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getProductId()
+    {
+        return $this->productId;
+    }
+
+    /**
+     * @param mixed $productId
+     */
+    public function setProductId($productId)
+    {
+        $this->productId = $productId;
+    }
 
     /**
      * @return mixed
@@ -35,166 +65,99 @@ class OrderProduct extends Base{
     /**
      * @return mixed
      */
-    public function getQuantityTotal()
+    public function getProductCode()
     {
-        return $this->quantityTotal;
+        return $this->productCode;
     }
 
     /**
-     * @param mixed $quantityTotal
+     * @param mixed $productCode
      */
-    public function setQuantityTotal($quantityTotal)
+    public function setProductCode($productCode)
     {
-        $this->quantityTotal = $quantityTotal;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getPriceOff()
-    {
-        return $this->priceOff;
-    }
-    /**
-     * @param mixed $priceOff
-     */
-    public function setPriceOff($priceOff)
-    {
-        $this->priceOff = $priceOff;
-    }
-    /**
-     * @param mixed $productColor
-     */
-    public function setProductColor($productColor)
-    {
-        $this->productColor = $productColor;
+        $this->productCode = $productCode;
     }
 
     /**
      * @return mixed
      */
-    public function getProductColor()
+    public function getProductImage()
     {
-        return $this->productColor;
+        return $this->productImage;
     }
 
     /**
-     * @param mixed $productSize
+     * @param mixed $productImage
      */
-    public function setProductSize($productSize)
+    public function setProductImage($productImage)
     {
-        $this->productSize = $productSize;
+        $this->productImage = $productImage;
     }
 
     /**
      * @return mixed
      */
-    public function getProductSize()
+    public function getPrice()
     {
-        return $this->productSize;
+        return $this->price;
     }
 
-	/**
-	 * @return the $product
-	 */
-	public function getProduct() {
-		return $this->product;
-	}
-
-	/**
-	 * @param field_type $product
-	 */
-	public function setProduct($product) {
-		$this->product = $product;
-	}
-
-	/**
-	 * @return the $id
-	 */
-	public function getId() {
-		return $this->id;
-	}
-
-	/**
-	 * @param field_type $id
-	 */
-	public function setId($id) {
-		$this->id = $id;
-	}
-
-	/**
-	 * @return the $orderId
-	 */
-	public function getOrderId() {
-		return $this->orderId;
-	}
-
-	/**
-	 * @param field_type $orderId
-	 */
-	public function setOrderId($orderId) {
-		$this->orderId = $orderId;
-	}
-
-	/**
-	 * @return the $productId
-	 */
-	public function getProductId() {
-		return $this->productId;
-	}
-
-	/**
-	 * @param field_type $productId
-	 */
-	public function setProductId($productId) {
-		$this->productId = $productId;
-	}
-
-	/**
-	 * @return the $storeId
-	 */
-	public function getStoreId() {
-		return $this->storeId;
-	}
-
-	/**
-	 * @param field_type $storeId
-	 */
-	public function setStoreId($storeId) {
-		$this->storeId = $storeId;
-	}
-
-	/**
-	 * @return the $productPrice
-	 */
-	public function getProductPrice() {
-		return $this->productPrice;
-	}
-
-	/**
-	 * @param field_type $productPrice
-	 */
-	public function setProductPrice($productPrice) {
-		$this->productPrice = $productPrice;
-	}
-
-	/**
-	 * @return the $quantity
-	 */
-	public function getQuantity() {
-		return $this->quantity;
-	}
-
-	/**
-	 * @param field_type $quantity
-	 */
-	public function setQuantity($quantity) {
-		$this->quantity = $quantity;
-	}
-
-    public function getViewLink(){
-        return \Base\Model\Uri::slugify($this);
+    /**
+     * @param mixed $price
+     */
+    public function setPrice($price)
+    {
+        $this->price = $price;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getQuantity()
+    {
+        return $this->quantity;
+    }
+
+    /**
+     * @param mixed $quantity
+     */
+    public function setQuantity($quantity)
+    {
+        $this->quantity = $quantity;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getStock()
+    {
+        return $this->stock;
+    }
+
+    /**
+     * @param mixed $stock
+     */
+    public function setStock($stock)
+    {
+        $this->stock = $stock;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getDiscount()
+    {
+        return $this->discount;
+    }
+
+    /**
+     * @param mixed $discount
+     */
+    public function setDiscount($discount)
+    {
+        $this->discount = $discount;
+    }
+
 
 	
 }

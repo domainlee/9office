@@ -78,7 +78,8 @@ class Module {
 						'Admin\Form\Productc' => 'Admin\Form\Productc',
 						'Admin\Form\ProductcFilter' => 'Admin\Form\ProductcFilter',
 						'Admin\Form\ProductcSearch' => 'Admin\Form\ProductcSearch',
-						
+						'Admin\Form\OrderTwoSearch' => 'Admin\Form\OrderTwoSearch',
+
 
 						'Admin\Model\Banner' => 'Admin\Model\Banner',
 						'Admin\Model\BannerMapper' => 'Admin\Model\BannerMapper',

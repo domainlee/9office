@@ -415,7 +415,6 @@ class Table {
         $pagingHtml = "<div class='dataTables_paginate paging_bootstrap pagination pagination__option'><ul class='pagination'>";
         $paging = $this->getPaging();
 //        echo $this->getUrlQuery();
-
 //        $uri = $this->getUrlQuery() ? '&'.$this->getUrlQuery():'';
         $uri = '';
         $uri = preg_replace('/\?page=(\d+)/', '', $uri);

@@ -1,0 +1,87 @@
+<?php
+echo $this->headtitle($this->escapehtml($this->translate('Danh sách hoá đơn')));
+$domainUrl = $this->home()->getDomain();
+$domainUrl ? $_SERVER['HTTP_HOST'] = $domainUrl:$_SERVER['HTTP_HOST'];
+$option = $this->option;
+$query_request = $this->query;
+$startDate = !empty($query_request->start) ? $query_request->start:'';
+$endDate = !empty($query_request->end) ? $query_request->end:'';
+
+?>
+<input type="hidden" class="updateHomepage" />
+<div class="row">
+    <div class="col-sm-12">
+        <div class="card-box">
+            <div class="portlet-body">
+                <div id="sample_editable_1_wrapper" class="dataTables_wrapper form-inline" role="grid">
+                    <div class="btn-toolbar">
+                        <div class="btn-group focus-btn-group">
+                            <a href="/admin/invoice/add" class="btn btn-default waves-effect waves-light">Tạo hoá đơn</a>
+                        </div>
+                        <div class="btn-group dropdown-btn-group pull-right">
+                            <div class="dataTables_filter mb-15">
+                                <form action="" method="get" name="ProductSearch" class="form-inline" id="ProductSearch">
+                                    <?php
+                                    $form = $this->fFilter;
+                                    ?>
+                                    <div class="form-group">
+                                        <div class="input-daterange input-group" id="date-range">
+                                            <input type="text" class="form-control" placeholder="Từ ngày" name="start" value="<?php echo $startDate ?>">
+                                            <span class="input-group-addon bg-custom b-0 text-white">Đến</span>
+                                            <input type="text" class="form-control" placeholder="Đến ngày" name="end" value="<?php echo $endDate ?>">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <?= $this->formelement($form->get('productCode')->setAttributes(['class' => 'form-control','placeholder'=>'Mã sản phẩm', 'value' => isset($this->query['productCode']) ? $this->query['productCode']:'']))?>
+                                    </div>
+                                    <div class="form-group">
+                                        <?=$this->formelement($form->get('status')->setAttributes(['class' => 'form-control']))?>
+                                    </div>
+
+                                    <div class="form-group"><input name="submit" type="submit" class="btn btn-default " value="Tìm Kiếm"></div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <?php
+                    echo $dg = new \Admin\Dg\DgOrderSecond ( array (
+                        'data' => $this->results->getData (),
+                        'paging' => $this->results->getPaging (),
+                        'rowCount' => $this->results->getRowCount (),
+                        'rowInPage' => $this->results->getRowInPage (),
+                        'setup' => true,
+                        'url' => $this->url,
+                    ));
+                    $total = ceil($this->results->getRowCount ()/$this->results->getPaging ()[1]);
+                    $page = $this->results->getPaging ()[0];
+                    $query = $this->query_uri;
+                    $page_prev = (int)($page == 1 ? 1:$page-1);
+                    $page_next = (int)($total == $page ? $page:$page + 1);
+                    $link = '';
+                    if($query) {
+                        $page_prev = preg_replace ( '/page=\d*/i','page='.$page_prev, $query );
+                        $page_next = preg_replace ( '/page=\d*/i','page='.$page_next, $query );
+                        $link = preg_replace ( '/page=\d*/i','', $query );
+                    } else {
+                        $page_prev = 'page='.$page_prev;
+                        $page_next = 'page='.$page_next;
+                    }
+                    ?>
+
+                    <label>Trang:
+                        <select class="form-control input-sm" id="paginationControl" size="1">
+                            <?php for($c = 1; $c <= $total; $c++): ?>
+                                <option value="<?php echo 'list?page='. $c .'&'. $link ?>" <?php echo $c == $page ? 'selected':'' ?>><?php echo $c ?></option>
+                            <?php endfor; ?>
+                        </select>
+                        / <?php echo $total; ?>
+                    </label>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

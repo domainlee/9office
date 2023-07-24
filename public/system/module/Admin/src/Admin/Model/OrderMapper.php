@@ -64,67 +64,37 @@ class OrderMapper extends Base{
         $dbAdapter = $this->getServiceLocator()->get('dbAdapter');
         /* @var $dbSql \Zend\Db\Sql\Sql */
         $dbSql = $this->getServiceLocator()->get('dbSql');
-//
-//        $select = $dbSql->select(array('p'=>self::TABLE_NAME));
-//        $rCount = $dbSql->select(array('p'=>self::TABLE_NAME),array('c'=>'count(id)'));
-//
-//        $selectStr = $dbSql->getSqlStringForSqlObject($select);
-//        $productId = [];
-//        $results = $dbAdapter->query($selectStr,$dbAdapter::QUERY_MODE_EXECUTE);
-//        foreach($results as $r){
-//            $productId[] = $r['id'];
-//        }
-//        unset($select);
-//
-//        $products = [];
-//        $select = $dbSql->select(array('o'=> 'order_products'));
-//        $select->where(array('o.orderId'=> $productId));
-//        $selectStr = $dbSql->getSqlStringForSqlObject($select);
-//        $results = $dbAdapter->query($selectStr,$dbAdapter::QUERY_MODE_EXECUTE);
-//        foreach($results as $r){
-//
-//            $select = $dbSql->select(array('pa'=> 'product_attr'));
-//            $select->where(array('pa.id'=> [$r['productColor'], $r['productSize']]));
-//            $selectStr = $dbSql->getSqlStringForSqlObject($select);
-//            $attrs = [];
-//            $results = $dbAdapter->query($selectStr,$dbAdapter::QUERY_MODE_EXECUTE);
-//            if(count($results)){
-//                foreach($results as $pa){
-//                    $attr = new \Admin\Model\Attr();
-//                    $attr->exchangeArray((array)$pa);
-//                    $attrs[] = $attr;
-//                }
-//            }
-//
-//            $product = new \Admin\Model\OrderProduct();
-//            $select = $dbSql->select(array('p'=> 'products'));
-//            $select->where(array('p.id'=> $r['productId']));
-//            $selectStr = $dbSql->getSqlStringForSqlObject($select);
-//            $results = $dbAdapter->query($selectStr,$dbAdapter::QUERY_MODE_EXECUTE);
-//            if(count($results)){
-//                foreach($results as $p){
-//                    $product->addOption('productName',$p['name']);
-//                    $product->addOption('priceOld',$p['priceOld']);
-//                    $product->addOption('price',$p['price']);
-//                }
-//            }
-//
-//            $product->addOption('attr', $attrs);
-//            $product->exchangeArray((array) $r);
-//            $products[$r['orderId']][$r['id']] = $product;
-//        }
-//        unset($select);
 
         $select = $dbSql->select(array('p'=>self::TABLE_NAME));
         $rCount = $dbSql->select(array('p'=>self::TABLE_NAME),array('c'=>'count(id)'));
 
-        if($item->getId()){
-            $select->where(array('p.id'=>$item->getId()));
-            $rCount->where(array('p.id'=>$item->getId()));
+        $select->join(array('op' => 'order_products'),
+            'op.orderId = p.orderId',array(
+                'productCode' => 'productCode'
+            ),\Zend\Db\Sql\Select::JOIN_LEFT
+        );
+        $rCount->join(array('op' => 'order_products'),
+            'op.orderId = p.orderId',array(
+                'productCode' => 'productCode'
+            ),\Zend\Db\Sql\Select::JOIN_LEFT
+        );
+        $datefrom = $item->getOptions()['start_date'];
+        $dateto = $item->getOptions()['end_date'];
+        if($datefrom || $dateto) {
+            $select->where("(p.createdDateTime >= '$datefrom 00:00:00' AND p.createdDateTime <= '$dateto 23:59:59')");
+            $rCount->where("(p.createdDateTime >= '$datefrom 00:00:00' AND p.createdDateTime <= '$dateto 23:59:59')");
         }
-        if($item->getStoreId()){
-            $select->where(array('p.storeId'=>$item->getStoreId()));
-            $rCount->where(array('p.storeId'=>$item->getStoreId()));
+        if($item->getProductCode()) {
+            $select->where("op.productCode LIKE '%{$item->getProductCode()}%'");
+            $rCount->where("op.productCode LIKE '%{$item->getProductCode()}%'");
+        }
+        if($item->getStatusCode()) {
+            $select->where("p.statusCode LIKE '%{$item->getStatusCode()}%'");
+            $rCount->where("p.statusCode LIKE '%{$item->getStatusCode()}%'");
+        }
+        if($item->getOrderId()){
+            $select->where(array('p.orderId'=>$item->getOrderId()));
+            $rCount->where(array('p.orderId'=>$item->getOrderId()));
         }
 
         $currentPage = isset ( $paging [0] ) ? $paging [0] : 1;
@@ -132,7 +102,7 @@ class OrderMapper extends Base{
         $offset = ($currentPage - 1) * $limit;
         $select->limit ( $limit );
         $select->offset ( $offset );
-        $select->order ( 'p.id DESC' );
+        $select->order ( 'p.createdDateTime DESC' );
 
         $selectStr = $dbSql->getSqlStringForSqlObject($select);
         $rCountStr = $dbSql->getSqlStringForSqlObject($rCount);
@@ -141,15 +111,20 @@ class OrderMapper extends Base{
         $rs = array();
         if(count($results)){
             foreach ($results as $rows){
-                    $model = new \Admin\Model\Order();
-                    if(isset($products[$rows['id']])){
-                        $model->addOption('product', $products[$rows['id']]);
-                    }
-                    $model->exchangeArray((array) $rows);
-                    $rs[] = $model;
+                $model = new \Admin\Model\Order();
+                $products = '';
+                if($rows['productCode']) {
+                    $orderProduct = new \Admin\Model\OrderProduct();
+                    $orderProduct->setProductCode($rows['productCode']);
+                    $orderProduct->setOrderId($rows['orderId']);
+                    $orderProductMapper = $this->getServiceLocator()->get('Admin\Model\OrderProductMapper');
+                    $products = $orderProductMapper->fetchAll($orderProduct);
+                    $model->setOptions(['products' => $products]);
+                }
+                $model->exchangeArray((array) $rows);
+                $rs[] = $model;
             }
         }
-
         return new \Base\Dg\Paginator ( $count->count (), $rs, $paging, count ( $results ) );
     }
 
@@ -232,25 +207,17 @@ class OrderMapper extends Base{
 		}
 	}
 
-	public function getId($id){
-		/* @var $dbAdapter \Zend\Db\Adapter\Adapter */
-		$dbAdapter = $this->getServiceLocator()->get('dbAdapter');
-		/* @var $dbSql \Zend\Db\Sql\Sql */
-		$dbSql = $this->getServiceLocator()->get('dbSql');
-	
-		$select = $dbSql->select(array('od'=>$this->getTableName()));
-		$select->where(array('od.id'=>$id));
+	public function getOrder($id){
+        /* @var $dbAdapter \Zend\Db\Adapter\Adapter */
+        $dbAdapter = $this->getServiceLocator()->get('dbAdapter');
+        /* @var $dbSql \Zend\Db\Sql\Sql */
+        $dbSql = $this->getServiceLocator()->get('dbSql');
+        $select = $dbSql->select(array('o'=> self::TABLE_NAME));
+        $select->columns(array('orderId'));
+        $select->where(array('o.orderId'=> $id));
 		$selectStr = $dbSql->getSqlStringForSqlObject($select);
 		$results = $dbAdapter->query($selectStr,$dbAdapter::QUERY_MODE_EXECUTE);
-		if(count($results)){
-			foreach ($results as $row){
-				$model = new \Admin\Model\Order();
-				$data = (array)$results->current();
-				$model->exchangeArray($data);
-				return $model;
-			}
-		}
-	
+        return $results->count();
 	}
 
     /**
@@ -258,20 +225,17 @@ class OrderMapper extends Base{
      */
 	public function save($model){
 		$data = array(
-			'storeId'=> $model->getStoreId(),
-			'clientId'=> $model->getClientId(),
-			'methodPay'=> $model->getMethodPay(),
-			'shippingType'=> $model->getShippingType(),
-			'customerName'=> $model->getCustomerName(),
-			'customerAddress'=> $model->getCustomerAddress(),
+			'orderId'=> $model->getOrderId(),
+			'depotId'=> $model->getDepotId(),
+			'depotName'=> $model->getDepotName(),
 			'customerMobile'=> $model->getCustomerMobile(),
+			'customerAddress'=> $model->getCustomerAddress(),
+			'customerName'=> $model->getCustomerName(),
 			'customerEmail'=> $model->getCustomerEmail(),
-			'description'=> $model->getDescription(),
-			'createdById'=> $model->getCreatedbyId(),
+			'statusName'=> $model->getStatusName(),
+			'statusCode'=> $model->getStatusCode(),
+			'calcTotalMoney'=> $model->getCalcTotalMoney(),
 			'createdDateTime'=> $model->getCreatedDateTime(),
-			'confirmedDateTime'=> $model->getConfirmedDateTime(),
-			'status' => $model->getStatus(),
-            'product' => $model->getProduct(),
 		);
         $xss = new xssClean();
         $data = $xss->cleanInputs($data);
@@ -280,17 +244,18 @@ class OrderMapper extends Base{
 		$dbAdapter = $this->getServiceLocator()->get('dbAdapter');
 		/* @var $dbSql \Zend\Db\Sql\Sql */
 		$dbSql = $this->getServiceLocator()->get('dbSql');
-		if($model->getId() === null){
-			//echo 'Id null';die();
+		$orderId = $this->getOrder($data['orderId']);
+		if(!$orderId){
 			$insert = $dbSql->insert($this->getTableName());
 			$insert->values($data);
 			$query = $dbSql->getSqlStringForSqlObject($insert);
+//			echo $query;
 			$results = $dbAdapter->query($query, $dbAdapter::QUERY_MODE_EXECUTE);
-            $model->setId($results->getGeneratedValue());
+//            $model->orderId($results->getGeneratedValue());
         } else {
-			$update = $dbSql->update($this->getTableName());
+            $update = $dbSql->update($this->getTableName());
 			$update->set($data);
-			$update->where(array("id" => (int)$model->getId()));
+			$update->where(array("orderId" => (int)$model->getOrderId()));
 			$selectString = $dbSql->getSqlStringForSqlObject($update);
             $results = $dbAdapter->query($selectString, $dbAdapter::QUERY_MODE_EXECUTE);
 		}

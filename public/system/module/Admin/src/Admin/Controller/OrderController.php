@@ -4,6 +4,7 @@ namespace Admin\Controller;
 use Base\XLSX\XLSXWriter;
 use Base\XLSXImage\XLSWriterPlus;
 use \Datetime;
+use Menu\Admin;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 use Zend\View\Model\JsonModel;
@@ -265,6 +266,193 @@ class OrderController extends AbstractActionController{
             'order_production' => $orderProduction
 		));
 	}
+
+	public function listAction() {
+        $this->layout('layout/admin');
+        $sl = $this->getServiceLocator();
+        $query = $this->getRequest()->getQuery();
+        $query_uri = $this->getRequest()->getUri()->getQuery();
+
+        $startDate = $query->start ? : '';
+        $endDate = $query->end ? : '';
+        $startDate = DateBase::toCommonDateTwo($startDate);
+        $endDate = DateBase::toCommonDateTwo($endDate);
+
+        $order = new \Admin\Model\Order();
+        $order->setOptions(['start_date' => $startDate, 'end_date' => $endDate]);
+        $orderMapper = $sl->get('Admin\Model\OrderMapper');
+        $order->exchangeArray((array)$this->getRequest()->getQuery());
+        $options['isAdmin'] = $this->user()->isSuperAdmin();
+        $orderMapper = $sl->get('Admin\Model\OrderMapper');
+        $fFilter = new \Admin\Form\OrderTwoSearch($options);
+        $status = array(
+            'New' => 'Đơn mới',
+            'Confirming' => 'Đang xác nhận',
+            'CustomerConfirming' => 'Chờ khách xác nhận',
+            'Confirmed' => 'Đã xác nhận',
+            'Packing' => 'Đang đóng gói',
+            'InProduction' => 'Đang sản xuất',
+            'FinishedProduction' => 'Đã sản xuất xong',
+        );
+        $status_filter = $this->getRequest()->getQuery()->status ? : '';
+        $fFilter->setStatus($status, $status_filter);
+        if($status_filter) {
+            $order->setStatusCode($status_filter);
+        }
+        $page = (int)$this->getRequest()->getQuery()->page ? : 1;
+        $results = $orderMapper->search($order, array($page,50));
+        return new ViewModel(array(
+            'fFilter' => $fFilter,
+            'results' => $results,
+            'url' => $this->getRequest()->getUri()->getQuery(),
+            'uri' => $this->getRequest()->getUri()->getQuery(),
+            'query' => $query,
+            'query_uri' => $query_uri,
+        ));
+    }
+	public function cronAction() {
+        $this->layout('layout/admin');
+        $now = new DateTime();
+        $nowOrder = $now->format('Y-m-d');
+        $sl = $this->getServiceLocator();
+
+        $query = $this->getRequest()->getUri()->getQuery();
+        $page = (int)$this->getRequest()->getQuery()->page ? : 1;
+        $id = $this->getRequest()->getQuery()->id ? : '';
+        $phone = $this->getRequest()->getQuery()->phone ? : '';
+        $status_filter = $this->getRequest()->getQuery()->status ? : '';
+        $startDate = $this->getRequest()->getQuery()->start ? : '';
+        $endDate = $this->getRequest()->getQuery()->end ? : '';
+        $startDate = DateBase::toCommonDateTwo($startDate);
+        $endDate = DateBase::toCommonDateTwo($endDate);
+        $query_request = $this->getRequest()->getQuery();
+
+        $inProduction = array();
+        if($status_filter == 'InProduction') {
+            $status_filter = '';
+            $orderManufacture = new \Admin\Model\OrderManufacture();
+            $orderManufacture->setStatus(\Admin\Model\OrderManufacture::IN_PRODUCTION);
+            $orderManufactureMapper = $this->getServiceLocator()->get('Admin\Model\OrderManufactureMapper');
+            $inProduction = $orderManufactureMapper->fetchStatus($orderManufacture);
+        }
+
+        $finishedProduction = array();
+        if($status_filter == 'FinishedProduction') {
+            $status_filter = '';
+            $orderManufacture = new \Admin\Model\OrderManufacture();
+            $orderManufacture->setStatus(\Admin\Model\OrderManufacture::FINISHED_PRODUCTION);
+            $orderManufactureMapper = $this->getServiceLocator()->get('Admin\Model\OrderManufactureMapper');
+            $finishedProduction = $orderManufactureMapper->fetchStatus($orderManufacture);
+        }
+
+        $data = json_encode(array('depotId' => 110912, 'page' => $page, 'fromDate' => $startDate,'toDate' => $endDate));
+        $curl = curl_init();
+        $api = \Base\Model\Resource::data_api();
+        $data = array(
+            'version' => $api['version'],
+            'appId' => $api['appId'],
+            'businessId' => $api['businessId'],
+            'accessToken' => $api['accessToken'],
+            'data' => $data
+        );
+        curl_setopt_array($curl, array(
+            CURLOPT_URL => 'https://open.nhanh.vn/api/order/index',
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => '',
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 0,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => 'POST',
+            CURLOPT_POSTFIELDS => $data,
+        ));
+        $response = curl_exec($curl);
+        curl_close($curl);
+        $response = json_decode($response, true);
+        $totalPage = $response['data']['totalPages'];
+        $order_items = array();
+        $order_export = array();
+        for($c = 1; $c <= $totalPage; $c++) {
+            $data = json_encode(array('page' => $c, 'fromDate' => $startDate,'toDate' => $endDate));
+            $curl = curl_init();
+            $api = \Base\Model\Resource::data_api();
+            $data = array(
+                'version' => $api['version'],
+                'appId' => $api['appId'],
+                'businessId' => $api['businessId'],
+                'accessToken' => $api['accessToken'],
+                'data' => $data
+            );
+            curl_setopt_array($curl, array(
+                CURLOPT_URL => 'https://open.nhanh.vn/api/order/index',
+                CURLOPT_RETURNTRANSFER => true,
+                CURLOPT_ENCODING => '',
+                CURLOPT_MAXREDIRS => 10,
+                CURLOPT_TIMEOUT => 0,
+                CURLOPT_FOLLOWLOCATION => true,
+                CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+                CURLOPT_CUSTOMREQUEST => 'POST',
+                CURLOPT_POSTFIELDS => $data,
+            ));
+            $response = curl_exec($curl);
+            curl_close($curl);
+            $response = json_decode($response, true);
+            if(!empty($response['data']['orders'])) {
+                foreach ($response['data']['orders'] as $v) {
+                    $order = new \Admin\Model\Order();
+                    $v['orderId'] = $v['id'];
+                    $order->exchangeArray($v);
+                    $orderMapper = $sl->get('Admin\Model\OrderMapper');
+                    $orderMapper->save($order);
+                    if(!empty($v['products'])) {
+                        foreach ($v['products'] as $vv) {
+                            $vv['stock'] = $this->getstock($vv['productId']);
+                            $vv['orderId'] = $v['id'];
+                            $orderProduct = new \Admin\Model\OrderProduct();
+                            $orderProduct->exchangeArray($vv);
+                            $orderProductMapper = $sl->get('Admin\Model\OrderProductMapper');
+                            $orderProductMapper->save($orderProduct);
+                        }
+                    }
+                }
+            }
+        }
+
+        return json_encode(array('code' => 1,'mes' => 'Success'));
+    }
+
+    public function getstock($productId) {
+        $data = $productId;
+        $api = \Base\Model\Resource::data_api();
+        $data = array(
+            'version' => $api['version'],
+            'appId' => $api['appId'],
+            'businessId' => $api['businessId'],
+            'accessToken' => $api['accessToken'],
+            'data' => $data
+        );
+
+        $curl = curl_init();
+
+        curl_setopt_array($curl, array(
+            CURLOPT_URL => 'https://open.nhanh.vn/api/product/detail',
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => '',
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 0,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => 'POST',
+            CURLOPT_POSTFIELDS => $data,
+        ));
+
+        $response = curl_exec($curl);
+
+        curl_close($curl);
+        $product = json_decode($response, true);
+        $stock = $product['data'][$productId]['inventory']['remain'];
+        return $stock;
+    }
 
     public function exportAction() {
         $this->layout('layout/null');

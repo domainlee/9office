@@ -3,32 +3,19 @@ namespace Admin\Model;
 
 use Base\Model\Base;
 class Order extends Base{
-	protected $id;
-	protected $storeId;
-	protected $shippingType;
-	protected $customerName;
-	protected $customerAddress;
-	protected $customerMobile;
-	protected $customerEmail;
-	protected $description;
-	protected $createdbyId;
-	protected $createdDateTime;
-	protected $confirmedDateTime;
-	protected $status;
-	protected $totalMoney;
-	protected $orderProduct;
-	protected $quantity;
-	protected $product;
-	protected $clientId;
-	protected $methodPay;
+
 	protected $orderId;
-
-
-    const STATUS_NEW = 1;
-    const STATUS_DONE = 2;
-
-    const PAYMENT_DIRECT = 1;
-    const PAYMENT_COD = 2;
+	protected $depotId;
+	protected $depotName;
+	protected $customerMobile;
+	protected $customerAddress;
+    protected $customerName;
+    protected $customerEmail;
+	protected $statusName;
+	protected $statusCode;
+	protected $calcTotalMoney;
+	protected $createdDateTime;
+	protected $productCode;
 
     /**
      * @return mixed
@@ -49,275 +36,177 @@ class Order extends Base{
     /**
      * @return mixed
      */
-    public function getClientId()
+    public function getDepotId()
     {
-        return $this->clientId;
+        return $this->depotId;
     }
 
     /**
-     * @param mixed $clientId
+     * @param mixed $depotId
      */
-    public function setClientId($clientId)
+    public function setDepotId($depotId)
     {
-        $this->clientId = $clientId;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getMethodPay()
-    {
-        return $this->methodPay;
-    }
-
-    /**
-     * @param mixed $methodPay
-     */
-    public function setMethodPay($methodPay)
-    {
-        $this->methodPay = $methodPay;
+        $this->depotId = $depotId;
     }
 
     /**
      * @return mixed
      */
-    public function getProduct()
+    public function getDepotName()
     {
-        return $this->product;
+        return $this->depotName;
     }
 
     /**
-     * @param mixed $product
+     * @param mixed $depotName
      */
-    public function setProduct($product)
+    public function setDepotName($depotName)
     {
-        $this->product = $product;
+        $this->depotName = $depotName;
     }
 
-	/**
-	 * @return the $quantity
-	 */
-	public function getQuantity() {
-		return $this->quantity;
-	}
+    /**
+     * @return mixed
+     */
+    public function getCustomerMobile()
+    {
+        return $this->customerMobile;
+    }
 
-	/**
-	 * @param field_type $quantity
-	 */
-	public function setQuantity($quantity) {
-		$this->quantity = $quantity;
-	}
+    /**
+     * @param mixed $customerMobile
+     */
+    public function setCustomerMobile($customerMobile)
+    {
+        $this->customerMobile = $customerMobile;
+    }
 
-	/**
-	 * @return the $orderProduct
-	 */
-	public function getOrderProduct() {
-		return $this->orderProduct;
-	}
+    /**
+     * @return mixed
+     */
+    public function getCustomerAddress()
+    {
+        return $this->customerAddress;
+    }
 
-	/**
-	 * @param field_type $orderProduct
-	 */
-	public function setOrderProduct($orderProduct) {
-		$this->orderProduct = $orderProduct;
-	}	
+    /**
+     * @param mixed $customerAddress
+     */
+    public function setCustomerAddress($customerAddress)
+    {
+        $this->customerAddress = $customerAddress;
+    }
 
-	/**
-	 * @return the $totalMoney
-	 */
-	public function getTotalMoney() {
-		return $this->totalMoney;
-	}
+    /**
+     * @return mixed
+     */
+    public function getCustomerName()
+    {
+        return $this->customerName;
+    }
 
-	/**
-	 * @param Ambigous <unknown, number> $totalMoney
-	 */
-	public function setTotalMoney($totalMoney) {
-		$this->totalMoney = $totalMoney;
-	}
+    /**
+     * @param mixed $customerName
+     */
+    public function setCustomerName($customerName)
+    {
+        $this->customerName = $customerName;
+    }
 
-	public function addProduct($product) {
-		if(!is_array($this->orderProduct)) {
-			$this->orderProduct = array();
-		}
-		$this->orderProduct[] = $product;
-	}
-	
-	public function addMoney($money) {
-		$this->totalMoney = $this->totalMoney?: 0;
-		$this->totalMoney += $money;
-	}
-	public function qtt($quantity){
-		$this->quantity = $this->quantity?: 0;
-		$this->quantity = $quantity;
-	}
-	/**
-	 * @return the $id
-	 */
-	public function getId() {
-		return $this->id;
-	}
+    /**
+     * @return mixed
+     */
+    public function getCustomerEmail()
+    {
+        return $this->customerEmail;
+    }
 
-	/**
-	 * @param field_type $id
-	 */
-	public function setId($id) {
-		$this->id = $id;
-	}
+    /**
+     * @param mixed $customerEmail
+     */
+    public function setCustomerEmail($customerEmail)
+    {
+        $this->customerEmail = $customerEmail;
+    }
 
-	/**
-	 * @return the $storeId
-	 */
-	public function getStoreId() {
-		return $this->storeId;
-	}
+    /**
+     * @return mixed
+     */
+    public function getStatusName()
+    {
+        return $this->statusName;
+    }
 
-	/**
-	 * @param field_type $storeId
-	 */
-	public function setStoreId($storeId) {
-		$this->storeId = $storeId;
-	}
+    /**
+     * @param mixed $statusName
+     */
+    public function setStatusName($statusName)
+    {
+        $this->statusName = $statusName;
+    }
 
-	/**
-	 * @return the $shippingType
-	 */
-	public function getShippingType() {
-		return $this->shippingType;
-	}
+    /**
+     * @return mixed
+     */
+    public function getStatusCode()
+    {
+        return $this->statusCode;
+    }
 
-	/**
-	 * @param field_type $shippingType
-	 */
-	public function setShippingType($shippingType) {
-		$this->shippingType = $shippingType;
-	}
+    /**
+     * @param mixed $statusCode
+     */
+    public function setStatusCode($statusCode)
+    {
+        $this->statusCode = $statusCode;
+    }
 
-	/**
-	 * @return the $customerName
-	 */
-	public function getCustomerName() {
-		return $this->customerName;
-	}
+    /**
+     * @return mixed
+     */
+    public function getCalcTotalMoney()
+    {
+        return $this->calcTotalMoney;
+    }
 
-	/**
-	 * @param field_type $customerName
-	 */
-	public function setCustomerName($customerName) {
-		$this->customerName = $customerName;
-	}
+    /**
+     * @param mixed $calcTotalMoney
+     */
+    public function setCalcTotalMoney($calcTotalMoney)
+    {
+        $this->calcTotalMoney = $calcTotalMoney;
+    }
 
-	/**
-	 * @return the $customerAddress
-	 */
-	public function getCustomerAddress() {
-		return $this->customerAddress;
-	}
+    /**
+     * @return mixed
+     */
+    public function getCreatedDateTime()
+    {
+        return $this->createdDateTime;
+    }
 
-	/**
-	 * @param field_type $customerAddress
-	 */
-	public function setCustomerAddress($customerAddress) {
-		$this->customerAddress = $customerAddress;
-	}
+    /**
+     * @param mixed $createdDateTime
+     */
+    public function setCreatedDateTime($createdDateTime)
+    {
+        $this->createdDateTime = $createdDateTime;
+    }
 
-	/**
-	 * @return the $customerMobile
-	 */
-	public function getCustomerMobile() {
-		return $this->customerMobile;
-	}
+    /**
+     * @return mixed
+     */
+    public function getProductCode()
+    {
+        return $this->productCode;
+    }
 
-	/**
-	 * @param field_type $customerMobile
-	 */
-	public function setCustomerMobile($customerMobile) {
-		$this->customerMobile = $customerMobile;
-	}
-
-	/**
-	 * @return the $customerEmail
-	 */
-	public function getCustomerEmail() {
-		return $this->customerEmail;
-	}
-
-	/**
-	 * @param field_type $customerEmail
-	 */
-	public function setCustomerEmail($customerEmail) {
-		$this->customerEmail = $customerEmail;
-	}
-
-	/**
-	 * @return the $description
-	 */
-	public function getDescription() {
-		return $this->description;
-	}
-
-	/**
-	 * @param field_type $description
-	 */
-	public function setDescription($description) {
-		$this->description = $description;
-	}
-
-	/**
-	 * @return the $createdbyId
-	 */
-	public function getCreatedbyId() {
-		return $this->createdbyId;
-	}
-
-	/**
-	 * @param field_type $createdbyId
-	 */
-	public function setCreatedbyId($createdbyId) {
-		$this->createdbyId = $createdbyId;
-	}
-
-	/**
-	 * @return the $createdDateTime
-	 */
-	public function getCreatedDateTime() {
-		return $this->createdDateTime;
-	}
-
-	/**
-	 * @param field_type $createdDateTime
-	 */
-	public function setCreatedDateTime($createdDateTime) {
-		$this->createdDateTime = $createdDateTime;
-	}
-
-	/**
-	 * @return the $confirmedDateTime
-	 */
-	public function getConfirmedDateTime() {
-		return $this->confirmedDateTime;
-	}
-
-	/**
-	 * @param field_type $confirmedDateTime
-	 */
-	public function setConfirmedDateTime($confirmedDateTime) {
-		$this->confirmedDateTime = $confirmedDateTime;
-	}
-
-	/**
-	 * @return the $status
-	 */
-	public function getStatus() {
-		return $this->status;
-	}
-
-	/**
-	 * @param field_type $status
-	 */
-	public function setStatus($status) {
-		$this->status = $status;
-	}
-
+    /**
+     * @param mixed $productCode
+     */
+    public function setProductCode($productCode)
+    {
+        $this->productCode = $productCode;
+    }
 
 }

@@ -9,15 +9,30 @@ class OrderProductMapper extends Base{
     /**
      * @param \Admin\Model\OrderProduct $model
      */
+
+    public function getOrderProduct($id, $productId){
+        /* @var $dbAdapter \Zend\Db\Adapter\Adapter */
+        $dbAdapter = $this->getServiceLocator()->get('dbAdapter');
+        /* @var $dbSql \Zend\Db\Sql\Sql */
+        $dbSql = $this->getServiceLocator()->get('dbSql');
+        $select = $dbSql->select(array('o'=> $this->getTableName()));
+        $select->where(array('o.orderId'=> $id, 'o.productId' => $productId));
+        $selectStr = $dbSql->getSqlStringForSqlObject($select);
+        $results = $dbAdapter->query($selectStr,$dbAdapter::QUERY_MODE_EXECUTE);
+        return $results->count();
+    }
+
 	public function save($model){
 		$data = array(
 			'orderId' => $model->getOrderId(),
 			'productId' => $model->getProductId(),
-			'storeId' => $model->getStoreId(),
-			'productPrice' => $model->getProductPrice(),
-			'quantity' => $model->getQuantity(),
-			'priceOff' => $model->getPriceOff(),
 			'productName' => $model->getProductName(),
+			'productCode' => $model->getProductCode(),
+			'productImage' => $model->getProductImage(),
+			'stock' => $model->getStock(),
+			'price' => $model->getPrice(),
+			'quantity' => $model->getQuantity(),
+			'discount' => $model->getDiscount(),
 		);
         $xss = new xssClean();
         $data = $xss->cleanInputs($data);
@@ -25,60 +40,54 @@ class OrderProductMapper extends Base{
 		$dbAdapter = $this->getServiceLocator()->get('dbAdapter');
 		/* @var $dbSql \Zend\Db\Sql\Sql */
 		$dbSql = $this->getServiceLocator()->get('dbSql');
-		
-		if($model->getId() == null){
+        $orderId = $this->getOrderProduct($data['orderId'], $data['productId']);
+        if(!$orderId){
 			$insert = $dbSql->insert($this->getTableName());
 			$insert->values($data);
 			$insertStr = $dbSql->getSqlStringForSqlObject($insert);
+//			echo $insertStr;
             $results = $dbAdapter->query($insertStr,$dbAdapter::QUERY_MODE_EXECUTE);
 		}else{
-			$update = $dbSql->update($this->getTableName());
+            $update = $dbSql->update($this->getTableName());
 			$update->set($data);
-			$update->where(array('id'=>$model->getId()));
+			$update->where(array('orderId' => $model->getOrderId(), 'productId' => $model->getProductId()));
 			$updateStr = $dbSql->getSqlStringForSqlObject($update);
             $results = $dbAdapter->query($updateStr,$dbAdapter::QUERY_MODE_EXECUTE);
 		}
 		return $results;
 	}
 
-	public function updateQtt($model){
-		$data = array(
-				'quantity' => $model->getQuantity(),
-		);
-		/* @var $dbAdapter \Zend\Db\Adapter\Adapter */
-		$dbAdapter = $this->getServiceLocator()->get('dbAdapter');
-		/* @var $dbSql \Zend\Db\Sql\Sql */
-		$dbSql = $this->getServiceLocator()->get('dbSql');
-		$select = $dbSql->select(array('odp'=>'order_products'));
-		$select->join(array('od'=>'orders'),
-				'od.id = odp.orderId',
-				array(
-						'name'=>'name'
-				)
-		);
-		$selectStr = $dbSql->getSqlStringForSqlObject($select);
-		$results = $dbAdapter->query($selectStr,$dbAdapter::QUERY_MODE_EXECUTE);
-		if(count($results)){
-			
-		}
-		if(count($results)){
-			foreach ($results as $row){
-				$orderPro = new \Admin\Model\OrderProduct();
-				$orderPro->exchangeArray((array)$row);
-				$product = new \Admin\Model\Product();
-				$quantity = ($orderPro->getQuantity() - $product->getQuantity());
-				$product->setQuantity($quantity);
-				$update = $dbSql->update('products');
-				$update->set($data);
-				$update->where(array(
-					'id'=>$orderPro->getProductId()
-				));
-				$updateStr = $dbSql->getSqlStringForSqlObject($update);
-				echo $updateStr;
-				return $dbAdapter->query($updateStr,$dbAdapter::QUERY_MODE_EXECUTE);
-			}
-		}
-	}
+    public function fetchAll($item)
+    {
+        /* @var $dbAdapter \Zend\Db\Adapter\Adapter */
+        $dbAdapter = $this->getServiceLocator()->get('dbAdapter');
+
+        /* @var $dbSql \Zend\Db\Sql\Sql */
+        $dbSql = $this->getServiceLocator()->get('dbSql');
+        $select = $dbSql->select(array("ac" => $this->getTableName()));
+
+        if($item->getOrderId()) {
+            $select->where(array('ac.orderId' => $item->getOrderId()));
+        }
+        if($item->getProductId()){
+            $select->where(array('ac.productId' => $item->getProductId()));
+        }
+        if($item->getProductCode()){
+            $select->where(array('ac.productCode' => $item->getProductCode()));
+        }
+        $selectString = $dbSql->getSqlStringForSqlObject($select);
+        $results = $dbAdapter->query($selectString, $dbAdapter::QUERY_MODE_EXECUTE);
+
+        $rs = array();
+        if($results->count()) {
+            foreach ($results as $row) {
+                $model = new \Admin\Model\OrderProduct();
+                $model->exchangeArray((array)$row);
+                $rs[] = $model;
+            }
+        }
+        return $rs;
+    }
 
     /**
      * @param \Admin\Model\OrderProduct $item
