@@ -55,25 +55,12 @@ class Admin extends Navigation
                 'icon'  => '<i class="ti-shopping-cart"></i>',
                 'label'	=> 'Đơn hàng',
                 'label2'=> 'Đơn hàng',
-                'uri'	=> '/admin/order?page=1&status=Confirmed',
+                'uri'	=> '/admin/order/list?status=Confirmed',
                 'resource' => 'admin:order',
                 'privilege' => 'index',
                 'class'=>'fa fa-plus-square',
                 'pages'	=> array(
-                    array(
-                        'label'	=> 'Đơn hàng',
-                        'uri'	=> '/admin/order?page=1&status=Confirmed',
-                        'resource' => 'admin:order',
-                        'privilege' => 'index',
-                        'class'=>'fa fa-list-ul'
-                    ),
-                    array(
-                        'label'	=> 'Đơn hàng sản xuất',
-                        'uri'	=> '/admin/material/productsx',
-                        'resource' => 'admin:material',
-                        'privilege' => 'productsx',
-                        'class'=>'fa fa-list-ul'
-                    ),
+
                 )
             ),
             array(
