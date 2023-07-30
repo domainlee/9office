@@ -291,17 +291,19 @@ $(function(){
         }
     });
 
-    $('.btn-in-process').on('click', function () {
+    $('.btn-in-process').on('click', function (e) {
+        e.preventDefault();
         var t = $(this);
-        var data = $(this).attr('data-orders');
+        var data = $(this).attr('data-order');
         var code = $(this).attr('data-code');
         var quantity = $(this).attr('data-quantity');
-
-        if (confirm('Bạn sẽ sản xuất đơn hàng này ? Mã sản phẩm '+ code +' với số lượng ' + quantity)) {
+        console.log(data);
+        console.log(code);
+        if (confirm('Bạn sẽ sản xuất đơn hàng này gee ? Mã sản phẩm '+ code +' với số lượng ' + quantity)) {
             $.post('/admin/material/processproduct',{data: data, code: code, quantity: quantity},function(r){
                 if(r.code == 1){
                     alert(r.messenger);
-                    t.text('Đang sản xuất');
+                    location.reload();
                 } else if(r.code == 0){
                     alert(r.messenger);
                 }
@@ -310,10 +312,10 @@ $(function(){
     });
 
     $('.btn-in-finished').on('click', function () {
-        var order = $(this).attr('data-order'), _this = $(this);
+        var order = $(this).attr('data-order'), code = $(this).attr('data-code'), _this = $(this);
 
         if (confirm('Xác nhận hoàn thành đơn hàng này ?')) {
-            $.post('/admin/material/orderfinished',{orderId: order},function(r){
+            $.post('/admin/material/orderfinished',{orderId: order, code: code},function(r){
                 if(r.code == 1){
                     alert(r.messenger);
                     location.reload();
@@ -527,6 +529,8 @@ $(function(){
     var table_order = $('.order_list');
     var button_order_selected = $('.button-order-export-selected');
     button_order_selected.prop('disabled', false);
+    var btn_list_order = $('.btn-list-order');
+    btn_list_order.prop('disabled', false);
 
     table_order.on("click", "input[type=checkbox]", function(e){
         var $this = $(this);
@@ -537,6 +541,7 @@ $(function(){
             tmp_order.splice($.inArray(checked, tmp_order),1);
         }
         button_order_selected.attr('data-ids', tmp_order);
+        btn_list_order.attr('data-ids', tmp_order);
     });
 
     $('.button-order-export-all').click(function () {
@@ -567,6 +572,31 @@ $(function(){
             }
         });
     });
+
+    // btn_list_order.click(function () {
+    //     var time = $(this).attr('data-time') ? $(this).attr('data-time'):1000;
+    //     var query = $(this).attr('data-query');
+    //
+    //     var form_data = new FormData();
+    //     form_data.append("print", true);
+    //     $.ajax({
+    //         data: form_data,
+    //         type: "POST",
+    //         url: "/admin/order?" + query,
+    //         cache: false,
+    //         contentType: false,
+    //         processData: false,
+    //         success: function(html) {
+    //             w = window.open(window.location.href,"_blank");
+    //             w.document.open();
+    //             w.document.write(html);
+    //             w.document.close();
+    //             setTimeout(function () {
+    //                 w.window.print();
+    //             }, time);
+    //         }
+    //     });
+    // });
 
     $('#paginationControl').on('change', function () {
         var url = $(this).val();

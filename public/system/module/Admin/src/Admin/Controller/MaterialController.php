@@ -1138,12 +1138,12 @@ class MaterialController extends AbstractActionController{
                 'messenger' => 'Vật liệu không đủ số lượng để sản xuất'
             ));
         }
-
+        $orId = explode('_', $orders);
         // Tạo đơn hàng
         $invoice = new \Admin\Model\Invoice();
         $invoice->setType(\Admin\Model\Invoice::EXPORT);
         $invoice->setStatus(\Admin\Model\Invoice::STATUS_APPROVED);
-        $invoice->setDescription('Sản xuất mã sản phẩm "'.$code.'" / '.DateBase::getCurrentDateTime().'');
+        $invoice->setDescription('Sản xuất đơn hàng "'.$orId[0].'", mã sản phẩm "'.$code.'" / '.DateBase::getCurrentDateTime().'');
         $invoice->setCreatedDateTime(DateBase::getCurrentDateTime());
         $invoice->setUpdatedDateTime(DateBase::getCurrentDateTime());
         $invoice->setCreatedById($u->getId());
@@ -1271,6 +1271,7 @@ class MaterialController extends AbstractActionController{
         $orderId = (int)trim($orderId);
         $orderManufacture = new \Admin\Model\OrderManufacture();
         $orderManufacture->setOrderId($orderId);
+        $orderManufacture->setProductId($code);
         $orderManufactureMapper = $this->getServiceLocator()->get('Admin\Model\OrderManufactureMapper');
         $orderManufacturer = $orderManufactureMapper->get($orderManufacture);
         if(!$orderManufacturer) {

@@ -112,6 +112,40 @@ class OrderManufactureMapper extends Base{
         return $all;
     }
 
+    public function fetchAllTwo($item)
+    {
+        /* @var $dbAdapter \Zend\Db\Adapter\Adapter */
+        $dbAdapter = $this->getServiceLocator()->get('dbAdapter');
+
+        /* @var $dbSql \Zend\Db\Sql\Sql */
+        $dbSql = $this->getServiceLocator()->get('dbSql');
+        $select = $dbSql->select(array("ac" => $this->getTableName()));
+
+        if($item->getId()) {
+            $select->where(array('ac.id' => $item->getId()));
+        }
+        $selectString = $dbSql->getSqlStringForSqlObject($select);
+        $results = $dbAdapter->query($selectString, $dbAdapter::QUERY_MODE_EXECUTE);
+
+        $all = array();
+        if($results->count()) {
+            foreach ($results as $row) {
+//                $modelMaterial = new \Admin\Model\Material();
+//                $modelMaterial->setId($row['materialId']);
+//                $mapperMaterial = $this->getServiceLocator()->get('Admin\Model\MaterialMapper');
+//                $resultMaterial = $mapperMaterial->get($modelMaterial);
+                $all[$row['orderId'].'_'.$row['productId']] = array(
+                    $row['productId'] => $row['productId'],
+                    'orderId' => $row['orderId'],
+                    'status' => $row['status'],
+                    'startDateTime' => $row['startDateTime'],
+                    'endDateTime' => $row['endDateTime'],
+                );
+            }
+        }
+        return $all;
+    }
+
     public function fetchStatus($item)
     {
         /* @var $dbAdapter \Zend\Db\Adapter\Adapter */

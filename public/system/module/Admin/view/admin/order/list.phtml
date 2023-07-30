@@ -4,6 +4,7 @@ $domainUrl = $this->home()->getDomain();
 $domainUrl ? $_SERVER['HTTP_HOST'] = $domainUrl:$_SERVER['HTTP_HOST'];
 $option = $this->option;
 $query_request = $this->query;
+$order_production = $this->order_production;
 $startDate = !empty($query_request->start) ? $query_request->start:'';
 $endDate = !empty($query_request->end) ? $query_request->end:'';
 
@@ -13,14 +14,14 @@ $endDate = !empty($query_request->end) ? $query_request->end:'';
     <div class="col-sm-12">
         <div class="card-box">
             <div class="portlet-body">
-                <div id="sample_editable_1_wrapper" class="dataTables_wrapper form-inline" role="grid">
+                <div id="sample_editable_1_wrapper" class="dataTables_wrapper form-inline order_list" role="grid">
                     <div class="btn-toolbar">
                         <div class="btn-group focus-btn-group">
-                            <a href="/admin/invoice/add" class="btn btn-default waves-effect waves-light">Tạo hoá đơn</a>
+                            <a class="btn btn-default btn-list-order waves-effect waves-light">Sản xuất đơn hàng</a>
                         </div>
                         <div class="btn-group dropdown-btn-group pull-right">
                             <div class="dataTables_filter mb-15">
-                                <form action="" method="get" name="ProductSearch" class="form-inline" id="ProductSearch">
+                                <form action="" method="get" name="ProductSearch" class="form-inline " id="ProductSearch">
                                     <?php
                                     $form = $this->fFilter;
                                     ?>
@@ -53,6 +54,8 @@ $endDate = !empty($query_request->end) ? $query_request->end:'';
                         'rowInPage' => $this->results->getRowInPage (),
                         'setup' => true,
                         'url' => $this->url,
+                        'material' => $this->material,
+                        'order_production' => $this->order_production,
                     ));
                     $total = ceil($this->results->getRowCount ()/$this->results->getPaging ()[1]);
                     $page = $this->results->getPaging ()[0];
@@ -70,13 +73,12 @@ $endDate = !empty($query_request->end) ? $query_request->end:'';
                     }
                     ?>
 
-                    <label>Trang:
+                    <label class="m-t-5">Trang:
                         <select class="form-control input-sm" id="paginationControl" size="1">
                             <?php for($c = 1; $c <= $total; $c++): ?>
                                 <option value="<?php echo 'list?page='. $c .'&'. $link ?>" <?php echo $c == $page ? 'selected':'' ?>><?php echo $c ?></option>
                             <?php endfor; ?>
-                        </select>
-                        / <?php echo $total; ?>
+                        </select> / <?php echo $total; ?>
                     </label>
 
                 </div>
@@ -84,4 +86,8 @@ $endDate = !empty($query_request->end) ? $query_request->end:'';
         </div>
     </div>
 </div>
-
+<style>
+    .pagination {
+        display: none;
+    }
+</style>

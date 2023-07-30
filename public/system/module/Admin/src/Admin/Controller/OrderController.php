@@ -301,6 +301,15 @@ class OrderController extends AbstractActionController{
         }
         $page = (int)$this->getRequest()->getQuery()->page ? : 1;
         $results = $orderMapper->search($order, array($page,50));
+
+        $productMaterialItem = new \Admin\Model\ProductMaterialItem();
+        $mapperProductMaterialItem = $this->getServiceLocator()->get('Admin\Model\ProductMaterialItemMapper');
+        $productMaterial = $mapperProductMaterialItem->fetchAll3($productMaterialItem);
+
+        $orderManufacture = new \Admin\Model\OrderManufacture();
+        $orderManufactureMapper = $this->getServiceLocator()->get('Admin\Model\OrderManufactureMapper');
+        $orderProduction = $orderManufactureMapper->fetchAllTwo($orderManufacture);
+
         return new ViewModel(array(
             'fFilter' => $fFilter,
             'results' => $results,
@@ -308,6 +317,8 @@ class OrderController extends AbstractActionController{
             'uri' => $this->getRequest()->getUri()->getQuery(),
             'query' => $query,
             'query_uri' => $query_uri,
+            'material' => $productMaterial,
+            'order_production' => $orderProduction,
         ));
     }
 	public function cronAction() {

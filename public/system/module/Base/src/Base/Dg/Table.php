@@ -18,6 +18,8 @@ class Table {
 	protected $uriLink;
 	protected $setup;
 	protected $urlQuery;
+	protected $material;
+	protected $order_production;
 
     /**
      * @return mixed
@@ -51,6 +53,38 @@ class Table {
 
     public function setSetup($setup) {
         $this->setup = $setup;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getMaterial()
+    {
+        return $this->material;
+    }
+
+    /**
+     * @param mixed $material
+     */
+    public function setMaterial($material)
+    {
+        $this->material = $material;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getOrderProduction()
+    {
+        return $this->order_production;
+    }
+
+    /**
+     * @param mixed $order_production
+     */
+    public function setOrderProduction($order_production)
+    {
+        $this->order_production = $order_production;
     }
 
 
@@ -216,6 +250,12 @@ class Table {
             }
             if (isset($options['url'])) {
                 $this->setUrlQuery($options['url']);
+            }
+            if (isset($options['material'])) {
+                $this->setMaterial($options['material']);
+            }
+            if (isset($options['order_production'])) {
+                $this->setOrderProduction($options['order_production']);
             }
 			$this->setOptions($options);
 		}
