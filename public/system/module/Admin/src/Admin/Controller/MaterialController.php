@@ -222,12 +222,13 @@ class MaterialController extends AbstractActionController{
         $this->layout('layout/admin');
         $query = $this->getRequest()->getUri()->getQuery();
         $page = (int)$this->getRequest()->getQuery()->page ? : 1;
-
+        $query_router = $this->getRequest()->getQuery();
+        $product_code = $query_router['productCode'] ? $query_router['productCode']:'';
         $array_id = array('9MPOLLAC225015L','9MPOLLAC231701L','9MPOLLAC226701L');
 //        $array_data = array();
 //        foreach ($array_id as $v):
             $api = \Base\Model\Resource::data_api();
-            $data = json_encode(array('page' => $page, 'icpp' => 50, 'name' => ''));
+            $data = json_encode(array('page' => $page, 'icpp' => 50, 'name' => $product_code));
 
             $data = array(
                 'version' => $api['version'],
@@ -298,6 +299,7 @@ class MaterialController extends AbstractActionController{
 //            }
         return new ViewModel(array(
             'query'=> $query,
+            'query_array'=> $query_router,
             'results'=> $response['data'],
 //            'fFilter'=> $fFilter,
 //            'id' => $id,
