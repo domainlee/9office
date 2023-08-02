@@ -17,7 +17,7 @@ $endDate = !empty($query_request->end) ? $query_request->end:'';
                 <div id="sample_editable_1_wrapper" class="dataTables_wrapper form-inline order_list" role="grid">
                     <div class="btn-toolbar">
                         <div class="btn-group focus-btn-group">
-                            <a style="display: none" class="btn btn-default btn-list-order waves-effect waves-light">Sản xuất đơn hàng</a>
+                            <a class="btn btn-default waves-effect waves-light" target="_blank" href="<?= '/admin/order/list?'. $this->query_uri .'&export=true' ?>">Xuất excel</a>
                         </div>
                         <div class="btn-group dropdown-btn-group pull-right">
                             <div class="dataTables_filter mb-15">

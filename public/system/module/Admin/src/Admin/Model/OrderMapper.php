@@ -128,6 +128,60 @@ class OrderMapper extends Base{
         return new \Base\Dg\Paginator ( $count->count (), $rs, $paging, count ( $results ) );
     }
 
+    public function searchTwo($item,$paging){
+        /* @var $dbAdapter \Zend\Db\Adapter\Adapter */
+        $dbAdapter = $this->getServiceLocator()->get('dbAdapter');
+        /* @var $dbSql \Zend\Db\Sql\Sql */
+        $dbSql = $this->getServiceLocator()->get('dbSql');
+
+        $select = $dbSql->select(array('p'=>self::TABLE_NAME));
+        $rCount = $dbSql->select(array('p'=>self::TABLE_NAME),array('c'=>'count(id)'));
+
+        $select->join(array('op' => 'order_products'),
+            'op.orderId = p.orderId',array(
+                'productCode' => 'productCode'
+            ),\Zend\Db\Sql\Select::JOIN_LEFT
+        );
+        $rCount->join(array('op' => 'order_products'),
+            'op.orderId = p.orderId',array(
+                'productCode' => 'productCode',
+                'productImage' => 'productImage',
+                'productName' => 'productName',
+                'quantity' => 'quantity',
+            ),\Zend\Db\Sql\Select::JOIN_LEFT
+        );
+        $datefrom = $item->getOptions()['start_date'];
+        $dateto = $item->getOptions()['end_date'];
+        if($datefrom || $dateto) {
+            $select->where("(p.createdDateTime >= '$datefrom 00:00:00' AND p.createdDateTime <= '$dateto 23:59:59')");
+            $rCount->where("(p.createdDateTime >= '$datefrom 00:00:00' AND p.createdDateTime <= '$dateto 23:59:59')");
+        }
+        if($item->getProductCode()) {
+            $select->where("op.productCode LIKE '%{$item->getProductCode()}%'");
+            $rCount->where("op.productCode LIKE '%{$item->getProductCode()}%'");
+        }
+        if($item->getStatusCode()) {
+            $select->where("p.statusCode LIKE '%{$item->getStatusCode()}%'");
+            $rCount->where("p.statusCode LIKE '%{$item->getStatusCode()}%'");
+        }
+        if($item->getOrderId()){
+            $select->where(array('p.orderId'=>$item->getOrderId()));
+            $rCount->where(array('p.orderId'=>$item->getOrderId()));
+        }
+        $rCount->order ( 'p.createdDateTime DESC' );
+
+        $rCountStr = $dbSql->getSqlStringForSqlObject($rCount);
+        $count = $dbAdapter->query($rCountStr,$dbAdapter::QUERY_MODE_EXECUTE);
+        $rs = array();
+        if(count($count)){
+            foreach ($count as $rows){
+                $model = array($rows['orderId'], $rows['customerName'], $rows['productImage'], $rows['productCode'], $rows['productName'], $rows['quantity'], $rows['createdDateTime'], $rows['statusName']);
+                $rs[] = $model;
+            }
+        }
+        return $rs;
+    }
+
 
 	public function updateQtt($item){
 // 		$data = array(

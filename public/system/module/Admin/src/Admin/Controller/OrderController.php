@@ -302,6 +302,11 @@ class OrderController extends AbstractActionController{
         $page = (int)$this->getRequest()->getQuery()->page ? : 1;
         $results = $orderMapper->search($order, array($page,50));
 
+        $export = $this->getRequest()->getQuery()['export'];
+        if($export) {
+            $export_data = $orderMapper->searchTwo($order, array($page,50));
+            $this->template_excel($export_data);
+        }
         $productMaterialItem = new \Admin\Model\ProductMaterialItem();
         $mapperProductMaterialItem = $this->getServiceLocator()->get('Admin\Model\ProductMaterialItemMapper');
         $productMaterial = $mapperProductMaterialItem->fetchAll3($productMaterialItem);

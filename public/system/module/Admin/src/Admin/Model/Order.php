@@ -16,6 +16,57 @@ class Order extends Base{
 	protected $calcTotalMoney;
 	protected $createdDateTime;
 	protected $productCode;
+	protected $productImage;
+	protected $productName;
+	protected $quantity;
+
+    /**
+     * @return mixed
+     */
+    public function getQuantity()
+    {
+        return $this->quantity;
+    }
+
+    /**
+     * @param mixed $quantity
+     */
+    public function setQuantity($quantity)
+    {
+        $this->quantity = $quantity;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getProductName()
+    {
+        return $this->productName;
+    }
+
+    /**
+     * @param mixed $productName
+     */
+    public function setProductName($productName)
+    {
+        $this->productName = $productName;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getProductImage()
+    {
+        return $this->productImage;
+    }
+
+    /**
+     * @param mixed $productImage
+     */
+    public function setProductImage($productImage)
+    {
+        $this->productImage = $productImage;
+    }
 
     /**
      * @return mixed
