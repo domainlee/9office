@@ -148,6 +148,7 @@ class OrderMapper extends Base{
                 'productImage' => 'productImage',
                 'productName' => 'productName',
                 'quantity' => 'quantity',
+                'stock' => 'stock',
             ),\Zend\Db\Sql\Select::JOIN_LEFT
         );
         $datefrom = $item->getOptions()['start_date'];
@@ -175,7 +176,7 @@ class OrderMapper extends Base{
         $rs = array();
         if(count($count)){
             foreach ($count as $rows){
-                $model = array($rows['orderId'], $rows['customerName'], $rows['productImage'], $rows['productCode'], $rows['productName'], $rows['quantity'], $rows['createdDateTime'], $rows['statusName']);
+                $model = array($rows['orderId'], $rows['customerName'], $rows['productImage'], $rows['productCode'], $rows['productName'], $rows['quantity'], $rows['stock'], $rows['createdDateTime'], $rows['statusName']);
                 $rs[] = $model;
             }
         }

@@ -718,7 +718,7 @@ class OrderController extends AbstractActionController{
         }
         $file_name = 'Danh sách đơn hàng_'.date('ymd').'.xlsx';
         $sheet_product = 'Order '.date('ymd');
-        $header_one = array( 'Mã đơn hàng', 'Khách hàng', 'Hình ảnh','Mã sản phẩm','Tên sản phẩm','Số lượng', 'Ngày', 'Trạng thái');
+        $header_one = array( 'Mã đơn hàng', 'Khách hàng', 'Hình ảnh','Mã sản phẩm','Tên sản phẩm','Số lượng','Tồn kho', 'Ngày', 'Trạng thái');
         $styles_white = array('font'=>'Arial', 'font-style'=>'bold', 'fill'=>'#FFF', 'halign'=>'left', 'border'=>'left,right,top,bottom');
         $writer = new XLSXWriter();
         $writer->writeSheetRow($sheet_product, $header_one, $styles_white);
