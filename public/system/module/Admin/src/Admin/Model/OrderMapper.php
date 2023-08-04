@@ -96,7 +96,8 @@ class OrderMapper extends Base{
             $select->where(array('p.orderId'=>$item->getOrderId()));
             $rCount->where(array('p.orderId'=>$item->getOrderId()));
         }
-
+        $select->where(array('p.depotId' => 110912));
+        $rCount->where(array('p.depotId' => 110912));
         $currentPage = isset ( $paging [0] ) ? $paging [0] : 1;
         $limit = isset ( $paging [1] ) ? $paging [1] : 20;
         $offset = ($currentPage - 1) * $limit;
@@ -169,6 +170,8 @@ class OrderMapper extends Base{
             $select->where(array('p.orderId'=>$item->getOrderId()));
             $rCount->where(array('p.orderId'=>$item->getOrderId()));
         }
+        $select->where(array('p.depotId' => 110912));
+        $rCount->where(array('p.depotId' => 110912));
         $rCount->order ( 'p.createdDateTime DESC' );
 
         $rCountStr = $dbSql->getSqlStringForSqlObject($rCount);
