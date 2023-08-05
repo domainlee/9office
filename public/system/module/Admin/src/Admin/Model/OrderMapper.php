@@ -3,6 +3,7 @@ namespace Admin\Model;
 
 use Base\Mapper\Base;
 use \Base\XSS\xssClean;
+use mysql_xdevapi\Exception;
 
 class OrderMapper extends Base{
 
@@ -303,21 +304,24 @@ class OrderMapper extends Base{
 		/* @var $dbSql \Zend\Db\Sql\Sql */
 		$dbSql = $this->getServiceLocator()->get('dbSql');
 		$orderId = $this->getOrder($data['orderId']);
-		if(!$orderId){
-			$insert = $dbSql->insert($this->getTableName());
-			$insert->values($data);
-			$query = $dbSql->getSqlStringForSqlObject($insert);
-//			echo $query;
-			$results = $dbAdapter->query($query, $dbAdapter::QUERY_MODE_EXECUTE);
-//            $model->orderId($results->getGeneratedValue());
-        } else {
-            $update = $dbSql->update($this->getTableName());
-			$update->set($data);
-			$update->where(array("orderId" => (int)$model->getOrderId()));
-			$selectString = $dbSql->getSqlStringForSqlObject($update);
-            $results = $dbAdapter->query($selectString, $dbAdapter::QUERY_MODE_EXECUTE);
-		}
-		return $results;
+		try {
+            if(!$orderId){
+                $insert = $dbSql->insert($this->getTableName());
+                $insert->values($data);
+                $query = $dbSql->getSqlStringForSqlObject($insert);
+                $results = $dbAdapter->query($query, $dbAdapter::QUERY_MODE_EXECUTE);
+//              $model->orderId($results->getGeneratedValue());
+            } else {
+                $update = $dbSql->update($this->getTableName());
+                $update->set($data);
+                $update->where(array("orderId" => (int)$model->getOrderId()));
+                $selectString = $dbSql->getSqlStringForSqlObject($update);
+                $results = $dbAdapter->query($selectString, $dbAdapter::QUERY_MODE_EXECUTE);
+            }
+            return $results;
+        } catch (\Exception $ex) {
+            return $ex->getMessage();
+        }
 	}
 
     /**

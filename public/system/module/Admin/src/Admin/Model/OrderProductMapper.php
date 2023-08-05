@@ -41,20 +41,24 @@ class OrderProductMapper extends Base{
 		/* @var $dbSql \Zend\Db\Sql\Sql */
 		$dbSql = $this->getServiceLocator()->get('dbSql');
         $orderId = $this->getOrderProduct($data['orderId'], $data['productId']);
-        if(!$orderId){
-			$insert = $dbSql->insert($this->getTableName());
-			$insert->values($data);
-			$insertStr = $dbSql->getSqlStringForSqlObject($insert);
-//			echo $insertStr;
-            $results = $dbAdapter->query($insertStr,$dbAdapter::QUERY_MODE_EXECUTE);
-		}else{
-            $update = $dbSql->update($this->getTableName());
-			$update->set($data);
-			$update->where(array('orderId' => $model->getOrderId(), 'productId' => $model->getProductId()));
-			$updateStr = $dbSql->getSqlStringForSqlObject($update);
-            $results = $dbAdapter->query($updateStr,$dbAdapter::QUERY_MODE_EXECUTE);
-		}
-		return $results;
+        try {
+            if(!$orderId){
+                $insert = $dbSql->insert($this->getTableName());
+                $insert->values($data);
+                $insertStr = $dbSql->getSqlStringForSqlObject($insert);
+    //			echo $insertStr;
+                $results = $dbAdapter->query($insertStr,$dbAdapter::QUERY_MODE_EXECUTE);
+            }else{
+                $update = $dbSql->update($this->getTableName());
+                $update->set($data);
+                $update->where(array('orderId' => $model->getOrderId(), 'productId' => $model->getProductId()));
+                $updateStr = $dbSql->getSqlStringForSqlObject($update);
+                $results = $dbAdapter->query($updateStr,$dbAdapter::QUERY_MODE_EXECUTE);
+            }
+            return $results;
+        } catch (\Exception $ex) {
+            return $ex->getMessage();
+        }
 	}
 
     public function fetchAll($item)

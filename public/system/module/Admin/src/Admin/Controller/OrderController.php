@@ -364,8 +364,8 @@ class OrderController extends AbstractActionController{
             $orderManufactureMapper = $this->getServiceLocator()->get('Admin\Model\OrderManufactureMapper');
             $finishedProduction = $orderManufactureMapper->fetchStatus($orderManufacture);
         }
-        $startDate = '2023-08-04';
-        $endDate = '2023-08-06';
+        $startDate = date('Y-m-d', strtotime('-2 day', strtotime($nowOrder)));;
+        $endDate = $nowOrder;
         $data = json_encode(array('depotId' => 110912, 'fromDate' => $startDate,'toDate' => $endDate));
         $curl = curl_init();
         $api = \Base\Model\Resource::data_api();
@@ -390,11 +390,12 @@ class OrderController extends AbstractActionController{
         $response = curl_exec($curl);
         curl_close($curl);
         $response = json_decode($response, true);
+//        print_r($response['data']);die;
         $totalPage = $response['data']['totalPages'];
         $order_items = array();
         $order_export = array();
         for($c = 1; $c <= $totalPage; $c++) {
-            $data = json_encode(array('page' => $c, 'fromDate' => $startDate,'toDate' => $endDate));
+            $data = json_encode(array('depotId' => 110912, 'page' => $c, 'fromDate' => $startDate,'toDate' => $endDate));
             $curl = curl_init();
             $api = \Base\Model\Resource::data_api();
             $data = array(
