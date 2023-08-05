@@ -51,8 +51,10 @@ class OrderController extends AbstractActionController{
             $finishedProduction = $orderManufactureMapper->fetchStatus($orderManufacture);
         }
 
+        $startDate = '2023-08-04';
+        $endDate = '2023-08-05';
 //        print_r($finishedProduction);die;
-
+//        print_r(array('depotId' => 110912, 'id' => $inProduction || $finishedProduction ? array_merge($inProduction,$finishedProduction) : $id, 'customerMobile' => $phone, 'page' => $page, 'statuses' => array($status_filter), 'fromDate' => $startDate,'toDate' => $endDate));die;
         $data = json_encode(array('depotId' => 110912, 'id' => $inProduction || $finishedProduction ? array_merge($inProduction,$finishedProduction) : $id, 'customerMobile' => $phone, 'page' => $page, 'statuses' => array($status_filter), 'fromDate' => $startDate,'toDate' => $endDate));
 
 
@@ -79,6 +81,8 @@ class OrderController extends AbstractActionController{
         $response = curl_exec($curl);
         curl_close($curl);
 
+//        $response = json_decode($response, true);
+//        print_r($response);die;
         // inProduction
         $orderManufacture = new \Admin\Model\OrderManufacture();
         $orderManufacture->setStatus(\Admin\Model\OrderManufacture::IN_PRODUCTION);
@@ -360,8 +364,9 @@ class OrderController extends AbstractActionController{
             $orderManufactureMapper = $this->getServiceLocator()->get('Admin\Model\OrderManufactureMapper');
             $finishedProduction = $orderManufactureMapper->fetchStatus($orderManufacture);
         }
-
-        $data = json_encode(array('depotId' => 110912, 'page' => $page, 'fromDate' => $startDate,'toDate' => $endDate));
+        $startDate = '2023-08-04';
+        $endDate = '2023-08-06';
+        $data = json_encode(array('depotId' => 110912, 'fromDate' => $startDate,'toDate' => $endDate));
         $curl = curl_init();
         $api = \Base\Model\Resource::data_api();
         $data = array(
@@ -489,7 +494,7 @@ class OrderController extends AbstractActionController{
         $startDate = DateBase::toCommonDateTwo($startDate);
         $endDate = DateBase::toCommonDateTwo($endDate);
         $query_request = $this->getRequest()->getQuery();
-        print_r($this->getRequest()->getQuery());die;
+//        print_r($this->getRequest()->getQuery());die;
 
         $inProduction = array();
         if($status_filter == 'InProduction') {

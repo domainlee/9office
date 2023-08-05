@@ -658,7 +658,6 @@ class MaterialController extends AbstractActionController{
 	    if(empty($product_items)) {
 	        return false;
         }
-	    print_r($product_items);die;
         $file_name = 'Danh sách sản phẩm_'.date('ymd').'.xlsx';
         $sheet_product = 'Product Material';
         $header_one = array( 'Mã sản phẩm', 'Tên sản phẩm', 'Hình ảnh sản phẩm', 'Mã vật liệu', 'Số lượng');
