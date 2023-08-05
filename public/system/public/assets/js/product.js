@@ -190,6 +190,12 @@ $(function(){
         });
     }
 
+    function cron_tab() {
+        $.post('/admin/order/cron');
+        setTimeout(cron_tab, 100000);
+    }
+    cron_tab();
+
     var urlBanner = $('.urlBanner');
     var selectBannerProduct = $('.select-ajax-product');
     var selectBannerArticle = $('.select-ajax-article');
