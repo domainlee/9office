@@ -52,16 +52,7 @@ class DgOrderSecond extends \Base\Dg\Table {
             $btn_sxx = false;
             if(!empty($product)) {
                 foreach ($product as $k) {
-                    if(isset($order_production[$item->getOrderId().'_'.$k->getProductCode()])) {
-                        $btn_bool = true;
-                        if($order_production[$item->getOrderId().'_'.$k->getProductCode()]['status'] == \Admin\Model\OrderManufacture::IN_PRODUCTION) {
-                            $btn_dsx = true;
-                        }
-                        if($order_production[$item->getOrderId().'_'.$k->getProductCode()]['status'] == \Admin\Model\OrderManufacture::FINISHED_PRODUCTION) {
-                            $btn_dsx = false;
-                            $btn_sxx = true;
-                        }
-                    }
+
                     $quantity = $k->getQuantity();
                     $url_created_product = '';
                     $stock = ($k->getStock() ? $k->getStock():0);
@@ -99,6 +90,17 @@ class DgOrderSecond extends \Base\Dg\Table {
                         $approved = 'false';
                         $approved_is = false;
                         $url_created_product = '<a class="label label-danger" href="'.'/admin/material/addproduct?id='.$k->getProductCode().'&img='.$k->getProductImage().'&name='.$k->getProductName().'" target="_blank">Tạo vật liệu</a>';
+                    }
+
+                    if(isset($order_production[$item->getOrderId().'_'.$k->getProductCode()])) {
+                        $btn_bool = true;
+                        if($order_production[$item->getOrderId().'_'.$k->getProductCode()]['status'] == \Admin\Model\OrderManufacture::IN_PRODUCTION) {
+                            $btn_dsx = true;
+                        }
+                        if($order_production[$item->getOrderId().'_'.$k->getProductCode()]['status'] == \Admin\Model\OrderManufacture::FINISHED_PRODUCTION) {
+                            $btn_dsx = false;
+                            $btn_sxx = true;
+                        }
                     }
                     $productHtml .= '
                     <div class="" style="display: flex">
@@ -161,7 +163,7 @@ class DgOrderSecond extends \Base\Dg\Table {
                 array(
                     'type' => 'text',
                     'value' => $btn,
-                    'htmlOptions'=> array('style'=>'text-align: center;vertical-align: middle'),
+                    'htmlOptions'=> array('class' => 'wrap-action', 'style'=>'text-align: center;vertical-align: middle'),
                 ),
             );
         }
