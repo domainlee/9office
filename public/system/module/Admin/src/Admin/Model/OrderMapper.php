@@ -71,12 +71,14 @@ class OrderMapper extends Base{
 
         $select->join(array('op' => 'order_products'),
             'op.orderId = p.orderId',array(
-                'productCode' => 'productCode'
+                'productCode' => 'productCode',
+                'stock' => 'stock'
             ),\Zend\Db\Sql\Select::JOIN_LEFT
         );
         $rCount->join(array('op' => 'order_products'),
             'op.orderId = p.orderId',array(
-                'productCode' => 'productCode'
+                'productCode' => 'productCode',
+                'stock' => 'stock'
             ),\Zend\Db\Sql\Select::JOIN_LEFT
         );
         $datefrom = $item->getOptions()['start_date'];
@@ -114,7 +116,10 @@ class OrderMapper extends Base{
             $productIds = implode(',', $resultProductIds);
             $select->where('p.orderId in ('.$orderIds.') AND op.productCode in ('.$productIds.')');
             $rCount->where('p.orderId in ('.$orderIds.') AND op.productCode in ('.$productIds.')');
-        } elseif($item->getStatusCode() || $item->getStatusCode() == 'InProduction') {
+        } elseif($item->getStatusCode() == 'StockLess') {
+            $select->where('(NOT op.stock > 0 OR op.stock IS NULL)');
+            $rCount->where('(NOT op.stock > 0 OR op.stock IS NULL)');
+        } elseif($item->getStatusCode() || $item->getStatusCode() != 'InProduction' || $item->getStatusCode() != 'FinishedProduction' || $item->getStatusCode() != 'StockLess') {
             $select->where("p.statusCode LIKE '%{$item->getStatusCode()}%'");
             $rCount->where("p.statusCode LIKE '%{$item->getStatusCode()}%'");
         }

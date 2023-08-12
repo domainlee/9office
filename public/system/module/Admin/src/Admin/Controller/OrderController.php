@@ -297,6 +297,7 @@ class OrderController extends AbstractActionController{
             'Packing' => 'Đang đóng gói',
             'InProduction' => 'Đang sản xuất',
             'FinishedProduction' => 'Đã sản xuất xong',
+            'StockLess' => 'Tồn kho nhỏ hơn 1',
         );
         $status_filter = $this->getRequest()->getQuery()->status ? : '';
         $fFilter->setStatus($status, $status_filter);
