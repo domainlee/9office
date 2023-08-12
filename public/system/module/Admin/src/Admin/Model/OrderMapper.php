@@ -214,8 +214,91 @@ class OrderMapper extends Base{
         return $rs;
     }
 
+    public function report($item){
+        /* @var $dbAdapter \Zend\Db\Adapter\Adapter */
+        $dbAdapter = $this->getServiceLocator()->get('dbAdapter');
+        /* @var $dbSql \Zend\Db\Sql\Sql */
+        $dbSql = $this->getServiceLocator()->get('dbSql');
 
-	public function updateQtt($item){
+//        $select = $dbSql->select(array('p'=>self::TABLE_NAME));
+        $rCount = $dbSql->select(array('p'=>self::TABLE_NAME),array('c'=>'count(id)'));
+
+//        $select->join(array('op' => 'order_products'),
+//            'op.orderId = p.orderId',array(
+//                'productCode' => 'productCode',
+//                'stock' => 'stock'
+//            ),\Zend\Db\Sql\Select::JOIN_LEFT
+//        );
+        $not_join = $item->getOptions()['not_join'];
+        if(!$not_join) {
+            $rCount->join(array('op' => 'order_products'),
+                'op.orderId = p.orderId',array(
+                    'productCode' => 'productCode',
+                    'stock' => 'stock'
+                ),\Zend\Db\Sql\Select::JOIN_LEFT
+            );
+        }
+        $datefrom = $item->getOptions()['start_date'];
+        $dateto = $item->getOptions()['end_date'];
+        if($datefrom || $dateto) {
+//            $select->where("(p.createdDateTime >= '$datefrom 00:00:00' AND p.createdDateTime <= '$dateto 23:59:59')");
+            $rCount->where("(p.createdDateTime >= '$datefrom 00:00:00' AND p.createdDateTime <= '$dateto 23:59:59')");
+        }
+        if($item->getProductCode()) {
+//            $select->where("op.productCode LIKE '%{$item->getProductCode()}%'");
+            $rCount->where("op.productCode LIKE '%{$item->getProductCode()}%'");
+        }
+        if($item->getOrderId()){
+//            $select->where(array('p.orderId'=>$item->getOrderId()));
+            $rCount->where(array('p.orderId'=>$item->getOrderId()));
+        }
+
+        if($item->getStatusCode() == 'InProduction') {
+            $orderManufacture = new \Admin\Model\OrderManufacture();
+            $orderManufacture->setStatus(1);
+            $orderManufactureMapper = $this->getServiceLocator()->get('Admin\Model\OrderManufactureMapper');
+            $resultOrderIds = $orderManufactureMapper->fetchAllStatus($orderManufacture, 'order');
+            $orderIds = implode(',', $resultOrderIds);
+            $resultProductIds = $orderManufactureMapper->fetchAllStatus($orderManufacture, 'product');
+            $productIds = implode(',', $resultProductIds);
+//            $select->where('p.orderId in ('.$orderIds.') AND op.productCode in ('.$productIds.')');
+            $rCount->where('p.orderId in ('.$orderIds.') AND op.productCode in ('.$productIds.')');
+        } elseif($item->getStatusCode() == 'FinishedProduction') {
+            $orderManufacture = new \Admin\Model\OrderManufacture();
+            $orderManufacture->setStatus(2);
+            $orderManufactureMapper = $this->getServiceLocator()->get('Admin\Model\OrderManufactureMapper');
+            $resultOrderIds = $orderManufactureMapper->fetchAllStatus($orderManufacture, 'order');
+            $orderIds = implode(',', $resultOrderIds);
+            $resultProductIds = $orderManufactureMapper->fetchAllStatus($orderManufacture, 'product');
+            $productIds = implode(',', $resultProductIds);
+//            $select->where('p.orderId in ('.$orderIds.') AND op.productCode in ('.$productIds.')');
+            $rCount->where('p.orderId in ('.$orderIds.') AND op.productCode in ('.$productIds.')');
+        } elseif($item->getStatusCode() == 'StockLess') {
+//            $select->where('(NOT op.stock > 0 OR op.stock IS NULL)');
+            $rCount->where('(NOT op.stock > 0 OR op.stock IS NULL)');
+        } elseif($item->getStatusCode() || $item->getStatusCode() != 'InProduction' || $item->getStatusCode() != 'FinishedProduction' || $item->getStatusCode() != 'StockLess') {
+//            $select->where("p.statusCode LIKE '%{$item->getStatusCode()}%'");
+            $rCount->where("p.statusCode LIKE '%{$item->getStatusCode()}%'");
+        }
+
+//        $select->where(array('p.depotId' => 110912));
+        $rCount->where(array('p.depotId' => 110912));
+//        $currentPage = isset ( $paging [0] ) ? $paging [0] : 1;
+//        $limit = isset ( $paging [1] ) ? $paging [1] : 20;
+//        $offset = ($currentPage - 1) * $limit;
+//        $select->limit ( $limit );
+//        $select->offset ( $offset );
+//        $select->order ( 'p.createdDateTime DESC' );
+
+//        $selectStr = $dbSql->getSqlStringForSqlObject($select);
+        $rCountStr = $dbSql->getSqlStringForSqlObject($rCount);
+//        $results = $dbAdapter->query($selectStr,$dbAdapter::QUERY_MODE_EXECUTE);
+        $count = $dbAdapter->query($rCountStr,$dbAdapter::QUERY_MODE_EXECUTE);
+        return $count->count ();
+    }
+
+
+    public function updateQtt($item){
 // 		$data = array(
 // 				'quantity' => $model->getQuantity(),
 // 		);

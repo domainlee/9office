@@ -33,29 +33,33 @@
                 <div class="row">
                     <div class="col-sm-3">
                         <div class="widget-inline-box text-center">
-                            <h3><i class="text-primary md md-add-shopping-cart"></i> <b data-plugin="counterup">4477</b></h3>
-                            <h4 class="text-muted font-16">Lifetime total sales</h4>
+                            <h3><i class="text-primary md md-add-shopping-cart"></i> <b data-plugin="counterup"><?php echo $this->count_new ?></b></h3>
+                            <h4 class="text-muted font-16">Hôm nay</h4>
+                            <span class="text-muted">Đơn hàng</span>
                         </div>
                     </div>
 
                     <div class="col-sm-3">
                         <div class="widget-inline-box text-center">
-                            <h3><i class="text-custom md md-attach-money"></i> <b data-plugin="counterup">3920</b></h3>
-                            <h4 class="text-muted font-16">Income amounts</h4>
+                            <h3><i class="text-custom md md-add-shopping-cart"></i> <b data-plugin="counterup"><?php echo $this->count_confirmed ?></b></h3>
+                            <h4 class="text-muted font-16">Đã xác nhận</h4>
+                            <span class="text-muted">Sản phẩm</span>
                         </div>
                     </div>
 
                     <div class="col-sm-3">
                         <div class="widget-inline-box text-center">
-                            <h3><i class="text-pink md md-account-child"></i> <b data-plugin="counterup">3260</b></h3>
-                            <h4 class="text-muted font-16">Total users</h4>
+                            <h3><i class="text-pink md md-add-shopping-cart"></i> <b data-plugin="counterup"><?php echo $this->doing_product ?></b></h3>
+                            <h4 class="text-muted font-16">Đang sản xuất</h4>
+                            <span class="text-muted">Sản phẩm</span>
                         </div>
                     </div>
 
                     <div class="col-sm-3">
                         <div class="widget-inline-box text-center b-0">
-                            <h3><i class="text-purple md md-visibility"></i> <b data-plugin="counterup">162</b></h3>
-                            <h4 class="text-muted font-16">Total visits</h4>
+                            <h3><i class="text-purple md md-add-shopping-cart"></i> <b data-plugin="counterup"><?php echo $this->finished_product ?></b></h3>
+                            <h4 class="text-muted font-16">Đã sản xuất xong</h4>
+                            <span class="text-muted">Sản phẩm</span>
                         </div>
                     </div>
                 </div>
