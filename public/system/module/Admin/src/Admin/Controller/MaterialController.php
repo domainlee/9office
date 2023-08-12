@@ -1191,30 +1191,39 @@ class MaterialController extends AbstractActionController{
                 $mapperInvoiceMaterial->save($modelInvoiceMaterial);
             }
             $orders = explode('_', $orders);
+            $startDate = '';
+            $data_orderId = '';
             if(!empty($orders)) {
                 foreach ($orders as $orderId) {
                     if($orderId) {
+                        $data_orderId = $orderId;
                         $orderManufacture = new \Admin\Model\OrderManufacture();
                         $orderManufactureMapper = $this->getServiceLocator()->get('Admin\Model\OrderManufactureMapper');
                         $orderManufacturer = $orderManufactureMapper->get($orderManufacture);
                         if($orderManufacturer) {
                             $orderManufacture->setId($orderManufacturer->getId());
                         }
+                        $startDate = DateBase::getCurrentDateTime();
                         $orderManufacture->setStatus(\Admin\Model\OrderManufacture::IN_PRODUCTION);
                         $orderManufacture->setOrderId($orderId);
                         $orderManufacture->setProductId($code);
-                        $orderManufacture->setCreatedDateTime(DateBase::getCurrentDateTime());
+                        $orderManufacture->setCreatedDateTime($startDate);
                         $orderManufacture->setCreatedById($u->getId());
-                        $orderManufacture->setStartDateTime(DateBase::getCurrentDateTime());
+                        $orderManufacture->setStartDateTime($startDate);
                         $orderManufactureMapper->save($orderManufacture);
                     }
                 }
             }
         }
 
+        $html = '<span class="label label-warning m-b-5 d-block">Đang sản xuất</span>
+                <p class="text-muted m-t-5 m-b-5 font-13">Ngày bắt đầu: '.DateBase::toDisplayDateTime($startDate).'</p>
+                <a data-order="'.$data_orderId.'" data-code="'.$code.'" class="btn-in-finished btn label btn-sm btn-default btn-rounded waves-effect waves-light">Hoàn thành</a>';
+
         return new JsonModel(array(
             'code' => 1,
-            'messenger' => 'Đang sản xuất'
+            'messenger' => 'Đang sản xuất',
+            'html' => $html
         ));
     }
 
@@ -1291,10 +1300,13 @@ class MaterialController extends AbstractActionController{
         $orderManufacturer->setStatus(\Admin\Model\OrderManufacture::FINISHED_PRODUCTION);
         $orderManufacturer->setEndDateTime(DateBase::getCurrentDateTime());
         $orderManufactureMapper->save($orderManufacturer);
-
+        $html = '<p class="text-muted m-t-5 m-b-5 font-13">Ngày bắt đầu: '.DateBase::toDisplayDateTime($orderManufacturer->getStartDateTime()).'</p>
+                <span class="label label-success m-b-5 d-block">Đã xong</span>
+                <p class="text-muted m-t-5 m-b-5 font-13">Ngày kết thúc: '.DateBase::toDisplayDateTime(DateBase::getCurrentDateTime()).'</p>';
         return new JsonModel(array(
             'code' => 1,
-            'messenger' => 'Đã sản xuất xong đơn hàng'
+            'messenger' => 'Đã sản xuất xong đơn hàng',
+            'html' => $html
         ));
     }
 

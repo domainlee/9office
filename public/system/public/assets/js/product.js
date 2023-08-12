@@ -300,16 +300,14 @@ $(function(){
     $('.btn-in-process').on('click', function (e) {
         e.preventDefault();
         var t = $(this);
+        var wrap_action = t.parent('.wrap-action');
         var data = $(this).attr('data-order');
         var code = $(this).attr('data-code');
         var quantity = $(this).attr('data-quantity');
-        console.log(data);
-        console.log(code);
-        if (confirm('Bạn sẽ sản xuất đơn hàng này gee ? Mã sản phẩm '+ code +' với số lượng ' + quantity)) {
+        if (confirm('Bạn sẽ sản xuất đơn hàng này ? Mã sản phẩm '+ code +' với số lượng ' + quantity)) {
             $.post('/admin/material/processproduct',{data: data, code: code, quantity: quantity},function(r){
                 if(r.code == 1){
-                    alert(r.messenger);
-                    location.reload();
+                    wrap_action.html(r.html);
                 } else if(r.code == 0){
                     alert(r.messenger);
                 }
@@ -317,14 +315,12 @@ $(function(){
         }
     });
 
-    $('.btn-in-finished').on('click', function () {
-        var order = $(this).attr('data-order'), code = $(this).attr('data-code'), _this = $(this);
-
+    $('.order_list').on('click', '.btn-in-finished', function () {
+        var order = $(this).attr('data-order'), code = $(this).attr('data-code'), _this = $(this), wrap_action = _this.parent('.wrap-action');
         if (confirm('Xác nhận hoàn thành đơn hàng này ?')) {
             $.post('/admin/material/orderfinished',{orderId: order, code: code},function(r){
                 if(r.code == 1){
-                    alert(r.messenger);
-                    location.reload();
+                    wrap_action.html(r.html);
                 } else if(r.code == 0){
                     alert(r.messenger);
                 }
