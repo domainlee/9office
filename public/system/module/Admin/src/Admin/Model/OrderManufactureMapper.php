@@ -124,6 +124,9 @@ class OrderManufactureMapper extends Base{
         if($item->getId()) {
             $select->where(array('ac.id' => $item->getId()));
         }
+        if($item->getStatus()) {
+            $select->where(array('ac.status' => $item->getStatus()));
+        }
         $selectString = $dbSql->getSqlStringForSqlObject($select);
         $results = $dbAdapter->query($selectString, $dbAdapter::QUERY_MODE_EXECUTE);
 
@@ -168,6 +171,40 @@ class OrderManufactureMapper extends Base{
             }
         }
         return $all;
+    }
+
+    public function fetchAllStatus($item, $option = '')
+    {
+        /* @var $dbAdapter \Zend\Db\Adapter\Adapter */
+        $dbAdapter = $this->getServiceLocator()->get('dbAdapter');
+
+        /* @var $dbSql \Zend\Db\Sql\Sql */
+        $dbSql = $this->getServiceLocator()->get('dbSql');
+        $select = $dbSql->select(array("ac" => $this->getTableName()));
+
+        if($item->getId()) {
+            $select->where(array('ac.id' => $item->getId()));
+        }
+        if($item->getStatus()) {
+            $select->where(array('ac.status' => $item->getStatus()));
+        }
+        $selectString = $dbSql->getSqlStringForSqlObject($select);
+        $results = $dbAdapter->query($selectString, $dbAdapter::QUERY_MODE_EXECUTE);
+
+        $orderIds = array();
+        $productIds = array();
+        if($results->count()) {
+            foreach ($results as $row) {
+                $orderIds[] = $row['orderId'];
+                $productIds[] = "'".$row['productId']."'";
+            }
+        }
+        if($option == 'order') {
+            return $orderIds;
+        } elseif($option == 'product') {
+            return $productIds;
+        }
+        return $orderIds;
     }
 
 

@@ -89,14 +89,36 @@ class OrderMapper extends Base{
             $select->where("op.productCode LIKE '%{$item->getProductCode()}%'");
             $rCount->where("op.productCode LIKE '%{$item->getProductCode()}%'");
         }
-        if($item->getStatusCode()) {
-            $select->where("p.statusCode LIKE '%{$item->getStatusCode()}%'");
-            $rCount->where("p.statusCode LIKE '%{$item->getStatusCode()}%'");
-        }
         if($item->getOrderId()){
             $select->where(array('p.orderId'=>$item->getOrderId()));
             $rCount->where(array('p.orderId'=>$item->getOrderId()));
         }
+
+        if($item->getStatusCode() == 'InProduction') {
+            $orderManufacture = new \Admin\Model\OrderManufacture();
+            $orderManufacture->setStatus(1);
+            $orderManufactureMapper = $this->getServiceLocator()->get('Admin\Model\OrderManufactureMapper');
+            $resultOrderIds = $orderManufactureMapper->fetchAllStatus($orderManufacture, 'order');
+            $orderIds = implode(',', $resultOrderIds);
+            $resultProductIds = $orderManufactureMapper->fetchAllStatus($orderManufacture, 'product');
+            $productIds = implode(',', $resultProductIds);
+            $select->where('p.orderId in ('.$orderIds.') AND op.productCode in ('.$productIds.')');
+            $rCount->where('p.orderId in ('.$orderIds.') AND op.productCode in ('.$productIds.')');
+        } elseif($item->getStatusCode() == 'FinishedProduction') {
+            $orderManufacture = new \Admin\Model\OrderManufacture();
+            $orderManufacture->setStatus(2);
+            $orderManufactureMapper = $this->getServiceLocator()->get('Admin\Model\OrderManufactureMapper');
+            $resultOrderIds = $orderManufactureMapper->fetchAllStatus($orderManufacture, 'order');
+            $orderIds = implode(',', $resultOrderIds);
+            $resultProductIds = $orderManufactureMapper->fetchAllStatus($orderManufacture, 'product');
+            $productIds = implode(',', $resultProductIds);
+            $select->where('p.orderId in ('.$orderIds.') AND op.productCode in ('.$productIds.')');
+            $rCount->where('p.orderId in ('.$orderIds.') AND op.productCode in ('.$productIds.')');
+        } elseif($item->getStatusCode() || $item->getStatusCode() == 'InProduction') {
+            $select->where("p.statusCode LIKE '%{$item->getStatusCode()}%'");
+            $rCount->where("p.statusCode LIKE '%{$item->getStatusCode()}%'");
+        }
+
         $select->where(array('p.depotId' => 110912));
         $rCount->where(array('p.depotId' => 110912));
         $currentPage = isset ( $paging [0] ) ? $paging [0] : 1;

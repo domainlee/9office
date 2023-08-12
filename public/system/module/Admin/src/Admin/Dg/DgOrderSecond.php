@@ -33,7 +33,7 @@ class DgOrderSecond extends \Base\Dg\Table {
             ),
             array(
                 'label' => 'Hành động',
-                'style' => 'text-align: center;width: 5%'
+                'style' => 'text-align: center;width: 10%'
             )
         );
         $this->headers = $headerArr;
@@ -46,7 +46,7 @@ class DgOrderSecond extends \Base\Dg\Table {
             $product = $item->getOptions()['products'];
             $productHtml = '';
             $quantity = 0;
-            $is_facture = false;
+            $is_facture = true;
             $btn_bool = false;
             $btn_dsx = false;
             $btn_sxx = false;
@@ -66,6 +66,7 @@ class DgOrderSecond extends \Base\Dg\Table {
                     $url_created_product = '';
                     $stock = ($k->getStock() ? $k->getStock():0);
                     if(isset($product_material[$k->getProductCode()])) {
+                        $btn_bool = false;
                         $named = '';
                         $c = 0;
                         $products = array();
@@ -90,7 +91,7 @@ class DgOrderSecond extends \Base\Dg\Table {
                         }
                         $is_facture = true;
                         if($stock > 0) {
-                            $is_facture = false;
+//                            $is_facture = false;
                         }
                         $url_created_product = '<span class="label label-success" data-toggle="tooltip" data-html="true" data-placement="top" title="" data-original-title="'.$named.'">Vật liệu sử dụng</span>';
                     } else {
