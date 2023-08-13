@@ -154,7 +154,7 @@ $(function(){
     var pageId = $('#pageId');
     var articleCategoryId = $('#articleCategoryId');
 
-    loadImage.Load(null, null, returnData, null);
+    // loadImage.Load(null, null, returnData, null);
     loadImage.Upload();
 
     if(productID.length){

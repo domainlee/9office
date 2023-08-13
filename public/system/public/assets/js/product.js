@@ -194,7 +194,7 @@ $(function(){
         $.post('/admin/order/cron');
         setTimeout(cron_tab, 100000);
     }
-    cron_tab();
+    setTimeout(cron_tab, 3000);
 
     var urlBanner = $('.urlBanner');
     var selectBannerProduct = $('.select-ajax-product');
@@ -805,10 +805,10 @@ $(function(){
         });
     }
 
-    if($('.updateHomepage').length) {
-        $.post('/admin/page/homepage', {update: true} , function(e){});
-        $.post('/admin/setup/template', {update: true} , function(e){});
-    }
+    // if($('.updateHomepage').length) {
+    //     $.post('/admin/page/homepage', {update: true} , function(e){});
+    //     $.post('/admin/setup/template', {update: true} , function(e){});
+    // }
 
     if($('.addField').length) {
         $('.addField').click(function (e) {
