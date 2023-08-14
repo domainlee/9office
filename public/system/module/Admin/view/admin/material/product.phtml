@@ -41,7 +41,31 @@ $option = $this->option;
                         'setup' => true,
                         'url' => $this->url,
                     ));
+
+                    $total = ceil($this->results->getRowCount ()/$this->results->getPaging ()[1]);
+                    $page = $this->results->getPaging ()[0];
+                    $query = $this->uri;
+                    $page_prev = (int)($page == 1 ? 1:$page-1);
+                    $page_next = (int)($total == $page ? $page:$page + 1);
+                    $link = '';
+                    if($query) {
+                        $page_prev = preg_replace ( '/page=\d*/i','page='.$page_prev, $query );
+                        $page_next = preg_replace ( '/page=\d*/i','page='.$page_next, $query );
+                        $link = preg_replace ( '/page=\d*/i','', $query );
+                    } else {
+                        $page_prev = 'page='.$page_prev;
+                        $page_next = 'page='.$page_next;
+                    }
+
                     ?>
+
+                    <label class="m-t-5">Trang:
+                        <select class="form-control input-sm" id="paginationControl" size="1">
+                            <?php for($c = 1; $c <= $total; $c++): ?>
+                                <option value="<?php echo 'product?page='. $c .'&'. $link ?>" <?php echo $c == $page ? 'selected':'' ?>><?php echo $c ?></option>
+                            <?php endfor; ?>
+                        </select> / <?php echo $total; ?>
+                    </label>
                 </div>
             </div>
         </div>
@@ -89,3 +113,8 @@ $option = $this->option;
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 
+<style>
+    .pagination {
+        display: none;
+    }
+</style>
