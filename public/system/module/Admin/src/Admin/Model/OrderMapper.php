@@ -88,8 +88,8 @@ class OrderMapper extends Base{
             $rCount->where("(p.createdDateTime >= '$datefrom 00:00:00' AND p.createdDateTime <= '$dateto 23:59:59')");
         }
         if($item->getProductCode()) {
-            $select->where("op.productCode LIKE '%{$item->getProductCode()}%'");
-            $rCount->where("op.productCode LIKE '%{$item->getProductCode()}%'");
+            $select->where("op.productCode LIKE '{$item->getProductCode()}'");
+            $rCount->where("op.productCode LIKE '{$item->getProductCode()}'");
         }
         if($item->getOrderId()){
             $select->where(array('p.orderId'=>$item->getOrderId()));
@@ -120,8 +120,8 @@ class OrderMapper extends Base{
             $select->where('(NOT op.stock > 0 OR op.stock IS NULL)');
             $rCount->where('(NOT op.stock > 0 OR op.stock IS NULL)');
         } elseif($item->getStatusCode() || $item->getStatusCode() != 'InProduction' || $item->getStatusCode() != 'FinishedProduction' || $item->getStatusCode() != 'StockLess') {
-            $select->where("p.statusCode LIKE '%{$item->getStatusCode()}%'");
-            $rCount->where("p.statusCode LIKE '%{$item->getStatusCode()}%'");
+            $select->where("p.statusCode LIKE '{$item->getStatusCode()}'");
+            $rCount->where("p.statusCode LIKE '{$item->getStatusCode()}'");
         }
 
         $select->where(array('p.depotId' => 110912));
