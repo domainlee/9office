@@ -119,7 +119,7 @@ class OrderMapper extends Base{
         } elseif($item->getStatusCode() == 'StockLess') {
             $select->where('(NOT op.stock > 0 OR op.stock IS NULL)');
             $rCount->where('(NOT op.stock > 0 OR op.stock IS NULL)');
-        } elseif($item->getStatusCode() || $item->getStatusCode() != 'InProduction' || $item->getStatusCode() != 'FinishedProduction' || $item->getStatusCode() != 'StockLess') {
+        } elseif($item->getStatusCode() && ( $item->getStatusCode() != 'InProduction' && $item->getStatusCode() != 'FinishedProduction' && $item->getStatusCode() != 'StockLess')) {
             $select->where("p.statusCode LIKE '{$item->getStatusCode()}'");
             $rCount->where("p.statusCode LIKE '{$item->getStatusCode()}'");
         }

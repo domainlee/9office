@@ -114,6 +114,9 @@ class DgOrderSecond extends \Base\Dg\Table {
                     </div>';
                 }
             }
+            if($item->getStatusCode() == 'Packing') {
+                $is_facture = false;
+            }
             if($btn_bool) {
                 if($btn_dsx) {
                     $btn = '<span class="label label-warning m-b-5 d-block">Đang sản xuất</span>
