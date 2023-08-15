@@ -112,6 +112,7 @@ class Acl extends ZendAcl
         $this->allow('Admin', 'admin:product', array('field', 'deletefield', 'url'));
         $this->allow('Admin', 'admin:question', array('index', 'view', 'task'));
         $this->allow('Admin', 'admin:setup', array('page', 'changecomment', 'deleteccomment'));
+        $this->allow('Admin', 'admin:order', array('cron'));
 //        $this->allow('Admin', 'admin:admin', array('huongdan'));
 
         $this->allow('Super Admin', null);
@@ -155,8 +156,10 @@ class Acl extends ZendAcl
                             'Danh sách vật liệu' => 'index',
                             'Tạo vật liệu' => 'add',
                             'Sửa vật liệu' => 'edit',
-                            'Danh sách sản phẩm' => 'product',
+                            'Sản phẩm vật liệu' => 'product',
                             'Thêm sản phẩm' => 'addproduct',
+                            'Sản xuất đơn hàng' => 'processproduct',
+                            'Hoàn thành đơn hàng' => 'orderfinished',
                         ),
                         'Hoá đơn' => array(
                             'Danh sách invoice' => 'index',
@@ -165,7 +168,8 @@ class Acl extends ZendAcl
                             'Duyệt xuất hàng' => 'export',
                         ),
                         'Đơn hàng' => array(
-                            'Xem danh sách đơn hàng' => 'index',
+//                            'Xem danh sách đơn hàng' => 'index',
+                            'Xem danh sách đơn hàng' => 'list',
                         ),
                         'Nhà cung cấp' => array(
                             'Xem danh sách nhà cung cấp' => 'index',

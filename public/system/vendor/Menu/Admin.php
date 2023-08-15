@@ -57,7 +57,7 @@ class Admin extends Navigation
                 'label2'=> 'Đơn hàng',
                 'uri'	=> '/admin/order/list?status=Confirmed',
                 'resource' => 'admin:order',
-                'privilege' => 'index',
+                'privilege' => 'list',
                 'class'=>'fa fa-plus-square',
                 'pages'	=> array(
 
@@ -67,8 +67,8 @@ class Admin extends Navigation
                 'icon'  => '<i class="ti-pencil-alt"></i>',
                 'label'	=> 'Vật liệu',
                 'uri'	=> '/admin/material',
-                'resource' => 'admin:material',
-                'privilege' => 'index',
+//                'resource' => 'admin:material',
+//                'privilege' => 'index',
                 'class' => 'fa fa-dot-circle-o',
                 'module' => 'material',
                 'pages'	=> array(
