@@ -75,7 +75,8 @@ class Resource {
     const version = 2;
     const appId = 73193;
     const businessId = 109797;
-    const accessToken = 'pV0IWWhXrpiM9SWgeGT8kClOaAF7caGiBCyZ4c2iIc2M9dvJLDv9NUTVI2RB4QP29zoQncLxQ4IZdTbYglchdOeBlKF0ovVR5P5TyJ52RHL55IGVPRgMMc6Ll0WHzRjE0kmQILxj2x3dLAuLY6AU13';
+    const accessToken_2023 = 'pV0IWWhXrpiM9SWgeGT8kClOaAF7caGiBCyZ4c2iIc2M9dvJLDv9NUTVI2RB4QP29zoQncLxQ4IZdTbYglchdOeBlKF0ovVR5P5TyJ52RHL55IGVPRgMMc6Ll0WHzRjE0kmQILxj2x3dLAuLY6AU13';
+    const accessToken_22082024 = 'Fy6XnicVUfCVqWs8PKnfs4NVRMvbPVkjrgM5KNVBqTYfXcsF4XCeLYuAtekfXWDKOHERk2VjDDNyebpkNZLhvNsMwYvsxoBqlxZfiWvxY2Wl4ah9tQtTDC9EZsqWExbALvGr6AkMWd7RyImz';
 
 
     static public function data_api() {
@@ -83,7 +84,7 @@ class Resource {
             'version' => self::version,
             'appId' => self::appId,
             'businessId' => self::businessId,
-            'accessToken' => self::accessToken,
+            'accessToken' => self::accessToken_2023,
         );
         return $data;
     }
