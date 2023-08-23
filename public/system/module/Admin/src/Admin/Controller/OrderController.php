@@ -307,11 +307,6 @@ class OrderController extends AbstractActionController{
         $page = (int)$this->getRequest()->getQuery()->page ? : 1;
         $results = $orderMapper->search($order, array($page,50));
 
-        $export = $this->getRequest()->getQuery()['export'];
-        if($export) {
-            $export_data = $orderMapper->searchTwo($order, array($page,50));
-            $this->template_excel($export_data);
-        }
         $productMaterialItem = new \Admin\Model\ProductMaterialItem();
         $mapperProductMaterialItem = $this->getServiceLocator()->get('Admin\Model\ProductMaterialItemMapper');
         $productMaterial = $mapperProductMaterialItem->fetchAll3($productMaterialItem);
@@ -319,6 +314,12 @@ class OrderController extends AbstractActionController{
         $orderManufacture = new \Admin\Model\OrderManufacture();
         $orderManufactureMapper = $this->getServiceLocator()->get('Admin\Model\OrderManufactureMapper');
         $orderProduction = $orderManufactureMapper->fetchAllTwo($orderManufacture);
+
+        $export = $this->getRequest()->getQuery()['export'];
+        if($export) {
+            $export_data = $orderMapper->searchTwo($order, array($page,1000), $orderProduction, $productMaterial);
+            $this->template_excel($export_data);
+        }
 
         return new ViewModel(array(
             'fFilter' => $fFilter,
@@ -725,7 +726,7 @@ class OrderController extends AbstractActionController{
         }
         $file_name = 'Danh sách đơn hàng_'.date('ymd').'.xlsx';
         $sheet_product = 'Order '.date('ymd');
-        $header_one = array( 'Mã đơn hàng', 'Khách hàng', 'Hình ảnh','Mã sản phẩm','Tên sản phẩm','Số lượng','Tồn kho', 'Ngày', 'Trạng thái');
+        $header_one = array( 'Mã đơn hàng', 'Khách hàng', 'Hình ảnh','Mã sản phẩm','Tên sản phẩm','Số lượng','Tồn kho', 'Ngày', 'Trạng thái', 'Hành động');
         $styles_white = array('font'=>'Arial', 'font-style'=>'bold', 'fill'=>'#FFF', 'halign'=>'left', 'border'=>'left,right,top,bottom');
         $writer = new XLSXWriter();
         $writer->writeSheetRow($sheet_product, $header_one, $styles_white);

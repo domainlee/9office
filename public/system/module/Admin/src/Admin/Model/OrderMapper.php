@@ -4,6 +4,7 @@ namespace Admin\Model;
 use Base\Mapper\Base;
 use \Base\XSS\xssClean;
 use mysql_xdevapi\Exception;
+use Home\Model\DateBase;
 
 class OrderMapper extends Base{
 
@@ -157,7 +158,7 @@ class OrderMapper extends Base{
         return new \Base\Dg\Paginator ( $count->count (), $rs, $paging, count ( $results ) );
     }
 
-    public function searchTwo($item,$paging){
+    public function searchTwo($item,$paging, $order_production, $product_material){
         /* @var $dbAdapter \Zend\Db\Adapter\Adapter */
         $dbAdapter = $this->getServiceLocator()->get('dbAdapter');
         /* @var $dbSql \Zend\Db\Sql\Sql */
@@ -207,7 +208,40 @@ class OrderMapper extends Base{
         $rs = array();
         if(count($count)){
             foreach ($count as $rows){
-                $model = array($rows['orderId'], $rows['customerName'], $rows['productImage'], $rows['productCode'], $rows['productName'], $rows['quantity'], $rows['stock'], $rows['createdDateTime'], $rows['statusName']);
+                $is_facture = true;
+                $btn_bool = false;
+                $btn_dsx = false;
+                $btn_sxx = false;
+
+                if($rows['statusCode'] == 'Packing') {
+                    $is_facture = false;
+                }
+                if(isset($product_material[$rows['productCode']])) {
+                    $btn_bool = false;
+                }
+                if(isset($order_production[$rows['orderId'].'_'.$rows['productCode']])) {
+                    $btn_bool = true;
+                    if($order_production[$rows['orderId'].'_'.$rows['productCode']]['status'] == \Admin\Model\OrderManufacture::IN_PRODUCTION) {
+                        $btn_dsx = true;
+                    }
+                    if($order_production[$rows['orderId'].'_'.$rows['productCode']]['status'] == \Admin\Model\OrderManufacture::FINISHED_PRODUCTION) {
+                        $btn_dsx = false;
+                        $btn_sxx = true;
+                    }
+                }
+
+                if($btn_bool) {
+                    if($btn_dsx) {
+                        $btn = 'Đang sản xuất - Ngày bắt đầu: '.DateBase::toDisplayDateTime($order_production[$rows['orderId'].'_'.$rows['productCode']]['startDateTime']);
+                    }
+                    if($btn_sxx) {
+                        $btn = 'Đã xong';
+                    }
+                } else {
+                    $btn = ($is_facture ? 'Chưa sản xuất':'');
+                }
+
+                $model = array($rows['orderId'], $rows['customerName'], $rows['productImage'], $rows['productCode'], $rows['productName'], $rows['quantity'], $rows['stock'], $rows['createdDateTime'], $rows['statusName'], $btn);
                 $rs[] = $model;
             }
         }
