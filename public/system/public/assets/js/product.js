@@ -192,9 +192,9 @@ $(function(){
 
     function cron_tab() {
         $.post('/admin/order/cron');
-        setTimeout(cron_tab, 100000);
+        setTimeout(cron_tab, 300000);
     }
-    setTimeout(cron_tab, 3000);
+    setTimeout(cron_tab, 5000);
 
     var urlBanner = $('.urlBanner');
     var selectBannerProduct = $('.select-ajax-product');
