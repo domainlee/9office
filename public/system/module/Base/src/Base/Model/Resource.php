@@ -84,7 +84,7 @@ class Resource {
             'version' => self::version,
             'appId' => self::appId,
             'businessId' => self::businessId,
-            'accessToken' => self::accessToken_2023,
+            'accessToken' => self::accessToken_22082024,
         );
         return $data;
     }
